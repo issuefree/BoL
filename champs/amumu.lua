@@ -6,6 +6,7 @@ pp(" - Despair and Tantrum in the jungle")
 pp(" - Despair and Tantrum enemies")
 
 InitAAData({
+  baseAttackSpeed = 0.638,
   windup=.30,
   extraRange=25,
   particles = {"SadMummyBasicAttack"}
@@ -34,7 +35,7 @@ spells["bandage"] = {
 spells["despair"] = {
   key="W", 
   range=300, 
-  color=blue
+  color=blue,
 }
 spells["tantrum"] = {
   key="E", 
