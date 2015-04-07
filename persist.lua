@@ -207,18 +207,17 @@ function GetPersisted(name)
 end
 
 -- find an object only near me and persist it
-function PersistBuff(name, object, name, dist)
+function PersistBuff(label, object, name, dist)
    if not dist then
       dist = 150
    end
    if object and find(object.name, name) then
       if GetDistance(object) < dist then
-         P[name] = object
-         PData[name] = {}
-         PData[name].cn = object.name
+         P[label] = object
+         PData[label] = {}
          return true
       elseif GetDistance(object) < 500 then
-         -- pp("Found "..name.." at distance "..math.floor(GetDistance(object)))
+         -- pp("Found "..label.." at distance "..math.floor(GetDistance(object)))
       end
    end
    return false
@@ -244,6 +243,7 @@ end
 
 -- check if a given target has the named buff
 function HasBuff(buffName, target)
+   target = target or me
    if not pOn[buffName] then return false end
    for _,pKey in ipairs(pOn[buffName]) do
       local pd = PData[pKey]
@@ -274,10 +274,9 @@ end
 
 function CleanPersistedObjects()
    for name,obj in pairs(P) do
-      if not obj or 
-         not obj.charName or obj.charName ~= PData[name].cn or
-         not obj.x or not obj.z or
-         ( obj.team ~= 0 and obj.dead )
+      if not obj or not obj.valid
+         -- not obj.charName or obj.charName ~= PData[name].cn or
+         -- ( obj.team ~= 0 and obj.dead )
       then
          -- pp("Clean "..name)
          P[name] = nil

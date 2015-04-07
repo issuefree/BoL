@@ -13,15 +13,9 @@ require "issuefree/walls"
 
 -- require "issuefree/champWealth"
 
+
 function OnLoad()
 	require("issuefree/champs/"..string.lower(me.charName))
-
-   for i = 1, objManager.iCount, 1 do
-      local object = objManager:GetObject(i)
-      if object then
-         OnCreateObj(object)
-      end
-   end
 end
 
 function OnUnload()
@@ -285,10 +279,11 @@ local function drawCommon()
    end
 end
 
-function OnCreateObj(object)
+function doCreateObj(object)
    if not (object and object.x and object.z) then
       return
    end
+
 
    createForPersist(object)
 
@@ -1652,12 +1647,28 @@ local manaCheckTime = nil
 
 TICK_DELAY = .05
 -- Common stuff that should happen every time
+
+local lastObjectName = {}
 local tt = time()
+
 function OnTick()
    FRAME = time()
    Text(""..trunc(1/(time()-tt),1), 1800, 60, 0xFFCCEECC);
    TICK_DELAY = time()-tt
    tt = time()
+
+   for i = 1, objManager.iCount, 1 do
+      local object = objManager:GetObject(i)
+      if object and object.valid then
+         if lastObjectName[i] == object.name then
+            -- existing object
+         else
+            lastObjectName[i] = object.name
+            doCreateObj(object)
+         end
+      end
+   end
+
 
    for _,spell in pairs(spells) do
       if spell.key == "Q" or
@@ -1782,6 +1793,7 @@ function OnTick()
    CheckTrinket()
 
    for _,callback in ipairs(TICK_CALLBACKS) do
+      -- pp(callback)
    	callback()
    end
 end
