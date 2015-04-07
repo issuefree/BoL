@@ -92,7 +92,7 @@ local minionAAData = {
 function InitAAData(data)
    data = data or {}
 
-   spells["AA"].baseAttackSpeed = data.baseAttackSpeed or .6
+   spells["AA"].baseAttackSpeed = data.baseAttackSpeed or .625
    spells["AA"].windup = data.windup or .4
    spells["AA"].minMoveTime = data.minMoveTime or .1
    spells["AA"].particles = data.particles or {}
@@ -460,7 +460,7 @@ function onSpellAA(unit, spell)
          end
 
          if delay then
-            AddIncomingDamage(spell.target, unit.baseDamage+unit.addDamage, GetImpactTime(unit, spell.target, delay, speed))
+            AddIncomingDamage(spell.target, unit.totalDamage, GetImpactTime(unit, spell.target, delay, speed))
          end
       end
    end

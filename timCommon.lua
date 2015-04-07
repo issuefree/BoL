@@ -407,16 +407,16 @@ function IsMinion(unit)
 end
 
 function IsBasicMinion(minion)
-   return find(minion.name, "MinionMelee")
+   return find(minion.charName, "MinionMelee")
 end
 function IsCasterMinion(minion)
-   return find(minion.name, "MinionRanged")
+   return find(minion.charName, "MinionRanged")
 end
 function IsBigMinion(minion)
-   return find(minion.name, "MinionSiege")
+   return find(minion.charName, "MinionSiege")
 end
 function IsSuperMinion(minion)
-   return find(minion.name, "MinionSuper")
+   return find(minion.charName, "MinionSuper")
 end
 
 function IsHero(unit)
