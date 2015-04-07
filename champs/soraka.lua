@@ -6,6 +6,7 @@ pp("Tim's Soraka")
 SetChampStyle("support")
 
 InitAAData({ 
+	baseAttackSpeed = .625,
 	speed = 1000, windup=.25,
 	extraRange=-10,
 	particles = {"Soraka_Base_BA_mis"}
