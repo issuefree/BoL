@@ -112,34 +112,33 @@ ccNames = {
 
 
 -- find an object and persist it
-function Persist(name, object, charName, team)
+function Persist(label, object, name, team)
    if team and object.team ~= team then
       return
    end
-   if object and (not charName or find(object.charName, charName)) then
-      P[name] = object
-      PData[name] = {}
-      PData[name].cn = object.charName
+   if object and (not name or find(object.name, name)) then
+      P[label] = object
+      PData[label] = {}
+      PData[label].name = object.name
       return true
    end
 end
 
-function PersistTemp(name, ttl)
-   if P[name] then
-      if PData[name].timeout then
-         PData[name].timeout = time() + ttl
+function PersistTemp(label, ttl)
+   if P[label] then
+      if PData[label].timeout then
+         PData[label].timeout = time() + ttl
       end
    else
-      P[name] = {charName=name, x=0, z=0}
-      PData[name] = {}
-      PData[name].cn = name
-      PData[name].timeout = time() + ttl
+      P[label] = {valid=true}
+      PData[label] = {}
+      PData[label].timeout = time() + ttl
    end
-   return P[name]
+   return P[label]
 end
 
-function IsTemp(name)
-   if PData[name] and PData[name].timeout then
+function IsTemp(label)
+   if PData[label] and PData[label].timeout then
       return true
    end
    return false
@@ -215,6 +214,7 @@ function PersistBuff(label, object, name, dist)
       if GetDistance(object) < dist then
          P[label] = object
          PData[label] = {}
+         PData[label].name = object.name
          return true
       elseif GetDistance(object) < 500 then
          -- pp("Found "..label.." at distance "..math.floor(GetDistance(object)))
@@ -223,17 +223,17 @@ function PersistBuff(label, object, name, dist)
    return false
 end
 
-function PersistOnTargets(name, object, charName, ...)
-   if object and find(object.name, charName) then
+function PersistOnTargets(label, object, name, ...)
+   if object and find(object.name, name) then
       local target = SortByDistance(GetInRange(object, 125, concat(...)), object)[1]
       if target then
-         if not pOn[name] then
-            pOn[name] = {}
+         if not pOn[label] then
+            pOn[label] = {}
          end
-         Persist(name..object.networkID, object)
-         PData[name..object.networkID].unit = target
-         PData[name..object.networkID].time = time()
-         table.insert(pOn[name], name..object.networkID)
+         Persist(label..object.name, object)
+         PData[label..object.name].unit = target
+         PData[label..object.name].time = time()
+         table.insert(pOn[label], label..object.name)
          -- pp("Persisting "..name.." on "..target.charName.." as "..name..object.networkID)
          return target
       end
@@ -274,9 +274,9 @@ end
 
 function CleanPersistedObjects()
    for name,obj in pairs(P) do
-      if not obj or not obj.valid
-         -- not obj.charName or obj.charName ~= PData[name].cn or
-         -- ( obj.team ~= 0 and obj.dead )
+      if not obj or 
+         not obj.valid or
+         not obj.name == PData[name].name
       then
          -- pp("Clean "..name)
          P[name] = nil
@@ -286,6 +286,7 @@ function CleanPersistedObjects()
    for name, data in pairs(PData) do
 
       if data.timeout and data.timeout < time() then
+         pp("timeout")
          P[name] = nil
          PData[name] = nil
       end
@@ -320,30 +321,32 @@ function Clean(list, field, value)
 end
 
 function isDupMinion(minionTable, minion)
-  local count = 0
-  for _,m in pairs(minionTable) do
-    if minion.charName == m.charName then count = count + 1 end
-    if count > 1 then return true end
-  end
-  return false
+   local count = 0
+   for _,m in pairs(minionTable) do
+      if minion.name == m.name then count = count + 1 end
+      if count > 1 then 
+         pp("DUP MINION")
+         return true 
+      end
+   end
+   return false
 end
 
 local function updateMinions()
+   -- pp(" - enemy minions")
    for i,minion in rpairs(MINIONS) do
-      if not ValidTarget(minion) or
-         not find(minion.charName, "Minion") or
-         isDupMinion(MINIONS, minion)
+      if not minion or
+         not minion.valid or
+         not find(minion.charName, "Minion") 
       then
          table.remove(MINIONS,i)
       end
    end
+   -- pp(" - my minions")
    for i,minion in rpairs(MYMINIONS) do
       if not minion or
-         minion.dead or
-         minion.x == nil or 
-         minion.z == nil or
-         not find(minion.charName, "Minion") or
-         isDupMinion(MYMINIONS, minion)
+         not minion.valid or
+         not find(minion.charName, "Minion") 
       then
          table.remove(MYMINIONS,i)
       end
@@ -364,11 +367,11 @@ end
 
 local function cleanCreeps(list, names)
    for i,unit in rpairs(list) do
-      if not unit or
-         unit.dead or
-         unit.x == nil or 
-         unit.y == nil or
-         not ListContains(unit.name, names)
+      if not unit or not unit.valid
+         -- unit.dead or
+         -- unit.x == nil or 
+         -- unit.y == nil or
+         -- not ListContains(unit.name, names)
       then
          table.remove(list,i)
       end
@@ -557,13 +560,6 @@ function createForPersist(object)
    PersistBuff("manaPotion", object, "GLOBAL_Item_Mana")
    PersistBuff("healthPotion", object, "GLOBAL_Item_Health")
 
-   if Persist("cursorA", object, "Cursor_MoveTo_Red") then
-      PData.cursorA.lastPos = Point(P.cursorA)
-   end
-   if Persist("cursorM", object, "Cursor_MoveTo.troy") then
-      PData.cursorM.lastPos = Point(P.cursorM)
-   end
-
    for _,spell in pairs(spells) do
       if spell.modAA and spell.object then
          PersistBuff(spell.modAA, object, spell.object, 200)
@@ -626,6 +622,7 @@ function createForPersist(object)
 end
 
 function persistTick()
+   -- pp("here0")
    Clean(WARDS, "charName", "Ward")
    if GetMap() == 8 then
       Clean(INHIBS, "charName", "_Idle")
@@ -652,10 +649,16 @@ function persistTick()
 
    CleanPersistedObjects()
 
+
+   -- pp("minions")
    updateMinions()
+   -- pp("creeps")
    updateCreeps()
+   -- pp("heros")
    updateHeroes()
+   -- pp("tracked")
    updateTrackedSpells()
+
 
    MINIONS = ValidTargets(GetPersisted("MINIONS"))
    MYMINIONS = ValidTargets(GetPersisted("MYMINIONS"))
