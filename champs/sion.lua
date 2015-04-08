@@ -10,7 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Sion")
 
 InitAAData({ 
-   windup=.3,
 --    minMoveTime = 0,
    -- extraRange=10,
 --    particles = {"TeemoBasicAttack_mis", "Toxicshot_mis"} 
@@ -32,7 +31,7 @@ spells["smash"] = {
    range=800, -- TODO
    color=yellow, 
    base={20,40,60,80,100}, 
-   ad=.6,
+   ad=.65,
    delay=2.4, 
    speed=20, -- 
    width=190, -- reticle
@@ -46,7 +45,7 @@ spells["smash"] = {
                scale = 1
             end
             if IsMinion(target) then
-               scale = scale*.6
+               scale = scale*.8
             end
             return scale
          end,
@@ -72,7 +71,6 @@ spells["roar"] = {
    speed=17.5, -- tss
    width=85, -- reticle
    knockback=650, --reticle
-   cost={10,20,30,40,50}
 } 
 spells["roarKB"] = copy(spells["roar"])
 spells["roarKB"].scale = 1.5
