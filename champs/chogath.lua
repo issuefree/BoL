@@ -1,10 +1,9 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
-print("\nTim's Cho'Gath")
+pp("\nTim's Cho'Gath")
 
 InitAAData({
-	windup = .35,
 	extraRange=10,
 	particles = {"vorpal_spikes_mis"}
 })
@@ -118,7 +117,6 @@ function Run()
 			end
 		end
    end
-
 
 	if IsOn("jungle") and Alone() then
 		if CanUse("feast") then
