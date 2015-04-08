@@ -33,15 +33,15 @@ local camps = {
 	baron = {id=12, timeout=420, num=1}
 }
 
-if GetMap() ~= 8 then
-	camps = {
-	-- Howling abyss 
-		bInner = {id=4, timeout=40, num=1},
-		rInner = {id=3, timeout=40, num=1},
-		bOuter = {id=2, timeout=40, num=1},
-		rOuter = {id=1, timeout=40, num=1},
-	}
-end
+-- if GetMap() ~= 8 then
+-- 	camps = {
+-- 	-- Howling abyss 
+-- 		bInner = {id=4, timeout=40, num=1},
+-- 		rInner = {id=3, timeout=40, num=1},
+-- 		bOuter = {id=2, timeout=40, num=1},
+-- 		rOuter = {id=1, timeout=40, num=1},
+-- 	}
+-- end
 
 for _,camp in pairs(camps) do	
 	camp.name = "monsterCamp_"..camp.id
@@ -83,7 +83,7 @@ function JungleTimer()
 		if camp.object then
 
 			for i,creep in rpairs(camp.creeps) do
-				if not creep.charName or not ListContains(creep.charName, camp.creepNames) then
+				if not creep.valid or not creep.name or not ListContains(creep.name, camp.creepNames) then
 					table.remove(camp.creeps, i)
 				end
 			end
@@ -100,7 +100,7 @@ function JungleTimer()
 				local tts = math.floor((camp.nextSpawn - time())+.5)
 				local perc = tts/camp.timeout
 				if perc > .5 then
-					color = 0x99CCCCCC
+					color = 0xCCCCCCCC
 				elseif perc > .25 then
 					color = 0xFFCCCCCC
 				elseif perc > .1 then					
@@ -108,20 +108,22 @@ function JungleTimer()
 				else
 					color = 0xFF33CC33
 				end
-				local label = tts%60
+				local label = tostring(tts%60)
 				if tts > 59 then
 					if tts%60 < 10 then
 						label = "0"..label
 					end
 					label = math.floor(tts/60)..":"..label
 				end
-				DrawTextMinimap(label, camp.object.x, camp.object.z, color)
+				minimap = GetMinimap(camp.object)
+
+				Text(label, minimap.x, minimap.y, color, 14)
 			end
 
 			if not camp.nextSpawn and #camp.creeps > 0 then
 				local campLive = false
 				for _,creep in ipairs(camp.creeps) do
-					if creep.dead == 0 then
+					if not creep.dead then
 						campLive = true
 						break
 					end
@@ -134,18 +136,17 @@ function JungleTimer()
 		end
 	end
 
-	-- DrawTextMinimap("M", mousePos.x,mousePos.z,0xFFCCEECC)
 end
 
 function onCreate(object)
 	for campName,camp in pairs(camps) do
-		if object.charName == camp.name then
-			-- pp("Adding camp "..campName.." "..object.charName)
+		if object.name == camp.name then
+			-- pp("Adding camp "..campName.." "..object.name)
 			camp.object = object
 		end
 		for _,creepName in ipairs(camp.creepNames) do
-			if find(object.charName, creepName) and camp.object and GetDistance(camp.object, object) < 1000 then
-				-- pp("Adding "..object.charName.." to "..campName)
+			if find(object.name, creepName) and camp.object and GetDistance(camp.object, object) < 1000 then
+				-- pp("Adding "..object.name.." to "..campName)
 				table.insert(camp.creeps, object)
 				camp.nextSpawn = nil
 				saveTimers()
