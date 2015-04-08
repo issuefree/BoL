@@ -35,8 +35,8 @@ spells["fling"] = {
    key="E", 
    range=125, 
    color=violet, 
-   base={80,125,170,215,260}, 
-   ap=.75,
+   base={50,65,80,95,110}, 
+   targetMaxHealth={.06,.065,.07,.075,.08},
    cost={100,110,120,130,140}
 } 
 spells["potion"] = {
