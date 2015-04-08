@@ -10,7 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Xin Zhao")
 
 InitAAData({
-   windup=.35,
    particles={"xen_ziou_intimidate"},
    resets={GetSpellData("Q").name}
 })
@@ -40,17 +39,15 @@ spells["cry"] = {
    base={26,32,38,44,50}, 
    ap=.7,
    type="H",
-   cost=40
 } 
 spells["charge"] = {
    key="E", 
    range=600, 
    color=yellow,
-   base={70,105,140,175,210}, 
+   base={70,110,150,190,230}, 
    ap=.6,
    type="M",
    radius=function() return GetWidth(me) + 112.5 end,  --TODO test
-   cost=60
 } 
 spells["sweep"] = {
    key="R", 
