@@ -1,6 +1,6 @@
 require "issuefree/basicUtils"
 
-Point = class()
+Point = Class()
 function Point:__type()
     return "Point"
 end
@@ -133,7 +133,8 @@ function ApproachAngle(attacker, target)
    if IsMe(attacker) then
       point = ProjectionA(me, GetMyDirection(), 25)
    else
-      point = Point(GetFireahead(attacker, 3, 0))
+      point = VP:GetPredictedPos(attacker, 1, 1000)
+      -- point = Point(GetFireahead(attacker, 3, 0))
    end
    local aa = RadsToDegs(math.abs( AngleBetween(attacker, target) - AngleBetween(attacker, point) ))
    if aa > 180 then
@@ -307,13 +308,18 @@ returns the width of a unit
 function GetWidth(unit)
    unit = unit or me
    local minbb = unit.minBBox
-   if not minbb.x then -- for when I pass in not a real unit
+   if not minbb or not minbb.x then -- for when I pass in not a real unit
       if unit.width then
          return unit.width
       end
       return 70
    end
-   return GetDistance(unit, minbb)
+   local width = GetDistance(unit, minbb)
+   -- BoL is returning ridiculous widths
+   if width > 500 then
+      return 100
+   end
+   return width
 end
 
 function GetUnblocked(thing, source, ...)
@@ -353,7 +359,7 @@ end
 
 function FacingMe(target)
    local d1 = GetDistance(target)
-   local p = Point(GetFireahead(target,3,0))
+   local p = Point(VP:GetPredictedPos(target,1,1000))
    local d2 = GetDistance(p)
    return d2 < d1 
 end
