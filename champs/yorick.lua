@@ -6,7 +6,6 @@ pp("\nTim's Yorick")
 SetChampStyle("bruiser")
 
 InitAAData({ 
-   windup=.30,
    resets = {GetSpellData("Q").name}
 })
 
@@ -26,7 +25,7 @@ spells["war"] = {
    type="P",
    modAA="war",
    object="yorick_spectralGhoul_attack_buf_self",
-   range=GetAARange,
+   range=175, --was GetAARange but wiki says 175
    rangeType="e2e",
    cost=40   
 }
