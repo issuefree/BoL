@@ -498,7 +498,10 @@ function log(text)
    LOG_FILE:flush()
 end
 
+DO_LOG = false
 function dlog(text)
+   if not DO_LOG then return end
+   
    if not DEBUG_LOG_FILE then
       DEBUG_LOG_FILE = io.open(BOL_PATH.."boldebug.log", "a")
    end
