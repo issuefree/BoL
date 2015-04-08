@@ -2,9 +2,6 @@ require "issuefree/basicUtils"
 require "issuefree/telemetry"
 require "issuefree/spellUtils"
 
-local ping = 50
-local latency = ping * 2 / 1000
-
 -- The most important thing is to register attack spells. Nothing works if the attack spell isn't
 -- picked up. 90% of the time the attack spell is just the default of "attack" something.
 -- There may be additional ones especially if the character has attack mod skills.
@@ -23,11 +20,12 @@ local latency = ping * 2 / 1000
 
 -- Particles used to be important but it is all timing based now. May as well throw them in...
 
-      -- Ashe         = { speed = 2000, windup = .25,
+      -- Ashe         = { speed = 2000, 
       --                  extraRange = 0,
       --                  minMoveTime = .25,
       --                  particles = {"Ashe_Base_BA_mis", "Ashe_Base_Q_mis"},
-      --                  attacks = {"attack", "frostarrow"} },
+      --                  attacks = {"attack", "frostarrow"},
+      --                  resets={GetSpellData("Q").name} },
 
 function GetAARange(target)
    if not target or IsMe(target) then
@@ -93,7 +91,8 @@ function InitAAData(data)
    data = data or {}
 
    spells["AA"].baseAttackSpeed = data.baseAttackSpeed or .625
-   spells["AA"].windup = data.windup or .4
+   spells["AA"].windupTime = data.windup or .4
+   spells["AA"].windupVal = 3
    spells["AA"].minMoveTime = data.minMoveTime or .1
    spells["AA"].particles = data.particles or {}
    spells["AA"].attacks = data.attacks or {"attack"}
@@ -108,7 +107,7 @@ function InitAAData(data)
       spells["AA"].duration = 1/spells["AA"].baseAttackSpeed
 
       -- err a bit on the side of attack faster
-      spells["AA"].duration = spells["AA"].duration*.95
+      spells["AA"].duration = spells["AA"].duration
    end
 end
 
@@ -117,15 +116,11 @@ function getAttackSpeed()
 end
 
 function getAADuration()
-   return spells["AA"].duration / getAttackSpeed()
+   return 1 / (myHero.attackSpeed * spells["AA"].baseAttackSpeed)
 end
 
 function getWindup()
-   if ModuleConfig.aaDebug then
-      return spells["AA"].windup / math.max(1, getAttackSpeed())^2
-   else
-      return spells["AA"].windup / math.max(1, getAttackSpeed()*.85)^2 -- err a bit on the side of don't clip      
-   end
+   return 1 / (myHero.attackSpeed * spells["AA"].windupVal)
 end
 
 function OrbWalk()
@@ -168,9 +163,6 @@ function AfterAttack()
    end
 end
 
-local gotObj = true
-local windups = {}
-
 function aaTick()
    -- PrintState(0, getAADuration())
    -- PrintState(1, 1/getAADuration())
@@ -210,34 +202,6 @@ function aaTick()
    end
 
    if ModuleConfig.aaDebug then
-      if not IsMelee(me) and not gotObj and time() - lastAttack > 1 then
-         pp("No object. Windup "..spells["AA"].windup.." too short. Incrementing")
-         for wu,_ in ipairs(windups) do
-            if wu <= spells["AA"].windup then
-               windups[wu] = windups[wu] - 5
-               if windups[wu] < 1 then
-                  windups[wu] = nil
-               end
-            end
-         end
-
-         spells["AA"].windup = spells["AA"].windup + .01
-         gotObj = true
-      end
-
-      -- AARate is how long to wait between attacks. 
-      --  This should be less than actual delta (try not to wait too long some wiggle room here) 
-      --  but close to it (don't stop doing other things before I should attack)
-      -- Windup is how long between I cast the attack and the actual attack.
-      --  This MUST be greater than the actual windup (don't clip attacks)
-      --  but close to it (don't wait too long to do other things)
-      
-      local aarstr = "AARate "..trunc(getAADuration()).." ("..trunc(lastAADelta)..") - "..trunc(spells["AA"].duration, 3)
-      if getAADuration() > lastAADelta then
-         aarstr = aarstr.."!!!"
-      end
-
-
       PrintState(1, aarstr) 
 
       if CanAttack() then
@@ -283,15 +247,11 @@ function CanAttack()
    if P.blind then
       return false
    end
-   if time() > getNextAttackTime() - latency then
-      -- PrintAction("CANATTACK")
-   end
-   return time() > getNextAttackTime() - latency
+   return time() > getNextAttackTime() - GetLatency()/2
 end
 
 function IsAttacking()
-   return -- not shotFired or -- TODO for now this is timing based. ignore particles
-          time() < lastAttack + getWindup()
+   return time() < lastAttack + getWindup() - GetLatency()/2
 end
 
 function JustAttacked()
@@ -366,18 +326,6 @@ function onObjAA(object)
       end
 
       if ModuleConfig.aaDebug then
-         gotObj = true
-         pp("Windup "..spells["AA"].windup.." good. Decrementing.")
-         if windups[spells["AA"].windup] then
-            windups[spells["AA"].windup] = windups[spells["AA"].windup] + 1
-         else
-            windups[spells["AA"].windup] = 1
-         end
-         for wu,count in pairs(windups) do
-            pp(wu.." "..count)
-         end
-         spells["AA"].windup = spells["AA"].windup - .01
-
          local delta = time() - lastAAState         
          pp("AAP: "..trunc(delta).." "..object.charName)
 
@@ -474,13 +422,12 @@ function onSpellAA(unit, spell)
    end
 
    if IAttack(unit, spell) then
+      spells["AA"].baseAttackSpeed = 1 / (spell.animationTime * myHero.attackSpeed)
+      spells["AA"].windupVal = 1 / (spell.windUpTime * myHero.attackSpeed)
+      spells["AA"].baseWindup = 1 / (spell.windUpTime * spells["AA"].baseAttackSpeed)
+
       if IsValid(spell.target) then
          lastAATarget = spell.target
-
-         if ModuleConfig.aaDebug then
-            gotObj = false
-         end
-
       end
 
       -- if I attack a minion and I won't kill it try to find an enemy to hit instead.
@@ -526,4 +473,4 @@ end
 AddOnCreate(onObjAA)
 AddOnSpell(onSpellAA)
 
-AddOnTick(aaTick)
+AddOnTick(aaTick, "aaTick")
