@@ -10,7 +10,7 @@ require "issuefree/modules"
 pp("\nTim's LeBlanc")
 
 InitAAData({
-   speed = 1700, windup=.2,
+   speed = 1700,
    -- extraRange=-10,
    particles = {"leBlancBasicAttack_mis"}
 })
@@ -141,17 +141,17 @@ spells["chains"] = {
 } 
 spells["mimicMalice"] = copy(spells["malice"])
 spells["mimicMalice"].base = {100,200,300}
-spells["mimicMalice"].ap = .65
+spells["mimicMalice"].ap = .6
 spells["mimicMalice"].key = "R"
 
 spells["mimicDistortion"] = copy(spells["distortion"])
 spells["mimicDistortion"].base = {150,300,450}
-spells["mimicDistortion"].ap = .975
+spells["mimicDistortion"].ap = .9
 spells["mimicDistortion"].key = "R"
 
 spells["mimicChains"] = copy(spells["chains"])
 spells["mimicChains"].base = {100,200,300}
-spells["mimicChains"].ap = .65
+spells["mimicChains"].ap = .6
 spells["mimicChains"].key = "R"
 
 mimic = "malice"
