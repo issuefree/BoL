@@ -88,7 +88,7 @@ function Run()
       local targets = GetInRange(P.fission, spells["fission"].splitDist, ENEMIES)
       for _,target in ipairs(targets) do
          local r = GetDistance(target) / GetDistance(P.fission, target)
-         local point = Point(GetFireahead(target, 2, 15*r))
+         local point = VP:GetPredictedPos(target, 2, 15*r)
          local ra = RadsToDegs(RelativeAngle(P.fission, me, point))
          if ra > 85 and ra < 95 then
             if not IsBlocked(point, "fission", P.fission, ENEMIES, MINIONS, PETS) then
