@@ -66,14 +66,14 @@ spells["singularity"] = {
    ap=.6,
    delay=2, -- testskillshot
    speed=12,
-   canCast=function() return me.SpellNameE ~= "luxlightstriketoggle" and not P.singularity end,
+   canCast=function() return GetSpellData("E").name ~= "luxlightstriketoggle" and not P.singularity end,
    noblock=true,
    radius=350-25,
    cost={70,85,100,115,130}
 }
 spells["detonate"] = {
    key="E",
-   canCast=function() return me.SpellNameE == "luxlightstriketoggle" and P.singularity end
+   canCast=function() return GetSpellData("E").name == "luxlightstriketoggle" and P.singularity end
 }
 spells["detonate"].base = spells["singularity"].base
 spells["detonate"].ap = spells["singularity"].ap
@@ -163,7 +163,7 @@ function Run()
             PrintAction("Pop for flare", enemy, .5)
             break
          end
-         local nextPos = Point(GetFireahead(enemy, 4, 0))
+         local nextPos = VP:GetPredictedPos(enemy, 1, 1000)
          if GetDistance(P.singularity, nextPos) > spell.radius then
             Cast("detonate", me, true)
             PrintAction("Pop escapees", nil, .5)

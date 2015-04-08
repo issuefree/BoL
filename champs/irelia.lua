@@ -167,7 +167,7 @@ function Action()
             return true
          end
 
-         if GetDistance(Point(GetFireahead(target, 5, 0))) > GetSpellRange("strike") then
+         if GetDistance(VP:GetPredictedPos(target, 1, 1000)) > GetSpellRange("strike") then
             Cast("strike", target)
             PrintAction("Strike to stop escape", target)
             return true
