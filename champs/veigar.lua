@@ -13,13 +13,16 @@ InitAAData({
    particles = {"permission_basicAttack_mis"}   
 })
 
+-- TODO needs complete rework for patch
 spells["strike"] = {
    key="Q", 
-   range=650, 
+   range=950, 
    color=violet, 
    base={80,125,170,215,260}, 
    ap=.6,
-   cost={60,65,70,75,80}
+   speed=20, -- wiki
+   delay=.6, -- TEST
+   width=75, -- TEST
 }
 spells["dark"] = {
    key="W", 
@@ -27,14 +30,12 @@ spells["dark"] = {
    color=red,    
    base={120,170,220,270,320}, 
    ap=1, 
-   cost={70,80,90,100,110},
    radius=250
 }
 spells["event"] = {
    key="E", 
-   range=600, 
+   range=700, 
    color=yellow, 
-   cost={80,90,100,110,120},
    radius=400
 }
 spells["burst"] = {
@@ -42,8 +43,7 @@ spells["burst"] = {
    range=650, 
    color=red,    
    base={250,375,500}, 
-   ap=1.2,
-   cost={125,175,225}
+   ap=1,
 }
 
 AddToggle("", {on=true, key=112, label=""})
@@ -84,9 +84,10 @@ function Run()
    end
 
    if IsOn("lasthit") and Alone() then
-      if KillMinion("strike", "burn", true) then
-         return true
-      end
+      --TODO for skill change
+--      if KillMinion("strike", "burn", true) then
+--         return true
+--      end
    end
 
    if HotKey() then
@@ -158,6 +159,7 @@ function Action()
    if CanUse("strike") then
       UseItem("Deathfire Grasp", GetWeakestEnemy("strike"))
    end
+   -- TODO for skill change
    if CastBest("strike") then
       return true
    end
