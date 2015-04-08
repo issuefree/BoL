@@ -2,7 +2,7 @@ require "issuefree/basicUtils"
 require "issuefree/items"
 require "issuefree/persist"
 require "issuefree/telemetry"
-require "issuefree/walls"
+-- require "issuefree/walls"
 
 --[[
 spells["alias"] = {
@@ -159,7 +159,7 @@ function GetCD(thing, hero)
 end
 
 function CastSpellTarget(slot, target)
-   me:Cast(getISpell(slot), target)
+   CastSpell(getISpell(slot), target)
 end
 
 function Cast(thing, target, force)
@@ -365,6 +365,16 @@ function GetSpellName(thing)
 	end
 
 end
+
+-- spell.name
+-- spell.level
+-- spell.mana
+-- spell.cd
+-- spell.currentCd
+-- spell.range
+-- spell.channelDuration
+-- spell.startPos -- only for spellProc
+-- spell.endPos -- only for spellProc
 
 function GetSpellData(thing, hero)
    local spell = GetSpell(thing)
