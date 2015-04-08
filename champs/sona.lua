@@ -4,7 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Sona")
 
 InitAAData({ 
-   speed = 1600, windup=.2,
+   speed = 1600,
    -- extraRange=-20,
    particles = {"Sona_Base_BA", "PowerChord_mis"}
 })
@@ -88,7 +88,7 @@ function Run()
    if P.pcBlue or P.pcGreen or P.pcViolet then
       spells["AA"].bonus = GetSpellDamage("chord")
       if P.pcBlue then
-         spells["AA"].bonus = spells["AA"].bonus * 1.5
+         spells["AA"].bonus = spells["AA"].bonus * 1.4
       end
    end
 
