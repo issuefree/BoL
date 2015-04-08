@@ -670,3 +670,12 @@ function GetInCone(source, angle, arc, ...)
       end
    )
 end
+
+
+   -- if IsWall(D3DXVECTOR3(mousePos.x, mousePos.y, mousePos.z)) then
+   --    PrintState(0, "WALL")
+   -- end
+
+   -- if IsGrass(D3DXVECTOR3(mousePos.x, mousePos.y, mousePos.z)) then
+   --    PrintState(0, "GRASS")
+   -- end
