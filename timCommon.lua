@@ -9,13 +9,15 @@ require "issuefree/persist"
 require "issuefree/prediction"
 require "issuefree/spellUtils"
 require "issuefree/toggles"
-require "issuefree/walls"
+
+require "VPrediction"
+-- require "issuefree/walls"
 
 -- require "issuefree/champWealth"
 
-
 function OnLoad()
 	require("issuefree/champs/"..string.lower(me.charName))
+   VP = VPrediction()
 end
 
 function OnUnload()
@@ -43,20 +45,20 @@ FRAME = time()
 
 CREEP_ACTIVE = false
 
-if me.SpellLevelQ == 0 and
-   me.SpellLevelW == 0 and
-   me.SpellLevelE == 0
+if GetSpellData("Q").level == 0 and
+   GetSpellData("W").level == 0 and
+   GetSpellData("E").level == 0
 then
    os.remove("lualog.txt")
-   MoveToXYZ(me.x, me.y, me.z)
+   me.MoveTo(me.x, me.z)
 end
 
 healSpell = {range=700+GetWidth(me), color=green, summoners=true}
 
-if me.SpellNameD == "SummonerHeal" then
+if GetSpellData("D").name == "SummonerHeal" then
    spells["summonerHeal"] = healSpell
    spells["summonerHeal"].key = "D"
-elseif me.SpellNameF == "SummonerHeal" then
+elseif GetSpellData("F").name == "SummonerHeal" then
    spells["summonerHeal"] = healSpell
    spells["summonerHeal"].key = "F"
 end
@@ -147,8 +149,10 @@ local function OnKey(msg, key)
       MarkTarget()
    end
 end
+
+KEY_CALLBACKS = {}
 function AddOnKey(callback)
-   -- RegisterLibraryOnWndMsg(callback)
+   table.insert(KEY_CALLBACKS, callback)
 end
 AddOnKey(OnKey)
 
@@ -198,7 +202,15 @@ local function drawCommon()
 
    for _,minion in ipairs(MINIONS) do
       if IsValid(minion) and GetDistance(minion) < 2000 then
-         local hits = math.ceil(minion.health/GetAADamage(minion))
+         local damage = GetAADamage(minion)
+
+         local MinionBarPos = GetUnitHPBarPos(minion)
+         local DrawDistance = math.floor(63 / (minion.maxHealth / damage))
+--~         for i=1,math.ceil(minion.health / damage) do
+            DrawRectangleAL(MinionBarPos.x - 32 + DrawDistance * 1, MinionBarPos.y, 1, 4, 4278190080)
+--~         end
+
+         local hits = math.ceil(minion.health/damage)
          if hits == 1 then
             TextObject(hits.." hp", minion, blueT)
             Circle(minion, 75, red, 5)
@@ -248,11 +260,11 @@ local function drawCommon()
 
                if GetDistance(point) < GetSpellRange(activeSpell)+100 then
 
-                  if chance > .75 then
+                  if chance >= 3 then
                      Circle(point, 50, green, 3)
-                  elseif chance > .5 then
+                  elseif chance >= 2 then
                      Circle(point, 50, green, 2)                  
-                  elseif chance > .25 then
+                  elseif chance >= 1 then
                      Circle(point, 50, green, 1)
                   end
                   LineBetween(target, point)
@@ -601,8 +613,8 @@ end
 
 function MoveToTarget(t)
    if CanMove() then
-      local x,y,z = GetFireahead(t, 2.5, 0)
-      MoveToXYZ(x,y,z)
+      local x,y,z = VP:GetPredictedPos(t, .5, 500)
+      me.MoveTo(x,z)
       CURSOR = Point(x,y,z)
       PrintAction("MTT", t, 1)
       return true
@@ -619,7 +631,7 @@ function MoveToCursor()
    --    local moveX = myHero.x + 300*((mousePos.x - myHero.x)/moveSqr)
    --    local moveZ = myHero.z + 300*((mousePos.z - myHero.z)/moveSqr)
    --    -- pp(GetDistance(me, {x=moveX, y=me.y, z=moveZ}))
-   --    MoveToXYZ(moveX,myHero.y,moveZ)
+   --    me.MoveTo(moveX,moveZ)
    -- else
    if GetDistance(mousePos) < 10 then
       me:HoldPosition()
@@ -734,16 +746,17 @@ function KillMinion(thing, method, force, targetOnly)
       AddWillKill(target, thing)
 
       if spell.name and spell.name == "attack" then
-         AA(target)
-         PrintAction("Kill "..targetBy.." minion")
-         return target
+         if AA(target) then
+            )
+            PrintAction("Kill "..targetBy.." minion")
+            return target
+         end
       else
          if IsSkillShot(thing) then
             -- CastFireahead(thing, target)
             CastXYZ(thing, target)
          else
             Cast(spell, target)
-            Circle(target)
          end
          -- pp("setting lkms to "..spellName)
          PrintAction(spellName.." "..targetBy.." minion")
@@ -1307,7 +1320,8 @@ function WillKill(...)
                   speed = speed*10
                end
             end
-            local impactTime = GetImpactTime(me, target, getWindup(), speed)
+            -- err on the side of slow so I don't beat things there
+            local impactTime = GetImpactTime(me, target, getWindup()*1000/4, speed)
             local incdDam = 0
             for _,incd in ipairs(INCOMING_DAMAGE) do
                if incd.time < impactTime then
@@ -1627,7 +1641,7 @@ function BlockingMove(move_dest)
    -- pp("block and move")
    if time() - lastMove > 1 then
       
-      -- MoveToXYZ(move_dest.x, 0, move_dest.z)
+      -- me.MoveTo(move_dest.x, move_dest.z)
       -- BlockOrders()
       DODGING = true
       DoIn( function()
@@ -1649,7 +1663,9 @@ TICK_DELAY = .05
 -- Common stuff that should happen every time
 
 local lastObjectName = {}
+local lastObjectCheck = time()
 local tt = time()
+
 
 function OnTick()
    FRAME = time()
@@ -1657,16 +1673,21 @@ function OnTick()
    TICK_DELAY = time()-tt
    tt = time()
 
-   for i = 1, objManager.iCount, 1 do
-      local object = objManager:GetObject(i)
-      if object and object.valid then
-         if lastObjectName[i] == object.name then
-            -- existing object
+   if time() - lastObjectCheck > .1 then   
+      for i = 1, objManager.iCount, 1 do
+         local object = objManager:GetObject(i)
+         if object and object.valid then
+            if lastObjectName[i] == object.name then
+               -- existing object
+            else
+               lastObjectName[i] = object.name
+               doCreateObj(object)
+            end
          else
-            lastObjectName[i] = object.name
-            doCreateObj(object)
+            lastObjectName[i] = nil
          end
       end
+      lastObjectCheck = time()
    end
 
 
@@ -1710,49 +1731,34 @@ function OnTick()
       end
    end
 
-   for _,spell in pairs(spells) do
-      if spell.delay and spell.speed then
-         for _,enemy in ipairs(ENEMIES) do
-            TrackSpellFireahead(spell, enemy)
-         end
-      end
+   -- for _,spell in pairs(spells) do
+   --    if spell.delay and spell.speed then
+   --       for _,enemy in ipairs(ENEMIES) do
+   --          TrackSpellFireahead(spell, enemy)
+   --       end
+   --    end
 
-      if spell.useCharges and GetSpellLevel(spell.key) > 0 then
-         if not spell.lastRecharge then
-            spell.lastRecharge = time()
-         end
+   --    if spell.useCharges and GetSpellLevel(spell.key) > 0 then
+   --       if not spell.lastRecharge then
+   --          spell.lastRecharge = time()
+   --       end
 
-         if spell.charges < spell.maxCharges then
-            -- local ttRecharge = GetLVal(spell, "rechargeTime") * (1+me.cdr)
-            local ttRecharge = GetLVal(spell, "rechargeTime") * (1+0)
-            if ttRecharge > 0 then -- no recharge time means time doesn't generate charges
-               if time() - spell.lastRecharge > ttRecharge then
-                  spell.lastRecharge = time()
-                  spell.charges = spell.charges + 1
-               end
-            end
-         else
-            spell.lastRecharge = time()
-         end
-      end
-   end
+   --       if spell.charges < spell.maxCharges then
+   --          -- local ttRecharge = GetLVal(spell, "rechargeTime") * (1+me.cdr)
+   --          local ttRecharge = GetLVal(spell, "rechargeTime") * (1+0)
+   --          if ttRecharge > 0 then -- no recharge time means time doesn't generate charges
+   --             if time() - spell.lastRecharge > ttRecharge then
+   --                spell.lastRecharge = time()
+   --                spell.charges = spell.charges + 1
+   --             end
+   --          end
+   --       else
+   --          spell.lastRecharge = time()
+   --       end
+   --    end
+   -- end
 
    TrackMyPosition()
-
-   if P.cursorM and GetDistance(P.cursorM, PData.cursorM.lastPos) > 0 then
-      CURSOR = Point(P.cursorM)
-      PData.cursorM.lastPos = Point(P.cursorM)
-      -- if IsAttacking() and VeryAlone() then
-      --    pp("interrupt attack")
-      --    ResetAttack()
-      -- end
-   elseif P.cursorA and GetDistance(P.cursorA, PData.cursorA.lastPos) > 0 then
-      CURSOR = nil --P.cursorA
-      PData.cursorA.lastPos = Point(P.cursorA)
-      -- if IsAttacking() then
-      --    ResetAttack()
-      -- end
-   end
 
    if GetDistance(me, CURSOR) < 50 and CURSOR then
       ClearCursor()
@@ -1792,9 +1798,9 @@ function OnTick()
 
    CheckTrinket()
 
-   for _,callback in ipairs(TICK_CALLBACKS) do
-      -- pp(callback)
-   	callback()
+   for _,callback in pairs(TICK_CALLBACKS) do
+      -- pp(callback[1])
+   	callback[2]()
    end
 end
 
@@ -1856,8 +1862,10 @@ function StartTickActions()
 
    if HotKey() then
       if GetDistance(mousePos) < 3000 then
-         CURSOR = Point(mousePos)
+         -- CURSOR = Point(mousePos)
       end
+   else
+      CURSOR = nil
    end
 
    return false
@@ -1885,7 +1893,7 @@ function AutoMove()
          end
       end
       if needMove and CURSOR then      
-         MoveToXYZ(Point(CURSOR):unpack())
+         me:MoveTo(Point(CURSOR).x, Point(CURSOR).z)
          -- PrintAction("move")
          needMove = false
       end
@@ -2032,7 +2040,7 @@ function ModAAFarm(thing)
          then
             AddWillKill(minion, thing)
             Cast(thing, me)
-            AttackTarget(minion)
+            me:Attack(minion)
             PrintAction(thing.." lasthit", minion)
             return true
          end
@@ -2152,7 +2160,7 @@ function UseItem(itemName, target, force)
       itemName == "Blade of the Ruined King"
    then
       if not target or not IsInRange(item, target) then
-         target = GetWeakEnemy("MAGIC", item.range)
+         target = GetWeakest(item)
       end
       if target then
          CastSpellTarget(slot, target)
@@ -2207,8 +2215,7 @@ function UseItem(itemName, target, force)
       end
 
    elseif itemName == "Guardian's Horn" then
-      target = GetWeakEnemy("MAGIC", 600)
-      if target then
+      if #GetInRange(me, 600, ENEMIES) > 0 then
          CastSpellTarget(slot, me)
       end
 
@@ -2423,12 +2430,13 @@ function ScoreCreeps(creeps)
    return points
 end
 
-
 function OnWndMsg(msg, key)
-
+   for _,callback in ipairs(KEY_CALLBACKS) do
+      callback(msg, key)
+   end
 end
 
-Combo = class()
+Combo = Class()
 function Combo:__init(name, timeout, onEnd)
    self.state = nil   
    self.states = {}
