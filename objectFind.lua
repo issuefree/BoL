@@ -6,7 +6,7 @@ local spells = {}
 
 local range = 250
 
-local ignoredObjects = {"Minion", "DrawFX", "Mfx_", "mm_ba", "cm_ba"}
+local ignoredObjects = {"DrawFX", "Mfx_", "mm_ba", "cm_ba"}
 
 local testShot
 local testShotDelays = {}
@@ -63,7 +63,7 @@ function debugTick()
          GetDistance(object, GetMousePos()) < range 
       then
          if not ListContains(object.charName, ignoredObjects) then
-            table.insert(objects, object.name)
+            table.insert(objects, object.name.."     ("..object.charName..")")
          end
       end
    end
