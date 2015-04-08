@@ -17,7 +17,7 @@ function GetVarArg(...)
     end
 end
 
-function class()
+function Class()
     local cls = {}
     cls.__index = cls
     return setmetatable(cls, {__call = function (c, ...)
@@ -236,12 +236,12 @@ SPELL_CALLBACKS = {}
 TICK_CALLBACKS = {}
 DRAW_CALLBACKS = {}
 
-function AddOnDraw(callback)
+function AddOnDraw(callback)   
    table.insert(DRAW_CALLBACKS, callback)
 end
 
 function AddOnTick(callback)
-   table.insert(TICK_CALLBACKS, callback)
+   table.insert(TICK_CALLBACKS, {debug.getinfo(callback).source, callback})
 end
 
 function AddOnCreate(callback)
@@ -268,6 +268,7 @@ function ListContains(item, list, exact)
    if type(item) ~= "string" then
       exact = true
    end
+
    for _,test in pairs(list) do
       if exact then
          if item == test then return true end
@@ -326,7 +327,7 @@ function CalculateDamage(target, dam)
    return dam:toNum()
 end
 
-Damage = class()
+Damage = Class()
 function Damage:__init(p, m, t)
    self.isDamage = true
    if type(p) == "table" and p.isDamage then 
@@ -468,7 +469,11 @@ function LoadConfig(name)
          return config
       end 
    )
-   if status then return config end
+   if status then 
+      return config 
+   else
+      return {}
+   end
 end
 
 function SaveConfig(name, config)
