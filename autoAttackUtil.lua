@@ -247,11 +247,11 @@ function CanAttack()
    if P.blind then
       return false
    end
-   return time() > getNextAttackTime() - GetLatency()/2
+   return time() > getNextAttackTime() - GetLatency()/2000
 end
 
 function IsAttacking()
-   return time() < lastAttack + getWindup() - GetLatency()/2
+   return time() < lastAttack + getWindup() - GetLatency()/2000
 end
 
 function JustAttacked()
@@ -336,14 +336,14 @@ function onObjAA(object)
       if object and object.x and object.charName and
          GetDistance(object, me) < 250 
       then
-         if not ListContains(object.charName, ignoredObjects) and
-            not ListContains(object.charName, aaObjects) and
-            not ListContains(object.charName, spells["AA"].particles)
+         if not ListContains(object.name, ignoredObjects) and
+            not ListContains(object.name, aaObjects) and
+            not ListContains(object.name, spells["AA"].particles)
          then         
             if time() - lastAttack < .5 then
-               table.insert(aaObjects, object.charName)
+               table.insert(aaObjects, object.name)
                table.insert(aaObjectTime, time() - lastAttack)
-               pp(object.charName)
+               pp(object.name)
             end
          end
       end
