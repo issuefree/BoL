@@ -10,7 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Trundle")
 
 InitAAData({ 
-   windup=.25,
    -- particles = {"Trundle_Attack"},
    resets={GetSpellData("Q").name}
 })
@@ -27,7 +26,7 @@ AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["tribute"] = {
-   range=1000,
+   range=1400,
    color=green
 }
 spells["chomp"] = {
