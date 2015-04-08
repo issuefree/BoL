@@ -23,7 +23,7 @@ for i=1, objManager:GetMaxHeroes(), 1 do
 end
 
 if load then
-    function OnTick()
+    function tick()
         OnCreateObj()
         OnDraw()
     end
@@ -75,7 +75,7 @@ if load then
     ModuleConfig:addParam("clones", "Clone Revealer", SCRIPT_PARAM_ONOFF, true)
 	 ModuleConfig:permaShow("clones")
     
-    AddOnTick(OnTick)
+    AddOnTick(tick)
     printtext(" >> IGER's CloneRevealer "..version.." loaded!\n")
     
 end

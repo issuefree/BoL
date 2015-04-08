@@ -13,7 +13,7 @@ InitAAData({
    windup=.3,
    particles={"leona_basicattack_hit"},
    -- shield of daybreak attack handled by default
-   resets={me.SpellNameQ}
+   resets={GetSpellData("Q").name}
 })
 
 AddToggle("", {on=true, key=112, label=""})

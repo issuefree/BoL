@@ -231,7 +231,7 @@ function FollowUp()
             if #GetInRange(me, "AA", ENEMIES) <= 0 or
                #GetInRange(point, "AA", ENEMIES) > 0
             then
-               MoveToXYZ(point:unpack())
+               me.MoveTo(point.x, point.z)
                return true
             end
          end

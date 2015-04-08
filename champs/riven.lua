@@ -12,7 +12,7 @@ pp("\nTim's Riven")
 InitAAData({
    windup=.25,
    extraRange=20,
-   resets = {me.SpellNameQ}
+   resets = {GetSpellData("Q").name}
 })
 
 SetChampStyle("bruiser")
@@ -120,6 +120,7 @@ end
 function Run()
    spells["wings"].range = spells["wings"].rangeB + me.movespeed/10
 
+-- BoL FIGURE THIS OUT
    if me.SpellTimeQ < -1 then
       wingsStage = 1
    end

@@ -211,7 +211,7 @@ function Action()
       end
    end
 
-   if CanUse("tibbers") and me.SpellNameR == "InfernalGuardian" then
+   if CanUse("tibbers") and GetSpellData("R").name == "InfernalGuardian" then
       local hits, kills, score = GetBestArea(me, "tibbers", .1, 1, ENEMIES)
 
       if #kills >= 1 then

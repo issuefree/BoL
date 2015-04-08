@@ -51,10 +51,10 @@ function debugTick()
    end
    Circle(GetMousePos(), range, blue) 
 
-   -- PrintState(-5, me.SpellNameQ.."  "..me.SpellTimeQ)
-   -- PrintState(-4, me.SpellNameW.."  "..me.SpellTimeW)
-   -- PrintState(-3, me.SpellNameE.."  "..me.SpellTimeE)
-   -- PrintState(-2, me.SpellNameR.."  "..me.SpellTimeR)
+   -- PrintState(-5, GetSpellData("Q").name.."  "..me.SpellTimeQ)
+   -- PrintState(-4, GetSpellData("W").name.."  "..me.SpellTimeW)
+   -- PrintState(-3, GetSpellData("E").name.."  "..me.SpellTimeE)
+   -- PrintState(-2, GetSpellData("R").name.."  "..me.SpellTimeR)
 
    objects = {}
    for i = 1, objManager.iCount, 1 do

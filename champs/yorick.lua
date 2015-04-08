@@ -7,7 +7,7 @@ SetChampStyle("bruiser")
 
 InitAAData({ 
    windup=.30,
-   resets = {me.SpellNameQ}
+   resets = {GetSpellData("Q").name}
 })
 
 AddToggle("tear", {on=true, key=112, label="Charge Tear"})

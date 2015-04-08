@@ -140,26 +140,26 @@ local watched
 local watchedTime = 0
 
 function Run()
-   if me.SpellNameQ == "BlindMonkQOne" then      
-      spells["sonic"] = altSpells[me.SpellNameQ]
+   if GetSpellData("Q").name == "BlindMonkQOne" then      
+      spells["sonic"] = altSpells[GetSpellData("Q").name]
       spells["strike"] = nil
    else
       spells["sonic"] = nil
-      spells["strike"] = altSpells[me.SpellNameQ]
+      spells["strike"] = altSpells[GetSpellData("Q").name]
    end
-   if me.SpellNameW == "BlindMonkWOne" then      
-      spells["safeguard"] = altSpells[me.SpellNameW]
+   if GetSpellData("W").name == "BlindMonkWOne" then      
+      spells["safeguard"] = altSpells[GetSpellData("W").name]
       spells["will"] = nil
    else
       spells["safeguard"] = nil
-      spells["will"] = altSpells[me.SpellNameW]
+      spells["will"] = altSpells[GetSpellData("W").name]
    end
-   if me.SpellNameE == "BlindMonkEOne" then
-      spells["tempest"] = altSpells[me.SpellNameE]
+   if GetSpellData("E").name == "BlindMonkEOne" then
+      spells["tempest"] = altSpells[GetSpellData("E").name]
       spells["cripple"] = nil
    else
       spells["tempest"] = nil
-      spells["cripple"] = altSpells[me.SpellNameE]
+      spells["cripple"] = altSpells[GetSpellData("E").name]
    end
 
    watched = GetWithBuff("watched", ENEMIES)[1]

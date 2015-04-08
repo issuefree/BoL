@@ -309,7 +309,7 @@ function Farm()
             end
          end
          if GetDistance(bestKillTargets[1]) < GetSpellRange("blades") then
-            if GetWeakEnemy("MAGIC", 1500) and UnderTower() then
+            if #GetInRange(me, 1500, ENEMIES) > 0 and UnderTower() then
                -- do nothing if there's a hero nearby and i'm under a tower
             elseif bestKills >= 1 then
                Cast("blades", bestKillTargets[1])

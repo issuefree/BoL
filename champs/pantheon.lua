@@ -128,7 +128,7 @@ function Action()
 
    if CanUse("strike") then
       -- I want to hit them a couple times so don't go for things right on the edge
-      local target = GetWeakEnemy("PHYS", 400)
+      local target = GetWeakestEnemy("strike", -200)
       if target then
          Cast("strike", target)
          PrintAction("Strike", target)

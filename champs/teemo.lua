@@ -4,11 +4,11 @@ require "issuefree/modules"
 print("\nTim's Teemo")
 
 InitAAData({ 
-	speed = 1300, windup=.3,
+	speed = 1300, 
 	minMoveTime = 0,
-	-- extraRange=-20,
+	-- extraRange = -20,
 	particles = {"TeemoBasicAttack_mis", "Toxicshot_mis"},
-	resets={me.SpellNameQ} -- wiki says so
+	resets={GetSpellData("Q").name} -- wiki says so
 })
 
 AddToggle("shroom", {on=true, key=112, label="Auto Shroom", auxLabel="{0} ~ {1}", args={"shroom", function() return spells["shroom"].charges end}})
@@ -52,7 +52,6 @@ local poisons = {}
 local shrooms = {}
 
 function Run()
-	PrintState(8, CanUseSpell("R"))
 	Clean(poisons, "charName", "Global_poison")
 	Clean(shrooms, "charName", "Noxious Trap")
 
@@ -78,7 +77,7 @@ function Action()
       	PrintAction("Blind ADC", EADC)
       	return true
    	else
-         local target = GetWeakEnemy("MAGIC", spell.range)
+         local target = GetWeakestEnemy(spell)
          if target then
             Cast("blind", target)
             PrintAction("Blind", target)

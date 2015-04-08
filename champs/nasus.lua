@@ -16,9 +16,10 @@ function setStrikes(val)
 end
 
 InitAAData({
+   baseAttackSpeed = 0.638,
    windup=.3,
    particles = {"nassus_siphonStrike_tar"},
-   resets = {me.SpellNameQ}
+   resets = {GetSpellData("Q").name}
 })
 
 AddToggle("", {on=true, key=112, label=""})
@@ -93,7 +94,7 @@ function Run()
          for _,target in ipairs(targets) do 
             if WillKill("strike", target) then
                Cast("strike", me)
-               AttackTarget(target) -- not using AA as I want to interupt auto attacks
+               me:Attack(target) -- not using AA as I want to interupt auto attacks
                needMove = true
                PrintAction("strike lasthit")
                return true
@@ -127,7 +128,8 @@ function Action()
          return true
       end
 
-      local target = GetWeakEnemy("PHYS", spells["AA"].range*2)
+      
+      local target = GetWeakest("AA", GetInRange(me, GetAARange()*2, ENEMIES))
       if target then
          CastFireahead("fire", target)
          PrintAction("Fire", target)

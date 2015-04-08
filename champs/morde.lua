@@ -10,7 +10,7 @@ pp("\nTim's Morde")
 
 InitAAData({
    windup=.3,
-   resets={me.SpellNameQ}
+   resets={GetSpellData("Q").name}
 })
 
 AddToggle("", {on=true, key=112, label=""})
@@ -101,7 +101,7 @@ function Run()
          local kills = SortByDistance(GetKills("mace", GetInAARange(me, MINIONS)))
          if kills[1] then
             Cast("mace", me)
-            AttackTarget(kills[1])
+            me:Attack(kills[1])
             PrintAction("Mace on for LH")
             return true
          end
@@ -189,7 +189,7 @@ function FollowUp()
          local target = SortByDistance(GetInRange(me, 200, MINIONS))[1]
          if #GetInRange(target, spells["mace"].radius, MINIONS) > 2 then
             Cast("mace", me)
-            AttackTarget(target)
+            me:Attack(target)
             PrintAction("Mace for clear")
             return true
          end

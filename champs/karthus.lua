@@ -46,6 +46,7 @@ spells["defile"] = {
 }
 spells["ult"] = {
    key="R", 
+   range=90000,
    base={250,400,550}, 
    ap=.6,
    cost={150,175,200},
@@ -55,7 +56,7 @@ spells["ult"] = {
 }
 
 function Run()
-   local target = GetWeakEnemy("MAGIC", 90000) 
+   local target = GetWeakestEnemy("ult") 
    if target and CanUse("ult") and WillKill("ult", target) then
       LineBetween(GetMousePos(), target, 3)
       -- PlaySound("Beep")
@@ -130,7 +131,7 @@ end
 
 function Action()
    if CanUse("defile") and not P.defile then
-      local target = GetWeakEnemy("MAGIC", spells["defile"].range-50)   
+      local target = GetWeakestEnemy("defile", -50)   
       if target then
          CastBuff("defile")
       end

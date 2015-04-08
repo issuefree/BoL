@@ -81,7 +81,7 @@ spells["AA"].damOnTarget =
    end
 
 function isSpider()
-   if me.SpellNameQ == "EliseHumanQ" then
+   if GetSpellData("Q").name == "EliseHumanQ" then
       return false
    end
    return true

@@ -6,7 +6,7 @@ pp("\nTim's Shyvana")
 -- TODO needs love, especially jungle love
 
 InitAAData({
-   resets = {me.SpellNameQ}
+   resets = {GetSpellData("Q").name}
 })
 
 AddToggle("", {on=true, key=112, label="- - -"})
@@ -97,7 +97,7 @@ function Run()
          if target and WillKill("bite", target) and CanAct() and JustAttacked() then
             Cast("bite", me)
             PrintAction("Bite lasthit")
-            AttackTarget(target)
+            me:Attack(target)
             return true
          end
       end
@@ -155,7 +155,7 @@ function FollowUp()
       then
          Cast("bite", me)
          PrintAction("Bite lasthit")
-         AttackTarget(target)
+         me:Attack(target)
          return true
       end
    end

@@ -85,7 +85,7 @@ function Action()
       me.mana > GetSpellCost("pulverize") + GetSpellCost("headbutt")
    then
       -- I want the nearmouse
-      local target = GetWeakEnemy("MAGIC", spells["headbutt"].range, "NEARMOUSE")
+      local target = GetWeakestEnemy("headbutt")
       if target then
          UseItem("Deathfire Grasp", target)
          Cast("headbutt", target)

@@ -158,10 +158,10 @@ mimic = "malice"
 harrassState = 0
 
 function canDistortion()
-   return CanUse("distortion") and me.SpellNameW ~= "leblancslidereturn"
+   return CanUse("distortion") and GetSpellData("W").name ~= "leblancslidereturn"
 end
 function canDistortionM()
-   return CanUse("mimic") and mimic == "distortion" and me.SpellNameR ~= "leblancslidereturnm"
+   return CanUse("mimic") and mimic == "distortion" and GetSpellData("R").name ~= "leblancslidereturnm"
 end
 
 function getDistortionPoint(target)
@@ -342,15 +342,15 @@ doore:addState("malice",
 )
 
 function Run()
-   if me.SpellNameR == "LeblancChaosOrbM" then
+   if GetSpellData("R").name == "LeblancChaosOrbM" then
       spells["mimic"] = spells["mimicMalice"]
       mimic = "malice"
    end
-   if me.SpellNameR == "LeblancSlideM" then
+   if GetSpellData("R").name == "LeblancSlideM" then
       spells["mimic"] = spells["mimicDistortion"]
       mimic = "distortion"
    end   
-   if me.SpellNameR == "LeblancSoulShackleM" then
+   if GetSpellData("R").name == "LeblancSoulShackleM" then
       spells["mimic"] = spells["mimicChains"]
       mimic = "chains"
    end
@@ -549,7 +549,7 @@ end
 function FollowUp()
    if IsOn("harrass") then
 
-      if canDistortion() and me.SpellLevelQ == 0 then
+      if canDistortion() and GetSpellData("Q").level == 0 then
          local target = GetWeakest("distortion", GetInRange(me, GetSpellRange("distortion")+spells["distortion"].radius-50, ENEMIES))
          if target then
             lvl1harrass.target = target

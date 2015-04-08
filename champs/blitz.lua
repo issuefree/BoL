@@ -5,7 +5,7 @@ pp("\nTim's Blitz")
 
 InitAAData({
    windup=.4,
-   resets={me.SpellNameE}
+   resets={GetSpellData("E").name}
 })
 
 AddToggle("pull", {on=false, key=112, label="Pull"})

@@ -7,7 +7,7 @@ SetChampStyle("caster")
 
 InitAAData({
 	windup=.2,
-	resets = {me.SpellNameW}
+	resets = {GetSpellData("W").name}
 })
 
 AddToggle("execute", {on=false, key=112, label="Execute", auxLabel="", args={}})

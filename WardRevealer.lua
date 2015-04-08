@@ -64,7 +64,7 @@ local timerColor = 0xFFFFFFFF
 local wards = {}
 local showVisionRange = false
 
-function OnTick()
+function Tick()
 	if IsKeyDown(showVisionRangeKey) then 
 		showVisionRange = true
 	else 
@@ -198,4 +198,4 @@ end
 AddOnCreate(onCreate)
 AddOnSpell(onSpell)
 
-AddOnTick(OnTick)
+AddOnTick(Tick)

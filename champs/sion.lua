@@ -140,7 +140,7 @@ function Run()
          end
 
          if CanUse("furnace") then
-            if me.SpellNameW == "sionwdetonate" then
+            if GetSpellData("W").name == "sionwdetonate" then
                local kills = GetKills("furnace", GetInRange(me, "furnace", MINIONS))
                if #kills >= 2 then
                   Cast("furnace", me)

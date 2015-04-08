@@ -18,7 +18,7 @@ pp("\nTim's Vayne")
 InitAAData({
    speed = 2000, windup=.2,
    -- extraRange=-10,
-   resets={me.SpellNameQ},
+   resets={GetSpellData("Q").name},
    particles = {"vayne_basicAttack_mis.troy", "vayne_critAttack_mis.troy", "vayne_ult_mis.troy"}
 })
 AddToggle("kb", {on=true, key=112, label="Auto KB"})
@@ -97,7 +97,7 @@ function Tick()
          local kb = GetKnockback("condemn", me, enemy)
          if WillCollide(enemy, kb) then
             Cast("condemn", enemy)
-            -- AttackTarget(enemy)
+            -- me:Attack(enemy)
             PrintAction("Condemn for stun", enemy)
             return true
          end

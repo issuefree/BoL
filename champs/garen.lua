@@ -179,7 +179,7 @@ function FollowUp()
 
          -- if I'm spinning then move close to the spin spot.
          if isSpinning() and spinT then
-            MoveToXYZ(spinT:unpack())
+            me.MoveTo(spinT.x, spinT.z)
             return true
          end
       end
@@ -191,7 +191,7 @@ end
 
 function getJusticeDam(target)
    if not target then return 0 end
-   local sLvl = me.SpellLevelR
+   local sLvl = GetSpellData("R").level
    if sLvl < 1 then return 0 end
 
    local dam = GetSpellDamage("justice")
@@ -201,7 +201,7 @@ function getJusticeDam(target)
 end
 
 function isSpinning()
-   return me.SpellNameE == "garenecancel"
+   return GetSpellData("E").name == "garenecancel"
 end
 
 local function onObject(object)

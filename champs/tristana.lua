@@ -381,7 +381,7 @@ function Action()
    end
 
    if CanUse("shot") then
-      if me.SpellLevelE >= me.SpellLevelQ then
+      if GetSpellData("E").level >= GetSpellData("Q").level then
          if CastBest("shot") then
             return true
          end

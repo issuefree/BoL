@@ -113,7 +113,7 @@ spells["cougar"] = {
 local isCougar = false
 
 function Run()
-   if me.SpellNameQ == "Takedown" then
+   if GetSpellData("Q").name == "Takedown" then
       isCougar = true
    else
       isCougar = false
@@ -123,7 +123,7 @@ function Run()
       InitAAData({ -- cougar
          windup=.2,
          extraRange=-10,
-         resets = {me.SpellNameQ},   
+         resets = {GetSpellData("Q").name},   
       })
       spells["jav"].key = "--"
       spells["trap"].key = "--"
@@ -203,7 +203,7 @@ function Action()
       end      
       
       if IsOn("pounce") then
-         if CanUse("cougar") and me.SpellLevelW > 0 then
+         if CanUse("cougar") and GetSpellData("W").level > 0 then
             local target = GetWeakest("pounce", GetInRange(me, "pounceProwl", GetWithBuff("prowl", ENEMIES)))
             if target then
                Cast("cougar", me)
@@ -236,7 +236,7 @@ function Action()
          local target = SortByHealth(GetKills("takedown", GetInRange(me, "takedown", ENEMIES)), "takedown")[1]
          if target then
             Cast("takedown", target)
-            AttackTarget(target)
+            me:Attack(target)
             PrintAction("Takedown for execute", target)
             return true
          end
@@ -278,7 +278,7 @@ function Action()
          local target = GetMarkedTarget() or GetWeakestEnemy("takedown")  -- GetWeakestEnemy should take into account prowl
          if target then
             Cast("takedown", target)
-            AttackTarget(target)
+            me:Attack(target)
             PrintAction("Takedown", target)
             return true
          end

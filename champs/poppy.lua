@@ -6,7 +6,7 @@ pp("\nTim's Poppy")
 InitAAData({ 
    windup=.3,
    particles = {"Poppy_DevastatingBlow_tar"},
-   resets = {me.SpellNameQ},
+   resets = {GetSpellData("Q").name},
 })
 
 

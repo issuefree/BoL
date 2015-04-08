@@ -123,7 +123,7 @@ function Action()
 		if target and WillKill("alpha", target) then
 			Cast("alpha", target)
 			PrintAction("Alpha (primary)", target)
-			AttackTarget(target) -- just in case
+			me:Attack(target) -- just in case
 			return true
 		end
 

@@ -98,7 +98,7 @@ function Run()
 end
 
 function Action()
-   local target = GetWeakEnemy('MAGIC', GetSpellRange("event")+250)
+   local target = GetWeakestEnemy("event", 250)
    if target then
       if CanUse("event") then
          if FacingMe(target) then
