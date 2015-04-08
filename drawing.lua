@@ -7,6 +7,7 @@ red    = 0xFFFF0000
 blue   = 0xFF0000FF
 cyan   = 0xFF00FFFF
 violet = 0xFFFF00FF
+darkViolet = 0x00220022
 
 -- text colors
 yellowT = 0xFFFFFF00
@@ -14,7 +15,7 @@ greenT  = 0xFF00FF00
 redT    = 0xFFFF0000
 blueT   = 0xFF00FFFF
 
-function LineBetween(object1, object2, thickness)
+function LineBetween(object1, object2, thickness)	
    if not thickness then
       thickness = 1
    end
@@ -39,9 +40,10 @@ function TextObject(text, object, color)
 	table.insert(DRAWS, {DrawText3D, {tostring(text), object.x, object.y, object.z, 14, color, true}})
 end
 
-function Circle(target, radius, color, thickness)
-	if not target then return end
-	if target.x == 0 then return end
+function Circle(target, radius, color, thickness)	
+	if not target or target.x == 0 then 
+		return 
+	end
 
 	thickness = thickness or 1
 	color = color or yellow
@@ -71,4 +73,12 @@ function DoDraws()
 		DRAWS[1][1](table.unpack(DRAWS[1][2]))
 		table.remove(DRAWS, 1)
 	end
+end
+
+-- from sxorbwalk
+function DrawRectangleAL(x, y, w, h, color)
+   local Points = {}
+   Points[1] = D3DXVECTOR2(math.floor(x), math.floor(y))
+   Points[2] = D3DXVECTOR2(math.floor(x + w), math.floor(y))
+   table.insert(DRAWS, {DrawLines2, {Points, math.floor(h), color}})
 end
