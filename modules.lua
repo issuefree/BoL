@@ -4,9 +4,9 @@ require "issuefree/spellRanges"
 ModuleConfig:addParam("ranges", "Draw Spell Ranges", SCRIPT_PARAM_ONOFF, true)
 ModuleConfig:permaShow("ranges")
 
--- require "issuefree/smite"
--- ModuleConfig:addParam("smite", "Auto Smite", SCRIPT_PARAM_ONOFF, true)
--- ModuleConfig:permaShow("smite")
+require "issuefree/smite"
+ModuleConfig:addParam("smite", "Auto Smite", SCRIPT_PARAM_ONOFF, true)
+ModuleConfig:permaShow("smite")
 
 -- require "issuefree/WardRevealer"
 
@@ -17,11 +17,11 @@ ModuleConfig:permaShow("ranges")
 -- ModuleConfig:addParam("cleanse", "Auto Cleanse", SCRIPT_PARAM_ONOFF, true)
 -- ModuleConfig:permaShow("cleanse")
 
--- require "issuefree/ignite"
--- if spells["ignite"] then
---    ModuleConfig:addParam("ignite", "Auto Ignite", SCRIPT_PARAM_ONOFF, true)
---    ModuleConfig:permaShow("ignite")
--- end
+require "issuefree/ignite"
+if spells["ignite"] then
+   ModuleConfig:addParam("ignite", "Auto Ignite", SCRIPT_PARAM_ONOFF, true)
+   ModuleConfig:permaShow("ignite")
+end
 
 -- require "issuefree/antiSkillShot"
 -- ModuleConfig:addParam("ass", "AntiSkillShot", SCRIPT_PARAM_ONOFF, false)
@@ -42,7 +42,7 @@ ModuleConfig:permaShow("autolane")
 ModuleConfig:addParam("aaDebug", "Debug AA", SCRIPT_PARAM_ONOFF, false)
 ModuleConfig:permaShow("aaDebug")
 
--- require "issuefree/JungleTimer"
+require "issuefree/JungleTimer"
 
 require "issuefree/support"
 
