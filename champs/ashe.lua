@@ -6,7 +6,7 @@ pp("\nTim's Ashe")
 SetChampStyle("marksman")
 
 InitAAData({
-   speed = 2000, windup = .3, -- can attack faster but seems to mess up move
+   speed = 2000,
    minMoveTime = .25, -- ashe can't get move commands too early for some reason
    particles = {"Ashe_Base_BA_mis", "Ashe_Base_Q_mis"},
    attacks = {"attack", "frostarrow"}

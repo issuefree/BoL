@@ -4,7 +4,6 @@ require "issuefree/modules"
 pp("\nTim's Blitz")
 
 InitAAData({
-   windup=.4,
    resets={GetSpellData("E").name}
 })
 

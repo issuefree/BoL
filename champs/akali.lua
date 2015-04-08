@@ -11,7 +11,6 @@ pp(" - Slash for last hit >= 2")
 SetChampStyle("caster")
 
 InitAAData({ 
-   windup=.25
 })
 
 AddToggle("ultSpam", {on=true, key=112, label="Ult Spam"})
@@ -51,11 +50,10 @@ spells["slash"] = {
   ad=.6,
   type="P",
   cost={60,55,50,45,40},
-  damOnTarget=getDetonateDam
 }
 spells["dance"] = {
   key="R", 
-  range=800, 
+  range=700, 
   color=yellow, 
   base={100,175,250}, 
   ap=.5

@@ -14,7 +14,7 @@ spells["cleaver"] = {
    color=darkViolet, 
    base={80,130,180,230,280},
    type="M",
-   width=80, -- reticle
+   width=60, -- patch notes
    delay=2.3,  -- tss
    speed=20,
    showFireahead=true   
@@ -47,9 +47,6 @@ function Run()
    if StartTickActions() then
       return true
    end
-
-
-
 
    if CastAtCC("cleaver") then
       return true

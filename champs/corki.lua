@@ -4,7 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Corki")
 
 InitAAData({
-   speed = 2000, windup=.1, -- !
+   speed = 2000,
    particles = {"corki_basicAttack_mis", "Corki_crit_mis"}
 })
 
@@ -41,7 +41,7 @@ spells["valk"] = {
    delay=2,
    speed=12,
    width=200,
-   cost=50,
+   cost=100,
    noblock=true
 }
 spells["gun"] = {

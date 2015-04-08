@@ -36,7 +36,7 @@ spells["strike"] = {
    key="E", 
    range=425, 
    color=red, 
-   base={80,130,180,230,280}, 
+   base={80,120,160,200,240}, 
    ap=.5,
    cost={50,55,60,65,70}
 }

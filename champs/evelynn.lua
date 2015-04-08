@@ -10,7 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Evelynn")
 
 InitAAData({ 
-   windup=.3,
    particles = {"EvelynnBasicAttack_tar"}
 })
 AddToggle("stealth", {on=false, key=112, label="Stealth Mode"})
@@ -32,7 +31,7 @@ spells["spike"] = {
    key="Q", 
    range=500, 
    color=violet, 
-   base={30,45,60,75,90}, 
+   base={40,55,70,85,100}, 
    ap={.35,.4,.45,.5,.55},
    adBonus={.5,.55,.6,.65,.7},
    width=80,
@@ -48,9 +47,11 @@ spells["ravage"] = {
    range=225+GetWidth(me),
    color=yellow, 
    base={70,110,150,190,230}, 
+   type="P",
    ap=1,
    adBonus=1,
-   cost={50,55,60,65,70}
+   cost={50,55,60,65,70},
+   onHit=true,
 } 
 spells["embrace"] = {
    key="R",

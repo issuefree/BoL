@@ -10,7 +10,7 @@ require "issuefree/modules"
 pp("\nTim's Cassiopeia")
 
 InitAAData({ 
-   speed = 1300, windup=.25,
+   speed = 1300,
    -- extraRange=-10,
    particles = {"CassBasicAttack"} 
 })

@@ -4,7 +4,6 @@ require "issuefree/modules"
 pp("\nTim's Elise")
 
 InitAAData({
-   windup=.25,
    particles = {"Elise_spider_basicattack", "Elise_human_BasicAttack_mis"}
 })
 
@@ -23,7 +22,7 @@ spells["toxin"] = {
    color=green,
    base={40,75,110,145,180}, 
    targetHealth=.08,
-   maxOnMobs={50,75,100,125,150},
+   maxOnMobs={75,100,125,150,175},
    cost={80,85,90,95,100}
 } 
 spells["bite"] = {
@@ -32,7 +31,7 @@ spells["bite"] = {
    color=violet,
    base={60,100,140,180,220}, 
    targetMissingHealth=.08,
-   maxOnMobs={50,75,100,125,150}
+   maxOnMobs={75,100,125,150,175}
 } 
 
 spells["spiderling"] = {
@@ -55,7 +54,7 @@ spells["cocoon"] = {
    range=1075, -- patch notes
    color=yellow, 
    delay=2,
-   speed=14,
+   speed=16, -- patch notes
    width=55,  -- patch notes
    cost=50,
    showFireahead=true

@@ -9,7 +9,6 @@ pp(" - If someone targets me and I'm < 75% activate courage")
 pp(" - If strike is on cooldown and I have >= 2 enemies in range, activate spin")
 
 InitAAData({ 
-   windup = .35,
    particles = {"Garen_Base_AA_Tar", "Garen_Base_Q_Land"},
    resets = {"GarenQ"}
 })

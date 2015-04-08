@@ -10,7 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Azir")
 
 InitAAData({ 
-   windup=.25,
    particles = {"Azir_Base_BA_Beam.troy"} 
 })
 
@@ -28,9 +27,9 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["conquer"] = {
    key="Q", 
-   range=800, 
+   range=875, 
    color=yellow, 
-   base={75,105,135,165,195}, 
+   base={65,85,105,125,145}, 
    ap=.5,
    delay=2.4,
    speed=12,
@@ -58,7 +57,7 @@ spells["arise"] = {
    charges=1
 } 
 spells["soldier"] = {
-   range=400, 
+   range=375, 
    base=0,
    bonus=function() 
             local dam = {50,55,60,65,70,75,80,85,90,95,100,110,120,130,140,150,160,170}

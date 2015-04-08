@@ -6,7 +6,6 @@ pp("\nTim's Gragas")
 SetChampStyle("caster")
 
 InitAAData({
-   windup=.35 
 })
 
 AddToggle("", {on=true, key=112, label=""})
