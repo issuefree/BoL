@@ -1,9 +1,10 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
-print("\nTim's Twisted Fate")
+pp("\nTim's Twisted Fate")
 
 InitAAData({
+	baseAttackSpeed = 0.651,
 	speed = 1500, windup=.4,
 	particles = {"TwistedFateBasicAttack_mis", "TwistedFateStackAttack_mis", "PickaCard_blue", "PickaCard_red", "PickaCard_yellow"}	
 })
@@ -77,28 +78,26 @@ spells["stacked"] = {
 spells["card"] = nil
 
 function canPick()
-	return CanUse("pick") and not P.selecting and not P.card
+	return CanUse("pick") and not selecting and not P.card
 end
 
 function pick()
 	Cast("pick", me)
-	setSelecting()
 end
 
-function setSelecting()
-	if P.selecting then return end
-	PersistTemp("selecting", .5)
-end
-
+selecting = false
 function Run()
-	if P.selecting and not P.card and find(me.SpellNameW, card) then		
-		if IsOn("pick") then
-			CastSpellTarget("W", me, 0)
-			
-			P.selecting = nil
-			PersistTemp("card", .25)
+	if find(me:GetSpellData(_W).name, "lock") then
+		selecting = true
+	else
+		selecting = false
+	end
 
-			PrintAction("Pick "..card)
+	if selecting and not P.card and find(me:GetSpellData(_W).name, card) then		
+		if IsOn("pick") then
+			CastSpell(_W)			
+			
+			PrintAction("Pick "..card, nil, .5)
 		end
 	end
 
@@ -183,15 +182,12 @@ function Action()
 end
 
 function onCreateObj(object)
-	PersistBuff("selecting", object, "TwistedFate_Base_W_")
-
 	if PersistBuff("card", object, "Card_", 200) then
-		P.selecting = nil
-		if find(object.charName, "gold") then
+		if find(object.name, "gold") then
 			spells["card"] = spells["gold"]
-		elseif find(object.charName, "red") then
+		elseif find(object.name, "red") then
 			spells["card"] = spells["red"]
-		elseif find(object.charName, "blue") then
+		elseif find(object.name, "blue") then
 			spells["card"] = spells["blue"]
 		end
 	end
@@ -202,14 +198,6 @@ end
 function onSpell(unit, spell)
 --Destiny, gate
 	if IsMe(unit) then
-		
-		if find(spell.name, "cardlock") then
-			P.selecting = nil
-		end
-
-		if spell.name == "PickACard" then
-			setSelecting()			
-		end
 		
 		if spell.name == "Destiny" then
          card = "gold"         
