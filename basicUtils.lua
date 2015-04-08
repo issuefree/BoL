@@ -461,7 +461,7 @@ function LoadConfig(name)
    local status, config = pcall( 
       function()
          local config = {}
-         for line in io.lines(name..".cfg") do
+         for line in io.lines(BOL_PATH..name..".cfg") do
             for k,v in string.gmatch(line, "(%w+)=(%w+)") do
                config[k] = v
             end
@@ -477,7 +477,7 @@ function LoadConfig(name)
 end
 
 function SaveConfig(name, config)
-   local file = io.open(name..".cfg", "w")
+   local file = io.open(BOL_PATH..name..".cfg", "w")
    for k,v in pairs(config) do
       if type(v) == "table" then
          file:write(k.." = {\n  "..table_print(v, 2))
@@ -489,10 +489,26 @@ function SaveConfig(name, config)
 end
 
 LOG_FILE = nil
+DEBUG_LOG_FILE = nil
 function log(text)
    if not LOG_FILE then
-         LOG_FILE = io.open("c:/BOL.log", "w")
+         LOG_FILE = io.open(BOL_PATH.."BOL.log", "w")
    end
    LOG_FILE:write(text)
    LOG_FILE:flush()
 end
+
+function dlog(text)
+   if not DEBUG_LOG_FILE then
+      DEBUG_LOG_FILE = io.open(BOL_PATH.."boldebug.log", "a")
+   end
+   DEBUG_LOG_FILE:write(text.."\n")
+   DEBUG_LOG_FILE:flush()
+end
+
+function onSplat(foo)
+   pp(foo)
+   pp(debug.traceback())
+end
+
+AddBugsplatCallback(onSplat)
