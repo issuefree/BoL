@@ -8,7 +8,7 @@ MAPNAME = nil
 SUMMONERSRIFT = "SummonersRift"
 HOWLINGABYSS = "HowlingAbyss"
 
-if GetMap() == 8 then
+if GetGame().map.shortName == "summonerRift" then
    MAPNAME = SUMMONERSRIFT
 elseif GetMap() == 2 then
    MAPNAME = CRYSTALSCAR
@@ -238,7 +238,7 @@ function chasePoints()
    if targetPoint then
       if GetDistance(targetPoint) < distToTargetPoint then
          distToTargetPoint = GetDistance(targetPoint)
-         MoveToXYZ(targetPoint:unpack())
+         me.MoveTo(targetPoint.x, targetPoint.z)
          return
       else
          table.insert(noReachPoints, targetPoint)
@@ -269,7 +269,7 @@ function chasePoints()
    end
    if #near > 0 then
       targetPoint = SortByDistance(near)[1]
-      MoveToXYZ(targetPoint:unpack())
+      me.MoveTo(targetPoint.x, targetPoint.z)
       distToTargetPoint = GetDistance(targetPoint)
    end
 end
