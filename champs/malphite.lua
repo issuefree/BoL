@@ -10,7 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Malphite")
 
 InitAAData({
-   windup=.35,
    extraRange=5,
    particles={"Malphite_Base_CleaveHit"}
 })
@@ -35,7 +34,6 @@ spells["shard"] = {
 } 
 spells["strikes"] = {
    key="W", 
-   cost={50,55,60,65,70}
 } 
 spells["slam"] = {
    key="E", 
