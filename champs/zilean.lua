@@ -24,23 +24,19 @@ spells["bomb"] = {
    base={90,145,200,260,320}, 
    ap=.9,
    radius=325
-   -- cost={70,85,100,115,130},
 }
 spells["rewind"] = {
    key="W", 
-   -- cost=50
 }
 spells["warp"] = {
    key="E", 
    range=700, 
    color=yellow, 
-   -- cost=80
 }
 spells["chrono"] = {
    key="R", 
    range=780, 
    color=green, 
-   -- cost={125,150,175}
 } 
 
 function Run()
