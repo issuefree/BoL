@@ -4,7 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Tristana")
 
 InitAAData({
-   speed = 2250, windup=.2,
+   speed = 2250,
    minMoveTime=0,
    -- particles = {"TristannaBasicAttack_mis"}  -- Trists object is shared with minions. This could result in clipping. Can be turned back on for testing
 })
@@ -24,32 +24,36 @@ AddToggle("move", {on=true, key=118, label="Move"})
 spells["rapid"] = {
    key="Q", 
 } 
+
+-- TODO rework for explosive charge
 spells["jump"] = {
    key="W", 
    range=900, 
    color=blue, 
-   base={70,115,160,205,250}, 
-   ap=.8,
+   base={80,105,130,155,180}, 
+   ap=.5,
    delay=2,
    speed=12, --?
    radius=300, --?
 } 
-spells["shot"] = {
+-- TODO needs complete rework in bot
+spells["charge"] = {
    key="E", 
-   range=function() return 541+(9*me.level)+5 end,
+   range=GetAARange, -- TODO validate
    rangeType="e2e",
-   color=violet, 
-   base={80,125,170,215,260}, 
-   ap=1,
+   color=violet, "
+   base={60,70,80,90,100}, 
+   ap=.5,
+   adBonus={.5,.65,.80,.95,1.1},
    radius=150,
 } 
 spells["buster"] = {
    key="R", 
-   range=function() return 541+(9*me.level)+10 end,
+   range=GetAARange, -- TODO validate
    rangeType="e2e",
    color=red, 
    base={300,400,500}, 
-   ap=1.5,
+   ap=1,
    knockback={600,800,1000},
    radius=200,
 } 
@@ -158,7 +162,7 @@ function getJumpPoint()
    end
 
    -- don't jump into walls
-   if IsSolid(point) then
+   if IsWall(point) then
       return nil
    end
 
@@ -203,99 +207,7 @@ function getJumpPoint()
    return point, predTarget
 end
 
-function checkForHeals()
-   if not CanUse("shot") then return false end
-
-   local target = GetWithBuff("sadism", ENEMIES)[1]
-   if target and IsInRange("shot", target) then
-      Cast("shot", target)
-      PrintAction("Shrapnel for sadism", target)
-      return true
-   end
-
-   local target = GetWithBuff("crow", ENEMIES)[1]
-   if target and IsInRange("shot", target) then
-      Cast("shot", target)
-      PrintAction("Shrapnel for crow", target)
-      return true
-   end
-
-   local target = GetWithBuff("meditate", ENEMIES)[1]
-   if target and IsInRange("shot", target) then
-      Cast("shot", target)
-      PrintAction("Shrapnel for meditate", target)
-      return true
-   end
-
-   local target = GetWithBuff("healthPotion", ENEMIES)[1]
-   if target and IsInRange("shot", target) then
-      Cast("shot", target)
-      PrintAction("Shrapnel for healthPotion", target)
-      return true
-   end
-
-   local target = GetWeakestEnemy("AA")
-   if target then
-
-      local healers = GetInRange(target, 500, ENEMIES)
-      for _,healer in ipairs(healers) do
-         if ListContains(healer.name, {"Sona", "Soraka", "Nami", "Taric", "Alistar", "Nidalee", "Kayle"}) then
-            Cast("shot", target)
-            PrintAction("Shot to counter healers", healer)
-            return true
-         end
-      end
-
-   end
-
-   local target = GetWeakestEnemy("AA")
-   if target then
-      if target.name == "Akali" then
-         Cast("shot", target)
-         PrintAction("Shot to counter vamp", target)
-         return true
-      elseif target.name == "Gangplank" and IsCooledDown("E", 0, target) then
-         Cast("shot", target)
-         PrintAction("Shot to counter oranges", healer)
-         return true
-      elseif target.name == "Volibear" then
-         Cast("shot", target)
-         PrintAction("Shot to counter", target)
-         return true
-      elseif target.name == "Warwick" then
-         Cast("shot", target)
-         PrintAction("Shot to counter", target)
-         return true
-      -- elseif target.name == "FiddleSticks" and IsCooledDown("W", 0, target) then
-      --    Cast("shot", target)
-      --    PrintAction("Shot to counter drain", target)
-      --    return true
-      elseif target.name == "Fiora" then
-         Cast("shot", target)
-         PrintAction("Shot to counter", target)
-         return true
-      elseif target.name == "Garen" then
-         Cast("shot", target)
-         PrintAction("Shot to counter", target)
-         return true
-      elseif target.name == "Vladimir" then
-         Cast("shot", target)
-         PrintAction("Shot to counter", target)
-         return true
-      end
-   end
-end
-
 function Run()
-
-   -- for _,target in ipairs(ENEMIES) do
-   --    if target.name == "FiddleSticks" then
-   --       PrintState(1, "Fiddle")
-   --       if IsCooledDown("W", 0, target) then
-   --          PrintState(2, "CAN DRAIN")
-   --       end
-   --    end
-   -- end
    if StartTickActions() then
       return true
    end
@@ -380,13 +292,14 @@ function Action()
       end
    end
 
-   if CanUse("shot") then
-      if GetSpellData("E").level >= GetSpellData("Q").level then
-         if CastBest("shot") then
-            return true
-         end
-      end
-   end
+-- TODO rework for new explosive charge
+--   if CanUse("shot") then
+--      if GetSpellData("E").level >= GetSpellData("Q").level then
+--         if CastBest("shot") then
+--            return true
+--         end
+--      end
+--   end
 
    if CanUse("rapid") then
       local target = GetWeakestEnemy("AA", -50)
