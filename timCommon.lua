@@ -45,13 +45,12 @@ FRAME = time()
 
 CREEP_ACTIVE = false
 
-if GetSpellData("Q").level == 0 and
-   GetSpellData("W").level == 0 and
-   GetSpellData("E").level == 0
-then
-   os.remove("lualog.txt")
-   me.MoveTo(me.x, me.z)
-end
+-- if GetSpellData("Q").level == 0 and
+--    GetSpellData("W").level == 0 and
+--    GetSpellData("E").level == 0
+-- then
+--    me.MoveTo(me.x, me.z)
+-- end
 
 healSpell = {range=700+GetWidth(me), color=green, summoners=true}
 
@@ -747,7 +746,6 @@ function KillMinion(thing, method, force, targetOnly)
 
       if spell.name and spell.name == "attack" then
          if AA(target) then
-            )
             PrintAction("Kill "..targetBy.." minion")
             return target
          end
@@ -1548,7 +1546,7 @@ function processShot(shot)
    end
 
 
-   if me.dead == 0 then
+   if not me.dead then
       shot = ShotTarget(shot, me)
       if shot then
          if not shot.show then
@@ -1798,8 +1796,8 @@ function OnTick()
 
    CheckTrinket()
 
-   for _,callback in pairs(TICK_CALLBACKS) do
-      -- pp(callback[1])
+   for _,callback in ipairs(TICK_CALLBACKS) do
+      dlog(callback[1])
    	callback[2]()
    end
 end
