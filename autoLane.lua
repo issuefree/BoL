@@ -33,7 +33,7 @@ function AutoLane()
 
    if p and not UnderTower(p) and GetDistance(p) > 250 and CanMove() then
       Circle(p)
-      MoveToXYZ(p:unpack())
+      me:MoveTo(p.x, p.z)
    -- Circle(pointMinion)
    -- elseif CanMove() and not loc then
    --    local dist = 150
