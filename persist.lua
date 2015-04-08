@@ -186,11 +186,11 @@ function PersistPet(object, charName, name)
    end   
 end
 
-function PersistAll(name, object, charName)
-   if object and (not charName or find(object.charName, charName)) then      
-      Persist(name..object.networkID, object)
-      PData[name..object.networkID].name = name
-      PData[name..object.networkID].time = time()
+function PersistAll(label, object, name)
+   if object and (not name or find(object.name, name)) then      
+      Persist(label..object.name, object)
+      PData[label..object.name].name = label
+      PData[label..object.name].time = time()
       return true
    end
 end
@@ -286,7 +286,6 @@ function CleanPersistedObjects()
    for name, data in pairs(PData) do
 
       if data.timeout and data.timeout < time() then
-         pp("timeout")
          P[name] = nil
          PData[name] = nil
       end
@@ -320,20 +319,8 @@ function Clean(list, field, value)
    end
 end
 
-function isDupMinion(minionTable, minion)
-   local count = 0
-   for _,m in pairs(minionTable) do
-      if minion.name == m.name then count = count + 1 end
-      if count > 1 then 
-         pp("DUP MINION")
-         return true 
-      end
-   end
-   return false
-end
-
 local function updateMinions()
-   -- pp(" - enemy minions")
+   dlog(" - enemy minions", true)
    for i,minion in rpairs(MINIONS) do
       if not minion or
          not minion.valid or
@@ -342,7 +329,7 @@ local function updateMinions()
          table.remove(MINIONS,i)
       end
    end
-   -- pp(" - my minions")
+   dlog(" - my minions", true)
    for i,minion in rpairs(MYMINIONS) do
       if not minion or
          not minion.valid or
@@ -386,22 +373,14 @@ local function updateCreeps()
 end
 
 local function updateHeroes()
-   ALLIES = {}
-   ENEMIES = {}
+   ALLIES = GetAllyHeroes()
+   table.insert(ALLIES, me)
+   ENEMIES = GetEnemyHeroes()
    ADC = nil
    APC = nil
    EADC = nil
    EAPC = nil
-   for i = 1, heroManager.iCount, 1 do
-      local hero = heroManager:getHero(i)
-      if IsValid(hero) then
-         if hero.team == me.team then
-            table.insert(ALLIES, hero)
-         else
-            table.insert(ENEMIES, hero)
-         end
-      end
-   end   
+
    ADC = getADC(ALLIES)
    APC = getAPC(ALLIES)
 
@@ -423,17 +402,17 @@ local function updateHeroes()
 end
 
 function IsMinorCreep(creep)
-   if ListContains(creep.name, MinorCreepNames, true) then
+   if ListContains(creep.charName, MinorCreepNames, true) then
       return true
    end
 end
 function IsBigCreep(creep)
-   if ListContains(creep.name, BigCreepNames, true) then
+   if ListContains(creep.charName, BigCreepNames, true) then
       return true
    end
 end
 function IsMajorCreep(creep)
-   if ListContains(creep.name, MajorCreepNames, true) then
+   if ListContains(creep.charName, MajorCreepNames, true) then
       return true
    end
 end   
@@ -650,22 +629,23 @@ function persistTick()
    CleanPersistedObjects()
 
 
-   -- pp("minions")
+   dlog("minions", true)
    updateMinions()
-   -- pp("creeps")
+   dlog("creeps", true)
    updateCreeps()
-   -- pp("heros")
+   dlog("heros", true)
    updateHeroes()
-   -- pp("tracked")
+   dlog("tracked", true)
    updateTrackedSpells()
 
 
    MINIONS = ValidTargets(GetPersisted("MINIONS"))
    MYMINIONS = ValidTargets(GetPersisted("MYMINIONS"))
-   TURRETS = ValidTargets(GetPersisted("TURRET"))
-   MYTURRETS = ValidTargets(GetPersisted("MYTURRET"))
+   TURRETS = FilterList(ValidTargets(GetPersisted("TURRET")), function(item) return item.health > 0 end)
+   MYTURRETS = FilterList(ValidTargets(GetPersisted("MYTURRET")), function(item) return item.health > 0 end)
    PETS = GetPersisted("PET")
    MYPETS = GetPersisted("MYPET")
+   dlog("end of persisttick")
 end
 
 function getADC(list)
