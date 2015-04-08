@@ -58,9 +58,9 @@ spells["trap"] = {
    key="W", 
    range=900,
    color=yellow,
-   base={20,40,60,80,100},
+   base={40,80,120,160,200},
    targetHealth={.10,.12,.14,.16,.18},
-   targetHealthAP=.0002,
+   ap=.2,
    delay=5, -- 2.5 to land ~2.5 to arm
    speed=0,
    radius=85, -- reticle
@@ -121,7 +121,6 @@ function Run()
 
    if isCougar then
       InitAAData({ -- cougar
-         windup=.2,
          extraRange=-10,
          resets = {GetSpellData("Q").name},   
       })
@@ -135,7 +134,7 @@ function Run()
 
    else
       InitAAData({
-         speed = 1700, windup=.25,
+         speed = 1700,
          particles = {"nidalee_javelin_mis"},
       })
       spells["jav"].key = "Q"
