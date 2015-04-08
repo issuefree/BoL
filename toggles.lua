@@ -54,14 +54,14 @@ function DrawToggles()
          end
       end
       if val.on then
-         Text(label, labelX,labelY+(i-1)*15,0xFF00EE00);
+         Text(label, labelX, labelY+(i-1)*15, 0xFF00EE00)
          if auxLabel then        
-            Text(auxLabel, labelX+150,labelY+(i-1)*15,0xFF00EE00);
+            Text(auxLabel, labelX+150, labelY+(i-1)*15, 0xFF00EE00)
          end
       else
-         Text(label, labelX,labelY+(i-1)*15,0xFFFFFF00);
+         Text(label, labelX, labelY+(i-1)*15, 0xFFFFFF00)
          if auxLabel then
-            Text(auxLabel, labelX+150,labelY+(i-1)*15,0xFFFFFF00);
+            Text(auxLabel, labelX+150, labelY+(i-1)*15, 0xFFFFFF00)
          end
       end
    end   
