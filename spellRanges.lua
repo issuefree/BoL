@@ -20,7 +20,7 @@ function rangeTick()
          end
          local time 
          if info.key then
-            time = GetSpellDef(info).currentCd + 1
+            time = GetSpellData(info).currentCd + 1
             -- me["SpellTime"..info.key] - 2
          end
 
