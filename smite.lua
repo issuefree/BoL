@@ -6,10 +6,10 @@ local smiteTargets = {}
 
 local smiteSpells = {"summonersmite", "itemsmiteaoe", "s5_summonersmitequick"}
 
-if ListContains(me.SummonerD, smiteSpells) then
+if ListContains(GetSpellData("D").name, smiteSpells) then
    smite.key = "D"
    spells["smite"] = smite
-elseif ListContains(me.SummonerF, smiteSpells) then
+elseif ListContains(GetSpellData("F").name, smiteSpells) then
    smite.key = "F"
    spells["smite"] = smite
 end
@@ -20,10 +20,7 @@ function smiteTick()
       return
    end
    for i,target in rpairs(smiteTargets) do
-      if not target or
-         target.dead or
-         not target.x 
-      then
+      if not target or not target.valid then
          table.remove(smiteTargets,i)
       end
    end
@@ -40,12 +37,12 @@ function smiteTick()
 end
 
 function onCreateSmite(obj)
-   if not obj.name then return end
-   if find(obj.name, "MechCannon") and obj.team ~= me.team then
+   if not obj.charName then return end
+   if find(obj.charName, "MechCannon") and obj.team ~= me.team then
       table.insert(smiteTargets, obj)
-   elseif ListContains(obj.name, BigCreepNames, true) then
+   elseif ListContains(obj.charName, BigCreepNames, true) then
       table.insert(smiteTargets, obj)
-   elseif ListContains(obj.name, MajorCreepNames, true) then
+   elseif ListContains(obj.charName, MajorCreepNames, true) then
       table.insert(smiteTargets, obj)
    end
 end 

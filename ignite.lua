@@ -2,11 +2,11 @@ require "issuefree/timCommon"
 
 local ignite = {range=600, color=red, base={50}, lvl=20, type="T"}
 
-if me.SummonerD == "summonerdot" then
+if GetSpellData("D").name == "summonerdot" then
    ignite.key = "D"
    spells["ignite"] = ignite
 -- print("Ignite in "..ignite.key)
-elseif me.SummonerF == "summonerdot" then
+elseif GetSpellData("F").name == "summonerdot" then
    ignite.key = "F"
    spells["ignite"] = ignite
 -- print("Ignite in "..ignite.key)
