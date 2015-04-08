@@ -9,7 +9,7 @@ InitAAData({
 })
 
 spells["tailwind"] = {
-	range=1000,
+	range=1250,
 	color=blue
 }
 spells["gale"] = {
@@ -17,14 +17,16 @@ spells["gale"] = {
 	range=1700, 
 	color=violet, 
 	base={60,85,110,135,160}, 
-	ap=.35
+	ap=.35,
+	width=120,
 }
 spells["galeShort"] = {
    key="Q",
 	range=1000, 
 	color=violet, 
 	base={60,85,110,135,160}, 
-	ap=.35
+	ap=.35,
+	width=120,
 }
 spells["zephyr"] = {
 	key="W", 
