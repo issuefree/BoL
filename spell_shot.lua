@@ -26,7 +26,7 @@ Tim's modified version of...
 -- TODO I'd like to get the speeds/objects on the skill shots to improve the "is it going to hit a teammate" logic for shields
 
 require "issuefree/telemetry"
-require "issuefree/walls"
+-- require "issuefree/walls"
 require "issuefree/basicUtils"
 require "issuefree/spellDefs"
 
