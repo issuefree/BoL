@@ -23,7 +23,7 @@ spells["sphere"] = {
 	key="Q", 
 	range=650, 
 	color=violet, 
-	base={80,105,130,155,180}, 
+	base={70,95,120,145,170}, 
 	ap=.7,
 	cost={70,75,80,85,90}
 }
