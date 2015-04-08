@@ -6,7 +6,7 @@ require "issuefree/walls"
 
 --[[
 spells["alias"] = {
-   name="spellCastName",      -- this is used for ICast. If the spell reports casting as me.SpellNameX then this can be left blank.
+   name="spellCastName",      -- this is used for ICast. If the spell reports casting as GetSpellData("X").name then this can be left blank.
                                  if you need to detect the spell under a different name put that name here
 
    key="Q",                   -- the key that casts the spell. If no key is supplied then the spell will always read "ready"
@@ -115,8 +115,7 @@ end
 
 function GetSpellLevel(key, hero)
    hero = hero or me
-   local spell = hero:GetSpellData(getISpell(key))
-   return spell.level
+   return GetSpellData(key).level
 end
 
 local ping = .05
@@ -157,6 +156,10 @@ function GetCD(thing, hero)
       return cd
    end
    return 0
+end
+
+function CastSpellTarget(slot, target)
+   me:Cast(getISpell(slot), target)
 end
 
 function Cast(thing, target, force)
@@ -284,6 +287,7 @@ function CanUse(thing)
       	if not ListContains(thing.key, {"Q","W","E","R","D","F"}) then
       		return false
       	end
+         -- looks like there's a rounding error or something in the getspellcost.
          if thing.key == "D" or thing.key == "F" or ( GetSpellLevel(thing.key) > 0 and me.mana >= GetSpellCost(thing) ) then
          	if not GetLVal(thing, "canCast") then
          		return false
@@ -334,7 +338,7 @@ end
 function GetSpellCost(thing)
    local spell = GetSpell(thing)
    if spell.key then
-      return GetSpellDef(spell).mana
+      return math.floor(GetSpellData(spell).mana)
    	-- return me["SpellMana"..spell.key]
    else
    	return GetLVal(spell, "cost")
@@ -362,7 +366,12 @@ function GetSpellName(thing)
 
 end
 
-function GetSpellDef(spell, hero)
+function GetSpellData(thing, hero)
+   local spell = GetSpell(thing)
+   if not spell.key then
+      return nil
+   end
+
    hero = hero or me
    return hero:GetSpellData(getISpell(spell.key))
 end
@@ -643,7 +652,7 @@ function TrackSpellFireahead(thing, target)
    if not IsValid(target) or not tfas[key][tcn] then
       tfas[key][tcn] = {}
    end
-   local p = Point(GetFireahead(target, spell.delay, spell.speed)) - Point(target)
+   local p = Point(VP:GetPredictedPos(target, spell.delay, spell.speed)) - Point(target)
    p.y = 0
    table.insert(tfas[key][tcn], p)
 
@@ -653,64 +662,16 @@ function TrackSpellFireahead(thing, target)
    end
 end
 
-function GetSpellFireahead2(thing, target)
+function GetSpellFireahead(thing, target)
    local spell = GetSpell(thing)
 
    local point, chance
    if IsLinearSkillShot(spell) then
-		point, chance = YP:GetLineCastPosition(target, spell.delay/10, spell.width, spell.range, spell.speed*100, me)
-	else
-		point, chance = YP:GetCircularCastPosition(target, spell.delay/10, spell.radius, spell.range, spell.speed*100, me)
+		point, chance = VP:GetLineCastPosition(target, spell.delay/10, spell.width, spell.range, spell.speed*100, me, IsBlockedSkillShot(thing))
+	elseif IsPointAoE(spell) then
+      point, chance = VP:GetCircularCastPosition(target, spell.delay/10, spell.radius, spell.range, spell.speed*100, me, IsBlockedSkillShot(thing))
 	end
 
-	if true then
-		return point, chance
-	end
-
-   local trackingFudge = 0
-   if tfas[spell.key] then   
-   	local trackedPoints = tfas[spell.key][target.charName]
-   	if trackedPoints and #trackedPoints > 1 then
-	      local trackError = GetDistance(trackedPoints[1], trackedPoints[#trackedPoints])
-	      local r = spell.width or spell.cone or spell.radius*2 
-
-	      trackingFudge = 1 + (trackError/r * .25)
-	   end
-   end
-
-   local fudge = math.max(SS_FUDGE, trackingFudge)
-
-   return Point(GetFireahead(target, spell.delay/fudge, spell.speed*fudge))
-   -- end
-
-   -- return Point(target) + GetCenter(tfas[spell.key][target.charName])
-end
-
--- do fireahead calculations with a speedup to account for player direction changes
-SS_FUDGE = 1.25
-
-function GetSpellFireahead(thing, target)
-   local spell = GetSpell(thing)
-
-   local trackingFudge = 0
-   if tfas[spell.key] then   
-   	local trackedPoints = tfas[spell.key][target.charName]
-   	if trackedPoints and #trackedPoints > 1 then
-	      local trackError = GetDistance(trackedPoints[1], trackedPoints[#trackedPoints])
-	      local r = spell.width or spell.cone or spell.radius*2 
-
-	      trackingFudge = 1 + (trackError/r * .1)
-	   end
-   end
-
-   local fudge = trackingFudge
-
-   local chance = 2 - fudge
-
-   return Point(GetFireahead(target, spell.delay/fudge, spell.speed*fudge)), chance
-   -- end
-
-   -- return Point(target) + GetCenter(tfas[spell.key][target.charName])
 end
 
 function GetFireaheads(thing, targets)
@@ -740,7 +701,7 @@ function IsGoodFireahead(thing, target, minChance)
       return false
    end
 
-   minChance = minChance or .66
+   minChance = minChance or 2
 
    if chance < minChance then
    	-- PrintAction("Low chance SS")
@@ -795,7 +756,7 @@ function ICast(thing, unit, spell)
       if mySpell.name then
          return find(spell.name, mySpell.name)
       elseif mySpell.key then
-         return spell.name == me["SpellName"..mySpell.key]
+         return spell.name == GetSpellData(thing).name
       end
    end
 end
