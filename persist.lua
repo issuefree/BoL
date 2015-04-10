@@ -320,7 +320,6 @@ function Clean(list, field, value)
 end
 
 local function updateMinions()
-   dlog(" - enemy minions", true)
    for i,minion in rpairs(MINIONS) do
       if not minion or
          not minion.valid or
@@ -329,7 +328,6 @@ local function updateMinions()
          table.remove(MINIONS,i)
       end
    end
-   dlog(" - my minions", true)
    for i,minion in rpairs(MYMINIONS) do
       if not minion or
          not minion.valid or
@@ -601,7 +599,6 @@ function createForPersist(object)
 end
 
 function persistTick()
-   -- pp("here0")
    Clean(WARDS, "name", "Ward")
    if GetMap() == 8 then
       Clean(INHIBS, "name", "_Idle")
@@ -629,15 +626,11 @@ function persistTick()
    CleanPersistedObjects()
 
 
-   dlog("minions", true)
    -- updateMinions()
    MINIONS = minionManager(MINION_ENEMY, 2000, myHero, MINION_SORT_HEALTH_ASC).objects
    MYMINIONS = minionManager(MINION_ALLY, 2000, me).objects
-   dlog("creeps", true)
    updateCreeps()
-   dlog("heros", true)
    updateHeroes()
-   dlog("tracked", true)
    updateTrackedSpells()
 
 
@@ -647,7 +640,6 @@ function persistTick()
    MYTURRETS = FilterList(ValidTargets(GetPersisted("MYTURRET")), function(item) return item.health > 0 end)
    PETS = GetPersisted("PET")
    MYPETS = GetPersisted("MYPET")
-   dlog("end of persisttick")
 end
 
 function getADC(list)
