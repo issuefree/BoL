@@ -152,8 +152,8 @@ function enemyHasName(name)
    end
 end
 
-function PersistToTrack(object, charName, champName, spellName)
-   if Persist(spellName, object, charName) then
+function PersistToTrack(object, name, champName, spellName)
+   if Persist(spellName, object, name) then
 
       -- if the champ that can cast the spell isn't on the other team bail
       if not enemyHasName(champName) then
@@ -375,7 +375,7 @@ end
 local function updateHeroes()
    ALLIES = GetAllyHeroes()
    table.insert(ALLIES, me)
-   ENEMIES = GetEnemyHeroes()
+   ENEMIES = ValidTargets(GetEnemyHeroes())
    ADC = nil
    APC = nil
    EADC = nil
@@ -443,10 +443,10 @@ function createForPersist(object)
 
    if object.team ~= me.team then
       PersistAll("TURRET", object, "Turret_T")
-      PersistAll("MINIONS", object, "Minion")
+      -- PersistAll("MINIONS", object, "Minion")
    else
       PersistAll("MYTURRET", object, "Turret_T")
-      PersistAll("MYMINIONS", object, "Minion")
+      -- PersistAll("MYMINIONS", object, "Minion")
    end
 
    local inhibKey = "_Idle"
@@ -457,8 +457,8 @@ function createForPersist(object)
       inhibKey = "inhibit_gem"
       nexusKey = "nexus_on"
    end
-   if find(object.charName, inhibKey)then
-      if find(object.charName, "order") then
+   if find(object.name, inhibKey)then
+      if find(object.name, "order") then
          if me.team == 100 then
             table.insert(MYINHIBS, object)
          else
@@ -477,8 +477,8 @@ function createForPersist(object)
    PersistAll("destroyed", object, "Dest_")
 
 
-   if find(object.charName, nexusKey) then
-      if find(object.charName, "order") then
+   if find(object.name, nexusKey) then
+      if find(object.name, "order") then
          if me.team == 100 then
             table.insert(MYNEXUS, object)
          else
@@ -495,22 +495,22 @@ function createForPersist(object)
 
    PersistOnTargets("recall", object, "TeleportHome", ENEMIES, ALLIES)
 
-   if ListContains(object.charName, ccNames) then
-      local target = PersistOnTargets("cc", object, object.charName, ENEMIES, ALLIES)
+   if ListContains(object.name, ccNames) then
+      local target = PersistOnTargets("cc", object, object.name, ENEMIES, ALLIES)
       if target then
-         pp("CC on "..target.name.." "..object.charName)
+         pp("CC on "..target.name.." "..object.name)
       end
    end
 
    -- for _,enemy in ipairs(ENEMIES) do
    --    if enemy.y - me.y > 75 then
-   --       PersistOnTargets("cc", enemy, enemy.charName, ENEMIES)
+   --       PersistOnTargets("cc", enemy, enemy.name, ENEMIES)
    --    else
    --       P["cc"..enemy.networkID] = nil
    --    end
    -- end
 
-   if find(object.charName, "Ward") then
+   if find(object.name, "Ward") then
       table.insert(WARDS, object)
    end
 
@@ -602,17 +602,17 @@ end
 
 function persistTick()
    -- pp("here0")
-   Clean(WARDS, "charName", "Ward")
+   Clean(WARDS, "name", "Ward")
    if GetMap() == 8 then
-      Clean(INHIBS, "charName", "_Idle")
-      Clean(MYINHIBS, "charName", "_Idle")
-      Clean(NEXUS, "charName", "_Idle")
-      Clean(MYNEXUS, "charName", "_Idle")
+      Clean(INHIBS, "name", "_Idle")
+      Clean(MYINHIBS, "name", "_Idle")
+      Clean(NEXUS, "name", "_Idle")
+      Clean(MYNEXUS, "name", "_Idle")
    else
-      Clean(INHIBS, "charName", "_gem")
-      Clean(MYINHIBS, "charName", "_gem")
-      Clean(NEXUS, "charName", "_on")
-      Clean(MYNEXUS, "charName", "_on")
+      Clean(INHIBS, "name", "_gem")
+      Clean(MYINHIBS, "name", "_gem")
+      Clean(NEXUS, "name", "_on")
+      Clean(MYNEXUS, "name", "_on")
    end
 
    for i,inhib in rpairs(INHIBS) do
@@ -630,7 +630,9 @@ function persistTick()
 
 
    dlog("minions", true)
-   updateMinions()
+   -- updateMinions()
+   MINIONS = minionManager(MINION_ENEMY, 2000, myHero, MINION_SORT_HEALTH_ASC).objects
+   MYMINIONS = minionManager(MINION_ALLY, 2000, me).objects
    dlog("creeps", true)
    updateCreeps()
    dlog("heros", true)
@@ -639,8 +641,8 @@ function persistTick()
    updateTrackedSpells()
 
 
-   MINIONS = ValidTargets(GetPersisted("MINIONS"))
-   MYMINIONS = ValidTargets(GetPersisted("MYMINIONS"))
+   -- MINIONS = ValidTargets(GetPersisted("MINIONS"))
+   -- MYMINIONS = ValidTargets(GetPersisted("MYMINIONS"))
    TURRETS = FilterList(ValidTargets(GetPersisted("TURRET")), function(item) return item.health > 0 end)
    MYTURRETS = FilterList(ValidTargets(GetPersisted("MYTURRET")), function(item) return item.health > 0 end)
    PETS = GetPersisted("PET")
