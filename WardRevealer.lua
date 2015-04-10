@@ -5,34 +5,34 @@ local showVisionRangeKey = 18
 local showSameTeam = false
 
 local types = {
-	 { label="Trinket Ward", color=yellow,
+	 { label="Trinket Ward", color=yellow, mm="W",
 	   duration=60, sightRange=1350, triggerRange=70,
-	   charName="SightWard", name="YellowTrinket", spellName="RelicSmallLantern" },
-	 { label="Trinket Ward", color=yellow,
+	   name="SightWard", charName="YellowTrinket", spellName="RelicSmallLantern" },
+	 { label="Trinket Ward", color=yellow, mm="W",
 	   duration=120, sightRange=1350, triggerRange=70, 
-	   charName="SightWard", name="YellowTrinketUpgrade", spellName="RelicLantern" },
-	 { label="Sight Ward", color=green, 
+	   name="SightWard", charName="YellowTrinketUpgrade", spellName="RelicLantern" },
+	 { label="Sight Ward", color=green, mm="W",
 		duration=180, sightRange=1350, triggerRange=70,
-		charName="SightWard", name="SightWard", spellName="SightWard" }, 
-	 { label="Sight Ward", color=green, 
+		name="SightWard", charName="SightWard", spellName="SightWard" }, 
+	 { label="Sight Ward", color=green, mm="W",
 		duration=180, sightRange=1350, triggerRange=70, 
-		charName="SightWard", name="SightWard", spellName="wrigglelantern" },
-	 { label="Vision Ward", color=violet, 
+		name="SightWard", charName="SightWard", spellName="wrigglelantern" },
+	 { label="Vision Ward", color=violet, mm="W",
 		duration=0, sightRange=1350, triggerRange=70, 
-		charName="VisionWard", name="VisionWard", spellName="VisionWard" },
+		name="VisionWard", name="VisionWard", spellName="VisionWard" },
 
-	 { label="Jack in the Box", color=red, 
+	 { label="Jack in the Box", color=red, mm="J",
 		duration=60, sightRange=690, triggerRange=300,
-		charName="Jack In The Box", name="ShacoBox", spellName="JackInTheBox" },
-	 { label="Shroom", color=red, 
+		name="Jack In The Box", charName="ShacoBox", spellName="JackInTheBox" },
+	 { label="Shroom", color=red, mm="T",
 		duration=600, sightRange=405, triggerRange=115, 
-		charName="Noxious Trap", name="TeemoMushroom", spellName="BantamTrap" },
-  	 { label="Yordle Trap", color = red, 
+		name="Noxious Trap", charName="TeemoMushroom", spellName="BantamTrap" },
+  	 { label="Yordle Trap", color = red, mm="C",
   		duration = 240, sightRange=150, triggerRange=150,
-  		charName="Cupcake Trap", name="CaitlynTrap", spellName="CaitlynYordleTrap" }, 
-  	 { label="Bushwhack", color=yellow,
+  		name="Cupcake Trap", charName="CaitlynTrap", spellName="CaitlynYordleTrap" }, 
+  	 { label="Bushwhack", color=yellow, mm="T",
   		duration = 240, sightRange=0, triggerRange=150,
-		charName="Noxious Trap", name="Nidalee_Spear", spellName="Bushwhack" }
+		name="Noxious Trap", charName="Nidalee_Spear", spellName="Bushwhack" }
 }
 
 local wardSpots = {
@@ -79,15 +79,18 @@ function drawWards()
 	for i,ward in ipairs(wards) do 
 		local timer = string.format(math.ceil((ward.tick+ward.duration-time())))
 		Circle(ward, ward.triggerRange, ward.color)
+		TextMinimap(ward.mm, ward, ward.color, 14)
 		if showVisionRange then					
 			Circle(ward, ward.sightRange, ward.color)
 		end
 		if ward.duration > 0 then
 			if GetDistance(ward, GetMousePos()) < showTimerRadius then
 				if ward.source == "onload" then
-					Text(ward.label..": max "..timer, GetCursorX()-13, GetCursorY()-17, timerColor)
+					-- Text(ward.label..": max "..timer, GetCursorX()-13, GetCursorY()-17, timerColor)
+					TextObject(ward.label..": max "..timer, ward, timerColor)
 				else
-					Text(ward.label..": "..timer, GetCursorX()-13, GetCursorY()-17, timerColor)
+					-- Text(ward.label..": "..timer, GetCursorX()-13, GetCursorY()-17, timerColor)
+					TextObject(ward.label..": "..timer, ward, timerColor)
 				end
 			end
 		end
@@ -146,9 +149,7 @@ local function onCreate(object)
 	-- end
 
 	for _,type in ipairs(types) do
-		if object.charName == type.charName and 
-			object.name == type.name
-		then
+		if object.name == type.name then
 			local ward = {object=object, tick=time(), source="oncreate"}
 			ward = merge(ward, Point(object))
 			if LOADING then
@@ -159,7 +160,7 @@ local function onCreate(object)
 		end
 	end
 
-	if find(object.charName, "caitlyn_Base_yordleTrap_trigger") then
+	if find(object.name, "caitlyn_Base_yordleTrap_trigger") then
 		SortByDistance(wards, object)
 		for i,ward in ipairs(wards) do
 			if ward.name == "CaitlynYordleTrap" and GetDistance(object, ward) < 100 then
@@ -169,10 +170,10 @@ local function onCreate(object)
 			end
 		end
 	end
-	if find(object.charName, "ShroomMine") then
+	if find(object.name, "Teemo_Base_R_tar") then
 		SortByDistance(wards, object)
 		for i,ward in ipairs(wards) do
-			if ward.name == "TeemoMushroom" and GetDistance(object, ward) < 100 then
+			if ward.name == "Noxious Trap" and GetDistance(object, ward) < 100 then
 				table.remove(wards, i)
 				pp("remove shroom")
 				break

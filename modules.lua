@@ -1,5 +1,3 @@
--- require "Utils"
-
 require "issuefree/spellRanges"
 ModuleConfig:addParam("ranges", "Draw Spell Ranges", SCRIPT_PARAM_ONOFF, true)
 ModuleConfig:permaShow("ranges")
@@ -8,10 +6,9 @@ require "issuefree/smite"
 ModuleConfig:addParam("smite", "Auto Smite", SCRIPT_PARAM_ONOFF, true)
 ModuleConfig:permaShow("smite")
 
--- require "issuefree/WardRevealer"
-
--- ModuleConfig:addParam("wardRevealer", "Ward Revealer", SCRIPT_PARAM_ONOFF, true)
--- ModuleConfig:permaShow("wardRevealer")
+require "issuefree/WardRevealer"
+ModuleConfig:addParam("wardRevealer", "Ward Revealer", SCRIPT_PARAM_ONOFF, true)
+ModuleConfig:permaShow("wardRevealer")
 
 -- require "issuefree/cleanse"
 -- ModuleConfig:addParam("cleanse", "Auto Cleanse", SCRIPT_PARAM_ONOFF, true)
