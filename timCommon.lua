@@ -1818,7 +1818,6 @@ end
 champInit = false
 wasChannelling = false
 function StartTickActions()
-   dlog("start sta")
    if not champInit then
       for name, spell in pairs(spells) do
          if spell.channel then
@@ -1858,7 +1857,6 @@ function StartTickActions()
       CURSOR = nil
    end
 
-   dlog("end sta")
    return false
 end
 
@@ -1926,7 +1924,6 @@ function AutoJungle()
 end   
 
 function EndTickActions()
-   dlog("start eta")
    if IsOn("lasthit") and Alone() then
       if KillMinion("AA") then
          return true
@@ -1977,7 +1974,6 @@ function EndTickActions()
    end
 
    PrintAction()
-   dlog("end eta")
    return false
 end
 
@@ -2101,7 +2097,7 @@ function DrawKnockback(object2, thing)
       angle = angle+math.pi
    end
    
-   DrawLineObject(object2, dist, 0, angle, 0)
+   LineObject(object2, dist, 0, angle, 0)
 end
 
 function UseItems(target)

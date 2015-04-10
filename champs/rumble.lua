@@ -134,7 +134,7 @@ function Run()
    if bestStart then
       local center = GetAngularCenter(bestHits, bestStart)
       local ep = Projection(bestStart, center, GetSpellRange("equalizerLine"))
-      DrawLineObject(bestStart, GetSpellRange("equalizerLine"), 0, AngleBetween(bestStart, center), spells["equalizerLine"].width)
+      LineObject(bestStart, GetSpellRange("equalizerLine"), 0, AngleBetween(bestStart, center), spells["equalizerLine"].width)
    end
 
 	-- auto stuff that should happen if you didn't do something more important

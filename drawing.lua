@@ -27,19 +27,30 @@ local function isSafe(object)
 	return true
 end
 
-function LineBetween(object1, object2, thickness, color)	
+function LineObject(source, length, angle, width, color)
+	width = width or 1
+	color = color or cyan
+
+	p1 = WorldToScreen(D3DXVECTOR3(source.x, source.y, source.z))
+	local proj = ProjectionA(source, angle, length)
+	p2 = WorldToScreen(D3DXVECTOR3(proj.x, proj.y, proj.z))
+
+	table.insert(DRAWS, {DrawLine, {p1.x, p1.y, p2.x, p2.y, width, cyan}})
+end
+
+function LineBetween(object1, object2, width, color)	
 	if not isSafe(object1) or not isSafe(object2) then 
 		pp("bad object in linebetween")
 		return 
 	end
 
-	thickness = thickness or 1
+	width = width or 1
 	color = color or cyan
 
    local p1 = WorldToScreen(D3DXVECTOR3(object1.x, object1.y, object1.z))
    local p2 = WorldToScreen(D3DXVECTOR3(object2.x, object2.y, object2.z))
 
-   table.insert(DRAWS, {DrawLine, {p1.x, p1.y, p2.x, p2.y, thickness, cyan}})
+   table.insert(DRAWS, {DrawLine, {p1.x, p1.y, p2.x, p2.y, width, color}})
 end
 
 DRAWS = {}
