@@ -6,7 +6,7 @@ require "issuefree/drawing"
 require "issuefree/items"
 require "issuefree/autoAttackUtil"
 require "issuefree/persist"
-require "issuefree/prediction"
+-- require "issuefree/prediction"
 require "issuefree/spellUtils"
 require "issuefree/toggles"
 
@@ -15,9 +15,11 @@ require "VPrediction"
 
 -- require "issuefree/champWealth"
 
+loadtime = 999999999999
 function OnLoad()
 	require("issuefree/champs/"..string.lower(me.charName))
    VP = VPrediction()
+   loadtime = time()
 end
 
 function OnUnload()
@@ -49,7 +51,7 @@ CREEP_ACTIVE = false
 --    GetSpellData("W").level == 0 and
 --    GetSpellData("E").level == 0
 -- then
---    me.MoveTo(me.x, me.z)
+--    me:MoveTo(me.x, me.z)
 -- end
 
 healSpell = {range=700+GetWidth(me), color=green, summoners=true}
@@ -314,15 +316,15 @@ function doCreateObj(object)
          if spells[name].object then
             if spells[name].objectTimeout then
                if object and 
-                  find(object.charName, spells[name].object) and
+                  find(object.name, spells[name].object) and
                   GetDistance(object) < 200
                then
                   PersistTemp(name, spells[name].objectTimeout)
-                  -- PrintAction("found a channel temp object "..object.charName.." for "..name)
+                  -- PrintAction("found a channel temp object "..object.name.." for "..name)
                end
             else               
                if PersistBuff(name, object, spells[name].object, 200) then
-                  PrintAction("found a channel object "..object.charName.." for "..name)
+                  PrintAction("found a channel object "..object.name.." for "..name)
                end
             end
          else
@@ -339,7 +341,7 @@ function doCreateObj(object)
 end 
 
 function persistForDisrupt(char, oName, label, object)
-   if find(object.charName, oName) then
+   if find(object.name, oName) then
       for _,enemy in ipairs(ENEMIES) do
          if enemy.name == char and GetDistance(enemy, object) < 150 then
             Persist(char, enemy, enemy.charName)
@@ -446,6 +448,7 @@ function IsValid(target)
    end
    if target.dead or 
       target.invulnerable or
+      not target.valid or
       target.name == "" or target.charName == ""
    then
       return false
@@ -612,9 +615,9 @@ end
 
 function MoveToTarget(t)
    if CanMove() then
-      local x,y,z = VP:GetPredictedPos(t, .5, 500)
-      me.MoveTo(x,z)
-      CURSOR = Point(x,y,z)
+      local pos = VP:GetPredictedPos(t, .5, 1000)
+      me:MoveTo(pos.x,pos.z)
+      CURSOR = Point(pos)
       PrintAction("MTT", t, 1)
       return true
    end
@@ -630,7 +633,7 @@ function MoveToCursor()
    --    local moveX = myHero.x + 300*((mousePos.x - myHero.x)/moveSqr)
    --    local moveZ = myHero.z + 300*((mousePos.z - myHero.z)/moveSqr)
    --    -- pp(GetDistance(me, {x=moveX, y=me.y, z=moveZ}))
-   --    me.MoveTo(moveX,moveZ)
+   --    me:MoveTo(moveX,moveZ)
    -- else
    if GetDistance(mousePos) < 10 then
       me:HoldPosition()
@@ -1569,6 +1572,7 @@ function processShot(shot)
 end
 
 function OnProcessSpell(unit, spell)
+   dlog("start ops")
    if ModuleConfig.ass and IsEnemy(unit) then
       local shot = GetSpellShot(unit, spell)
       if shot and not shot.dodgeByObject then
@@ -1580,7 +1584,7 @@ function OnProcessSpell(unit, spell)
       StartChannel(1)
    end
 
-   PredictEnemy(unit, spell)
+   -- PredictEnemy(unit, spell)
 
    for _,name in ipairs(channeledSpells) do
       if ICast(name, unit, spell) then
@@ -1629,6 +1633,7 @@ function OnProcessSpell(unit, spell)
       callback(unit, spell)
    end
 
+   dlog("end ops")
 end
 
 DODGING = false
@@ -1639,7 +1644,7 @@ function BlockingMove(move_dest)
    -- pp("block and move")
    if time() - lastMove > 1 then
       
-      -- me.MoveTo(move_dest.x, move_dest.z)
+      -- me:MoveTo(move_dest.x, move_dest.z)
       -- BlockOrders()
       DODGING = true
       DoIn( function()
@@ -1652,11 +1657,6 @@ function BlockingMove(move_dest)
 
 end
 
-MP5 = 0
-
-local manaCheck = nil
-local manaCheckTime = nil
-
 TICK_DELAY = .05
 -- Common stuff that should happen every time
 
@@ -1666,6 +1666,9 @@ local tt = time()
 
 
 function OnTick()
+   if time() - loadtime < 1 then
+      return
+   end
    FRAME = time()
    Text(""..trunc(1/(time()-tt),1), 1800, 60, 0xFFCCEECC);
    TICK_DELAY = time()-tt
@@ -1703,19 +1706,6 @@ function OnTick()
    updateObjects()
    drawCommon()
    
-   if not manaCheck then
-      manaCheck = me.mana
-      manaCheckTime = time()
-   elseif time() - manaCheckTime > 1 then
-      local manaDiff = me.mana - manaCheck
-      local manaDiffTime = time() - manaCheckTime
-      if manaDiff > 0 then
-         MP5 = manaDiff / manaDiffTime * 5
-      end
-      manaCheck = me.mana
-      manaCheckTime = time()
-   end
-
    if ModuleConfig.ass then
       if blockAndMove then 
          blockAndMove() 
@@ -1800,6 +1790,7 @@ function OnTick()
       dlog(callback[1])
    	callback[2]()
    end
+   dlog("end ontick")
 end
 
 DISRUPTS = {
@@ -1827,6 +1818,7 @@ end
 champInit = false
 wasChannelling = false
 function StartTickActions()
+   dlog("start sta")
    if not champInit then
       for name, spell in pairs(spells) do
          if spell.channel then
@@ -1866,6 +1858,7 @@ function StartTickActions()
       CURSOR = nil
    end
 
+   dlog("end sta")
    return false
 end
 
@@ -1933,6 +1926,7 @@ function AutoJungle()
 end   
 
 function EndTickActions()
+   dlog("start eta")
    if IsOn("lasthit") and Alone() then
       if KillMinion("AA") then
          return true
@@ -1983,6 +1977,7 @@ function EndTickActions()
    end
 
    PrintAction()
+   dlog("end eta")
    return false
 end
 
@@ -2366,7 +2361,7 @@ function CastAtCC(thing, hardCCOnly, targetOnly)
       if not target then
          local targets = GetInRange(me, thing, ENEMIES)
          for _,t in ipairs(targets) do
-            if t.movespeed < 200 then
+            if t.ms < 200 then
                target = t
                stillMoving = true
                break
@@ -2395,7 +2390,7 @@ function CastAtCC(thing, hardCCOnly, targetOnly)
          end
 
          if stillMoving then
-            PrintAction(thing.." on very slow ("..trunc(target.movespeed)..")", target)
+            PrintAction(thing.." on very slow ("..trunc(target.ms)..")", target)
          elseif prediction then
             PrintAction(thing.." on predicted", target.enemy)
          else
@@ -2518,9 +2513,11 @@ function GetInventorySlot(item, hero)
 end
 
 function OnDraw()
+   dlog("start od")
    for _,callback in ipairs(DRAW_CALLBACKS) do
    	callback()
    end	
 
    DoDraws()
+   dlog("end od")
 end
