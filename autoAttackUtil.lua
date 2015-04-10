@@ -202,7 +202,7 @@ function aaTick()
    end
 
    if ModuleConfig.aaDebug then
-      PrintState(1, aarstr) 
+      PrintState(1, "APS:"..trunc(1/getAADuration(),2).."  WU:"..trunc(getWindup(),2) )
 
       if CanAttack() then
          setAttackState(0)
@@ -251,7 +251,7 @@ function CanAttack()
 end
 
 function IsAttacking()
-   return time() < lastAttack + getWindup() - GetLatency()/2000
+   return time() < lastAttack + getWindup() - GetLatency()/4000
 end
 
 function JustAttacked()
@@ -316,24 +316,24 @@ function setAttackState(state)
 end
 
 function onObjAA(object)
-   if ListContains(object.charName, spells["AA"].particles) 
+   if ListContains(object.name, spells["AA"].particles) 
       and GetDistance(object) < GetWidth(me)+250
    then
       shotFired = true 
 
       if time() - lastAttack > 2 then
-         pp("Got a weird object "..object.charName)
+         pp("Got a weird object "..object.name)
       end
 
       if ModuleConfig.aaDebug then
          local delta = time() - lastAAState         
-         pp("AAP: "..trunc(delta).." "..object.charName)
+         pp("AAP: "..trunc(delta).." "..object.name)
 
       end
 
    end
    if ModuleConfig.aaDebug then
-      if object and object.x and object.charName and
+      if object and object.x and object.name and
          GetDistance(object, me) < 250 
       then
          if not ListContains(object.name, ignoredObjects) and
