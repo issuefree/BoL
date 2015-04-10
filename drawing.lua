@@ -3,7 +3,8 @@ require "issuefree/telemetry"
 -- circle colors
 yellow = 0x00222200
 brightYellow = 0xFFFFFF00
-green  = 0xFF00FF00
+green  = 0x00002200
+brightGreen  = 0xFF00FF00
 red    = 0xFFFF0000
 blue   = 0xFF0000FF
 cyan   = 0xFF00FFFF
@@ -21,10 +22,6 @@ local function isSafe(object)
 		not object.x or not object.z --or
 		--( type(object) == "userdata" and ( not object.valid or ( object.x ~= mousePos.x and object.z ~= mousePos.z )))
 	then
-		pp(object.name)
-		pp(object.charName)
-		pp(object.x)
-		pp(mousePos.x)
 		return false
 	end
 	return true
@@ -60,8 +57,19 @@ function TextObject(text, object, color, size)
 	table.insert(DRAWS, {DrawText3D, {tostring(text), object.x, object.y, object.z, size, color, true}})
 end
 
+function TextMinimap(label, object, color, size)
+	color = color or cyan
+	size = size or 14
+	local minimap = GetMinimap(object)
+	Text(label, minimap.x, minimap.y, color, size)
+end
+
 function Circle(target, radius, color, thickness)	
 	if not isSafe(target) then
+		if not target then
+			return
+		end
+		pp(debug.traceback())
 		pp("Bad object in circle")
 		return
 	end
