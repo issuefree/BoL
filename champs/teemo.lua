@@ -1,7 +1,7 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
-print("\nTim's Teemo")
+pp("\nTim's Teemo")
 
 InitAAData({ 
 	speed = 1300, 
@@ -52,8 +52,8 @@ local poisons = {}
 local shrooms = {}
 
 function Run()
-	Clean(poisons, "charName", "Global_poison")
-	Clean(shrooms, "charName", "Noxious Trap")
+	Clean(poisons, "name", "Global_poison")
+	Clean(shrooms, "name", "Noxious Trap")
 
 	spells["AA"].bonus = GetSpellDamage("toxic")
 
@@ -142,12 +142,12 @@ end
 
 local function onObject(object)
 	if IsOn("clear") and GetDistance(object) < 1000 then
-		if find(object.charName, "Global_poison") then
+		if find(object.name, "Global_poison") then
 			table.insert(poisons, object)
 		end 
 	end
 
-	if find(object.charName, "Noxious Trap") then
+	if find(object.name, "Noxious Trap") then
 		table.insert(shrooms, object)
 	end
 end

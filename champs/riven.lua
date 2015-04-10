@@ -38,7 +38,7 @@ spells["runic"] = {
 } 
 spells["wings"] = {
    key="Q", 
-   range=260+me.movespeed/10,
+   range=260+me.ms/10,
    rangeB=260,
    color=violet, 
    base={10,30,50,70,90}, 
@@ -118,7 +118,7 @@ function wingChain(start, minionPool, numKills)
 end
 
 function Run()
-   spells["wings"].range = spells["wings"].rangeB + me.movespeed/10
+   spells["wings"].range = spells["wings"].rangeB + me.ms/10
 
 -- BoL FIGURE THIS OUT
    if me.SpellTimeQ < -1 then

@@ -80,7 +80,7 @@ function Run()
    if StartTickActions() then
       return true
    end
-   
+
    if HotKey() then
       if Action() then
          return true
@@ -128,7 +128,6 @@ function Action()
          return true
       end
 
-      
       local target = GetWeakest("AA", GetInRange(me, GetAARange()*2, ENEMIES))
       if target then
          CastFireahead("fire", target)
@@ -169,13 +168,13 @@ function FollowUp()
 end
 
 local function onObject(object)
-   if find(object.charName, "DeathsCaress") then
+   if find(object.name, "DeathsCaress") then
       if GetDistance(object) < 300 then         
          setStrikes(spells["strike"].bonus + 3)
          if victim then
             if ListContains(victim.name, BigCreepNames, true) or
                ListContains(victim.name, MajorCreepNames, true) or
-               find(victim.name, "Mech") or
+               IsBigMinion(victim) or
                string.find(victim.name, "Wraith") == 0 
             then
                setStrikes(spells["strike"].bonus + 3)

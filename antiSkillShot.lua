@@ -18,7 +18,7 @@ function assTick()
                         if spell.block then
                            local unblocked = GetUnblocked(spell, enemy, MYMINIONS, ALLIES)
                            for _,test in ipairs(unblocked) do
-                              if test.charName == me.charName then
+                              if IsMe(test) then
                                  LineBetween(enemy, me, spell.radius)
                                  break
                               end

@@ -62,7 +62,7 @@ function debugTick()
       if object and object.x and object.charName and
          GetDistance(object, GetMousePos()) < range 
       then
-         if not ListContains(object.charName, ignoredObjects) then
+         if not ListContains(object.name, ignoredObjects) then
             table.insert(objects, object.name.."     ("..object.charName..")")
          end
       end
@@ -94,7 +94,7 @@ local function onSpell(unit, spell)
       return
    end   
    if GetDistance(unit) < range or GetDistance(unit, GetMousePos()) < range then
-      if spell.target and spell.target.charName then
+      if spell.target and spell.target.name then
          table.insert(spells, unit.name.." : "..spell.name.." -> "..spell.target.name)
          pp(unit.name.." : "..spell.name.." -> "..spell.target.name)
       else
@@ -118,28 +118,28 @@ end
 local function onObject(object)
    if testShot and not testShot.object then
       if GetDistance(object) < 1000 and
-         object.charName ~= "LineMissile" and
-         object.charName ~= "missile" and
-         not find(object.charName, "DrawFX") and
-         not find(object.charName, "FountainHeal") and
-         not find(object.charName, "LevelProp") and
-         not find(object.charName, "Minion") and
-         not find(object.charName, "Audio") and
-         not find(object.charName, "Mfx") and
-         not find(object.charName, "ElixirSight") and
-         ( not testShot.charName or find(object.charName, testShot.charName) )
+         object.name ~= "LineMissile" and
+         object.name ~= "missile" and
+         not find(object.name, "DrawFX") and
+         not find(object.name, "FountainHeal") and
+         not find(object.name, "LevelProp") and
+         not find(object.name, "Minion") and
+         not find(object.name, "Audio") and
+         not find(object.name, "Mfx") and
+         not find(object.name, "ElixirSight") and
+         ( not testShot.name or find(object.name, testShot.name) )
       then
          local exclude = false
          if testShot.excludes then
             for _,cn in ipairs(testShot.excludes) do
-               if find(object.charName, cn) then
+               if find(object.name, cn) then
                   exclude = true
                   break
                end
             end
          end
          if not exclude then
-            pp("Particle: "..object.charName)
+            pp("Particle: "..object.name)
             local delay = trunc(time() - testShot.castTime)
             delay = delay - 2*.05 -- lag
             delay = delay * 10  -- leaguebot units 
@@ -155,19 +155,19 @@ local function onObject(object)
    end
    if GetDistance(object, GetMousePos()) < range then
       if not ListContains(object.name, ignoredObjects) then
-         pp(object.charName.."     "..object.name)
+         pp(object.name.."     ("..object.charName..")")
       end
    end
 end
 
-function TestSkillShot(thing, charName, excludes)
+function TestSkillShot(thing, name, excludes)
    local spell = GetSpell(thing)
 
    if CanUse(spell) then
       CastXYZ(spell, mousePos)
       testShot = {}
       testShot.spell = spell
-      testShot.charName = charName
+      testShot.name = name
       testShot.excludes = excludes
       testShot.castTime = time()
       testShot.points = {}

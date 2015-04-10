@@ -21,8 +21,8 @@ elseif me.SummonerF == "summonerboost" then
 end
 
 local function CheckCC(object, list)
-	if ListContains(object.charName, list) and
-		not ListContains(object.charName, exceptions)
+	if ListContains(object.name, list) and
+		not ListContains(object.name, exceptions)
 	then
 		return true
 	end
@@ -36,7 +36,7 @@ local function cleanseObj(object)
 		   CheckCC(object, byAbil) 
 		then
 			Cast("W", me)
-			pp("Removed "..object.charName.." with oranges.")
+			pp("Removed "..object.name.." with oranges.")
 			return
 		end
 		
@@ -45,7 +45,7 @@ local function cleanseObj(object)
 			not Alone()
       then
 			Cast("R", me)
-			pp("Removed "..object.charName.." with Ragnarok.")
+			pp("Removed "..object.name.." with Ragnarok.")
 			return
 		end
 		
@@ -53,7 +53,7 @@ local function cleanseObj(object)
 		local slot = GetInventorySlot(item.id)
 		if slot and CheckCC(object, byItem) then
 			CastSpellTarget(slot, me)
-			pp("Removed "..object.charName.." with QSS.")
+			pp("Removed "..object.name.." with QSS.")
 			return
 		end
 
@@ -61,13 +61,13 @@ local function cleanseObj(object)
 		local slot = GetInventorySlot(item.id)
 		if slot and CheckCC(object, byItem) then
 			CastSpellTarget(slot, me)
-			pp("Removed "..object.charName.." with MS.")
+			pp("Removed "..object.name.." with MS.")
 			return
 		end
 		
 		if cleanseKey and CheckCC(object, cleanse) then
 			CastHotkey("SPELL"..cleanseKey..":WEAKALLY SMARTCAST")
-			pp("Removed "..object.charName.." with Cleanse.")
+			pp("Removed "..object.name.." with Cleanse.")
 			return
 		end
 	end
@@ -78,12 +78,12 @@ local function cleanseObj(object)
 		if CheckCC(object, byItem) then
 			if GetDistance(ADC, object) < 75 then
 				UseItem("Mikael's Crucible", ADC)
-				pp("Mikael's ADC "..ADC.charName.." : "..object.charName)
+				pp("Mikael's ADC "..ADC.charName.." : "..object.name)
 				return
 			end
 			if GetDistance(APC, object) < 75 then
 				UseItem("Mikael's Crucible", APC)
-				pp("Mikael's APC "..APC.charName.." : "..object.charName)
+				pp("Mikael's APC "..APC.charName.." : "..object.name)
 				return
 			end
 		end

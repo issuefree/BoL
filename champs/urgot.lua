@@ -203,7 +203,7 @@ SetAutoJungle(AutoJungle)
 
 local function onObject(object)
    PersistOnTargets("charge", object, "UrgotCorrosiveDebuff", ENEMIES)
-   if find(object.charName, "UrgotPlasmaGrenade") then
+   if find(object.name, "UrgotPlasmaGrenade") then
       DoIn(function() chargeThrown = false end, .1)
    end
 end

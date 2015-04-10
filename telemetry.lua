@@ -69,8 +69,7 @@ function GetDistance(p1, p2)
    if not p1 or not p1.x then
       if not p1 then
          pp("null p1")
-      end
-      if not p1.x then
+      elseif not p1.x then
          pp("Incomplete object")
          pp(p1)
       end

@@ -122,7 +122,7 @@ function FollowUp()
 end
 
 local function onCreate(object)
-   if find(object.charName, "Leona_ZenithBlade_arrive") then
+   if find(object.name, "Leona_ZenithBlade_arrive") then
       if CanUse("eclipse") then
          Cast("eclipse", me)
          PrintAction("Zenith -> Eclipse")

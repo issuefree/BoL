@@ -7,10 +7,10 @@ local cloningHeroes = {"MonkeyKing", "Shaco", "LeBlanc", "Yorick", "Mordekaiser"
 
 function checkClones(object)
 	-- this one seems weird
-	if object.charName == "MonkeyKing bot" then
+	if object.name == "MonkeyKing bot" then
 		clone = {object = object,tick = GetClock(),duration = 1500}
 		table.insert(clones,clone)
-	elseif object.charName == "mordekaiser_cotg_ring.troy" then
+	elseif object.name == "mordekaiser_cotg_ring.troy" then
 		clone = {object = object,tick = GetClock(),duration = 30000}
 		table.insert(clones,clone)
 	else

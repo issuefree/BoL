@@ -178,7 +178,7 @@ function FollowUp()
 
          -- if I'm spinning then move close to the spin spot.
          if isSpinning() and spinT then
-            me.MoveTo(spinT.x, spinT.z)
+            me:MoveTo(spinT.x, spinT.z)
             return true
          end
       end

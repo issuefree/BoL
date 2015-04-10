@@ -198,7 +198,7 @@ end
 local function onObject(object)
 	PersistBuff("counter", object, "jaxdodger")
 
-   if find(object.charName, "RelentlessAssault") and GetDistance(object) < 350 then
+   if find(object.name, "RelentlessAssault") and GetDistance(object) < 350 then
    	ultCounter = 0
    	pp("reset ultCounter on activate")
    end

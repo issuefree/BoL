@@ -38,11 +38,11 @@ end
 
 function onCreateSmite(obj)
    if not obj.charName then return end
-   if find(obj.charName, "MechCannon") and obj.team ~= me.team then
+   if IsBigMinion(obj) then
       table.insert(smiteTargets, obj)
-   elseif ListContains(obj.charName, BigCreepNames, true) then
+   elseif IsBigCreep(obj) then
       table.insert(smiteTargets, obj)
-   elseif ListContains(obj.charName, MajorCreepNames, true) then
+   elseif IsMajorCreep(obj) then
       table.insert(smiteTargets, obj)
    end
 end 

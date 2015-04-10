@@ -118,7 +118,7 @@ function ShotTarget(shot, target)
 			end
 			
 			-- is where I'll be clear?
-			local safePoint = ProjectionA(me, GetMyDirection(), me.movespeed*.75)
+			local safePoint = ProjectionA(me, GetMyDirection(), me.ms*.75)
 			if isSafe(safePoint, shot) then
 				-- pp("Current movement will take me safe")
 				if isSafe(CURSOR, shot) then

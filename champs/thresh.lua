@@ -180,8 +180,8 @@ function FollowUp()
 end
 
 local function onCreate(object)
-   if find(object.charName, "Thresh_Soul_Eat.troy") then
-   -- if find(object.charName, "Thresh_Soul_Eat_buf") then
+   if find(object.name, "Thresh_Soul_Eat.troy") then
+   -- if find(object.name, "Thresh_Soul_Eat_buf") then
       setSouls(souls+1)
       PrintAction("Gathered soul "..souls)
    end

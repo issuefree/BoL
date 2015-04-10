@@ -46,7 +46,7 @@ spells["alias"] = {
 
    -- auto attack modifier spells
    modAA=<alias>,             -- trigger for this spell being an autoattack modifier. Should be set to the "alias" of the spell
-   object="object.charName",  -- required for modAA to work. This should be a substring that matches the object.charName of the buff this spell applies   
+   object="object.name",  -- required for modAA to work. This should be a substring that matches the object.name of the buff this spell applies   
    -- reset=true,                -- casting this resets auto attack timer
 
    onHit=true,                -- set to true if this spell triggers on hit affects e.g. gangplank Q
@@ -65,7 +65,7 @@ spells["alias"] = {
 
    -- channelling
    channel=true,              -- if the spell is channelled (e.g. fiddle's drain). If set up it will detect the channel and the bot won't break the channel
-   object="object.charName",  -- this is the object to detect while channelling. As long as this object exists the bot won't interrupt
+   object="object.name",  -- this is the object to detect while channelling. As long as this object exists the bot won't interrupt
    objectTimeout=.5,          -- if the channelling object is transient you can specify a timeout here.
                                  katarina's ult needs this as the channelling object comes and goes
 
@@ -252,7 +252,7 @@ function CastFireahead(thing, target)
       point = OverShoot(me, point, spell.overShoot)
    end   
    if GetDistance(point) < GetSpellRange(spell) then
-      if IsWall(point.x, point.y, point.z) == 1 then
+      if IsWall(D3DXVECTOR3(point.x, point.y, point.z))  then
 	   	local name = thing
 	   	if type(name) ~= "string" then
 	   		name = me["SpellName"..GetSpell(thing).key]
@@ -346,7 +346,7 @@ function GetSpellCost(thing)
 end
 
 function GetSpellCostPerc(thing)
-	return GetSpellCost(thing) / (me.mana+(MP5*5))
+	return GetSpellCost(thing) / (me.mana+(me.mpRegen*25))
 end
 
 function GetSpellRange(thing)
@@ -681,7 +681,7 @@ function GetSpellFireahead(thing, target)
 	elseif IsPointAoE(spell) then
       point, chance = VP:GetCircularCastPosition(target, spell.delay/10, spell.radius, spell.range, spell.speed*100, me, IsBlockedSkillShot(thing))
 	end
-
+   return point, chance
 end
 
 function GetFireaheads(thing, targets)

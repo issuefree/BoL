@@ -153,7 +153,7 @@ function onCreate(object)
 			end
 		end
 
-		if find(object.charName, "Odin_HealthPackHeal") then
+		if find(object.name, "Odin_HealthPackHeal") then
 			if GetDistance(camp.object, object) < 500 then
 				camp.nextSpawn = math.ceil(time()) + camp.timeout
 				saveTimers()

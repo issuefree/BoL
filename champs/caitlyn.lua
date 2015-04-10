@@ -184,7 +184,7 @@ end
 
 local function onSpell(unit, spell)
 --   DumpSpells(unit, spell)
-   if unit.charName == me.charName and
+   if IsMe(unit) and
       find(spell.name, "HeadshotMissile")
    then
       spells["ace"].ad = 0
