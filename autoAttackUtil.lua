@@ -28,12 +28,8 @@ require "issuefree/spellUtils"
       --                  resets={GetSpellData("Q").name} },
 
 function GetAARange(target)
-   if not target or IsMe(target) then
-      -- return GetSpellRange("AA")
-      return me.range
-   else
-      return target.range
-   end
+   target = target or me
+   return target.range
 end
 
 function IsMelee(target)
@@ -87,28 +83,21 @@ local minionAAData = {
 --    return champData[me.name] or {}
 -- end
 
+spells["AA"].baseAttackSpeed = .625
+spells["AA"].windup = .4
+spells["AA"].windupVal = 3
+-- BoL may not have the bug which necessitates the minMoveTime
+spells["AA"].minMoveTime = 0
+spells["AA"].attacks = {"attack"}
+spells["AA"].resets = {}
+spells["AA"].duration = 1/spells["AA"].baseAttackSpeed
+
+-- TODO check for other attack reset items
+spells["AA"].itemResets = {"ItemTiamatCleave"}
+
 function InitAAData(data)
    data = data or {}
-
-   spells["AA"].baseAttackSpeed = data.baseAttackSpeed or .625
-   spells["AA"].windupTime = data.windup or .4
-   spells["AA"].windupVal = 3
-   spells["AA"].minMoveTime = data.minMoveTime or .1
-   spells["AA"].particles = data.particles or {}
-   spells["AA"].attacks = data.attacks or {"attack"}
-   spells["AA"].resets = data.resets or {}
-   spells["AA"].speed = data.speed
-   spells["AA"].extraRange = data.extraRange
-
-   -- TOOD check for other attack reset items
-   table.insert(spells["AA"].resets, "ItemTiamatCleave")
-
-   if not spells["AA"].duration then
-      spells["AA"].duration = 1/spells["AA"].baseAttackSpeed
-
-      -- err a bit on the side of attack faster
-      spells["AA"].duration = spells["AA"].duration
-   end
+   spells["AA"] = merge(spells["AA"], data)
 end
 
 function getAttackSpeed()
@@ -152,8 +141,6 @@ local aaObjectTime = {}
 
 local testDurs = {}
 local testWUs = {}
-
--- local estimatedWU = spells["AA"].windup
 
 function AfterAttack()
    -- needMove = true
@@ -352,7 +339,7 @@ function onObjAA(object)
 end
 
 function IAttack(unit, spell)
-   if not unit or not IsMe(unit) then
+   if not IsMe(unit) then
       return false
    end
 
@@ -371,22 +358,12 @@ function IAttack(unit, spell)
 end
 
 function isResetSpell(spell)
-   local spellName = spells["AA"].resets
-   if not spellName then return false end
-   if type(spellName) == "table" then
-      if ListContains(spell.name, spellName, true) then
-         if ModuleConfig.aaDebug then
-            pp("Reset "..spell.name)
-         end
-         return true
+   local resetSpells = merge(spells["AA"].resets, spells["AA"].itemResets)
+   if ListContains(spell.name, resetSpells, true) then
+      if ModuleConfig.aaDebug then
+         pp("Reset "..spell.name)
       end
-   else
-      if find(spell.name, spellName) then                       
-         if ModuleConfig.aaDebug then
-            pp("Reset "..spell.name)
-         end
-         return true
-      end
+      return true
    end
    return false
 end
@@ -424,7 +401,7 @@ function onSpellAA(unit, spell)
    if IAttack(unit, spell) then
       spells["AA"].baseAttackSpeed = 1 / (spell.animationTime * myHero.attackSpeed)
       spells["AA"].windupVal = 1 / (spell.windUpTime * myHero.attackSpeed)
-      spells["AA"].baseWindup = 1 / (spell.windUpTime * spells["AA"].baseAttackSpeed)
+      spells["AA"].windup = 1 / (spell.windUpTime * spells["AA"].baseAttackSpeed)
 
       if IsValid(spell.target) then
          lastAATarget = spell.target
