@@ -223,6 +223,10 @@ function aaTick()
 
 end
 
+function SetAttacking()
+   lastAttack = time()
+end
+
 function ResetAttack(spell)
    needMove = false
    if ModuleConfig.aaDebug then
