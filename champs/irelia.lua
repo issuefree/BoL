@@ -167,7 +167,7 @@ function Action()
             return true
          end
 
-         if GetDistance(VP:GetPredictedPos(target, 1, 1000)) > GetSpellRange("strike") then
+         if GetDistance(VP:GetPredictedPos(target, .5, target.ms, target, false)) > GetSpellRange("strike") then
             Cast("strike", target)
             PrintAction("Strike to stop escape", target)
             return true
