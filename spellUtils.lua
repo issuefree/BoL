@@ -243,7 +243,7 @@ end
 function CastFireahead(thing, target)
    if not target then return false end
 
-   local spell = GetSpell(thing)   
+   local spell = GetSpell(thing)
    if not spell.speed then spell.speed = 20 end
    if not spell.delay then spell.delay = 1.6 end
 
@@ -255,7 +255,7 @@ function CastFireahead(thing, target)
       if IsWall(D3DXVECTOR3(point.x, point.y, point.z))  then
 	   	local name = thing
 	   	if type(name) ~= "string" then
-	   		name = me["SpellName"..GetSpell(thing).key]
+	   		name = GetSpellData(spell.key).name
 	   	end
          pp("Casting "..name.." into wall.")
       end
@@ -378,9 +378,8 @@ end
 
 function GetSpellData(thing, hero)
    local spell = GetSpell(thing)
-   if not spell.key then
-      return nil
-   end
+   local key = spell.key
+   key = key or thing
 
    hero = hero or me
    return hero:GetSpellData(getISpell(spell.key))
@@ -662,7 +661,8 @@ function TrackSpellFireahead(thing, target)
    if not IsValid(target) or not tfas[key][tcn] then
       tfas[key][tcn] = {}
    end
-   local p = Point(VP:GetPredictedPos(target, spell.delay, spell.speed)) - Point(target)
+   local p = VP:GetPredictedPos(target, spell.delay, spell.speed)
+   p = Point(p) - Point(target)
    p.y = 0
    table.insert(tfas[key][tcn], p)
 
@@ -676,11 +676,13 @@ function GetSpellFireahead(thing, target)
    local spell = GetSpell(thing)
 
    local point, chance
-   if IsLinearSkillShot(spell) then
-		point, chance = VP:GetLineCastPosition(target, spell.delay/10, spell.width, spell.range, spell.speed*100, me, IsBlockedSkillShot(thing))
-	elseif IsPointAoE(spell) then
+	if IsPointAoE(spell) then
       point, chance = VP:GetCircularCastPosition(target, spell.delay/10, spell.radius, spell.range, spell.speed*100, me, IsBlockedSkillShot(thing))
-	end
+   elseif IsConeAoE(spell) then
+      point, chance = VP:GetConeAOECastPosition(target, spell.delay/10, spell.cone, spell.range, spell.speed*100, me)
+	else --   if IsLinearSkillShot(spell) then
+      point, chance = VP:GetLineCastPosition(target, spell.delay/10, spell.width, spell.range, spell.speed*100, me, IsBlockedSkillShot(thing))
+   end
    return point, chance
 end
 
@@ -730,7 +732,7 @@ function IsGoodFireahead(thing, target, minChance)
    end
 
    -- TODO do something better!
-   if IsSolid(point) then -- don't shoot into walls
+   if IsWall(Point(point):vector()) then -- don't shoot into walls
    	-- PrintAction("Don't shoot into walls")
       return false
    end
