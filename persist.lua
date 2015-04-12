@@ -138,6 +138,7 @@ function PersistTemp(label, ttl)
 end
 
 function IsTemp(label)
+   assert(type(label) == "string")
    if PData[label] and PData[label].timeout then
       return true
    end
