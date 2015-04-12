@@ -163,7 +163,7 @@ function PersistToTrack(object, name, champName, spellName)
       -- check if it's an ally casting the spell
       -- if the object comes into creation very close to a character on my team with the right name...
       for _,ally in ipairs(ALLIES) do
-         if ally.name == champName then
+         if ally.charName == champName then
             if GetDistance(ally, object) < 200 then
                return
             end
@@ -371,7 +371,7 @@ local function updateCreeps()
 end
 
 local function updateHeroes()
-   ALLIES = GetAllyHeroes()
+   ALLIES = ValidTargets(GetAllyHeroes())
    table.insert(ALLIES, me)
    ENEMIES = ValidTargets(GetEnemyHeroes())
    ADC = nil
@@ -573,7 +573,7 @@ function createForPersist(object)
    PersistPet(object, "Inky")
    PersistPet(object, "Blinky")
    PersistPet(object, "Clyde")
-   if object.type == 12 then
+   if object.type == "obj_AI_Minion" then
       for _,hero in ipairs(concat(ENEMIES, ALLIES, me)) do
          if object.charName == hero.charName then
             PersistPet(object, object.charName)
@@ -592,7 +592,7 @@ function createForPersist(object)
 
    -- shaco
    PersistPet(object, "Jack In The Box")
-   if object.type == 12 and P.shacoClone then
+   if object.type == "obj_AI_Minion" and P.shacoClone then
       PersistPet(object, P.shacoClone.charName)
    end
 
@@ -627,8 +627,8 @@ function persistTick()
 
 
    -- updateMinions()
-   MINIONS = minionManager(MINION_ENEMY, 2000, myHero, MINION_SORT_HEALTH_ASC).objects
-   MYMINIONS = minionManager(MINION_ALLY, 2000, me).objects
+   MINIONS = ValidTargets(minionManager(MINION_ENEMY, 2000, myHero, MINION_SORT_HEALTH_ASC).objects)
+   MYMINIONS = ValidTargets(minionManager(MINION_ALLY, 2000, me).objects)
    updateCreeps()
    updateHeroes()
    updateTrackedSpells()
@@ -636,8 +636,18 @@ function persistTick()
 
    -- MINIONS = ValidTargets(GetPersisted("MINIONS"))
    -- MYMINIONS = ValidTargets(GetPersisted("MYMINIONS"))
-   TURRETS = FilterList(ValidTargets(GetPersisted("TURRET")), function(item) return item.health > 0 end)
-   MYTURRETS = FilterList(ValidTargets(GetPersisted("MYTURRET")), function(item) return item.health > 0 end)
+   TURRETS = FilterList(ValidTargets(GetPersisted("TURRET")), 
+      function(item) 
+         return item.health > 0 and
+                item.type == "obj_AI_Turret"
+      end
+   )
+   MYTURRETS = FilterList(ValidTargets(GetPersisted("MYTURRET")), 
+      function(item) 
+         return item.health > 0 and
+                item.type == "obj_AI_Turret"
+      end
+   )
    PETS = GetPersisted("PET")
    MYPETS = GetPersisted("MYPET")
 end
