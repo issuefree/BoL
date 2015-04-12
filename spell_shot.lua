@@ -35,7 +35,7 @@ function GetSpellShots(name)
 end
 
 function GetSpellShot(unit, spell)
-	local shot = copy(GetSpellDef(unit.name, spell.name))
+	local shot = copy(GetSpellDef(unit.charName, spell.name))
 	if shot then
 		shot.startPoint = Point(unit)
 		shot.endPoint = spell.endPos
