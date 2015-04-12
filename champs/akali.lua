@@ -20,7 +20,7 @@ AddToggle("", {on=true, key=115, label=""})
 
 AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0} / {1} / {2}", args={GetAADamage, "mark", "slash"}})
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
-AddToggle("move", {on=true, key=112, label="Move"})
+AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["mark"] = {
   key="Q",
@@ -71,6 +71,10 @@ spells["AA"].damOnTarget = getDetonateDam
 function Run()
    spells["AA"].bonus = GetSpellDamage("AA")*(.06+(me.ap/6/100))
 
+   for _,m in ipairs(GetWithBuff("mark", MINIONS, CREEPS, ENEMIES)) do
+      Circle(m)
+   end
+
    if StartTickActions() then
       return true
    end
@@ -83,18 +87,18 @@ function Run()
 
    if IsOn("lasthit") and Alone() then
       if CanUse("slash") then
-         local kills = GetKills("slash", GetInRange(me, "slash", MINIONS))
-         if #kills >= 2 then
+         local kills = GetKills("slash", GetInRange(me, "slash", MINIONS))         
+         if #kills >= 2 or (JustAttacked() and #kills == 1) then
             Cast("slash", me)
-            PrintAction("Slash for lasthit")
+            PrintAction("Slash for lasthit", #kills)
             return true
          end
+
       end
 
       if KillMinion("mark", "burn") then
          return true
       end
-
 
    end
 
@@ -151,16 +155,13 @@ function FollowUp()
 end
 
 local function onObject(object)
-   local target = PersistOnTargets("mark", object, "akali_markOftheAssasin_marker", ENEMIES)
-   -- if not GetMarkedTarget() then
-   --    Persist("markedTarget", target)
-   -- end
-   PersistOnTargets("mark", object, "akali_markOftheAssasin_marker", MINIONS)
+   local target = PersistOnTargets("mark", object, "Akali_Base_markOftheAssasin_marker_tar", ENEMIES)
+   PersistOnTargets("mark", object, "Akali_Base_markOftheAssasin_marker_tar", CREEPS, MINIONS)
 
    Persist("shroud", object, "akali_smoke_bomb_tar_team_green")
 end
 
-local function onSpell(object, spell)
+local function onSpell(unit, spell)
 end
 
 AddOnCreate(onObject)
