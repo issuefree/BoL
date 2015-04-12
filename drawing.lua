@@ -1,15 +1,18 @@
 require "issuefree/telemetry"
 
 -- circle colors
-yellow = 0x00222200
-brightYellow = 0xFFFFFF00
-green  = 0x00002200
-brightGreen  = 0xFF00FF00
-red    = 0xFFFF0000
-blue   = 0xFF0000FF
-cyan   = 0xFF00FFFF
-violet = 0x00220022
-brightViolet = 0xFFFF00FF
+yellowB  = 0xFFFFFF00
+yellow = 0x75FFFF00
+greenB   = 0xFF00FF00
+green  = 0x7500FF00
+redB     = 0xFFFF0000
+red    = 0x75FF0000
+blueB    = 0xFF0000FF
+blue   = 0x750000FF
+cyanB    = 0xFF00FFFF
+cyan   = 0x7500FFFF
+violetB  = 0xFFFF00FF
+violet = 0x75FF00FF
 
 -- text colors
 yellowT = 0xFFFFFF00
@@ -89,19 +92,7 @@ function Circle(target, radius, color, thickness)
 	color = color or yellow
 	radius = radius or GetWidth(target)
 
-	if type(target) == "userdata" then
-		for i = 1, thickness, 1 do
-			table.insert(DRAWS, {DrawCircle, {target.x, target.y, target.z, radius+i-1, color}})
-		end		
-	else
-		local p = Point(target)
-		if not p.x or not p.y or not p.z then
-			return 
-		end
-		for i = 1, thickness, 1 do
-			table.insert(DRAWS, {DrawCircle, {p.x, p.y, p.z, radius+i-1, color}})
-		end
-	end
+	table.insert(DRAWS, {DrawCircle3D, {target.x, target.y, target.z, radius, thickness, color, 50}})
 end
 
 function DoDraws()
