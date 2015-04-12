@@ -52,6 +52,10 @@ function Point:unpack()
    return self.x, self.y, self.z
 end
 
+function Point:vector()
+   return D3DXVECTOR3(self.x, self.y, self.z)
+end
+
 function Point:__tostring()
    if not self:valid() then
       return "(-)"
@@ -358,7 +362,7 @@ end
 
 function FacingMe(target)
    local d1 = GetDistance(target)
-   local p = Point(VP:GetPredictedPos(target,1,1000))
+   local p = VP:GetPredictedPos(target,1,1000)   
    local d2 = GetDistance(p)
    return d2 < d1 
 end

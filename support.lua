@@ -78,14 +78,14 @@ function CheckShield(thing, unit, spell, type)
       GetDistance(spell.target) < GetSpellRange(shield)
    then
       if type == "MAGIC" then
-         local shot = GetSpellDef(unit.name, spell.name)
+         local shot = GetSpellDef(unit.charName, spell.name)
          if not shot or shot.physical then
             return false
          end
       end
 
       if type == "CC" then
-         local shot = GetSpellDef(unit.name, spell.name)
+         local shot = GetSpellDef(unit.charName, spell.name)
          if not shot or not shot.cc or shot.cc <= 1 then
             return false
          end

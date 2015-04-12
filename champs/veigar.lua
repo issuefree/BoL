@@ -16,7 +16,7 @@ InitAAData({
 -- TODO needs complete rework for patch
 spells["strike"] = {
    key="Q", 
-   range=950, 
+   range=950-25, 
    color=violet, 
    base={80,125,170,215,260}, 
    ap=.6,
@@ -30,7 +30,7 @@ spells["dark"] = {
    color=red,    
    base={120,170,220,270,320}, 
    ap=1, 
-   radius=250
+   radius=250-25
 }
 spells["event"] = {
    key="E", 
@@ -57,12 +57,6 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 
 function Run()
-
-   local ccs = GetWithBuff("cc", ENEMIES)
-   for _,v in ipairs(ccs) do
-      Circle(v)
-   end
-
    if StartTickActions() then
       return true
    end
@@ -84,10 +78,9 @@ function Run()
    end
 
    if IsOn("lasthit") and Alone() then
-      --TODO for skill change
---      if KillMinion("strike", "burn", true) then
---         return true
---      end
+      if KillMinion("strike", "ignoreMana", true) then
+         return true
+      end
    end
 
    if HotKey() then

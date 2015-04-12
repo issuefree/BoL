@@ -74,6 +74,7 @@ spells["AA"] = {
    color=red,
    name="attack"   
 }
+loadAAData()
 
 MASTERIES = {}
 BLOCK_FOR_AA = true
@@ -242,38 +243,38 @@ local function drawCommon()
    end
 
 
-   if tfas then
-      for key,spell in pairs(tfas) do
-         local activeSpell = GetSpell(key)
+   -- if tfas then
+   --    for key,spell in pairs(tfas) do
+   --       local activeSpell = GetSpell(key)
 
-         if activeSpell and activeSpell.showFireahead then
-            for name,trackedPoints in pairs(spell) do
-               local target
-               for _,enemy in ipairs(ENEMIES) do
-                  if enemy.charName == name then
-                     target = enemy
-                     break
-                  end
-               end
+   --       if activeSpell and activeSpell.showFireahead then
+   --          for name,trackedPoints in pairs(spell) do
+   --             local target
+   --             for _,enemy in ipairs(ENEMIES) do
+   --                if enemy.charName == name then
+   --                   target = enemy
+   --                   break
+   --                end
+   --             end
 
-               if not target then break end
-               local point, chance = GetSpellFireahead(key, target)
+   --             if not target then break end
+   --             local point, chance = GetSpellFireahead(key, target)
 
-               if GetDistance(point) < GetSpellRange(activeSpell)+100 then
+   --             if GetDistance(point) < GetSpellRange(activeSpell)+100 then
 
-                  if chance >= 3 then
-                     Circle(point, 50, green, 3)
-                  elseif chance >= 2 then
-                     Circle(point, 50, green, 2)                  
-                  elseif chance >= 1 then
-                     Circle(point, 50, green, 1)
-                  end
-                  LineBetween(target, point)
-               end
-            end
-         end
-      end
-   end
+   --                if chance >= 3 then
+   --                   Circle(point, 50, green, 3)
+   --                elseif chance >= 2 then
+   --                   Circle(point, 50, green, 2)                  
+   --                elseif chance >= 1 then
+   --                   Circle(point, 50, green, 1)
+   --                end
+   --                LineBetween(target, point)
+   --             end
+   --          end
+   --       end
+   --    end
+   -- end
 
    for i,shot in rpairs(ACTIVE_SKILL_SHOTS) do
       if shot.timeOut < time() then
@@ -428,7 +429,7 @@ function IsSuperMinion(minion)
 end
 
 function IsHero(unit)
-   return unit.type == 20
+   return unit.type == "AIHeroClient"
    -- for _,hero in ipairs(concat(ALLIES, ENEMIES)) do
    --    if SameUnit(unit, hero) then
    --       return true
@@ -452,13 +453,6 @@ function IsValid(target)
       target.name == "" or target.charName == ""
    then
       return false
-   end
-   if not target.visible then
-      if target.type == 36 then
-
-      else
-         return false
-      end
    end
    return true
 end
@@ -809,7 +803,7 @@ local isx = nil
 local isy = nil
 function HitObjectives()
    local targets = GetInE2ERange(me, GetAARange()+25, TURRETS)
-   table.sort(targets, function(a,b) return a.maxhealth > b.maxhealth end)
+   table.sort(targets, function(a,b) return a.maxHealth > b.maxHealth end)
 
    if targets[1] and CanAttack() then
       if AA(targets[1]) then
@@ -1390,7 +1384,7 @@ function PetAttack(target, key)
    if time() - lastPetAttack > 1.5 then
       CastSpellTarget(key, target)
       lastPetAttack = time()
-      PrintAction("Pet Attack", target)
+      PrintAction("Pet Attack", target.charName)
    end
 end
 function CheckPetTarget(pet, unit, spell, key)
@@ -1660,7 +1654,7 @@ end
 TICK_DELAY = .05
 -- Common stuff that should happen every time
 
-local lastObjectName = {}
+lastObjectName = {}
 local lastObjectCheck = time()
 local tt = time()
 
@@ -1674,10 +1668,10 @@ function OnTick()
    TICK_DELAY = time()-tt
    tt = time()
 
-   if time() - lastObjectCheck > .1 then   
+   if time() - lastObjectCheck > .5 then   
       for i = 1, objManager.iCount, 1 do
          local object = objManager:GetObject(i)
-         if object and object.valid then
+         if object and object.valid and object.name then
             if lastObjectName[i] == object.name then
                -- existing object
             else
@@ -2335,16 +2329,16 @@ function CastAtCC(thing, hardCCOnly, targetOnly)
    end
 
    local target = GetWeakest(spell, GetWithBuff("cc", GetInRange(me, range, ENEMIES)))
+
    local stillMoving = false
    local prediction = false
    if not target then
-
       if hardCCOnly then
          return 
       end
 
       for _,enemy in ipairs(SortByHealth(ENEMIES, thing)) do
-         local pred = P[enemy.name..".pred"]
+         local pred = GetSpellFireahead(thing, enemy)
          Circle(pred)
          if IsInRange(range, pred) then
             target = pred
