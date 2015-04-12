@@ -4,7 +4,6 @@ require "issuefree/modules"
 pp("\nTim's Karma")
 
 InitAAData({
-   windup=.2,
    particles = {"Karma_Base_BA_mis"}
 })
 
