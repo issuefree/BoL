@@ -225,16 +225,16 @@ end
 
 function PersistOnTargets(label, object, name, ...)
    if object and find(object.name, name) then
-      local target = SortByDistance(GetInRange(object, 125, concat(...)), object)[1]
+      local target = SortByDistance(GetInRange(object, 50, concat(...)), object)[1]
       if target then
          if not pOn[label] then
             pOn[label] = {}
          end
-         Persist(label..object.name, object)
-         PData[label..object.name].unit = target
-         PData[label..object.name].time = time()
-         table.insert(pOn[label], label..object.name)
-         -- pp("Persisting "..name.." on "..target.charName.." as "..name..object.networkID)
+         Persist(label..target.name, object)
+         PData[label..target.name].unit = target
+         PData[label..target.name].time = time()
+         table.insert(pOn[label], label..target.name)
+         pp("Persisting "..name.." on "..target.charName.." as "..label..target.name)
          return target
       end
    end
@@ -247,7 +247,7 @@ function HasBuff(buffName, target)
    if not pOn[buffName] then return false end
    for _,pKey in ipairs(pOn[buffName]) do
       local pd = PData[pKey]
-      if pd and pd.unit.charName == target.charName then
+      if pd and SameUnit(pd.unit, target) then
          return true
       end
    end
