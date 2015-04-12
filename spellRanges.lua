@@ -32,7 +32,7 @@ function rangeTick()
             elseif os.clock() - getNextAttackTime() < 0 then
                time = os.clock() - getNextAttackTime() - 1
                Circle(me, range/(-time*-time), info.color)
-               Circle(me, range, red)
+               Circle(me, range, redS)
             end
          else
             if time and time > 1 then
