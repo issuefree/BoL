@@ -2339,13 +2339,15 @@ function CastAtCC(thing, hardCCOnly, targetOnly)
       end
 
       for _,enemy in ipairs(SortByHealth(ENEMIES, thing)) do
-         local pred = GetSpellFireahead(thing, enemy)
-         Circle(pred)
-         if IsInRange(range, pred) then
-            target = pred
+         local pred, chance = GetSpellFireahead(thing, enemy)
+         if chance >= 3 then
             Circle(pred)
-            prediction = true
-            break
+            if IsInRange(range, pred) then
+               target = pred
+               Circle(pred)
+               prediction = true
+               break
+            end
          end
       end
 
