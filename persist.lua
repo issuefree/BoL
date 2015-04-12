@@ -235,7 +235,7 @@ function PersistOnTargets(label, object, name, ...)
          PData[label..target.name].unit = target
          PData[label..target.name].time = time()
          table.insert(pOn[label], label..target.name)
-         pp("Persisting "..name.." on "..target.charName.." as "..label..target.name)
+         -- pp("Persisting "..name.." on "..target.charName.." as "..label..target.name)
          return target
       end
    end
