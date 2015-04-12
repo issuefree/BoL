@@ -136,7 +136,7 @@ function ApproachAngle(attacker, target)
    if IsMe(attacker) then
       point = ProjectionA(me, GetMyDirection(), 25)
    else
-      point = VP:GetPredictedPos(attacker, 1, 1000)
+      point = VP:GetPredictedPos(attacker, 1, 1000, attacker, false)
       -- point = Point(GetFireahead(attacker, 3, 0))
    end
    local aa = RadsToDegs(math.abs( AngleBetween(attacker, target) - AngleBetween(attacker, point) ))
@@ -362,7 +362,7 @@ end
 
 function FacingMe(target)
    local d1 = GetDistance(target)
-   local p = VP:GetPredictedPos(target,1,1000)   
+   local p = VP:GetPredictedPos(target,.5,target.ms,target, false)   
    local d2 = GetDistance(p)
    return d2 < d1 
 end
