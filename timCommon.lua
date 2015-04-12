@@ -450,6 +450,7 @@ function IsValid(target)
    if target.dead or 
       target.invulnerable or
       not target.valid or
+      not target.visible or
       target.name == "" or target.charName == ""
    then
       return false
