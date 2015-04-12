@@ -1,4 +1,5 @@
 require "issuefree/timCommon"
+require "issuefree/spellUtils"
 
 local num = 10
 local objects = {}
@@ -49,12 +50,12 @@ function debugTick()
    if not ModuleConfig.debug then
       return
    end
-   Circle(GetMousePos(), range, blue) 
+   Circle(GetMousePos(), range, cyanB) 
 
-   -- PrintState(-5, GetSpellData("Q").name.."  "..me.SpellTimeQ)
-   -- PrintState(-4, GetSpellData("W").name.."  "..me.SpellTimeW)
-   -- PrintState(-3, GetSpellData("E").name.."  "..me.SpellTimeE)
-   -- PrintState(-2, GetSpellData("R").name.."  "..me.SpellTimeR)
+   PrintState(-5, GetSpellData("Q").name.."  "..GetSpellData("Q").currentCd)
+   PrintState(-4, GetSpellData("W").name.."  "..GetSpellData("W").currentCd)
+   PrintState(-3, GetSpellData("E").name.."  "..GetSpellData("E").currentCd)
+   PrintState(-2, GetSpellData("R").name.."  "..GetSpellData("R").currentCd)
 
    objects = {}
    for i = 1, objManager.iCount, 1 do
@@ -63,7 +64,13 @@ function debugTick()
          GetDistance(object, GetMousePos()) < range 
       then
          if not ListContains(object.name, ignoredObjects) then
-            table.insert(objects, object.name.."     ("..object.charName..")")
+            if object.type == "AIHeroClient" or object.type == "obj_AI_Minion" then
+               table.insert(objects, object.name.."      \""..object.charName.."\"")
+               table.insert(objects, "        ("..object.type..")")
+            else
+               table.insert(objects, object.name)
+               table.insert(objects, "        ("..object.type..")")
+            end
          end
       end
    end
