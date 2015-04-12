@@ -429,18 +429,15 @@ function IsSuperMinion(minion)
 end
 
 function IsHero(unit)
-   return unit.type == "AIHeroClient"
-   -- for _,hero in ipairs(concat(ALLIES, ENEMIES)) do
-   --    if SameUnit(unit, hero) then
-   --       return true
-   --    end
-   -- end
-   -- return false
+   return unit and unit.type == "AIHeroClient"
 end
 
 function IsEnemy(unit)
-   if not unit then return false end
-   return unit.team ~= me.team and IsHero(unit)
+   return IsHero(unit) and unit.team ~= me.team
+end
+
+function IsAlly(unit)
+   return IsHero(unit) and unit.team == me.team
 end
 
 function IsValid(target)
@@ -610,7 +607,7 @@ end
 
 function MoveToTarget(t)
    if CanMove() then
-      local pos = VP:GetPredictedPos(t, .5, 1000)
+      local pos = VP:GetPredictedPos(t, .5, t.ms, t, false)
       me:MoveTo(pos.x,pos.z)
       CURSOR = Point(pos)
       PrintAction("MTT", t, 1)
@@ -1661,9 +1658,9 @@ local tt = time()
 
 
 function OnTick()
-   if time() - loadtime < 1 then
-      return
-   end
+   -- if time() - loadtime < 1 then
+   --    return
+   -- end
    FRAME = time()
    Text(""..trunc(1/(time()-tt),1), 1800, 60, 0xFFCCEECC);
    TICK_DELAY = time()-tt
@@ -1976,11 +1973,14 @@ function IsLoLActive()
    return tostring(winapi.get_foreground_window()) == "League of Legends (TM) Client"
 end
 
-function AA(target)
-   if CanAttack() and IsValid(target) then
-      me:Attack(target)
-      -- needMove = true
-      return true
+function AA(target, force)
+   if IsValid(target) then
+      if CanAttack() or force then
+         SetAttacking()
+         me:Attack(target)      
+         -- needMove = true
+         return true
+      end
    end
    return false
 end
@@ -2024,7 +2024,7 @@ function ModAAFarm(thing)
          then
             AddWillKill(minion, thing)
             Cast(thing, me)
-            me:Attack(minion)
+            AA(minion, true)
             PrintAction(thing.." lasthit", minion)
             return true
          end
@@ -2053,7 +2053,7 @@ function MeleeMove()
          if not IsInAARange(target) then            
             -- if not RetreatingFrom(target) then
             Circle(target, lockRange, yellow)
-            if GetDistance(target, CURSOR) < 350 then
+            if GetDistance(target, mousePos) < 350 then
                Circle(target, lockRange, red, 3)
                if MoveToTarget(target) then
                   return true
