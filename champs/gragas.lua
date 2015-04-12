@@ -87,7 +87,7 @@ function Run()
             PrintAction("Pop to kill", enemy)
             break
          end
-         local nextPos = Point(VP:GetPredictedPos(enemy, 1, 1000))
+         local nextPos = VP:GetPredictedPos(enemy, 1, 1000)
          if GetDistance(P.barrel, nextPos) > spell.radius then
             Cast(spell, me, true)
             PrintAction("Pop escapees", nil, 1)
