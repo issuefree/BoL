@@ -162,7 +162,13 @@ local function onObject(object)
    end
    if GetDistance(object, GetMousePos()) < range then
       if not ListContains(object.name, ignoredObjects) then
-         pp(object.name.."     ("..object.charName..")")
+         if object.type == "AIHeroClient" or object.type == "obj_AI_Minion" then
+            table.insert(objects, object.name.."      \""..object.charName.."\"")
+            table.insert(objects, "        ("..object.type..")")
+         else
+            table.insert(objects, object.name)
+            table.insert(objects, "        ("..object.type..")")
+         end
       end
    end
 end
