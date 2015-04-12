@@ -112,7 +112,7 @@ function getAADuration()
 end
 
 function getWindup()
-   return 1 / (myHero.attackSpeed * spells["AA"].windupVal)
+   return math.max(.2, 1 / (myHero.attackSpeed * spells["AA"].windupVal))
 end
 
 function OrbWalk()
