@@ -75,9 +75,6 @@ function ChampTick()
       return true
    end
 
-   PrintState(0, me.totalDamage)
-   PrintState(1, GetSpellDamage("AA"))
-
    AutoPet(P.tibbers)
 
    if P.stun then
@@ -243,7 +240,7 @@ local function onObject(object)
 end
 
 local function onSpell(unit, spell)
-   CheckShield("shield", unit, spell)   
+   CheckShield("shield", unit, spell)
 
    CheckPetTarget(P.tibbers, unit, spell)
 end
