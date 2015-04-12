@@ -1309,7 +1309,7 @@ function WillKill(...)
             local speed = spells["AA"].speed
             if not speed and not IsMelee(me) then
                speed = 1500
-               pp("No speed set")
+               pp("No speed set "..thing)
             end
             if not IsMelee(me) then
                while speed < 1000 do
