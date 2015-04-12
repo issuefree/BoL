@@ -678,13 +678,13 @@ SPELL_DEFS = {
       threshrpenta={type="stall"},
   	},
 	Tristana = {
-		rapidfire={},
-		detonatingshot={},
-		rocketjump={
+		tristanaq={},
+		tristanaw={
 			range=900, radius=200, time=1, ss=true, isline=false,
 			type="dash", ends="point"
 		},
-		bustershot={cc=KNOCK},
+		tristanae={},
+		tristanar={cc=KNOCK},
 	},
 	Tryndamere = {
 		slashcast={},
