@@ -1188,8 +1188,8 @@ function CheckTrinket()
    end
 
    local trinketItem = me:getItem(ITEM_7)
-   if trinketItem == 0 then
-      Circle(me, 500, yellow, 10)
+   if not trinketItem then
+      Circle(me, 500, yellowB, 10)
    end
 
    -- local ss = GetItem("Sightstone")
@@ -1839,7 +1839,7 @@ function StartTickActions()
       wasChannelling = false
    end
 
-   -- UseAutoItems()
+   UseAutoItems()
 
    if HotKey() then
       if GetDistance(mousePos) < 3000 then
@@ -2115,7 +2115,7 @@ end
 local flaskCharges = 3
 function UseItem(itemName, target, force)
    local item = ITEMS[itemName]
-   local slot = me:getInventorySlot(item.id)
+   local slot = GetInventorySlot(item.id)
    if not slot or slot == 0 then return end   
    slot = tostring(slot)
 
