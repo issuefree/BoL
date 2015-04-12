@@ -181,7 +181,7 @@ local function onCreate(object)
    Persist("warSpectre", object, "Clyde", me.team)
    Persist("pestilence", object, "Inky", me.team)
    Persist("famine", object, "Blinky", me.team)
-   if object.type == 12 then
+   if object.type == "obj_AI_Minion" then
       for _,hero in ipairs(concat(ENEMIES, ALLIES)) do
          if object.charName == hero.charName then
             Persist("death", object)
