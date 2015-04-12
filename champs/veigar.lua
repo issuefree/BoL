@@ -30,6 +30,9 @@ spells["dark"] = {
    color=red,    
    base={120,170,220,270,320}, 
    ap=1, 
+   delay=1,
+   speed=0,
+   noblock=true,
    radius=250-25
 }
 spells["event"] = {
