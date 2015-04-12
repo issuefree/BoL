@@ -81,8 +81,6 @@ function Run()
       return true
    end
 
-   PrintState(0, me:getBuff(2).valid)
-
    if IsOn("tear") then
       UseItem("Muramana")
    end
