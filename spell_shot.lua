@@ -136,12 +136,12 @@ function ShotTarget(shot, target)
 				-- pp("orthag "..safePoint)
 			end
 
-			if IsSolid(safePoint) then -- if safe is into a wall go the other direction
+			if IsWall(safePoint:vector()) then -- if safe is into a wall go the other direction
 				pp("Safepoint is in a wall")
 				safePoint = nil
 				local locs = SortByDistance(GetCircleLocs(impactPoint, shot.safeDist))
 				for _,loc in ipairs(locs) do
-					if not IsSolid(loc) and isSafe(loc, shot) then
+					if not IsWall(loc) and isSafe(loc, shot) then
 						safePoint = loc
 						pp("nearest nonwall safepoint "..safePoint)
 						break
