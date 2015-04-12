@@ -27,7 +27,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 spells["orb"] = {
    key="Q", 
    range=1100, 
-   color=blue, 
+   color=cyan, 
    base={60,90,120,150,180}, 
    ap=.5,
    delay=1.5,
@@ -70,24 +70,27 @@ function Run()
       return true
    end
 
-   if not P.orb then
+   -- TODO charge tear
+
+   if not P.orb and not P.orbTemp then
       if CheckDisrupt("orb") then
          return true
       end
    end
 
    if P.orb and CanUse("orb") then
-      Circle(P.orb, spells["orb"].radius, blue)
+      Circle(P.orb, spells["orb"].radius, cyanB)
+
       if CanUse("orb") then
          local inRange = GetInRange(P.orb, spells["orb"].radius, ENEMIES)
          if #inRange > 0 then
             Cast("orb", me, true)
-            PrintAction("Detonate orb", inRange[1])
+            PrintAction("Detonate orb", inRange[1], .5)
          end
       end
    end
 
-   if not P.orb then
+   if not P.orb and not P.orbTemp then
       if CastAtCC("orb") then
          return true
       end
@@ -108,7 +111,7 @@ function Run()
          end
       end
 
-      if P.orb and #GetInRange(me, "orb", ENEMIES) == 0 then
+      if P.orb and not P.orbTemp and #GetInRange(me, "orb", ENEMIES) == 0 then
          if #GetKills("orb", GetInRange(P.orb, spells["orb"].radius, MINIONS)) >= 2 then
             Cast("orb", me, true)
             PrintAction("Detonate orb for LH")
@@ -155,7 +158,7 @@ function Action()
       end
    end
 
-   if not P.orb then
+   if not P.orb and not P.orbTemp then
       if SkillShot("orb") then
          return true
       end
@@ -179,12 +182,12 @@ end
 local function onObject(object)
    Persist("orb", object, "cryo_FlashFrost_mis")
    Persist("storm", object, "cryo_storm_green_team")
-   PersistOnTargets("freeze", object, "Global_Freeze", ENEMIES)
+   PersistOnTargets("freeze", object, "Global_Freeze", ENEMIES, MINIONS)
 end
 
 local function onSpell(unit, spell)
    if ICast("orb", unit, spell) then
-      PersistTemp("orb", .5)
+      PersistTemp("orbTemp", 1)
    end
 end
 
