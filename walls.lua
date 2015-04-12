@@ -328,7 +328,7 @@ end
 AddOnCreate(onCreate)
 AddOnTick(Tick)
 
-function IsSolid(p)
+function IsWall(p)
    local ix, iy = pointToIndex(p)
    if not POINTS[ix] or not POINTS[ix][iy] then
       return false
@@ -341,7 +341,7 @@ function WillCollide(s, t)
    local cp = s
    cp = Projection(cp,t,RES/4)
    while GetDistance(s, cp) < dist do
-      if IsSolid(cp) then --or #getNearPoints(cp) >= 1 then
+      if IsWall(cp) then --or #getNearPoints(cp) >= 1 then
          return cp
       end
       cp = Projection(cp,t,RES/4)
