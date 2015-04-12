@@ -296,6 +296,7 @@ function RemoveFromList(list1, list2)
 end
 
 function SameUnit(o1, o2)
+   assert(type(o1) == "userdata" and type(o2) == "userdata")
    if not o1 or not o2 then return false end
    return o1.name == o2.name and
           o1.charName == o2.charName and
