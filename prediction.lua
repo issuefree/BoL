@@ -5,9 +5,9 @@ require "issuefree/spellDefs"
 function PredictEnemy(unit, spell)
    -- if IsEnemy(unit) then
    if IsHero(unit) then
-      local def = GetSpellDef(unit.name, spell.name)
+      local def = GetSpellDef(unit.charName, spell.name)
       if def and def.type then
-         local predName = unit.name..".pred"
+         local predName = unit.charName..".pred"
          local pred = PersistTemp(predName, def.duration or .5)
          pred.enemy = unit
          local point
@@ -45,12 +45,12 @@ end
 
 function checkSpells()
 	for _,hero in ipairs(concat(ALLIES, ENEMIES)) do
-		local defs = PREDICTION_DEFS[hero.name]
+		local defs = PREDICTION_DEFS[hero.charName]
 		if defs and defs.keys then
 			for _,key in ipairs(defs.keys) do
 				local sn = hero["SpellName"..key]
 				if not defs[sn] then
-					pp(hero.name.."."..key)
+					pp(hero.charName.."."..key)
 					pp(sn)
 					defs[sn] = {}
 				end
