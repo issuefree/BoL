@@ -83,17 +83,20 @@ local minionAAData = {
 --    return champData[me.name] or {}
 -- end
 
-spells["AA"].baseAttackSpeed = .625
-spells["AA"].windup = .4
-spells["AA"].windupVal = 3
--- BoL may not have the bug which necessitates the minMoveTime
-spells["AA"].minMoveTime = 0
-spells["AA"].attacks = {"attack"}
-spells["AA"].resets = {}
-spells["AA"].duration = 1/spells["AA"].baseAttackSpeed
+function loadAAData()
+   spells["AA"].baseAttackSpeed = .625
+   spells["AA"].windup = .4
+   spells["AA"].windupVal = 3
+   -- BoL may not have the bug which necessitates the minMoveTime
+   spells["AA"].minMoveTime = 0
+   spells["AA"].attacks = {"attack"}
+   spells["AA"].resets = {}
+   spells["AA"].duration = 1/spells["AA"].baseAttackSpeed
+   spells["AA"].particles = {}
 
--- TODO check for other attack reset items
-spells["AA"].itemResets = {"ItemTiamatCleave"}
+   -- TODO check for other attack reset items
+   spells["AA"].itemResets = {"ItemTiamatCleave"}
+end
 
 function InitAAData(data)
    data = data or {}
