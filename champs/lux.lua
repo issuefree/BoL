@@ -60,7 +60,7 @@ spells["barrier"] = {
 }
 spells["singularity"] = {
    key="E", 
-   range=1100, 
+   range=1100-100, -- reticle
    color=yellow, 
    base={60,105,150,195,240}, 
    ap=.6,
@@ -112,7 +112,7 @@ function Run()
       return true
    end
 
-   Circle(P.singularity, nil, blue)
+   Circle(P.singularity, nil, cyan)
 
    if KillSteal(P.BARON) then
       return true
@@ -163,7 +163,7 @@ function Run()
             PrintAction("Pop for flare", enemy, .5)
             break
          end
-         local nextPos = VP:GetPredictedPos(enemy, 1, 1000)
+         local nextPos = VP:GetPredictedPos(enemy, .5, enemy.ms, enemy, false)
          if GetDistance(P.singularity, nextPos) > spell.radius then
             Cast("detonate", me, true)
             PrintAction("Pop escapees", nil, .5)
@@ -297,19 +297,18 @@ function FollowUp()
 
 end
 
+
+--TODO rework this to work with CheckShield
 function checkBarrier(unit, spell)
    local W = GetSpell("barrier")
    if IsOn("barrier") and
-      spell.target and
-      not find(unit.name, "Minion") and
-      not find(spell.target.name, "Minion") and
       CanUse("barrier") and
-      unit.team ~= me.team and
-      GetDistance(spell.target) < W.range and
-      spell.target.team == me.team
+      IsEnemy(unit) and
+      IsAlly(spell.target) and
+      GetDistance(spell.target) < W.range
    then
       -- don't bother shielding people near full health
-      if spell.target.health/spell.target.maxHealth > .85 then
+      if GetHPerc(spell.target) > .85 then
          return
       end
       
@@ -318,11 +317,11 @@ function checkBarrier(unit, spell)
       -- if there isn't anyone shoot it at the caster
       
       local target = spell.target      
-      if spell.target.name == me.name then
+      if IsMe(spell.target) then
          target = unit
          local minPH = 2
          for _,ally in ipairs(GetInRange(me, W.range, ALLIES)) do
-            local lMinPH = ally.health,ally.maxHealth
+            local lMinPH = GetHPerc(ally)
             if lMinPH < minPH then
                target = ally
                minPH = lMinPH
@@ -350,7 +349,7 @@ end
 
 
 local function onObject(object)
-   Persist("singularity", object, "LuxLightstrike_mis")
+   Persist("singularity", object, "LuxLightstrike_tar")
    PersistOnTargets("flare", object, "LuxDebuff", MINIONS, ENEMIES)
 end
 
