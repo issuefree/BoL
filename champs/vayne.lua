@@ -97,7 +97,7 @@ function Tick()
          local kb = GetKnockback("condemn", me, enemy)
          if WillCollide(enemy, kb) then
             Cast("condemn", enemy)
-            -- me:Attack(enemy)
+            -- AA(enemy)
             PrintAction("Condemn for stun", enemy)
             return true
          end

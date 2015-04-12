@@ -97,7 +97,7 @@ function Run()
          if target and WillKill("bite", target) and CanAct() and JustAttacked() then
             Cast("bite", me)
             PrintAction("Bite lasthit")
-            me:Attack(target)
+            AA(target, true)
             return true
          end
       end
@@ -155,7 +155,7 @@ function FollowUp()
       then
          Cast("bite", me)
          PrintAction("Bite lasthit")
-         me:Attack(target)
+         AA(target, true)
          return true
       end
    end

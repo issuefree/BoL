@@ -235,7 +235,7 @@ function Action()
          local target = SortByHealth(GetKills("takedown", GetInRange(me, "takedown", ENEMIES)), "takedown")[1]
          if target then
             Cast("takedown", target)
-            me:Attack(target)
+            AA(target, true)
             PrintAction("Takedown for execute", target)
             return true
          end
@@ -277,7 +277,7 @@ function Action()
          local target = GetMarkedTarget() or GetWeakestEnemy("takedown")  -- GetWeakestEnemy should take into account prowl
          if target then
             Cast("takedown", target)
-            me:Attack(target)
+            AA(target, true)
             PrintAction("Takedown", target)
             return true
          end

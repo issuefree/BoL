@@ -94,7 +94,7 @@ function Run()
          for _,target in ipairs(targets) do 
             if WillKill("strike", target) then
                Cast("strike", me)
-               me:Attack(target) -- not using AA as I want to interupt auto attacks
+               AA(target, true) -- not using AA as I want to interupt auto attacks
                needMove = true
                PrintAction("strike lasthit")
                return true

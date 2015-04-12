@@ -101,7 +101,7 @@ function Run()
          local kills = SortByDistance(GetKills("mace", GetInAARange(me, MINIONS)))
          if kills[1] then
             Cast("mace", me)
-            me:Attack(kills[1])
+            AA(kills[1], true)
             PrintAction("Mace on for LH")
             return true
          end
@@ -189,7 +189,7 @@ function FollowUp()
          local target = SortByDistance(GetInRange(me, 200, MINIONS))[1]
          if #GetInRange(target, spells["mace"].radius, MINIONS) > 2 then
             Cast("mace", me)
-            me:Attack(target)
+            AA(target, true)
             PrintAction("Mace for clear")
             return true
          end
