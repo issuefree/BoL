@@ -104,7 +104,7 @@ function Run()
    end
 
    if IsOn("harrass") then
-      if SkillShot("shot", nil, nil, .75) then
+      if SkillShot("shot") then
          return true
       end
    end
