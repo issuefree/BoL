@@ -387,16 +387,16 @@ local function updateHeroes()
    EAPC = getAPC(ENEMIES)
 
    if ADC then
-      Text("ADC:"..ADC.name, 10, 880, 0xFF00FF00)
+      Text("ADC:"..ADC.charName, 10, 880, 0xFF00FF00)
    end
    if APC then
-      Text("APC:"..APC.name, 10, 895, 0xFF00FF00)
+      Text("APC:"..APC.charName, 10, 895, 0xFF00FF00)
    end
    if EADC then
-      Text("ADC:"..EADC.name, 150, 880, 0xFFFF0000)
+      Text("ADC:"..EADC.charName, 150, 880, 0xFFFF0000)
    end
    if EAPC then
-      Text("APC:"..EAPC.name, 150, 895, 0xFFFF0000)
+      Text("APC:"..EAPC.charName, 150, 895, 0xFFFF0000)
    end
 end
 
