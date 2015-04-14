@@ -183,12 +183,7 @@ local function onObject(object)
 end
 
 local function onSpell(unit, spell)
---   DumpSpells(unit, spell)
-   if IsMe(unit) and
-      find(spell.name, "HeadshotMissile")
-   then
-      spells["ace"].ad = 0
-   end
+
 end
 
 AddOnCreate(onObject)
