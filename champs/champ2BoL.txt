@@ -3,7 +3,7 @@ champ conversion to BoL
 +	tested in game, seems ok
 =	tested solo, seems ok
 0	script read, nothing stands out as needing done
--	unknown but probably needs work
+-	unknown but probably needs work (object verification or something)
 !	tested and needs work
 
 
@@ -14,88 +14,88 @@ champ conversion to BoL
 	+	annie.lua
 	=	ashe.lua
 	-	azir.lua
-		blitz.lua
-		brand.lua
-		caitlyn.lua
+	0	blitz.lua
+	0	brand.lua
+	-	caitlyn.lua
 	-	cassiopeia.lua
-		chogath.lua
-		corki.lua
-		draven.lua
+	0	chogath.lua
+	-	corki.lua
+	-	draven.lua
 	=	drmundo.lua
-		elise.lua
-		evelynn.lua
+	-	elise.lua
+	-	evelynn.lua
 	+	ezreal.lua
-		fiddlesticks.lua
-		galio.lua
-		gangplank.lua
-		garen.lua
-		gnar.lua
-		gragas.lua
-		graves.lua
-		heimerdinger.lua
-		irelia.lua
-		janna.lua
-		jax.lua
-		jinx.lua
+	-	fiddlesticks.lua
+	-	galio.lua
+	0	gangplank.lua
+	=	garen.lua
+	-	gnar.lua
+	-	gragas.lua
+	0	graves.lua
+	-	heimerdinger.lua
+	-	irelia.lua
+	0	janna.lua
+	-	jax.lua
+	0	jinx.lua
 	+	karma.lua
-		karthus.lua
-		kassadin.lua
-		katarina.lua
-		kayle.lua
-		kennen.lua
-		kog.lua
-		leblanc.lua
-		leesin.lua
-		leona.lua
-		lulu.lua
+	-	karthus.lua
+	-	kassadin.lua
+	-	katarina.lua
+	-	kayle.lua
+	-	kennen.lua
+	-	kog.lua
+	-	leblanc.lua
+	-	leesin.lua
+	-	leona.lua
+	-	lulu.lua
 	+	lux.lua
-		malphite.lua
-		malzahar.lua
-		maokai.lua
-		masteryi.lua
-		missfortune.lua
-		mordekaiser.lua
-		morgana.lua
+	0	malphite.lua
+	0	malzahar.lua
+	-	maokai.lua
+	-	masteryi.lua
+	-	missfortune.lua
+	-	mordekaiser.lua
+	0	morgana.lua
 	=	nasus.lua
 	=	nidalee.lua
-		nunu.lua
-		olaf.lua
-		orianna.lua
-		pantheon.lua
-		poppy.lua
-		renekton.lua
-		riven.lua
-		rumble.lua
+	-	nunu.lua
+	-	olaf.lua
+	-	orianna.lua
+	-	pantheon.lua
+	-	poppy.lua
+	-	renekton.lua
+	-	riven.lua
+	-	rumble.lua
 	+	ryze.lua
-		shaco.lua
-		shyvana.lua
-		singed.lua
-		sion.lua
-		sivir.lua
-		sona.lua
-		soraka.lua
-		swain.lua
-		talon.lua
-		taric.lua
+	-	shaco.lua
+	-	shyvana.lua
+	-	singed.lua
+	-	sion.lua
+	0	sivir.lua
+	-	sona.lua
+	0	soraka.lua
+	-	swain.lua
+	!	talon.lua
+	-	taric.lua
 	=	teemo.lua
-		template.lua
-		thresh.lua
-		tristana.lua
-		trundle.lua
-		tryndamere.lua
+	+	template.lua
+	-	thresh.lua
+	!	tristana.lua
+	0	trundle.lua
+	-	tryndamere.lua
 	+	twistedfate.lua
-		twitch.lua
-		udyr.lua
-		urgot.lua
+	-	twitch.lua
+	-	udyr.lua
+	-	urgot.lua
 	=	varus.lua
-		vayne.lua
+	-	vayne.lua
 	+	veigar.lua
-		velkoz.lua
-		vladimir.lua
-		volibear.lua
-		warwick.lua
-		xerath.lua
-		xinzhao.lua
-		yorick.lua
-		zilean.lua
-		zyra.lua
+	-	velkoz.lua
+	-	vladimir.lua
+	0	volibear.lua
+	0	warwick.lua
+	=	xerath.lua
+	-	xinzhao.lua
+	-	yorick.lua
+	0	zilean.lua
+	=	zyra.lua
