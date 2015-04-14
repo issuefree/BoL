@@ -68,8 +68,12 @@ function pp(str)
          pp(table_print(str, 2))
       end
    elseif type(str) == "userdata" then
-      if str.name then
+      if str.type == "AIHeroClient" or str.type == "obj_AI_Minion" then
+         pp(str.charName)
+      else
          pp(str.name)
+      end
+      if str.name then
          pp("  ("..math.floor(str.x+.5)..","..math.floor(str.z+.5)..")")
       end
    else
