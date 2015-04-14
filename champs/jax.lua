@@ -12,8 +12,7 @@ pp(" - lasthit with empower")
 
 
 InitAAData({
-	windup=.3,
-	extraRange=-25,
+	extraRange=-20,
 	particles = {"RelentlessAssault_tar", "EmpowerTwoHit"},
 	attacks={"JaxBasicAttack", "JaxCritAttack", "jaxrelentless"},
 	resets = {GetSpellInfo("W").name}
