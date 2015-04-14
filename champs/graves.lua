@@ -4,7 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Graves")
 
 InitAAData({
-   speed = 3000, windup=.3,
+   speed = 3000, 
    particles = {"Graves_BasicAttack_mis"}
 })
 

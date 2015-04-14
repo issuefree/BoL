@@ -4,7 +4,6 @@ require "issuefree/modules"
 pp("\nTim's Irelia")
 
 InitAAData({
-   windup=.3
 })
 
 AddToggle("", {on=true, key=112, label="- - -"})
@@ -69,7 +68,7 @@ function Run()
    for _,minion in ipairs(GetInRange(me, GetSpellRange("surge")+100, MINIONS)) do
       if WillKill("surge", minion) then
          if GetDistance(minion) < GetSpellRange("surge") then
-            Circle(minion, nil, blue, 3)
+            Circle(minion, nil, cyan, 3)
          else
             Circle(minion, nil, blue)
          end
