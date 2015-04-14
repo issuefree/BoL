@@ -132,7 +132,7 @@ function Action()
    -- TestSkillShot("roots")
    -- TestSkillShot("bloom", "zyra_Q_expire")
 
-   if SkillShot("roots", nil, nil, .8) then
+   if SkillShot("roots") then
       return true
    end
 
@@ -140,10 +140,6 @@ function Action()
       return true
    end
 
-   if CanUse("bloom") then
-      CastXYZ("bloom", mousePos)
-      return true
-   end
    return false
 end
 
