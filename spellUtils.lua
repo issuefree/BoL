@@ -127,7 +127,6 @@ function IsCooledDown(thing, hero)
 	hero = hero or me
 
 	local spell = GetSpell(thing)
-	local extraCooldown = spell.extraCooldown or 0
 
 	local key = spell.key
 	if not key then return false end	
@@ -142,7 +141,7 @@ function IsCooledDown(thing, hero)
 	end
 
 
-   return hero:GetSpellData(getISpell(tostring(key))).currentCd < extraCooldown
+   return hero:GetSpellData(getISpell(tostring(key))).currentCd == 0
 end
 
 
@@ -151,11 +150,19 @@ function GetCD(thing, hero)
    local spell = GetSpell(thing)
 
 	if spell.manualCooldown then
+      if not spell.lastCast then
+         return 0
+      end
 		local cd = GetLVal(spell, "manualCooldown") * (1+me.cdr)
-		return time() - spell.lastCast
+		return math.max(0, cd - (time() - spell.lastCast))
 	end
 
-   local cd = hero:GetSpellData(getISpell(tostring(GetInventorySlot(spell.id)))).currentCd
+   local cd
+   if spell.id then -- item
+      cd = GetSpellInfo(tostring(GetInventorySlot(spell.id))).currentCd
+   else
+      cd = GetSpellInfo(spell.key).currentCd
+   end
    if cd > 0 then
       return cd
    end
@@ -201,31 +208,31 @@ function CastXYZ(thing, x,y,z)
    CastSpell(getISpell(spell.key), p.x, p.z)
 end
 
-local sx, sy
-function CastClick(thing, x,y,z)
-   local spell = GetSpell(thing)
-   if not spell then return end
+-- local sx, sy
+-- function CastClick(thing, x,y,z)
+--    local spell = GetSpell(thing)
+--    if not spell then return end
    
-   local p = Point(x,y,z)
+--    local p = Point(x,y,z)
 
-   if IsLoLActive() and IsChatOpen() == 0 then
-      if sx == nil then
-         sx = GetCursorX()
-         sy = GetCursorY()
-      end
-      ClickSpellXYZ(spell.key, p.x, p.y, p.z, 0)
-      DoIn(
-         function() 
-            if sx then 
-               send.mouse_move(sx, sy) 
-               sx = nil
-               sy = nil
-            end
-         end, 
-         .1 
-      )
-   end
-end
+--    if IsLoLActive() and IsChatOpen() == 0 then
+--       if sx == nil then
+--          sx = GetCursorX()
+--          sy = GetCursorY()
+--       end
+--       ClickSpellXYZ(spell.key, p.x, p.y, p.z, 0)
+--       DoIn(
+--          function() 
+--             if sx then 
+--                send.mouse_move(sx, sy) 
+--                sx = nil
+--                sy = nil
+--             end
+--          end, 
+--          .1 
+--       )
+--    end
+-- end
 
 function CastBuff(spell, switch)
    if CanUse(spell) then
