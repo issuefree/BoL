@@ -46,10 +46,9 @@ spells["valk"] = {
 }
 spells["gun"] = {
    key="E", 
-
-   color=red, 
    range=600, 
-   cone=55,  -- checked through DrawSpellCone aagainst the reticle
+   color=red, 
+   cone=55,  -- reticle
    noblock=true,
    
    base={20,32,44,56,68}, 
@@ -84,7 +83,7 @@ local mCount = 0
 bigOne = false
 
 function Run()
-   spells["AA"].bonus = Damage((me.baseDamage+me.addDamage)*.1, "T")
+   spells["AA"].bonus = Damage((me.totalDamage)*.1, "T")
 
    if GetSpellLevel("R") > 0 then
       if me.dead then
