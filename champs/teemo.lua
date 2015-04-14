@@ -72,7 +72,7 @@ end
 function Action()	
 	if CanUse("blind") then
 		local spell = spells["blind"]
-   	if EADC and GetDistance(EADC) < spell.range then
+   	if EADC and GetDistance(EADC) < GetSpellRange(spell) then
       	Cast("blind", EADC)
       	PrintAction("Blind ADC", EADC)
       	return true

@@ -141,7 +141,7 @@ function Action()
       local spell = spells["wither"]
       local target = GetMarkedTarget()
       if not target then
-         if EADC and GetDistance(EADC) < spell.range then
+         if EADC and GetDistance(EADC) < GetSpellRange(spell) then
             target = EADC
          end
       end

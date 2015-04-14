@@ -148,20 +148,20 @@ function healTeam()
    
    for _,hero in ipairs(ALLIES) do
    	if not IsMe(hero) then
-	      if GetDistance(HOME, hero) > spell.range+250 and
+	      if GetDistance(HOME, hero) > GetSpellRange(spell)+250 and
 	         hero.health + value < hero.maxHealth*.9 and
 	         GetHPerc(me) >= GetHPerc(hero) and
 	         not HasBuff("wound", hero) and 
 	         not IsRecalling(hero)
 	      then
-	         if GetDistance(hero) < spell.range then        
+	         if GetDistance(hero) < GetSpellRange(spell) then        
 	            if not bestInRangeT or
 	               GetHPerc(hero) < bestInRangeP
 	            then           
 	               bestInRangeT = hero
 	               bestInRangeP = GetHPerc(hero)
 	            end
-	         elseif GetDistance(hero) < spell.range+250 then
+	         elseif GetDistance(hero) < GetSpellRange(spell)+250 then
 	            if not bestOutRangeT or
 	               GetHPerc(hero) < bestOutRangeP
 	            then           
@@ -175,7 +175,7 @@ function healTeam()
    if bestInRangeT then
       Circle(bestInRangeT, 100, green)
    end
-   if bestOutRangeT and GetDistance(me, bestOutRangeT) > spell.range then
+   if bestOutRangeT and GetDistance(me, bestOutRangeT) > GetSpellRange(spell) then
       Circle(bestOutRangeT, 100, yellow, 4)
    end
 

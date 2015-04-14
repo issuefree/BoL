@@ -127,10 +127,10 @@ function Action()
       local burstBase = GetSpellDamage("burst")
 
       -- look for 1 hit kills
-      for _,enemy in ipairs(GetInRange(me, spell.range*1.5 ,ENEMIES)) do
+      for _,enemy in ipairs(GetInRange(me, GetSpellRange(spell)*1.5 ,ENEMIES)) do
          local tDam = CalculateDamage(enemy, burstBase + enemy.ap)
          -- one hit kill in range. kill it.
-         if tDam > enemy.health and GetDistance(enemy) < spell.range then
+         if tDam > enemy.health and GetDistance(enemy) < GetSpellRange(spell) then
             Cast("burst", enemy)
             PrintAction("Burst for execute", enemy)
             return true
@@ -143,7 +143,7 @@ function Action()
                bestT = enemy
             end
          end
-         if bestT and GetDistance(bestT) < spell.range then
+         if bestT and GetDistance(bestT) < GetSpellRange(spell) then
             UseItem("Deathfire Grasp", bestT)
             Cast("burst", bestT)
             PrintAction("Burst for damage", enemy)

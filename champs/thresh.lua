@@ -218,7 +218,7 @@ function getBestFlay(source, thing, hitScore, killScore, ...)
    local bestT = {}
    local bestK = {}
    for _,target in ipairs(targets) do
-      local backswing = OverShoot(target, source, spell.range)
+      local backswing = OverShoot(target, source, GetSpellRange(spell))
       local hits = GetInLineR(backswing, spell, target, targets)
       local score, kills = scoreHits(spell, hits, hitScore, killScore)
       if not bestT or score > bestS then

@@ -136,7 +136,7 @@ function Run()
       local spell = GetSpell("spark")
       local target = GetWeakest("spark", RemoveFromList(GetInRange(me, "spark", ENEMIES), GetInAARange(me, ENEMIES)))
       if target and WillKill("spark", target) then
-         LineBetween(me, Projection(me, target, spell.range), spell.width)
+         LineBetween(me, Projection(me, target, GetSpellRange(spell)), spell.width)
          if IsOn("ks") or HotKey() then
             if IsGoodFireahead(spell, target) then
                CastFireahead("spark", target, .8)

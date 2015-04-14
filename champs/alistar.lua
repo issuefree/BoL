@@ -103,11 +103,11 @@ end
 function heal()
    local spell = spells["roar"]
    if CanUse(spell) then
-      local nearAllies = GetInRange(me, spell.range+150, ALLIES)
+      local nearAllies = GetInRange(me, GetSpellRange(spell)+150, ALLIES)
       local healScore = 0
       for _,ally in ipairs(nearAllies) do
          local p = ally.health/ally.maxHealth
-         if GetDistance(ally) < spell.range then
+         if GetDistance(ally) < GetSpellRange(spell) then
             if p <= needHealPercent then
                healScore = healScore + 100
                break
