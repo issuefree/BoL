@@ -64,7 +64,7 @@ spells["binding"] = {
 function Run()
    local biteLevel = GetSpellLevel(spells["bite"].key)
    if biteLevel > 0 then
-      spells["bite"].base = (me.baseDamage+me.addDamage)*spells["bite"].perc
+      spells["bite"].base = (me.totalDamage)*spells["bite"].perc
    end
 
    if StartTickActions() then

@@ -46,7 +46,7 @@ spells["AA"].damOnTarget =
 
 function Run()
    if P.tiger then
-      spells["AA"].bonus = (me.baseDamage+me.addDamage)*.15
+      spells["AA"].bonus = (me.totalDamage)*.15
    else
       spells["AA"].bonus = 0
    end

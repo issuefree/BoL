@@ -98,7 +98,7 @@ spells["box"] = {
 } 
 
 spells["AA"].bonus = function()
-   return souls + GetLVal(spells["flay"], "flayScale")*(me.baseDamage+me.addDamage) * math.min(time() - aaTime, 9) / 9
+   return souls + GetLVal(spells["flay"], "flayScale")*(me.totalDamage) * math.min(time() - aaTime, 9) / 9
 end
 
 aaTime = 0
