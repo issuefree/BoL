@@ -1,7 +1,6 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
-
 -- Try to stick to one "action" per loop.
 -- Action function should return 
 --   true if they perform an action that takes time (most spells attacks)
@@ -125,8 +124,6 @@ spells["AA"].damOnTarget =
 local chargeStartTime = 0
 
 function Run()
-   P.markedTarget = nil
-
    if P.charging then      
       local chargeDuration = math.min(time() - chargeStartTime, spells["arrow"].chargeTime)
 
@@ -225,11 +222,8 @@ function Run()
       if IsOn("move") then
          AutoMove()
       end
-      return true
-   end
 
-   if not CanUse("arrow") then
-      ClearQ()
+      return true
    end
 
    -- auto stuff that always happen
@@ -360,43 +354,14 @@ function FollowUp()
 end
 
 function StartArrow(timeout)
-   if IsLoLActive() and IsChatOpen() == 0 then
-      if CanUse("arrow") and not P.charging then
-         send.key_down(SKeys.Q)
-         PersistTemp("charging", .25)
-         chargeStartTime = time()
-         if timeout then
-            DoIn(function() FinishArrow(mousePos) end, timeout)
-         end
-      end
-   end
+   Circle(me, spells["arrow"].range, violetB, 5)
 end
 
 local sx, sy
 function FinishArrow(t)
-   if IsLoLActive() and IsChatOpen() == 0 and P.charging then      
-      if sx == nil then
-         sx = GetCursorX()
-         sy = GetCursorY()
-      end
-      ClickSpellXYZ("Q", t.x, t.y, t.z, 0)
-      send.key_up(SKeys.Q)
-      DoIn(
-         function() 
-            if sx then 
-               send.mouse_move(sx, sy) 
-               P.markedTarget = nil
-               sx = nil
-               sy = nil
-            end
-         end, 
-         .1
-      )
+   if P.charging then
+      LineBetween(me, t, spells["arrow"].width, violetB)
    end
-end
-
-function ClearQ()
-   send.key_up(SKeys.Q)
 end
 
 local function onCreate(object)
@@ -404,7 +369,7 @@ local function onCreate(object)
    PersistOnTargets("blight2", object, "VarusW_counter_02", MINIONS, ENEMIES, CREEPS)
    PersistOnTargets("blight3", object, "VarusW_counter_03", MINIONS, ENEMIES, CREEPS)
 
-   if Persist("charging", object, "VarusQChannel") then
+   if Persist("charging", object, "Varus_Base_Q_Channel") then
       chargeStartTime = time()
    end
 
