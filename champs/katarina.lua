@@ -2,7 +2,6 @@ require "issuefree/timCommon"
 require "issuefree/modules"
 
 InitAAData({
-   windup=.25,
    particles={"Katarina_BasicAttack_tar"}
 })
 
@@ -139,7 +138,7 @@ function Run()
       return true
    end
 
-   if KeyDown(string.byte("X")) then
+   if IsKeyDown(string.byte("X")) then
       WardJump("shunpo")
       return true
    end
@@ -394,13 +393,13 @@ function getBouncePath(target, nearTargets)
 end
 
 function onObject(object)
-   PersistOnTargets("dagger", object, "katarina_daggered", ENEMIES, MINIONS)
+   PersistOnTargets("dagger", object, "Katarina_Base_daggered", ENEMIES, MINIONS)
 end
 
 function onSpell(unit, spell)
    -- this is here to make sure I let blades land before I consider my next move as it may change based on what gets hit.
    if ICast("blades", unit, spell) then
-      StartChannel(.33, "blades")
+      StartChannel(.5, "blades")
    end
 end
 
