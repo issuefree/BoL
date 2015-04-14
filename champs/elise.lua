@@ -80,7 +80,7 @@ spells["AA"].damOnTarget =
    end
 
 function isSpider()
-   if GetSpellData("Q").name == "EliseHumanQ" then
+   if GetSpellInfo("Q").name == "EliseHumanQ" then
       return false
    end
    return true

@@ -87,13 +87,13 @@ end
 
 selecting = false
 function Run()
-	if find(me:GetSpellData(_W).name, "lock") then
+	if find(GetSpellInfo("W").name, "lock") then
 		selecting = true
 	else
 		selecting = false
 	end
 
-	if selecting and not P.card and find(me:GetSpellData(_W).name, card) then		
+	if selecting and not P.card and find(GetSpellInfo("W").name, card) then		
 		if IsOn("pick") then
 			CastSpell(_W)			
 			

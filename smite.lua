@@ -6,10 +6,10 @@ local smiteTargets = {}
 
 local smiteSpells = {"summonersmite", "itemsmiteaoe", "s5_summonersmitequick"}
 
-if ListContains(GetSpellData("D").name, smiteSpells) then
+if ListContains(GetSpellInfo("D").name, smiteSpells) then
    smite.key = "D"
    spells["smite"] = smite
-elseif ListContains(GetSpellData("F").name, smiteSpells) then
+elseif ListContains(GetSpellInfo("F").name, smiteSpells) then
    smite.key = "F"
    spells["smite"] = smite
 end

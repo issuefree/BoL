@@ -19,7 +19,7 @@ InitAAData({
    baseAttackSpeed = 0.638,
    windup=.3,
    particles = {"nassus_siphonStrike_tar"},
-   resets = {GetSpellData("Q").name}
+   resets = {GetSpellInfo("Q").name}
 })
 
 AddToggle("", {on=true, key=112, label=""})

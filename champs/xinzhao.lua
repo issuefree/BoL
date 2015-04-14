@@ -11,7 +11,7 @@ pp("\nTim's Xin Zhao")
 
 InitAAData({
    particles={"xen_ziou_intimidate"},
-   resets={GetSpellData("Q").name}
+   resets={GetSpellInfo("Q").name}
 })
 
 AddToggle("", {on=true, key=112, label=""})

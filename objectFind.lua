@@ -52,10 +52,10 @@ function debugTick()
    end
    Circle(GetMousePos(), range, cyanB) 
 
-   PrintState(-5, GetSpellData("Q").name.."  "..GetSpellData("Q").currentCd)
-   PrintState(-4, GetSpellData("W").name.."  "..GetSpellData("W").currentCd)
-   PrintState(-3, GetSpellData("E").name.."  "..GetSpellData("E").currentCd)
-   PrintState(-2, GetSpellData("R").name.."  "..GetSpellData("R").currentCd)
+   PrintState(-5, GetSpellInfo("Q").name.."  "..GetSpellInfo("Q").currentCd)
+   PrintState(-4, GetSpellInfo("W").name.."  "..GetSpellInfo("W").currentCd)
+   PrintState(-3, GetSpellInfo("E").name.."  "..GetSpellInfo("E").currentCd)
+   PrintState(-2, GetSpellInfo("R").name.."  "..GetSpellInfo("R").currentCd)
 
    objects = {}
    for i = 1, objManager.iCount, 1 do

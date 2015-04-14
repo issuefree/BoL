@@ -10,7 +10,7 @@ pp(" - morale if near enemies")
 InitAAData({
 	windup=.25,
 	extraRange=15,
-	resets={GetSpellData("Q").name}
+	resets={GetSpellInfo("Q").name}
 })
 
 AddToggle("", {on=true, key=112, label=""})

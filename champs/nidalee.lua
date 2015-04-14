@@ -113,7 +113,7 @@ spells["cougar"] = {
 local isCougar = false
 
 function Run()
-   if GetSpellData("Q").name == "Takedown" then
+   if GetSpellInfo("Q").name == "Takedown" then
       isCougar = true
    else
       isCougar = false
@@ -122,7 +122,7 @@ function Run()
    if isCougar then
       InitAAData({ -- cougar
          extraRange=-10,
-         resets = {GetSpellData("Q").name},   
+         resets = {GetSpellInfo("Q").name},   
       })
       spells["jav"].key = "--"
       spells["trap"].key = "--"
@@ -151,7 +151,7 @@ function Run()
       return true
    end
    
-   if CastAtCC("spear") or
+   if CastAtCC("jav") or
       CastAtCC("trap")
    then
       return true
@@ -202,7 +202,7 @@ function Action()
       end      
       
       if IsOn("pounce") then
-         if CanUse("cougar") and GetSpellData("W").level > 0 then
+         if CanUse("cougar") and GetSpellInfo("W").level > 0 then
             local target = GetWeakest("pounce", GetInRange(me, "pounceProwl", GetWithBuff("prowl", ENEMIES)))
             if target then
                Cast("cougar", me)

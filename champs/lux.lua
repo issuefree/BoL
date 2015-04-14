@@ -66,14 +66,14 @@ spells["singularity"] = {
    ap=.6,
    delay=2, -- testskillshot
    speed=12,
-   canCast=function() return GetSpellData("E").name ~= "luxlightstriketoggle" and not P.singularity end,
+   canCast=function() return GetSpellInfo("E").name ~= "luxlightstriketoggle" and not P.singularity end,
    noblock=true,
    radius=350-25,
    cost={70,85,100,115,130}
 }
 spells["detonate"] = {
    key="E",
-   canCast=function() return GetSpellData("E").name == "luxlightstriketoggle" and P.singularity end
+   canCast=function() return GetSpellInfo("E").name == "luxlightstriketoggle" and P.singularity end
 }
 spells["detonate"].base = spells["singularity"].base
 spells["detonate"].ap = spells["singularity"].ap

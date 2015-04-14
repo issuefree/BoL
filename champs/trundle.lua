@@ -11,7 +11,7 @@ pp("\nTim's Trundle")
 
 InitAAData({ 
    -- particles = {"Trundle_Attack"},
-   resets={GetSpellData("Q").name}
+   resets={GetSpellInfo("Q").name}
 })
 
 SetChampStyle("bruiser")

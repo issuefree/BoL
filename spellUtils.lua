@@ -6,7 +6,7 @@ require "issuefree/telemetry"
 
 --[[
 spells["alias"] = {
-   name="spellCastName",      -- this is used for ICast. If the spell reports casting as GetSpellData("X").name then this can be left blank.
+   name="spellCastName",      -- this is used for ICast. If the spell reports casting as GetSpellInfo("X").name then this can be left blank.
                                  if you need to detect the spell under a different name put that name here
 
    key="Q",                   -- the key that casts the spell. If no key is supplied then the spell will always read "ready"
@@ -115,10 +115,14 @@ end
 
 function GetSpellLevel(key, hero)
    hero = hero or me
-   return GetSpellData(key).level
+   local spellInfo = GetSpellInfo(key)
+   if spellInfo then
+      return spellInfo.level
+   else
+      return 0
+   end
 end
 
-local ping = .05
 function IsCooledDown(thing, hero)
 	hero = hero or me
 
@@ -138,7 +142,7 @@ function IsCooledDown(thing, hero)
 	end
 
 
-   return hero:GetSpellData(getISpell(tostring(key))).currentCd < ping*2 + extraCooldown
+   return hero:GetSpellData(getISpell(tostring(key))).currentCd < extraCooldown
 end
 
 
@@ -255,7 +259,7 @@ function CastFireahead(thing, target)
       if IsWall(D3DXVECTOR3(point.x, point.y, point.z))  then
 	   	local name = thing
 	   	if type(name) ~= "string" then
-	   		name = GetSpellData(spell.key).name
+	   		name = GetSpellInfo(spell.key).name
 	   	end
          pp("Casting "..name.." into wall.")
       end
@@ -338,7 +342,7 @@ end
 function GetSpellCost(thing)
    local spell = GetSpell(thing)
    if spell.key then
-      return math.floor(GetSpellData(spell).mana)
+      return math.floor(GetSpellInfo(spell).mana)
    	-- return me["SpellMana"..spell.key]
    else
    	return GetLVal(spell, "cost")
@@ -376,13 +380,18 @@ end
 -- spell.startPos -- only for spellProc
 -- spell.endPos -- only for spellProc
 
-function GetSpellData(thing, hero)
+function GetSpellInfo(thing, hero)
    local spell = GetSpell(thing)
    local key = spell.key
    key = key or thing
 
    hero = hero or me
-   return hero:GetSpellData(getISpell(spell.key))
+   local iSpell = getISpell(spell.key)
+   if iSpell then
+      return hero:GetSpellData(iSpell)
+   else
+      return nil
+   end
 end
 
 function GetSpell(thing)
@@ -768,7 +777,10 @@ function ICast(thing, unit, spell)
       if mySpell.name then
          return find(spell.name, mySpell.name)
       elseif mySpell.key then
-         return spell.name == GetSpellData(thing).name
+         local spellInfo = GetSpellInfo(thing)
+         if spellInfo then
+            return spell.name == spellInfo.name
+         end
       end
    end
 end

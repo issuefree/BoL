@@ -47,19 +47,19 @@ FRAME = time()
 
 CREEP_ACTIVE = false
 
--- if GetSpellData("Q").level == 0 and
---    GetSpellData("W").level == 0 and
---    GetSpellData("E").level == 0
+-- if GetSpellInfo("Q").level == 0 and
+--    GetSpellInfo("W").level == 0 and
+--    GetSpellInfo("E").level == 0
 -- then
 --    me:MoveTo(me.x, me.z)
 -- end
 
 healSpell = {range=700+GetWidth(me), color=green, summoners=true}
 
-if GetSpellData("D").name == "SummonerHeal" then
+if GetSpellInfo("D").name == "SummonerHeal" then
    spells["summonerHeal"] = healSpell
    spells["summonerHeal"].key = "D"
-elseif GetSpellData("F").name == "SummonerHeal" then
+elseif GetSpellInfo("F").name == "SummonerHeal" then
    spells["summonerHeal"] = healSpell
    spells["summonerHeal"].key = "F"
 end
@@ -2362,6 +2362,7 @@ function CastAtCC(thing, hardCCOnly, targetOnly)
          end
       end
    end
+
    if target and IsInRange(range, target) then
       if not targetOnly then
          if spell.noblock then

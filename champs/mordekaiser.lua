@@ -10,7 +10,7 @@ pp("\nTim's Morde")
 
 InitAAData({
    windup=.3,
-   resets={GetSpellData("Q").name}
+   resets={GetSpellInfo("Q").name}
 })
 
 AddToggle("", {on=true, key=112, label=""})

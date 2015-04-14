@@ -4,7 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Blitz")
 
 InitAAData({
-   resets={GetSpellData("E").name}
+   resets={GetSpellInfo("E").name}
 })
 
 AddToggle("pull", {on=false, key=112, label="Pull"})

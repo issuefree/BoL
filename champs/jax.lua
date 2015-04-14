@@ -16,7 +16,7 @@ InitAAData({
 	extraRange=-25,
 	particles = {"RelentlessAssault_tar", "EmpowerTwoHit"},
 	attacks={"JaxBasicAttack", "JaxCritAttack", "jaxrelentless"},
-	resets = {GetSpellData("W").name}
+	resets = {GetSpellInfo("W").name}
 })
 
 SetChampStyle("bruiser")

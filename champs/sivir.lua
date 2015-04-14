@@ -5,7 +5,7 @@ print("\nTim's Sivir")
 
 InitAAData({
    speed=1400, windup=.15,
-   resets={GetSpellData("W").name},
+   resets={GetSpellInfo("W").name},
    particles={"sivirbasicattack_mis", "sivirbasicattack2_mis", "SivirRicochetAttack_mis"}
 })
 

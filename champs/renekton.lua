@@ -11,7 +11,7 @@ pp("\nTim's Renekton")
 
 InitAAData({ 
    windup=.2,
-   resets = {GetSpellData("W").name}
+   resets = {GetSpellInfo("W").name}
 })
 
 SetChampStyle("bruiser")

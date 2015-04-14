@@ -6,7 +6,7 @@ pp("\nTim's Shyvana")
 -- TODO needs love, especially jungle love
 
 InitAAData({
-   resets = {GetSpellData("Q").name}
+   resets = {GetSpellInfo("Q").name}
 })
 
 AddToggle("", {on=true, key=112, label="- - -"})

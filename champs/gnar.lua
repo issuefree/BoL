@@ -115,7 +115,7 @@ local mega = false
 local mini = true
 
 function Run()
-   if GetSpellData("E").name == "gnarbige" then
+   if GetSpellInfo("E").name == "gnarbige" then
       mega = true
    else
       mega = false
@@ -235,7 +235,7 @@ function Action()
       end
    end
 
-   if mini and GetSpellData("Q").name == "gnarbigq" then
+   if mini and GetSpellInfo("Q").name == "gnarbigq" then
       local bestS
       local bestH = 1
       local starts = SortByDistance(GetInRange(me, GetSpellRange("hop")+spells["hop"].radius-25, ENEMIES))

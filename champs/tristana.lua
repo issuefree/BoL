@@ -294,7 +294,7 @@ function Action()
 
 -- TODO rework for new explosive charge
 --   if CanUse("shot") then
---      if GetSpellData("E").level >= GetSpellData("Q").level then
+--      if GetSpellInfo("E").level >= GetSpellInfo("Q").level then
 --         if CastBest("shot") then
 --            return true
 --         end

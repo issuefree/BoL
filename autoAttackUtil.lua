@@ -25,7 +25,7 @@ require "issuefree/spellUtils"
       --                  minMoveTime = .25,
       --                  particles = {"Ashe_Base_BA_mis", "Ashe_Base_Q_mis"},
       --                  attacks = {"attack", "frostarrow"},
-      --                  resets={GetSpellData("Q").name} },
+      --                  resets={GetSpellInfo("Q").name} },
 
 function GetAARange(target)
    target = target or me

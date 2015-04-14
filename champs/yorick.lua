@@ -6,7 +6,7 @@ pp("\nTim's Yorick")
 SetChampStyle("bruiser")
 
 InitAAData({ 
-   resets = {GetSpellData("Q").name}
+   resets = {GetSpellInfo("Q").name}
 })
 
 AddToggle("tear", {on=true, key=112, label="Charge Tear"})

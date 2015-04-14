@@ -190,7 +190,7 @@ end
 
 function getJusticeDam(target)
    if not target then return 0 end
-   local sLvl = GetSpellData("R").level
+   local sLvl = GetSpellInfo("R").level
    if sLvl < 1 then return 0 end
 
    local dam = GetSpellDamage("justice")
@@ -200,7 +200,7 @@ function getJusticeDam(target)
 end
 
 function isSpinning()
-   return GetSpellData("E").name == "garenecancel"
+   return GetSpellInfo("E").name == "garenecancel"
 end
 
 local function onObject(object)

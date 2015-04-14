@@ -12,7 +12,7 @@ pp("\nTim's Riven")
 InitAAData({
    windup=.25,
    extraRange=20,
-   resets = {GetSpellData("Q").name}
+   resets = {GetSpellInfo("Q").name}
 })
 
 SetChampStyle("bruiser")
