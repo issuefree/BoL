@@ -855,6 +855,11 @@ function scoreHits(spell, hits, hitScore, killScore)
    return score, kills
 end
 
+-- Used to calculate whether or not a spell should be cast based on % of mana vs cost of spell
+-- it will return a threshold to compare against score (generally used as 1 pt per normal minion as basis)
+-- mPercHit of .1 corresponds to it's worth 10% of my mana to get a point (kill a minion or whatever)
+-- .5 would be it's worth 50% of my mana to get a point.
+-- thresholds are adjusted for circumstances such as being alone, being full mana or charging tear.
 function GetThreshMP(thing, mPercHit, min)
    mPercHit = mPercHit or .1
    min = min or 1
@@ -1791,7 +1796,7 @@ function OnTick()
 end
 
 DISRUPTS = {
-   DeathLotus={char="Katarina", obj="Katarina_deathLotus_cas"},
+   DeathLotus={char="Katarina", obj="Katarina_deathLotus_cas", spell=nil, timeout=nil},
    -- StandUnited={char="Shen", obj=""},
    Meditate={char="MasterYi", obj="MasterYi_Base_W_Buf"},
    -- Idol={char="Galio", obj=""},
