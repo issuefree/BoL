@@ -7,7 +7,7 @@ pp(" - Xerath sucks (hard to script)")
 SetChampStyle("caster")
 
 InitAAData({ 
-   speed = 1200, windup=.35,
+   speed = 1200,
    attacks = {"XerathBasicAttack"},
    particles = {"Xerath_Base_BA_mis"}
 })
@@ -35,7 +35,6 @@ spells["bolt"] = {
    width=90-5,  -- reticle
    noblock=true,
    overShoot=100,
-   extraCooldown=.75
 } 
 spells["eye"] = {
    key="W",
@@ -265,45 +264,17 @@ function FollowUp()
    return false
 end
 
-function StartBolt(timeout)
-   if IsLoLActive() and IsChatOpen() == 0 then
-      if CanUse("bolt") and not P.charging then
-         send.key_up(SKeys.Q)
-         PrintAction("Start Bolt")         
-         PersistTemp("charging", .25)
-         chargeStartTime = time()
-
-         send.key_down(SKeys.Q)
-         timeout = timeout or 5
-         DoIn(function() FinishBolt(mousePos) end, timeout, "bolt")
-      end
-   end
+function StartArrow(timeout)
 end
 
-local sx, sy
+function StartBolt(timeout)
+   Circle(me, spells["bolt"].range, violetB, 5)
+end
+
 function FinishBolt(t)
-   if IsLoLActive() and IsChatOpen() == 0 and P.charging then
-      if sx == nil then
-         sx = GetCursorX()
-         sy = GetCursorY()
-      end
-      ClickSpellXYZ("Q", t.x, t.y, t.z, 0)
-      PrintAction("Finish Bolt", nil, 1)
-      DoIn(
-         function() 
-            if sx then 
-               P.markedTarget = nil
-               send.key_up(SKeys.Q)
-               send.mouse_move(sx, sy) 
-               sx = nil
-               sy = nil
-            end
-            P.charging = nil
-         end, 
-         .1 
-      )
+   if P.charging then
+      LineBetween(me, t, spells["bolt"].width, violetB)
    end
-   send.key_up(SKeys.Q)
 end
 
 
