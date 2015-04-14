@@ -13,7 +13,7 @@ pp(" - lasthit artillery >= 2 if no stacks and alone")
 SetChampStyle("marksman")
 
 InitAAData({
-   speed = 1800, windup=.2,
+   speed = 1800,
    particles = {"KogMawBasicAttack", "KogMawBioArcaneBarrage_mis"}
 })
 
@@ -197,8 +197,12 @@ function FollowUp()
 end
 
 local function onObject(object)
-   PersistBuff("barrage", object, "KogMaw_Fossile_Eye_Glow")
-   Persist("artillery", object, "KogMawLivingArtillery_cas")
+   if PersistBuff("barrage", object, "KogMaw_Fossile_Eye_Glow") then
+      pp("barrage")
+   end
+   if Persist("artillery", object, "KogMawLivingArtillery_cas") then
+      pp("artillery")
+   end
 end
 
 local function onSpell(object, spell)
