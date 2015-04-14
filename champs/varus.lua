@@ -365,9 +365,9 @@ function FinishArrow(t)
 end
 
 local function onCreate(object)
-   PersistOnTargets("blight1", object, "VarusW_counter_01", MINIONS, ENEMIES, CREEPS)
-   PersistOnTargets("blight2", object, "VarusW_counter_02", MINIONS, ENEMIES, CREEPS)
-   PersistOnTargets("blight3", object, "VarusW_counter_03", MINIONS, ENEMIES, CREEPS)
+   PersistOnTargets("blight1", object, "Varus_Base_W_counter_01", MINIONS, ENEMIES, CREEPS)
+   PersistOnTargets("blight2", object, "Varus_Base_W_counter_02", MINIONS, ENEMIES, CREEPS)
+   PersistOnTargets("blight3", object, "Varus_Base_W_counter_03", MINIONS, ENEMIES, CREEPS)
 
    if Persist("charging", object, "Varus_Base_Q_Channel") then
       chargeStartTime = time()
