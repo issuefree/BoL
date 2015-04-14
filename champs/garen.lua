@@ -204,7 +204,6 @@ function isSpinning()
 end
 
 local function onObject(object)
-   PersistBuff("strike", object, "Garen_Base_Q_Cas_Sword")
 end
 
 local function onSpell(unit, spell)
