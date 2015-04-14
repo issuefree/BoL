@@ -727,7 +727,7 @@ function KillMinion(thing, method, force, targetOnly)
          if IsBigMinion(target) then
             score = 1.5
          end
-         if GetThreshMP(thing, thresh) > score then
+         if score < GetThreshMP(thing, thresh) then
             return nil
          end
       end
@@ -860,15 +860,17 @@ end
 -- mPercHit of .1 corresponds to it's worth 10% of my mana to get a point (kill a minion or whatever)
 -- .5 would be it's worth 50% of my mana to get a point.
 -- thresholds are adjusted for circumstances such as being alone, being full mana or charging tear.
+-- the return is the number of pionts necessary so the higher return means harder to meet.
+
 function GetThreshMP(thing, mPercHit, min)
    mPercHit = mPercHit or .1
    min = min or 1
    local thresh = GetSpellCostPerc(thing)/mPercHit
    if CanChargeTear() then
-      thresh = thresh * .5
+      thresh = thresh * .75
    end
    if VeryAlone() then
-      thresh = thresh * .8
+      thresh = thresh * .75
    end
    if GetMPerc(me) == 1 then
       thresh = thresh * .5
