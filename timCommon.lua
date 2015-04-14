@@ -800,7 +800,7 @@ end
 local isx = nil
 local isy = nil
 function HitObjectives()
-   local targets = GetInE2ERange(me, GetAARange()+25, TURRETS)
+   local targets = GetInE2ERange(me, GetAARange()+25, TURRETS, INHIBS)
    table.sort(targets, function(a,b) return a.maxHealth > b.maxHealth end)
 
    if targets[1] and CanAttack() then
@@ -810,26 +810,26 @@ function HitObjectives()
       end
    end
 
-   for _,inhib in ipairs(concat(INHIBS, NEXUS)) do
-      if IsInRange(GetAARange()+100, inhib) then
-         if CanAttack() then
-            if not isx then
-               isx = GetCursorX()
-               isy = GetCursorY()
-            end
-            ClickSpellXYZ('m', inhib.x, inhib.y, inhib.z, 0)
-            MouseRightClick()
-            PrintAction("Attack inhib")
-            return true
-         else
-            if isx then
-               send.mouse_move(isx, isy) 
-               isx = nil
-               isy = nil
-            end
-         end
-      end
-   end
+   -- for _,inhib in ipairs(concat(INHIBS, NEXUS)) do
+   --    if IsInRange(GetAARange()+100, inhib) then
+   --       if CanAttack() then
+   --          if not isx then
+   --             isx = GetCursorX()
+   --             isy = GetCursorY()
+   --          end
+   --          ClickSpellXYZ('m', inhib.x, inhib.y, inhib.z, 0)
+   --          MouseRightClick()
+   --          PrintAction("Attack inhib")
+   --          return true
+   --       else
+   --          if isx then
+   --             send.mouse_move(isx, isy) 
+   --             isx = nil
+   --             isy = nil
+   --          end
+   --       end
+   --    end
+   -- end
 
    return false
 end
@@ -1563,6 +1563,10 @@ function processShot(shot)
 
 end
 
+function GetPing()
+   return GetLatency()/1000
+end
+
 function OnProcessSpell(unit, spell)
    dlog("start ops")
    if ModuleConfig.ass and IsEnemy(unit) then
@@ -1593,7 +1597,7 @@ function OnProcessSpell(unit, spell)
 
    for _,sp in pairs(spells) do
       if ICast(sp, unit, spell) then
-         sp.lastCast = time() + .1 -- lag
+         sp.lastCast = time() -- I don't know why I care so much here -- + .1 -- lag
 
          if sp.useCharges then
             if sp.charges == sp.maxCharges then
@@ -1711,32 +1715,33 @@ function OnTick()
       end
    end
 
-   -- for _,spell in pairs(spells) do
-   --    if spell.delay and spell.speed then
-   --       for _,enemy in ipairs(ENEMIES) do
-   --          TrackSpellFireahead(spell, enemy)
-   --       end
-   --    end
+   for _,spell in pairs(spells) do
 
-   --    if spell.useCharges and GetSpellLevel(spell.key) > 0 then
-   --       if not spell.lastRecharge then
-   --          spell.lastRecharge = time()
-   --       end
+      -- if spell.delay and spell.speed then
+      --    for _,enemy in ipairs(ENEMIES) do
+      --       TrackSpellFireahead(spell, enemy)
+      --    end
+      -- end
 
-   --       if spell.charges < spell.maxCharges then
-   --          -- local ttRecharge = GetLVal(spell, "rechargeTime") * (1+me.cdr)
-   --          local ttRecharge = GetLVal(spell, "rechargeTime") * (1+0)
-   --          if ttRecharge > 0 then -- no recharge time means time doesn't generate charges
-   --             if time() - spell.lastRecharge > ttRecharge then
-   --                spell.lastRecharge = time()
-   --                spell.charges = spell.charges + 1
-   --             end
-   --          end
-   --       else
-   --          spell.lastRecharge = time()
-   --       end
-   --    end
-   -- end
+      if spell.useCharges and GetSpellLevel(spell.key) > 0 then
+         if not spell.lastRecharge then
+            spell.lastRecharge = time()
+         end
+
+         if spell.charges < spell.maxCharges then
+            -- local ttRecharge = GetLVal(spell, "rechargeTime") * (1+me.cdr)
+            local ttRecharge = GetLVal(spell, "rechargeTime") * (1+0)
+            if ttRecharge > 0 then -- no recharge time means time doesn't generate charges
+               if time() - spell.lastRecharge > ttRecharge then
+                  spell.lastRecharge = time()
+                  spell.charges = spell.charges + 1
+               end
+            end
+         else
+            spell.lastRecharge = time()
+         end
+      end
+   end
 
    TrackMyPosition()
 
