@@ -107,7 +107,7 @@ AddToggle("steal",  {on=false, key=113, label="Secure Kills", auxLabel="{0}", ar
 AddToggle("", {on=true, key=114, label=""})
 AddToggle("", {on=true, key=115, label=""})
 
-AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0} / {1}", args={"blades", "sinister"}})
+AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0} / {1} / {2}", args={GetAADamage, "blades", "sinister"}})
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
@@ -240,6 +240,12 @@ function Action()
       end
 
    end
+
+   local target = GetMarkedTarget() or GetMeleeTarget()
+   if AutoAA(target, "empower") then
+      return true
+   end
+
    return false
 end
 
