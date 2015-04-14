@@ -110,7 +110,7 @@ iSpells["7"] = ITEM_7
 
 
 function getISpell(key)
-   return iSpells[key]
+   return iSpells[tostring(key)]
 end
 
 function GetSpellLevel(key, hero)
