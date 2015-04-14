@@ -348,12 +348,13 @@ end
 
 function GetSpellCost(thing)
    local spell = GetSpell(thing)
+   if spell.cost then
+      return GetLVal(spell, "cost")
+   end
    if spell.key then
       return math.floor(GetSpellInfo(spell).mana)
-   	-- return me["SpellMana"..spell.key]
-   else
-   	return GetLVal(spell, "cost")
    end
+   return 0 -- if it doesn't have a cost assigned or have a key then it's probably an item or AA
 end
 
 function GetSpellCostPerc(thing)
@@ -693,11 +694,11 @@ function GetSpellFireahead(thing, target)
 
    local point, chance
 	if IsPointAoE(spell) then
-      point, chance = VP:GetCircularCastPosition(target, spell.delay/10, spell.radius, spell.range, spell.speed*100, me, IsBlockedSkillShot(thing))
+      point, chance = VP:GetCircularCastPosition(target, spell.delay/10, spell.radius, GetSpellRange(spell), spell.speed*100, me, IsBlockedSkillShot(thing))
    elseif IsConeAoE(spell) then
-      point, chance = VP:GetConeAOECastPosition(target, spell.delay/10, spell.cone, spell.range, spell.speed*100, me)
+      point, chance = VP:GetConeAOECastPosition(target, spell.delay/10, spell.cone, GetSpellRange(spell), spell.speed*100, me)
 	else --   if IsLinearSkillShot(spell) then
-      point, chance = VP:GetLineCastPosition(target, spell.delay/10, spell.width, spell.range, spell.speed*100, me, IsBlockedSkillShot(thing))
+      point, chance = VP:GetLineCastPosition(target, spell.delay/10, spell.width, GetSpellRange(spell), spell.speed*100, me, IsBlockedSkillShot(thing))
    end
    return point, chance
 end
