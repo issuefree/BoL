@@ -33,15 +33,15 @@ local camps = {
 	baron = {id=12, timeout=420, num=1}
 }
 
--- if GetMap() ~= 8 then
--- 	camps = {
--- 	-- Howling abyss 
--- 		bInner = {id=4, timeout=40, num=1},
--- 		rInner = {id=3, timeout=40, num=1},
--- 		bOuter = {id=2, timeout=40, num=1},
--- 		rOuter = {id=1, timeout=40, num=1},
--- 	}
--- end
+if GetGame().map.shortName == "howlingAbyss" then
+	camps = {
+	-- Howling abyss 
+		bInner = {id=4, timeout=40, num=1},
+		rInner = {id=3, timeout=40, num=1},
+		bOuter = {id=2, timeout=40, num=1},
+		rOuter = {id=1, timeout=40, num=1},
+	}
+end
 
 for _,camp in pairs(camps) do	
 	camp.name = "monsterCamp_"..camp.id
