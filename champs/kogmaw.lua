@@ -35,14 +35,16 @@ spells["spittle"] = {
    cost=60,
    delay=1.2,
    speed=17.5,
-   width=80
+   width=80,
+   cost=60
 }
 spells["barrage"] = {
    key="W", 
    range={130,150,170,190,210},
    base=0,
    targetMaxHealth={.02,.03,.04,.05,.06},
-   targetMaxHealthAP=.0001
+   targetMaxHealthAP=.0001,
+   cost=0,
 }
 spells["ooze"] = {
    key="E", 
@@ -197,12 +199,8 @@ function FollowUp()
 end
 
 local function onObject(object)
-   if PersistBuff("barrage", object, "KogMaw_Fossile_Eye_Glow") then
-      pp("barrage")
-   end
-   if Persist("artillery", object, "KogMawLivingArtillery_cas") then
-      pp("artillery")
-   end
+   PersistBuff("barrage", object, "KogMaw_Fossile_Eye_Glow")
+   Persist("artillery", object, "KogMaw_Base_R_cas_green")
 end
 
 local function onSpell(object, spell)
