@@ -448,27 +448,19 @@ function createForPersist(object)
       -- PersistAll("MYMINIONS", object, "Minion")
    end
 
-   local inhibKey = "_Idle"
-   if GetMap() == 8 then
-      inhibKey = "inhibitor_idle"
-      nexusKey = "nexus_idle"
-   else
-      inhibKey = "inhibit_gem"
-      nexusKey = "nexus_on"
-   end
-   if find(object.name, inhibKey)then
-      if find(object.name, "order") then
-         if me.team == 100 then
-            table.insert(MYINHIBS, object)
-         else
-            table.insert(INHIBS, object)
-         end
+   -- local inhibKey = "_Idle"
+   -- if GetMap() == 8 then
+   --    inhibKey = "inhibitor_idle"
+   --    nexusKey = "nexus_idle"
+   -- else
+   --    inhibKey = "inhibit_gem"
+   --    nexusKey = "nexus_on"
+   -- end
+   if find(object.type, "Barracks") then
+      if object.team == me.team then
+         table.insert(MYINHIBS, object)
       else
-         if me.team == 100 then
-            table.insert(INHIBS, object)
-         else
-            table.insert(MYINHIBS, object)
-         end
+         table.insert(INHIBS, object)
       end
    end
    
@@ -601,29 +593,6 @@ end
 
 function persistTick()
    Clean(WARDS, "name", "Ward")
-   if GetMap() == 8 then
-      Clean(INHIBS, "name", "_Idle")
-      Clean(MYINHIBS, "name", "_Idle")
-      Clean(NEXUS, "name", "_Idle")
-      Clean(MYNEXUS, "name", "_Idle")
-   else
-      Clean(INHIBS, "name", "_gem")
-      Clean(MYINHIBS, "name", "_gem")
-      Clean(NEXUS, "name", "_on")
-      Clean(MYNEXUS, "name", "_on")
-   end
-
-   for i,inhib in rpairs(INHIBS) do
-      if #GetAllInRange(inhib, 250, GetPersisted("destroyed")) > 0 then
-         table.remove(INHIBS, i)
-      end
-   end
-   for i,inhib in ipairs(MYINHIBS) do
-      if #GetInRange(inhib, 250, GetPersisted("destroyed")) > 0 then
-         table.remove(MYINHIBS, i)
-      end
-   end
-
    CleanPersistedObjects()
 
 
@@ -635,8 +604,6 @@ function persistTick()
    updateTrackedSpells()
 
 
-   -- MINIONS = ValidTargets(GetPersisted("MINIONS"))
-   -- MYMINIONS = ValidTargets(GetPersisted("MYMINIONS"))
    TURRETS = FilterList(ValidTargets(GetPersisted("TURRET")), 
       function(item) 
          return item.health > 0 and
@@ -649,6 +616,10 @@ function persistTick()
                 item.type == "obj_AI_Turret"
       end
    )
+
+   INHIBS = FilterList(INHIBS, function(item) return item.health > 0 end)
+   MYINHIBS = FilterList(MYINHIBS, function(item) return item.health > 0 end)
+
    PETS = GetPersisted("PET")
    MYPETS = GetPersisted("MYPET")
 end
