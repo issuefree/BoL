@@ -2,37 +2,65 @@ require "issuefree/timCommon"
 
 local showTimerRadius = 100
 local showVisionRangeKey = 18
-local showSameTeam = false
+local showSameTeam = true
 
 local types = {
-	 { label="Trinket Ward", color=yellow, mm="W",
-	   duration=60, sightRange=1350, triggerRange=70,
-	   name="SightWard", charName="YellowTrinket", spellName="RelicSmallLantern" },
-	 { label="Trinket Ward", color=yellow, mm="W",
-	   duration=120, sightRange=1350, triggerRange=70, 
-	   name="SightWard", charName="YellowTrinketUpgrade", spellName="RelicLantern" },
-	 { label="Sight Ward", color=green, mm="W",
-		duration=180, sightRange=1350, triggerRange=70,
-		name="SightWard", charName="SightWard", spellName="SightWard" }, 
-	 { label="Sight Ward", color=green, mm="W",
-		duration=180, sightRange=1350, triggerRange=70, 
-		name="SightWard", charName="SightWard", spellName="wrigglelantern" },
-	 { label="Vision Ward", color=violet, mm="W",
-		duration=0, sightRange=1350, triggerRange=70, 
-		name="VisionWard", name="VisionWard", spellName="VisionWard" },
+   { label="Trinket Ward", color=yellowB, mm="W",
+     duration=60, 
+     sightRange=1350, triggerRange=70,
+     name="SightWard", 
+     charName="YellowTrinket", 
+     spellName="RelicSmallLantern" 
+   },
+   { label="Trinket Ward", color=yellowB, mm="W",
+     duration=120, sightRange=1350, triggerRange=70, 
+     name="SightWard", 
+     charName="YellowTrinketUpgrade", 
+     spellName="RelicLantern" 
+   },
+   { label="Sight Ward", color=greenB, mm="W",
+     duration=180, sightRange=1350, triggerRange=70,
+     name="SightWard", 
+     charName="SightWard", 
+     spellName="SightWard" 
+   }, 
+   { label="Sight Ward", color=greenB, mm="W",
+     duration=180, sightRange=1350, triggerRange=70, 
+     name="SightWard", 
+     charName="SightWard", 
+     spellName="wrigglelantern" 
+   },
+   { label="Vision Ward", color=violetB, mm="W",
+     duration=0, sightRange=1350, triggerRange=70, 
+     name="VisionWard", 
+     charName="VisionWard", 
+     spellName="VisionWard" 
+   },
 
-	 { label="Jack in the Box", color=red, mm="J",
-		duration=60, sightRange=690, triggerRange=300,
-		name="Jack In The Box", charName="ShacoBox", spellName="JackInTheBox" },
-	 { label="Shroom", color=red, mm="T",
-		duration=600, sightRange=405, triggerRange=115, 
-		name="Noxious Trap", charName="TeemoMushroom", spellName="BantamTrap" },
-  	 { label="Yordle Trap", color = red, mm="C",
-  		duration = 240, sightRange=150, triggerRange=150,
-  		name="Cupcake Trap", charName="CaitlynTrap", spellName="CaitlynYordleTrap" }, 
-  	 { label="Bushwhack", color=yellow, mm="T",
-  		duration = 240, sightRange=0, triggerRange=150,
-		name="Noxious Trap", charName="Nidalee_Spear", spellName="Bushwhack" }
+   { label="Jack in the Box", color=redB, mm="J",
+     duration=60, sightRange=690, triggerRange=300,
+     name="Jack In The Box", 
+     charName="ShacoBox", 
+     spellName="JackInTheBox" 
+   },
+   { label="Shroom", color=redB, mm="T",
+     duration=600, sightRange=405, triggerRange=115, 
+     name="Noxious Trap", 
+     charName="TeemoMushroom", 
+     spellName="BantamTrap" 
+   },
+   { label="Yordle Trap", color=redB, mm="C",
+     duration = 240, sightRange=150, triggerRange=150,
+     name="Cupcake Trap", 
+     charName="CaitlynTrap", 
+     spellName="CaitlynYordleTrap" 
+   }, 
+   { label="Bushwhack", color=yellowB, mm="T",
+     duration = 240, sightRange=0, triggerRange=150,
+     name="Noxious Trap", 
+     charName="Nidalee_Spear", 
+     spellName="Bushwhack" 
+   }
 }
 
 local wardSpots = {
@@ -65,134 +93,154 @@ local wards = {}
 local showVisionRange = false
 
 function Tick()
-	if IsKeyDown(showVisionRangeKey) then 
-		showVisionRange = true
-	else 
-		showVisionRange = false 
-	end
-	
-	cleanUpWards()
-	drawWards()
+   if IsKeyDown(showVisionRangeKey) then 
+      showVisionRange = true
+   else 
+      showVisionRange = false 
+   end
+   
+   cleanUpWards()
+   drawWards()
 end
 
 function drawWards()
-	for i,ward in ipairs(wards) do 
-		local timer = string.format(math.ceil((ward.tick+ward.duration-time())))
-		Circle(ward, ward.triggerRange, ward.color)
-		TextMinimap(ward.mm, ward, ward.color, 14)
-		if showVisionRange then					
-			Circle(ward, ward.sightRange, ward.color)
-		end
-		if ward.duration > 0 then
-			if GetDistance(ward, GetMousePos()) < showTimerRadius then
-				if ward.source == "onload" then
-					-- Text(ward.label..": max "..timer, GetCursorX()-13, GetCursorY()-17, timerColor)
-					TextObject(ward.label..": max "..timer, ward, timerColor)
-				else
-					-- Text(ward.label..": "..timer, GetCursorX()-13, GetCursorY()-17, timerColor)
-					TextObject(ward.label..": "..timer, ward, timerColor)
-				end
-			end
-		end
-	end
+   for i,ward in ipairs(wards) do 
+      local timer = string.format(math.ceil((ward.tick+ward.duration-time())))
+      Circle(ward, ward.triggerRange, ward.color)
+      TextMinimap(ward.mm, ward, ward.color, 14)
+      if showVisionRange then             
+         Circle(ward, ward.sightRange, ward.color)
+      end
+      if GetDistance(ward, GetMousePos()) < showTimerRadius then
+         if ward.source == "onload" then
+            TextObject(ward.label..": max "..timer, ward, timerColor)
+         else
+            TextObject(ward.label..": "..timer, ward, timerColor)
+         end
+      end
+   end
 
-	if GetMap() == 1 then
-		for _,spot in ipairs(wardSpots) do
-			Circle(Point(spot), 25, yellow, 2)
-		end 
-	end
+   if GetMap() == 1 then
+      for _,spot in ipairs(wardSpots) do
+         Circle(Point(spot), 25, yellow, 2)
+      end 
+   end
 end
 
 function cleanUpWards()
-	for i,ward in rpairs(wards) do
-		if ward.source ~= "spell" then
-			if not ward.object or not ward.object.x then
-				table.remove(wards,i)
-				break
-			end
-		end
-		if ward.duration > 0 and time()-ward.tick >= ward.duration then
-			table.remove(wards,i)
-		end
-	end
+   for i,ward in rpairs(wards) do
+      if ward.source ~= "spell" then
+         if not ward.object or not ward.object.x then
+            table.remove(wards,i)
+            break
+         end
+      end
+      if ward.duration > 0 and time()-ward.tick >= ward.duration then
+         table.remove(wards,i)
+      end
+   end
 end
 
 function addWard(ward, type)
-	ward = merge(ward, type)
+   ward = merge(ward, type)
 
-	--check for dups
-	for i,w in rpairs(wards) do
-		if GetDistance(w, ward) < 100 and
-		   math.abs(w.tick - ward.tick) < 1 and
-		   w.label == ward.label
-		then
-			if ward.source == "spell" then  -- don't add spells if the obj exists
-				return
-			else
-				table.remove(wards, i)
-				break
-			end
-		end
-	end
-	table.insert(wards, ward)
+   --check for dups
+   for i,w in rpairs(wards) do
+      if GetDistance(w, ward) < 100 and
+         math.abs(w.tick - ward.tick) < 1 and
+         w.label == ward.label
+      then
+         if ward.source == "spell" then  -- don't add spells if the obj exists
+            return
+         else
+            table.remove(wards, i)
+            break
+         end
+      end
+   end
+   table.insert(wards, ward)
+   -- pp("Adding ward")
+   -- pp(ward)
 end
 
 local function onCreate(object)
-	if not showSameTeam and object.team == me.team then
-		return
-	end
+   if not showSameTeam and object.team == me.team then
+      return
+   end
 
-	-- for _,ward in ipairs(wards) do
-	-- 	if GetDistance(ward, object) < 100 then
-	-- 		pp(object)
-	-- 	end
-	-- end
+   -- for _,ward in ipairs(wards) do
+   --    if GetDistance(ward, object) < 100 then
+   --       pp(object)
+   --    end
+   -- end
 
-	for _,type in ipairs(types) do
-		if object.name == type.name then
-			local ward = {object=object, tick=time(), source="oncreate"}
-			ward = merge(ward, Point(object))
-			if LOADING then
-				ward.source = "onload"
-			end
-			addWard(ward, type)
-			break
-		end
-	end
+   for _,type in ipairs(types) do
+      if object.name == type.name and
+         object.charName == type.charName
+      then
+         local ward = {object=object, tick=time(), source="oncreate"}
+         ward = merge(ward, Point(object))
+         if LOADING then
+            ward.source = "onload"
+         end
+         addWard(ward, type)
+         break
+      end
+   end
 
-	if find(object.name, "caitlyn_Base_yordleTrap_trigger") then
-		SortByDistance(wards, object)
-		for i,ward in ipairs(wards) do
-			if ward.name == "CaitlynYordleTrap" and GetDistance(object, ward) < 100 then
-				table.remove(wards, i)
-				pp("remove trap")
-				break
-			end
-		end
-	end
-	if find(object.name, "Teemo_Base_R_tar") then
-		SortByDistance(wards, object)
-		for i,ward in ipairs(wards) do
-			if ward.name == "Noxious Trap" and GetDistance(object, ward) < 100 then
-				table.remove(wards, i)
-				pp("remove shroom")
-				break
-			end
-		end
-	end
+   if find(object.name, "caitlyn_Base_yordleTrap_trigger") then
+      SortByDistance(wards, object)
+      for i,ward in ipairs(wards) do
+         if ward.name == "CaitlynYordleTrap" and GetDistance(object, ward) < 100 then
+            table.remove(wards, i)
+            -- pp("remove cait trap")
+            break
+         end
+      end
+   end
+   if find(object.name, "JackintheboxPoof") then
+      SortByDistance(wards, object)
+      for i,ward in ipairs(wards) do
+         if ward.name == "Jack In The Box" and GetDistance(object, ward) < 100 then
+            table.remove(wards, i)
+            -- pp("remove shaco box")
+            break
+         end
+      end
+   end
+   if find(object.name, "Nidalee_Base_W_Tar") then
+      SortByDistance(wards, object)
+      for i,ward in ipairs(wards) do
+         if ward.name == "Noxious Trap" and GetDistance(object, ward) < 100 then
+            table.remove(wards, i)
+            -- pp("remove nid trap")
+            break
+         end
+      end
+   end   
+   if find(object.name, "Teemo_Base_R_tar") then
+      SortByDistance(wards, object)
+      for i,ward in ipairs(wards) do
+         if ward.name == "Noxious Trap" and GetDistance(object, ward) < 100 then
+            table.remove(wards, i)
+            -- pp("remove shroom")
+            break
+         end
+      end
+   end
 end
 
 local function onSpell(unit, spell)
-	if IsHero(unit) and (showSameTeam or IsEnemy(unit)) then
-		for _,type in ipairs(types) do
-			if type.spellName == spell.name then
-				local ward = {tick=time(), source="spell"}
-				ward = merge(ward, Point(spell.endPos))
-				addWard(ward, type)
-				break
-			end
-		end
-	end
+   if IsHero(unit) and (showSameTeam or IsEnemy(unit)) then
+      for _,type in ipairs(types) do
+         if type.spellName == spell.name then
+            local ward = {tick=time(), source="spell"}
+            ward = merge(ward, Point(spell.endPos))
+            addWard(ward, type)
+            break
+         end
+      end
+   end
 end
 
 
