@@ -38,12 +38,12 @@ champ conversion to BoL
 	=	jax.lua
 	0	jinx.lua
 	+	karma.lua
-	-	karthus.lua
+	=	karthus.lua
 	-	kassadin.lua
-	-	katarina.lua
+	=	katarina.lua
 	-	kayle.lua
 	-	kennen.lua
-	-	kog.lua
+	+	kog.lua
 	-	leblanc.lua
 	-	leesin.lua
 	-	leona.lua
