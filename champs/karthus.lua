@@ -24,7 +24,7 @@ spells["lay"] = {
    color=violet, 
    base={40,60,80,100,120}, 
    ap=.3, 
-   radius=137.5,
+   radius=150,  -- Wiki says 200. Need to test.
    delay=7,
    speed=0,
    noblock=true,
@@ -71,7 +71,7 @@ function Run()
       return true
    end
 
-   Circle(GetMousePos(), spells["lay"].radius, red)
+   Circle(GetMousePos(), spells["lay"].radius, redB)
 
    if CastAtCC("lay") then
       return true
