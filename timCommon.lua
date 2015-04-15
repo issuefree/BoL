@@ -20,6 +20,19 @@ function OnLoad()
 	require("issuefree/champs/"..string.lower(me.charName))
    VP = VPrediction()
    loadtime = time()
+
+   -- if me:GetSpellData(_Q).mana < 5 then
+   --    pp("Check mana cost for Q  "..me:GetSpellData(_Q).mana)
+   -- end
+   -- if me:GetSpellData(_W).mana < 5 then
+   --    pp("Check mana cost for W  "..me:GetSpellData(_W).mana)
+   -- end
+   -- if me:GetSpellData(_E).mana < 5 then
+   --    pp("Check mana cost for E  "..me:GetSpellData(_E).mana)
+   -- end
+   -- if me:GetSpellData(_R).mana < 5 then
+   --    pp("Check mana cost for R  "..me:GetSpellData(_R).mana)
+   -- end
 end
 
 function OnUnload()
@@ -1736,8 +1749,7 @@ function OnTick()
          end
 
          if spell.charges < spell.maxCharges then
-            -- local ttRecharge = GetLVal(spell, "rechargeTime") * (1+me.cdr)
-            local ttRecharge = GetLVal(spell, "rechargeTime") * (1+0)
+            local ttRecharge = GetLVal(spell, "rechargeTime") * (1+me.cdr)
             if ttRecharge > 0 then -- no recharge time means time doesn't generate charges
                if time() - spell.lastRecharge > ttRecharge then
                   spell.lastRecharge = time()
@@ -2526,4 +2538,33 @@ function OnDraw()
 
    DoDraws()
    dlog("end od")
+end
+
+function WillCollide(s, t)
+   local dist = GetDistance(s,t)
+   local cp = Point(s)
+   cp = Projection(cp,t,25)
+   while GetDistance(s, cp) < dist do
+      if IsWall(cp:vector()) then --or #getNearPoints(cp) >= 1 then
+         return cp
+      end
+      cp = Projection(cp,t,25)
+   end
+   return nil
+end
+
+function GetNearestWall(target, dist)
+   local wallPoint
+   local wallDist
+   local points = GetCircleLocs(target, dist)
+   for _,point in ipairs(points) do
+      local cp = WillCollide(target, point)
+      if cp and ( not wallPoint or GetDistance(cp) < wallDist ) then
+         wallPoint = cp
+         wallDist = GetDistance(cp)
+      end
+   end
+   if wallPoint then
+      return wallPoint
+   end
 end
