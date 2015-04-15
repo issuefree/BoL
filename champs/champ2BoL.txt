@@ -15,7 +15,7 @@ champ conversion to BoL
 	=	ashe.lua
 	-	azir.lua
 	0	blitz.lua
-	0	brand.lua
+	+	brand.lua
 	=	caitlyn.lua
 	-	cassiopeia.lua
 	0	chogath.lua
@@ -79,7 +79,7 @@ champ conversion to BoL
 	=	taric.lua
 	=	teemo.lua
 	+	template.lua
-	-	thresh.lua
+	+	thresh.lua
 	!	tristana.lua
 	0	trundle.lua
 	-	tryndamere.lua
