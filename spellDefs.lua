@@ -15,7 +15,7 @@ ignoredSpells = {
 	"DeathfireGrasp", "totem", "ward", "BilgewaterCutlass", "ItemSwordOfFeastAndFamine",
 	"trinket", "HealthBomb", "RanduinsOmen", "YoumusBlade", "FlaskOfCrystalWater", 
 	"ElixirOfWrath", "HextechGunblade", "Muramana", "shurelyascrest", "lanternwally",
-	"kalistarallydash", "hextechsweeper", "quicksilversash",
+	"kalistarallydash", "hextechsweeper", "quicksilversash", "dummy",
 }
 
 SPELL_DEFS = {
@@ -453,7 +453,10 @@ SPELL_DEFS = {
 		maokaisapling2={range=1100, radius=350, time=1, ss=true, isline=false},
 	},
    MasterYi={
+   	alphastrike={},
       meditate={type="stall"},
+      wujustyle={},
+      masteryidoublestrike={},
    },
 	MissFortune = {
 		missfortunericochetshot={physical=true},
@@ -724,7 +727,9 @@ SPELL_DEFS = {
 	},
 	Varus = {
 		varusq={range=1475, radius=50, time=1, ss=true, isline=true, physical=true},
+		varuse={},
 		varusr={range=1075, radius=80, time=1.5, ss=true, isline=true, cc=STUN},
+		varusemissile={},
 	},
 	Veigar = {
 		veigarbalefulstrike={},
