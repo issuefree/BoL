@@ -730,6 +730,13 @@ function IsGoodFireahead(thing, target, minChance)
       return false
    end
 
+   -- - -1: Collision detected.
+   -- - 0: No waypoints found for the target, returning target current position
+   -- - 1: Low hitchance to hit the target
+   -- - 2: High hitchance to hit the target
+   -- - 3: Target too slowed or/and too close , (~100% hit chance)
+   -- - 4: Target inmmobile, (~100% hit chace)
+   -- - 5: Target dashing or blinking. (~100% hit chance)
    minChance = minChance or 2
 
    if chance < minChance then
