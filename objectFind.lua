@@ -52,10 +52,11 @@ function debugTick()
    end
    Circle(GetMousePos(), range, cyanB) 
 
-   PrintState(-5, GetSpellInfo("Q").name.."  "..math.ceil(GetCD("Q")))
-   PrintState(-4, GetSpellInfo("W").name.."  "..math.ceil(GetCD("W")))
-   PrintState(-3, GetSpellInfo("E").name.."  "..math.ceil(GetCD("E")))
-   PrintState(-2, GetSpellInfo("R").name.."  "..math.ceil(GetCD("R")))
+   PrintState(-6, "Name     CD     Cost     Range")
+   PrintState(-5, GetSpellInfo("Q").name.."  "..math.ceil(GetCD("Q")).."  "..GetSpellCost("Q").."  "..GetSpellRange("Q"))
+   PrintState(-4, GetSpellInfo("W").name.."  "..math.ceil(GetCD("W")).."  "..GetSpellCost("W").."  "..GetSpellRange("W"))
+   PrintState(-3, GetSpellInfo("E").name.."  "..math.ceil(GetCD("E")).."  "..GetSpellCost("E").."  "..GetSpellRange("E"))
+   PrintState(-2, GetSpellInfo("R").name.."  "..math.ceil(GetCD("R")).."  "..GetSpellCost("R").."  "..GetSpellRange("R"))
 
    objects = {}
    for i = 1, objManager.iCount, 1 do
