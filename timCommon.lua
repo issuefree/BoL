@@ -134,7 +134,7 @@ function PrintAction(str, target, timeout)
          then
             out = out.." : "..target
          else
-            out = out.." -> "..target.name
+            out = out.." -> "..target.charName
          end
       end
       local spaces = ""
