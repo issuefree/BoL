@@ -16,9 +16,8 @@ pp("\nTim's Thresh")
 --    Flay away darius when he pulls
 
 InitAAData({
-   windup=.4+.1,  -- fundge because of his very poor speed scaling.
+   speed=1000, --??
    -- extraRange=15,
-   particles = {"Thresh_ba"} 
 })
 
 local souls = 0
@@ -180,8 +179,7 @@ function FollowUp()
 end
 
 local function onCreate(object)
-   if find(object.name, "Thresh_Soul_Eat.troy") then
-   -- if find(object.name, "Thresh_Soul_Eat_buf") then
+   if find(object.name, "Thresh_Base_Soul_Eat.troy") then
       setSouls(souls+1)
       PrintAction("Gathered soul "..souls)
    end
@@ -194,11 +192,11 @@ local function onSpell(unit, spell)
 
    if IsOn("repell") then
       if IsEnemy(unit) then
-         if unit.name == "Leona" and spell.name == "LeonaZenithBlade" or
-            unit.name == "Alistar" and spell.name == "Headbutt" or
-            unit.name == "LeeSin" and spell.name == "blindmonkqtwo" or
-            unit.name == "Jax" and spell.name == "JaxLeapStrike" or
-            unit.name == "Amumu" and spell.name == "BandageToss"
+         if unit.charName == "Leona" and spell.name == "LeonaZenithBlade" or
+            unit.charName == "Alistar" and spell.name == "Headbutt" or
+            unit.charName == "LeeSin" and spell.name == "blindmonkqtwo" or
+            unit.charName == "Jax" and spell.name == "JaxLeapStrike" or
+            unit.charName == "Amumu" and spell.name == "BandageToss"
          then
             repellTarget = unit
             DoIn(function() repellTarget = nil end, 1)
