@@ -29,7 +29,7 @@ spells["bloom"] = {
    speed=0,
    noblock=true,
    radius=225, -- reticle
-   name="ZyraQFissure"
+   name="ZyraQFissure",
    cost={75,80,85,90,95},
 }
 spells["seed"] = {
@@ -57,7 +57,7 @@ spells["roots"] = {
    noblock=true,
    width=80,  --?
    growWidth=315,
-   name="ZyraGraspingRoots"
+   name="ZyraGraspingRoots",
    cost={70,75,80,85,90},
 }
 spells["strangle"] = {
