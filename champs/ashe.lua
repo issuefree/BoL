@@ -7,6 +7,7 @@ SetChampStyle("marksman")
 
 InitAAData({
    speed = 2000,
+   extraWindup=.1,
    minMoveTime = .25, -- ashe can't get move commands too early for some reason
    particles = {"Ashe_Base_BA_mis", "Ashe_Base_Q_mis"},
    attacks = {"attack", "frostarrow"}
