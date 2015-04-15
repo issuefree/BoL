@@ -37,7 +37,8 @@ spells["blast"] = {
    delay=3-2, -- hard to test but delay is 2.4 plus .6 from wiki.
    speed=0,
    noblock=true,
-   radius=150
+   radius=150,
+   cost={40,50,60,70,80},
 } 
 spells["miasma"] = {
    key="W", 
@@ -48,14 +49,16 @@ spells["miasma"] = {
    delay=2.3-1,
    speed=0,
    noblock=true,
-   radius=150+25
+   radius=150+25,
+   cost={40,50,60,70,80},
 } 
 spells["fang"] = {
    key="E", 
    range=700, 
    color=violet, 
    base={55,80,105,130,155},
-   ap={.55},
+   ap=.55,
+   cost={50,60,70,80,90},
 } 
 spells["gaze"] = {
    key="R", 
@@ -64,7 +67,8 @@ spells["gaze"] = {
    base={150,250,350}, 
    ap=.5,
    cone=80, -- reticle
-   noblock=true
+   noblock=true,
+   cost=100,
 } 
 
 function Run()

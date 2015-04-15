@@ -64,7 +64,7 @@ spells["might"] = {
 spells["relentless"] = {
 	base={100,160,220},
 	ap=.7,
-	type="M"
+	type="M",
 }
 
 local ultCounter = 0

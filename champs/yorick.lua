@@ -46,7 +46,7 @@ spells["famine"] = {
    base={55,85,115,145,175},
    adBonus=1,
    type="M",
-   cost={10,20,30,40,50}
+   cost={55,60,65,70,75}
 } 
 spells["death"] = {
    key="R",
@@ -59,18 +59,20 @@ local numGhouls = 0
 
 function Run()
    numGhouls = 0
-   if P.warSpectre then
+   if P.warSpectre and not P.warSpectre.dead then
       numGhouls = numGhouls + 1
    end
-   if P.pestilence then
+   if P.pestilence and not P.pestilence.dead then
       numGhouls = numGhouls + 1
    end
-   if P.famine then
+   if P.famine and not P.famine.dead then
       numGhouls = numGhouls + 1
    end
-   if P.death then
+   if P.death and not P.death.dead then
       numGhouls = numGhouls + 1
    end
+
+   PrintState(0, numGhouls)
 
    spells["AA"].bonus = 0
    spells["AA"].bonus = GetAADamage()*numGhouls*.05
@@ -118,7 +120,7 @@ function Run()
             return true
          end
 
-         if KillMinionsInArea("pestilence", GetThreshMP(thing, .1, 1)) then
+         if KillMinionsInArea("pestilence", GetThreshMP("pestilence", .1, 1)) then
             return true
          end
 
@@ -179,8 +181,10 @@ end
 
 local function onCreate(object)
    Persist("warSpectre", object, "Clyde", me.team)
-   Persist("pestilence", object, "Inky", me.team)
-   Persist("famine", object, "Blinky", me.team)
+   if Persist("famine", object, "Blinky", me.team) then
+   else
+      Persist("pestilence", object, "Inky", me.team)
+   end
    if object.type == "obj_AI_Minion" then
       for _,hero in ipairs(concat(ENEMIES, ALLIES)) do
          if object.charName == hero.charName then

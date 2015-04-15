@@ -49,7 +49,7 @@ spells["shield"] = {
    color=blue, 
    base={70,140,210,280,350}, 
    ap=.7,
-   cost=50
+   cost=55,
 }
 spells["shackles"] = {
    key="R", 
@@ -99,7 +99,7 @@ function Action()
          if SkillShot("binding", "peel") then
             return true
          end
-         if SkillShot("binding", nil, GetInRange(me, GetSpellRange("binding")-200, ENEMIES), .8) then
+         if SkillShot("binding", nil, GetInRange(me, GetSpellRange("binding")-200, ENEMIES)) then
             return true
          end
       end

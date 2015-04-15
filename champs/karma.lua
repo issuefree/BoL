@@ -25,8 +25,8 @@ spells["flame"] = {
    delay=1.6,
    speed=17,
    width=100,
-   cost={50,55,60,65,70},
    radius=250
+   cost={50,55,60,65,70},
 }
 spells["soulflare"] = {
    key="R",
@@ -52,7 +52,8 @@ spells["shield"] = {
    damageRadius=600
 }
 spells["mantra"] = {
-   key="R"
+   key="R",
+   cost=0,
 } 
 
 function Run()
@@ -145,7 +146,7 @@ function Action()
          end
       end
 
-      local target = GetSkillShot("flame", nil, nil, .75)
+      local target = GetSkillShot("flame")
       if target then
          if CanUse("mantra") and ApproachAngleRel(me, target) < 30 then
             Cast("mantra", me)

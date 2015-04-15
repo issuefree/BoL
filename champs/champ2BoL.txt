@@ -53,15 +53,15 @@ champ conversion to BoL
 	0	malzahar.lua
 	-	maokai.lua
 	-	masteryi.lua
-	-	missfortune.lua
-	-	mordekaiser.lua
+	+	missfortune.lua
+	+	mordekaiser.lua
 	0	morgana.lua
 	=	nasus.lua
 	=	nidalee.lua
-	-	nunu.lua
-	-	olaf.lua
+	+	nunu.lua
+	+	olaf.lua
 	-	orianna.lua
-	-	pantheon.lua
+	+	pantheon.lua
 	-	poppy.lua
 	-	renekton.lua
 	-	riven.lua
@@ -72,11 +72,11 @@ champ conversion to BoL
 	-	singed.lua
 	-	sion.lua
 	0	sivir.lua
-	-	sona.lua
+	=	sona.lua
 	0	soraka.lua
 	-	swain.lua
 	!	talon.lua
-	-	taric.lua
+	=	taric.lua
 	=	teemo.lua
 	+	template.lua
 	-	thresh.lua
@@ -86,16 +86,16 @@ champ conversion to BoL
 	+	twistedfate.lua
 	-	twitch.lua
 	-	udyr.lua
-	-	urgot.lua
+	+	urgot.lua
 	=	varus.lua
-	-	vayne.lua
+	+	vayne.lua
 	+	veigar.lua
 	-	velkoz.lua
-	-	vladimir.lua
+	+	vladimir.lua
 	0	volibear.lua
 	0	warwick.lua
 	=	xerath.lua
 	-	xinzhao.lua
-	-	yorick.lua
+	+	yorick.lua
 	0	zilean.lua
 	=	zyra.lua

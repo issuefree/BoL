@@ -31,7 +31,7 @@ spells["turret"] = {
    delay=2,
    speed=0,
    radius=100,
-   -- cost=20
+   cost=20
 }
 spells["rockets"] = {
    key="W", 
@@ -44,7 +44,7 @@ spells["rockets"] = {
    width=50,
    overShoot=-100,
    noblock=true,
-   -- cost={70,80,90,100,110}
+   cost={70,80,90,100,110}
 }
 spells["grenade"] = {
    key="E", 
@@ -58,11 +58,11 @@ spells["grenade"] = {
    radius=150,
    radiusBase=150,
    radiusUp=300,
-   -- cost=85
+   cost=85
 }
 spells["upgrade"] = {
    key="R", 
-   -- cost=100
+   cost=100
 }
 
 function Run()

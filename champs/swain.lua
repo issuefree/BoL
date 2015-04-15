@@ -33,6 +33,7 @@ spells["decrepify"] = {
    color=yellow, 
    base={75,120,165,210,255}, 
    ap=.9,
+   cost={60,70,80,90,100},
 } 
 spells["nevermore"] = {
    key="W", 
@@ -44,6 +45,7 @@ spells["nevermore"] = {
    speed=0,
    radius=250, -- reticle
    noblock=true,
+   cost={80,90,100,110,120},
 } 
 spells["torment"] = {
    key="E", 
@@ -52,6 +54,7 @@ spells["torment"] = {
    base={75,115,155,195,235},
    ap=.8,
    extraDamage={.08,.11,.14,.17,.2},
+   cost={65,70,75,80,85},
 } 
 spells["crow"] = {
    key="R",

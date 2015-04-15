@@ -35,6 +35,7 @@ spells["shuriken"] = {
    delay=1.8,  --tss
    speed=17,   --tss
    width=55+20,   --reticle
+   cost={65,60,55,50,45},
 } 
 spells["surge"] = {
    key="W", 
@@ -42,16 +43,18 @@ spells["surge"] = {
    color=yellow, 
    base={65,95,125,155,185}, 
    ap=.55,
+   cost=45,
 } 
 spells["surgePassive"] = {
    base=0,
    ad={.4,.5,.6,.7,.8},
-   type="M"
+   type="M",
 }
 spells["rush"] = {
    key="E", 
    base={85,125,165,205,245}, 
    ap=.6,
+   cost={100,95,90,85,80}
 } 
 spells["maelstrom"] = {
    key="R", 

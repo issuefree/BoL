@@ -72,7 +72,8 @@ spells["ace"] = {
    color=red, 
    base={250,475,700}, 
    type="P",
-   adBonus=2
+   adBonus=2,
+   cost=100,
 }
 spells["headshot"] = {
    base={0},

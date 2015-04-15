@@ -24,7 +24,8 @@ spells["switch"] = {
    ad=.1,
    radius=150,
    baseRange=525,
-   range={75,100,125,150,175}
+   range={75,100,125,150,175},
+   cost=0,
 } 
 spells["zap"] = {
    key="W", 

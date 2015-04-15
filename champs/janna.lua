@@ -19,6 +19,7 @@ spells["gale"] = {
 	base={60,85,110,135,160}, 
 	ap=.35,
 	width=120,
+	cost={90,105,120,135,150},
 }
 spells["galeShort"] = {
    key="Q",
@@ -27,27 +28,31 @@ spells["galeShort"] = {
 	base={60,85,110,135,160}, 
 	ap=.35,
 	width=120,
+	cost={90,105,120,135,150},
 }
 spells["zephyr"] = {
 	key="W", 
 	range=600,  
 	color=violet, 
 	base={60,115,170,225,280}, 
-	ap=.5
+	ap=.5,
+	cost={40,50,60,70,80},
 }
 spells["eye"] = {
 	key="E", 
 	range=800,  
 	color=green,  
 	base={80,120,160,200,240}, 
-	ap=.7
+	ap=.7,
+	cost={70,80,90,100,110},
 }
 spells["monsoon"] = {
 	key="R", 
 	range=800, 
 	color=green, 
 	base=100, 
-	ap=1.4
+	ap=1.4,
+	cost=100,
 }
 
 AddToggle("shield", {on=true, key=112, label="Auto Shield", auxLabel="{0}", args={"eye"}})

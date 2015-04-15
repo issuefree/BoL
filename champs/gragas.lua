@@ -28,14 +28,16 @@ spells["barrel"] = {
    radius=275,
    noblock=true,
    overShoot=50,
-   scale=function(target) if IsMinion(target) then return .7 end end
+   scale=function(target) if IsMinion(target) then return .7 end end,
+   cost={60,65,70,75,80},
 }
 
 spells["rage"] = {
    key="W",
    base={20,50,80,110,140},
    ap=.3,
-   percMaxHealth={.08,.09,.10,.11,.12}
+   percMaxHealth={.08,.09,.10,.11,.12},
+   cost=30,
 }
 spells["slam"] = {
    key="E", 
@@ -46,6 +48,7 @@ spells["slam"] = {
    delay=1.6,
    speed=9,
    area=150,
+   cost=50,
 }
 spells["cask"] = {
    key="R", 
@@ -55,7 +58,8 @@ spells["cask"] = {
    ap=.7,
    delay=1.6,
    speed=30,
-   radius=400
+   radius=400,
+   cost=100,
 }
 
 local barrelTime = 0

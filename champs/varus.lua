@@ -107,7 +107,7 @@ spells["chain"] = {
    speed=20,  -- wiki number
    width=120, -- TODO test
    chainRadius=550,
-   cost={10,20,30,40,50},
+   cost=100,
    damOnTarget=getBlightDamage
 } 
 spells["maxArrow"] = copy(spells["arrow"])

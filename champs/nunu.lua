@@ -1,10 +1,9 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
-print("\nTim's Nunu")
+pp("\nTim's Nunu")
 
 InitAAData({ 
-   windup=.25,
 })
 
 AddToggle("boil",  {on=true, key=112, label="Boil ADC"})
@@ -23,19 +22,23 @@ spells["consume"] = {
 	base={400,550,700,850,1000},
 	type="T",
 	color=yellow,
-	cost=60
+	cost=60,
+	baseCost=60,
 }
 spells["fed"] = {
 	key="Q",
 	base={70,115,160,205,250},
 	type="H",
-	ap=.75
+	ap=.75,
+	cost=60,
+	baseCost=60,
 }
 spells["boil"] = {
 	key="W", 
 	range=700,  
 	color=green,
-	cost=50
+	cost=50,
+	baseCost=50
 }
 spells["iceblast"] = {
 	key="E", 
@@ -44,7 +47,8 @@ spells["iceblast"] = {
 	base={85,130,175,225,275}, 
 	type="M",
 	ap=1,
-	cost={75,85,95,105,115}
+	cost={75,85,95,105,115},
+	baseCost={75,85,95,105,115},
 }
 spells["zero"] = {
 	key="R", 
@@ -54,6 +58,7 @@ spells["zero"] = {
 	ap=2.5,
 	type="M",
 	cost=100,
+	baseCost=100,
 	channel=true,
 	name="AbsoluteZero",
 	object="AbsoluteZero2_green_cas"
@@ -62,6 +67,21 @@ spells["zero"] = {
 local lastBoil = time()
 
 function Run()
+	if P.visionary then
+		spells["consume"].cost = 0
+		spells["fed"].cost = 0
+		spells["boil"].cost = 0
+		spells["iceblast"].cost = 0
+		spells["zero"].cost = 0
+	else
+		spells["consume"].cost = spells["consume"].baseCost
+		spells["fed"].cost = spells["fed"].baseCost
+		spells["boil"].cost = spells["boil"].baseCost
+		spells["iceblast"].cost = spells["iceblast"].baseCost
+		spells["zero"].cost = spells["zero"].baseCost
+	end
+
+
    if StartTickActions() then
       return true
    end
@@ -124,6 +144,7 @@ function Action()
 end
 
 local function onObject(object)
+	PersistBuff("visionary", object, "Visionary_buf")
 end
 
 local function onSpell(unit, spell)

@@ -115,7 +115,6 @@ function Run()
 
             end
 
-
             if CanUse("swing") and WillKill("swing", creep) and #creeps >= 2 then
                Cast("swing", creep)
                PrintAction("Execute creep")
@@ -136,7 +135,7 @@ function Run()
 end
 
 function Action()
-   if SkillShot("axe", nil, nil, .75) then
+   if SkillShot("axe") then
       return true
    end
       

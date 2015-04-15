@@ -49,7 +49,8 @@ spells["smash"] = {
             end
             return scale
          end,
-   type="P"
+   type="P",
+   cost=45,
 } 
 spells["furnace"] = {
    key="W", 
@@ -60,6 +61,7 @@ spells["furnace"] = {
    targetMaxHealth={.1,.11,.12,.13,.14},
    armTime=2,
    duration=6,
+   cost={65,70,75,80,85},
 } 
 spells["roar"] = {
    key="E",
@@ -71,6 +73,7 @@ spells["roar"] = {
    speed=17.5, -- tss
    width=85, -- reticle
    knockback=650, --reticle
+   cost={35,40,45,50,55},
 } 
 spells["roarKB"] = copy(spells["roar"])
 spells["roarKB"].scale = 1.5
@@ -81,6 +84,7 @@ spells["onslaught"] = {
    ad=.4,
    duration=8,
    type="P",
+   cost=100,
 } 
 
 --TODO
@@ -179,7 +183,7 @@ function Action()
       end
    end
 
-   if SkillShot("roar", nil, nil, 1) then
+   if SkillShot("roar", nil, nil, 3) then
       return true
    end
 

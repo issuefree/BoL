@@ -34,6 +34,7 @@ spells["shard"] = {
 } 
 spells["strikes"] = {
    key="W", 
+   cost=25,
 } 
 spells["slam"] = {
    key="E", 

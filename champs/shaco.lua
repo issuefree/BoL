@@ -30,6 +30,7 @@ spells["deceive"] = {
    key="Q", 
    range=400, 
    color=blue, 
+   cost={90,80,70,60,50},
 } 
 spells["box"] = {
    key="W", 
@@ -40,6 +41,7 @@ spells["box"] = {
    delay=2,
    speed=0,
    radius=300,
+   cost={50,55,60,65,70},
 } 
 spells["shiv"] = {
    key="E", 
@@ -48,12 +50,14 @@ spells["shiv"] = {
    base={50,90,130,170,210}, 
    ap=1,
    adBonus=1,
+   cost={50,55,60,65,70},
 } 
 spells["clone"] = {
    key="R", 
    base={300,450,600}, 
    ap=1,
-   radius=250
+   radius=250,
+   cost=100,
 } 
 
 function Run()

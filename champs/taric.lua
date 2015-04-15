@@ -162,6 +162,4 @@ end
 
 AddOnCreate(onCreate)
 AddOnSpell(onSpell)
-
-
 AddOnTick(Run)

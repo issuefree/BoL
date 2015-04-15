@@ -29,10 +29,12 @@ spells["blow"] = {
    object="Poppy_DevastatingBlow_buf",
    range=GetAARange,
    rangeType="e2e",
-   type="M"
+   type="M",
+   cost=55,
 }
 spells["paragon"] = {
-   key="W"
+   key="W",
+   cost={70,75,80,85,90},
 }
 spells["charge"] = {
    key="E", 
@@ -41,18 +43,21 @@ spells["charge"] = {
    base={50,75,100,125,150}, 
    ap=.4,
    type="M",
-   knockback=300
+   knockback=300,
+   cost={60,65,70,75,80},
 }
 spells["collision"] = {
    key="E", 
    base={75,125,175,225,275}, 
    ap=.4,
-   type="M"
+   type="M",
+   cost={60,65,70,75,80},
 }
 spells["immunity"] = {
    key="R", 
    range=900, 
-   color=blue
+   color=blue,
+   cost=100,
 }
 
 function Run()

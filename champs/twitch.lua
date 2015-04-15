@@ -21,7 +21,8 @@ AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["ambush"] = {
-   key="Q"
+   key="Q",
+   cost=60,
 }
 spells["cask"] = {
    key="W", 
@@ -30,7 +31,8 @@ spells["cask"] = {
    delay=2,
    speed=14,
    noblock=true,
-   radius=300
+   radius=300,
+   cost=50,
 }
 spells["expColor1"] = {
    key="E", 
@@ -49,7 +51,8 @@ spells["contaminate"] = {
    base=0,
    damOnTarget=function(target)
       return getStacks(target)*GetSpellDamage("contaminateStack")
-   end
+   end,
+   cost={50,60,70,80,90},
 }
 spells["contaminateStack"] = {
    base={20,35,50,65,80}, 
@@ -62,6 +65,7 @@ spells["rattat"] = {
    color=red,
    range=850,
    onHit=true,
+   cost={100,125,150},
 }
 
 function Run()

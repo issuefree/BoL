@@ -35,6 +35,7 @@ spells["bolt"] = {
    width=90-5,  -- reticle
    noblock=true,
    overShoot=100,
+   cost={80,90,100,110,120},
 } 
 spells["eye"] = {
    key="W",
@@ -47,6 +48,7 @@ spells["eye"] = {
    radius=275-10, -- reticle
    noblock=true,
    manualCooldown={14,13,12,11,10},
+   cost={70,80,90,100,110},
 } 
 spells["orb"] = {
    key="E", 
@@ -58,6 +60,7 @@ spells["orb"] = {
    speed=14,
    width=75, -- reticle
    manualCooldown={13,12.5,12,11.5,11},
+   cost={60,65,70,75,80},
 } 
 spells["rite"] = {
    key="R",
@@ -69,6 +72,7 @@ spells["rite"] = {
    speed=0,
    noblock=true,
    radius=150,
+   cost=100,
 } 
 
 spells["maxBolt"] = copy(spells["bolt"])

@@ -16,7 +16,7 @@ pp("\nTim's Vayne")
 --    condemn away darius when he pulls
 
 InitAAData({
-   speed = 2000, windup=.2,
+   speed = 2000,
    -- extraRange=-10,
    resets={GetSpellInfo("Q").name},
    particles = {"vayne_basicAttack_mis.troy", "vayne_critAttack_mis.troy", "vayne_ult_mis.troy"}
@@ -37,6 +37,7 @@ spells["tumble"] = {
    base=0,
    ad={.3,.35,.4,.45,.5},
    type="P",
+   cost=30,
 } 
 spells["bolts"] = {
    key="W",
@@ -53,7 +54,7 @@ spells["condemn"] = {
    adBonus=.5,
    type="P",
    cost=90,
-   knockback=470-25
+   knockback=470-50
 } 
 spells["final"] = {
    key="R", 
@@ -218,10 +219,10 @@ function GetTumbleLocs()
 end
 
 local function onCreate(object)
-   PersistOnTargets("ring", object, "vayne_W_ring1", ENEMIES, MINIONS, CREEPS)
-   PersistOnTargets("rings", object, "vayne_W_ring2", ENEMIES)
-   PersistOnTargets("rings", object, "vayne_W_ring2", MINIONS, CREEPS)
-   PersistBuff("tumble", object, "vayne_Q_buf")
+   PersistOnTargets("ring", object, "vayne_base_W_ring1", ENEMIES, MINIONS, CREEPS)
+   PersistOnTargets("rings", object, "vayne_base_W_ring2", ENEMIES)
+   PersistOnTargets("rings", object, "vayne_base_W_ring2", MINIONS, CREEPS)
+   PersistBuff("tumble", object, "Vayne_Base_Q_buf")
 end
 
 local function onSpell(unit, spell)

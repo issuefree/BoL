@@ -45,7 +45,8 @@ spells["fury"] = {
 spells["intervention"] = {
   key="R", 
   range=900, 
-  color=yellow
+  color=yellow,
+  cost=0,
 }
 
 -- reckoning is pretty spammable, so spam it.

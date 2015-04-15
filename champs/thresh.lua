@@ -127,7 +127,7 @@ function Run()
    end
 
    if IsOn("repell") and repellTarget and CanUse("flay") and IsInRange("flay", repellTarget) then
-      if SkillShot("flay", nil, repellTarget, 0) then
+      if SkillShot("flay", nil, repellTarget, 1) then
          PrintAction("Repell", repellTarget, 1)
          return true
       end

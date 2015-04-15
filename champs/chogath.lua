@@ -172,7 +172,7 @@ function Action()
       end
 
       -- barring that throw it at the weakest single
-      if SkillShot("rupture", nil, nil, 1) then
+      if SkillShot("rupture", nil, nil, 3) then
          return true
       end
    end

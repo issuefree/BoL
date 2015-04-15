@@ -32,6 +32,7 @@ spells["bite"] = {
    base={60,100,140,180,220}, 
    targetMissingHealth=.08,
    maxOnMobs={75,100,125,150,175}
+   cost=0,
 } 
 
 spells["spiderling"] = {
@@ -46,7 +47,8 @@ spells["spiderling"] = {
    cost={60,70,80,90,100}
 } 
 spells["frenzy"] = {
-   key="W"
+   key="W",
+   cost=0,
 }
 
 spells["cocoon"] = {
@@ -63,12 +65,14 @@ spells["rappel"] = {
    key="E", 
    range=750, 
    rangeType="e2e",
-   color=yellow
+   color=yellow,
+   cost=0,
 } 
 spells["spider"] = {
    key="R", 
    base={10,20,30,40}, 
-   ap=.3
+   ap=.3,
+   cost=0,
 } 
 
 spells["AA"].damOnTarget = 

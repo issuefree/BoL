@@ -51,7 +51,8 @@ spells["takedown"] = {
       end
       return 0
    end,
-   cd=5
+   cd=5,
+   cost=0,
 }
 
 spells["trap"] = {
@@ -78,7 +79,8 @@ spells["pounce"] = {
    end,
    ap=.3,
    radius=140+75, -- plus cougar size I imagine (reticle is close)
-   cd=5
+   cd=5,
+   cost=0,
 }
 spells["pounceProwl"] = copy(spells["pounce"])
 spells["pounceProwl"].range = 750
@@ -104,7 +106,8 @@ spells["swipe"] = {
    ap=.45,
    cone=180, -- reticle
    noblock=true,
-   cd=5
+   cd=5,
+   cost=0,
 }
 spells["cougar"] = {
    key="R"
@@ -197,7 +200,7 @@ end
 
 function Action()
    if not isCougar then
-      if SkillShot("jav", .75) then
+      if SkillShot("jav") then
          return true
       end      
       

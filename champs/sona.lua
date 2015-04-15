@@ -29,7 +29,8 @@ spells["blue"] = {
    range=850, 
    color=blue, 
    base={40,80,120,160,200}, 
-   ap=.5
+   ap=.5,
+   cost={45,50,55,60,65},
 }
 spells["valor"] = {
    base={40,50,60,70,80},
@@ -52,7 +53,8 @@ spells["green"] = {
          end
          return 0
       end,
-   type="H"
+   type="H",
+   cost={80,85,90,95,100}
 }
 spells["shield"] = {
    key="W",
@@ -69,14 +71,15 @@ spells["violet"] = {
    key="E", 
    range=350, 
    color=violet,
-   cost=65
+   cost=65,
 }
 spells["yellow"] = {
    key="R", 
    range=1000, 
    color=yellow, 
    base={150,250,350}, 
-   ap=.5
+   ap=.5,
+   cost=100,
 }
 
 

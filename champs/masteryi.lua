@@ -46,7 +46,8 @@ spells["wuju"] = {
    key="E",
    base={10,15,20,25,30},
    ad={.1,.125,.15,.175,.2},
-   type="T"
+   type="T",
+   cost=0,
 }
 spells["highlander"] = {
   key="R",

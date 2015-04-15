@@ -35,6 +35,7 @@ spells["smash"] = {
    speed=18, 
    width=120, -- reticle
    noblock=true,
+   cost=45,
 } 
 -- omnidirectional
 spells["smashPB"] = {
@@ -44,7 +45,8 @@ spells["smashPB"] = {
    ap=.4,
    delay=4,
    speed=0,
-   noblock=true
+   noblock=true,
+   cost=45,
 } 
 spells["advance"] = {
    key="W", 
@@ -53,6 +55,7 @@ spells["advance"] = {
    base=0, 
    targetMaxHealth={.09,.10,.11,.12,.13},
    targetMaxHealthAP=.0003,
+   cost=75,
 } 
 spells["sapling"] = {
    key="E", 
@@ -64,6 +67,7 @@ spells["sapling"] = {
    speed=10+5, -- might go deeper
    noblock=true,
    radius=225, -- reticle (wiki says 175)
+   cost={60,70,80,90,100},
 } 
 spells["maelstrom"] = {
    key="R", 

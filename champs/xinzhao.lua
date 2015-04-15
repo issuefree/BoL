@@ -39,6 +39,7 @@ spells["cry"] = {
    base={26,32,38,44,50}, 
    ap=.7,
    type="H",
+   cost=40,
 } 
 spells["charge"] = {
    key="E", 
@@ -48,6 +49,7 @@ spells["charge"] = {
    ap=.6,
    type="M",
    radius=function() return GetWidth(me) + 112.5 end,  --TODO test
+   cost=60,
 } 
 spells["sweep"] = {
    key="R", 

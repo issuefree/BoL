@@ -59,7 +59,7 @@ spells["charge"] = {
 spells["reverser"] = {
    key="R",
    range={550,700,850},
-   cost=120
+   cost=100
 }
 
 function Run()
@@ -212,7 +212,7 @@ local function onSpell(unit, spell)
    if GetHPerc(me) < .75 then
       CheckShield("capacitor", unit, spell)
    end
-   if ICast(unit, spell, "charge") then
+   if ICast("charge", unit, spell) then
       chargeThrown = true
    end
 end

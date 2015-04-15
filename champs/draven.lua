@@ -24,10 +24,12 @@ spells["axe"] = {
    base=0,
    ad={.45,.55,.65,.75,.85},
    type="P",
-   duration=6
+   duration=6,
+   cost=45,
 }
 spells["rush"] = {
    key="W",
+   cost=40,
 }
 spells["standaside"] = {
    key="E", 
@@ -40,7 +42,8 @@ spells["standaside"] = {
    speed=14, 
    width=135,
    noblock=true,
-   overShoot=100
+   overShoot=100,
+   cost=70,
 }
 spells["death"] = {
     key="R",
@@ -51,6 +54,7 @@ spells["death"] = {
     delay=8, -- ?
     speed=30, -- ?
     width=175,
+    cost=120,
 }
 
 local spinStart = 0

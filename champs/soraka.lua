@@ -6,8 +6,7 @@ pp("Tim's Soraka")
 SetChampStyle("support")
 
 InitAAData({ 
-	baseAttackSpeed = .625,
-	speed = 1000, windup=.25,
+	speed = 1000,
 	extraRange=-10,
 	particles = {"Soraka_Base_BA_mis"}
 })
@@ -23,6 +22,7 @@ spells["starcall"] = {
 	radius=300-25, -- reticle
 	innerRadius=100,
 	noblock=true,
+	cost={70,75,80,85,90},
 }
 spells["heal"] = {
 	key="W", 
@@ -31,7 +31,7 @@ spells["heal"] = {
 	base={110,140,170,200,230}, 
 	ap=.6,
 	type="H",
-	cost={80,100,120,140,160}
+	cost={20,25,30,35,40}
 }
 spells["equinox"] = {
 	key="E", 
@@ -43,6 +43,7 @@ spells["equinox"] = {
 	speed=0, 
 	radius=300, -- reticle
 	noblock=true,
+	cost=70,
 }
 spells["wish"] = {
 	key="R",
@@ -107,12 +108,12 @@ function Run()
 end 
 
 function Action()
-	-- if SkillShot("equinox", nil, nil, .6) then
+	-- if SkillShot("equinox") then
 	-- 	return true
 	-- end
 
 	-- TODO starcall less when I'm full health!?
-	if SkillShot("starcall", nil, nil, .85) then
+	if SkillShot("starcall") then
 		return true
    end
 

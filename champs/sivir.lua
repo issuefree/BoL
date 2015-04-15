@@ -40,13 +40,14 @@ spells["doubleMinBoomerang"].ap = spells["boomerang"].ap*.8
 
 spells["ricochet"] = {
    key="W",
-   cost=40,
+   cost=60,
    ad={.5,.55,.6,.65,.7},
    bounceRange=400 --?
 }
 spells["shield"] = {
    key="E",
-   range=10  
+   range=10,
+   cost=0,
 }
 spells["hunt"] = {
    key="R",
@@ -105,7 +106,7 @@ function Action()
       return true
    end
 
-   if SkillShot("boomerang", nil, nil, .9) then
+   if SkillShot("boomerang") then
       return true
    end
 

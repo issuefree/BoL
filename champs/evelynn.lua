@@ -35,10 +35,12 @@ spells["spike"] = {
    ap={.35,.4,.45,.5,.55},
    adBonus={.5,.55,.6,.65,.7},
    width=80,
-   noblock=true
+   noblock=true,
+   cost={12,18,24,30,36},
 } 
 spells["frenzy"] = {
-   key="W"
+   key="W",
+   cost=0,
 } 
 
 -- test if this is a modaa or an attack reset

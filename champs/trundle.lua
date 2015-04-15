@@ -38,19 +38,22 @@ spells["chomp"] = {
    object="Trundle_Q_TrollSmash_buf.troy",
    range=GetAARange, -- TODO
    rangeType="e2e",
-   type="P"
+   type="P",
+   cost=30,
 } 
 spells["domain"] = {
    key="W", 
    range=825, 
    color=blue, 
    radius=800,  -- reticle
+   cost=60,
 } 
 spells["pillar"] = {
    key="E", 
    range=1000, 
    color=yellow, 
    radius=350, -- reticle
+   cost=60,
 }
 spells["subjugate"] = {
    key="R", 
@@ -59,6 +62,7 @@ spells["subjugate"] = {
    base=0, 
    targetMaxHealth={.20,.24,.28},
    targetMaxHealthAP=.02,
+   cost=75,
 } 
 
 function Run()

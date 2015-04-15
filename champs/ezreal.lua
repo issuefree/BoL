@@ -25,7 +25,7 @@ spells["shot"] = {
    key="Q", 
    range=1100, 
    width=75, 
-   color=0x00770077, 
+   color=violet, 
    base={35,55,75,95,115}, 
    ad=1.1, 
    ap=.4,
@@ -40,7 +40,7 @@ spells["shot"] = {
 spells["flux"] = {
    key="W", 
    range=900, 
-   color=0x00333300, 
+   color=yellow, 
    base={70,115,160,205,250}, 
    ap=.8,
    delay=2.3,
@@ -52,14 +52,14 @@ spells["flux"] = {
 spells["arrow"] = {
    key="E", 
    range=475+750, 
-   color=0x00000022, 
+   color=cyan, 
    base={75,125,175,225,275}, 
-   ap=.75
+   ap=.75,
+   cost=90,
 }
 spells["shift"] = {
    key="E", 
    range=475, 
-   color=0x00002200,
    cost=90
 }
 spells["barrage"] = {
@@ -72,7 +72,7 @@ spells["barrage"] = {
    width=150,
    range=99999,
    noblock=true,
-   cost=100
+   cost=100,
 }
 
 

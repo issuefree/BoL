@@ -4,7 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Miss Fortune")
 
 InitAAData({
-   speed = 2000, windup=.25,
+   speed = 2000,
    particles = {"missFortune_basicAttack_mis", "missFortune_crit_mis"}
 })
 
@@ -28,9 +28,9 @@ spells["double"] = {
    ad=.85,
    ap=.35,
    type="P",
-   cost={43,46,49,52,55},
    radius=500,
-   onHit=true -- not sheen so watch for that
+   onHit=true, -- not sheen so watch for that
+   cost={43,46,49,52,55},
 }
 spells["doubleBounce"] = {
    key="Q",
@@ -39,7 +39,8 @@ spells["doubleBounce"] = {
    base={40,70,100,130,160},
    ad=1,
    ap=.5,
-   onhit=true
+   onhit=true,
+   cost=spells["double"].cost,
 }
 spells["impure"] = {
    key="W",

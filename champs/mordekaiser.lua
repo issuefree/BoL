@@ -9,7 +9,6 @@ require "issuefree/modules"
 pp("\nTim's Morde")
 
 InitAAData({
-   windup=.3,
    resets={GetSpellInfo("Q").name}
 })
 

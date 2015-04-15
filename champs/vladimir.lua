@@ -11,7 +11,7 @@ pp("\nTim's Vladimir")
 -- TODO auto pool
 
 InitAAData({ 
-   speed = 1400, windup=.3, -- tests ok at .25 but I thought I got a couple misses.
+   speed = 1400,
    particles = {"Vladimir_Base_BA_mis.troy"}
 })
 
@@ -40,7 +40,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["transfusion"] = {
    key="Q", 
-   range=600-25,
+   range=600, -- -25,
    color=violet, 
    base={90,125,160,195,230}, 
    ap=.6

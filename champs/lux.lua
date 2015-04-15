@@ -219,7 +219,7 @@ function Action()
          return true
       end
 
-      if SkillShot("singularity", nil, nil, .6) then
+      if SkillShot("singularity", nil, nil, 2) then -- I may go down to 1 if this doesn't cast enough
          return true
       end
    end
@@ -230,7 +230,7 @@ function Action()
          UseItem("Deathfire Grasp", GetWeakestEnemy("binding"))
          return true
       end
-      if SkillShot("binding", nil, nil, .75) then
+      if SkillShot("binding") then
          UseItem("Deathfire Grasp", GetWeakestEnemy("binding"))
          return true
       end

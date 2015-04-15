@@ -10,7 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Rumble")
 
 InitAAData({ 
-   windup=.3,
 })
 
 SetChampStyle("caster")
@@ -159,7 +158,7 @@ function Run()
 end
 
 function Action()
-   if SkillShot("harpoon", nil, nil, .25) then
+   if SkillShot("harpoon", nil, nil, 1) then
       return true
    end
 

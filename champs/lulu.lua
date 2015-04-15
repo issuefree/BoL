@@ -39,7 +39,7 @@ spells["whimsy"] = {
 	key="W", 
 	range=650,  
 	color=yellow,
-	cost={65,70,75,80,85}	
+	cost=65,
 }
 spells["help"] = {
 	key="E", 

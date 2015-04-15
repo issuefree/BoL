@@ -54,7 +54,8 @@ spells["spike"] = {
                      return GetSpellDamage("spike")
                   end
                   return 0
-               end
+               end,
+   cost={50,60,70,80,90}
 }
 spells["storm"] = {
    key="R", 

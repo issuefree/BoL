@@ -26,7 +26,7 @@ spells["strike"] = {
    color=violet, 
    base={75,125,175,225,275}, 
    ap=1,
-   cost={60,70,80,90,100}
+   cost={70,80,90,100,110}
 }
 spells["howl"] = {
    key="W", 

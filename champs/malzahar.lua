@@ -35,7 +35,8 @@ spells["void"] = {
    delay=8-3, -- testskillshot
    speed=0,
    width=400,
-   noblock=true
+   noblock=true,
+   cost={80,85,90,95,100},
 } 
 spells["zone"] = {
    key="W", 
@@ -47,7 +48,8 @@ spells["zone"] = {
    delay=1,
    speed=0,
    radius=250, -- reticle
-   noblock=true
+   noblock=true,
+   cost={90,95,100,105,110},
 } 
 spells["visions"] = {
    key="E",
@@ -56,6 +58,7 @@ spells["visions"] = {
    base={80,140,200,260,320}, 
    ap=.8,
    radius=300,
+   cost={60,75,90,105,120},
 } 
 spells["grasp"] = {
    key="R", 
@@ -66,7 +69,8 @@ spells["grasp"] = {
    channel=true,
    name="AlzaharNetherGrasp",
    object="AlZaharNetherGrasp_tar.troy",
-   channelTime=2.5
+   channelTime=2.5,
+   cost=100,
 } 
 
 function Run()

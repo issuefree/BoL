@@ -9,8 +9,9 @@ pp(" - Strike if they're near")
 pp(" - Spear if they're running")
 pp(" - Spear to lasthit far minions if I have mana")
 
+-- TODO use crit damage in lasthit calcs against targets under .15
+
 InitAAData({
-   windup=.25 -- TODO 4.21 This may have gotten faster?
 })
 
 AddToggle("dive", {on=false, key=112, label="Dive"})
@@ -64,7 +65,11 @@ spells["skyfall"] = {
    channelTime=2
 }
 
+local strikeTime = nil
 function Run()
+   if not P.strike and strikeTime then
+      pp(time() - strikeTime)
+      strikeTime = nil   end
    if StartTickActions() then
       return true
    end
@@ -115,7 +120,7 @@ function Action()
       end
    end
 
-   if IsOn("dive") and CanUse("aegis") then
+   if IsOn("dive") and CanUse("aegis") and not CanUse("spear") then
       local target = GetMarkedTarget() or GetWeakestEnemy("aegis")
       if target and
          not IsInAARange(target)
@@ -161,7 +166,7 @@ local function onObject(object)
    Persist("pbrc", object, "Pantheon_Base_R_cas")
 end
 
-local function onSpell(object, spell)
+local function onSpell(unit, spell)
 end
 
 AddOnCreate(onObject)

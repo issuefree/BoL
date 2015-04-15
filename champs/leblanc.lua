@@ -114,7 +114,8 @@ spells["malice"] = {
    range=700,
    color=violet,
    base={55,80,105,130,155}, 
-   ap=.4
+   ap=.4,
+   cost={50,60,70,80,90},
 } 
 
 spells["distortion"] = {
@@ -126,7 +127,8 @@ spells["distortion"] = {
    delay=2.4, 
    speed=0,
    noblock=true, 
-   radius=225 -- reticle
+   radius=225, -- reticle
+   cost={80,85,90,95,100},
 } 
 spells["chains"] = {
    key="E", 
@@ -137,7 +139,8 @@ spells["chains"] = {
    ap=.5,
    delay=2.5, -- testskillshot
    speed=17, -- testskillshot
-   width=80 -- reticle
+   width=80, -- reticle
+   cost=80,
 } 
 spells["mimicMalice"] = copy(spells["malice"])
 spells["mimicMalice"].base = {100,200,300}

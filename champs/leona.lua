@@ -65,7 +65,7 @@ spells["flare"] = {
    ap=.8,
    type="M",
    radius=250,
-   cost={100,150,200}
+   cost=100,
 } 
 
 

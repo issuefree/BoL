@@ -23,6 +23,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["rapid"] = {
    key="Q", 
+   cost=0,
 } 
 
 -- TODO rework for explosive charge
@@ -35,17 +36,19 @@ spells["jump"] = {
    delay=2,
    speed=12, --?
    radius=300, --?
+   cost=60,
 } 
 -- TODO needs complete rework in bot
 spells["charge"] = {
    key="E", 
    range=GetAARange, -- TODO validate
    rangeType="e2e",
-   color=violet, "
+   color=violet,
    base={60,70,80,90,100}, 
    ap=.5,
    adBonus={.5,.65,.80,.95,1.1},
    radius=150,
+   cost={70,75,80,85,90},
 } 
 spells["buster"] = {
    key="R", 
@@ -56,6 +59,7 @@ spells["buster"] = {
    ap=1,
    knockback={600,800,1000},
    radius=200,
+   cost=100,
 } 
 
 local jumpPoint = nil

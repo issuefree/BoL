@@ -35,11 +35,13 @@ spells["smite"] = {
    speed=12.5, 
    noblock=true,
    radius=215, -- reticle
+   cost={60,65,70,75,80},
 } 
 spells["bulwark"] = {
    key="W", 
    range=800, 
    color=yellow, 
+   cost=60,
 } 
 spells["gust"] = {
    key="E", 
@@ -50,6 +52,7 @@ spells["gust"] = {
    delay=2.4, -- TestSkillShot
    speed=12.5, 
    width=125, -- reticle
+   cost={70,75,80,85,90},
 } 
 spells["idol"] = {
    key="R",
@@ -59,7 +62,8 @@ spells["idol"] = {
    ap=.6,
    channel=true,
    name="GalioIdolOfDurand",
-   object="galio_talion_channel.troy"
+   object="galio_talion_channel.troy",
+   cost=100,
 } 
 
 function Run()

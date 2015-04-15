@@ -30,7 +30,7 @@ spells["bloom"] = {
    noblock=true,
    radius=225, -- reticle
    name="ZyraQFissure"
-   -- cost={75,80,85,90,95},
+   cost={75,80,85,90,95},
 }
 spells["seed"] = {
    key="W", 
@@ -58,7 +58,7 @@ spells["roots"] = {
    width=80,  --?
    growWidth=315,
    name="ZyraGraspingRoots"
-   -- cost={70,75,80,85,90},
+   cost={70,75,80,85,90},
 }
 spells["strangle"] = {
    key="R", 
@@ -70,7 +70,7 @@ spells["strangle"] = {
    speed=0,
    noblock=true,
    radius=525,  -- reticle
-   -- cost={100,120,140}
+   cost={100,120,140}
 }
 
 function Run()

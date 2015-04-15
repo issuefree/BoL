@@ -22,7 +22,7 @@ spells["overload"] = {
    ap=.4,
    maxMana=.065,
    cost=60,
-   speed=1400
+   speed=1400,
 }
 spells["prison"] = {
    key="W", 
@@ -31,7 +31,7 @@ spells["prison"] = {
    base={60,95,130,165,200}, 
    ap=.6, 
    maxMana=.045,
-   cost={60,70,80,90,100}
+   cost={60,70,80,90,100},
 }
 spells["flux"] = {
    key="E", 
@@ -40,7 +40,7 @@ spells["flux"] = {
    base={50,70,90,110,130},  
    ap=.35, 
    maxMana=.01,
-   cost={80,90,100,110,120}
+   cost={60,70,80,90,100},
 }
 spells["power"] = {
    key="R",

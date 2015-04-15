@@ -34,7 +34,7 @@ spells["drain"] = {
    cost={80,90,100,110,120},   
    channel=true,
    name="DrainChannel",
-   object="Drain.troy"
+   object="Drain.troy",
 }
 spells["wind"] = {
    key="E", 

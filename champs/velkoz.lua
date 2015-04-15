@@ -35,7 +35,8 @@ spells["fission"] = {
    delay=2.6, -- testskillshot
    speed=12.5,  -- testskillshot
    width=65,  -- reticle
-   splitDist=1050 -- visual
+   splitDist=1050, -- visual
+   cost={40,45,50,55,60},
 } 
 spells["rift"] = {
    key="W", 
@@ -51,7 +52,8 @@ spells["rift"] = {
    useCharges=true,
    maxCharges=2,
    rechargeTime={18,17,16,15,14},
-   charges=1
+   charges=1,
+   cost={50,55,60,65,70},
 } 
 spells["disruption"] = {
    key="E", 
@@ -63,6 +65,7 @@ spells["disruption"] = {
    speed=0,
    radius=225,  -- reticle
    noblock=true,
+   cost={50,55,60,65,70},
 } 
 spells["ray"] = {
    key="R", 
@@ -71,6 +74,7 @@ spells["ray"] = {
    base={500,700,900}, 
    ap=.6,
    width=125, -- guess
+   cost=100,
 } 
 
 local fissionAngle

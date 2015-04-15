@@ -22,7 +22,8 @@ spells["strike"] = {
    ap=.6,
    speed=20, -- wiki
    delay=.6, -- TEST
-   width=75, -- TEST
+   width=75, -- TEST,
+   cost={60,65,70,75,80},
 }
 spells["dark"] = {
    key="W", 
@@ -33,13 +34,15 @@ spells["dark"] = {
    delay=1,
    speed=0,
    noblock=true,
-   radius=250-25
+   radius=250-25,
+   cost={70,75,80,85,90},
 }
 spells["event"] = {
    key="E", 
    range=700, 
    color=yellow, 
-   radius=400
+   radius=400,
+   cost={80,85,90,95,100},
 }
 spells["burst"] = {
    key="R", 
@@ -47,6 +50,7 @@ spells["burst"] = {
    color=red,    
    base={250,375,500}, 
    ap=1,
+   cost=125,
 }
 
 AddToggle("", {on=true, key=112, label=""})

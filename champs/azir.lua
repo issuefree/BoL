@@ -34,6 +34,7 @@ spells["conquer"] = {
    delay=2.4,
    speed=12,
    width=80,
+   cost=70,
 } 
 spells["arise"] = {
    key="W", 
@@ -54,7 +55,8 @@ spells["arise"] = {
    useCharges=true,
    maxCharges=2,
    rechargeTime={12,11,10,9,8},
-   charges=1
+   charges=1,
+   cost=40,
 } 
 spells["soldier"] = {
    range=375, 
@@ -70,6 +72,7 @@ spells["shifting"] = {
    base={80,100,140,180,220}, 
    ap=.4,
    width=GetWidth(me),
+   cost=60,
 } 
 spells["divide"] = {
    key="R", 
@@ -77,6 +80,7 @@ spells["divide"] = {
    color=violet, 
    base={150,225,300}, 
    ap=.6,
+   cost=100,
 } 
 
 local soldiers = {}
