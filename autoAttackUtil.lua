@@ -21,6 +21,7 @@ require "issuefree/spellUtils"
 -- Particles used to be important but it is all timing based now. May as well throw them in...
 
       -- Ashe         = { speed = 2000, 
+      --                  extraWindup = 0,
       --                  extraRange = 0,
       --                  minMoveTime = .25,
       --                  particles = {"Ashe_Base_BA_mis", "Ashe_Base_Q_mis"},
@@ -85,7 +86,8 @@ local minionAAData = {
 
 function loadAAData()
    spells["AA"].baseAttackSpeed = .625
-   spells["AA"].windup = .4
+   spells["AA"].baseWindup = .4
+   spells["AA"].extraWindup = 0
    spells["AA"].windupVal = 3
    -- BoL may not have the bug which necessitates the minMoveTime
    spells["AA"].minMoveTime = 0
@@ -112,7 +114,7 @@ function getAADuration()
 end
 
 function getWindup()
-   return math.max(.2, 1 / (myHero.attackSpeed * spells["AA"].windupVal))
+   return (1 / (myHero.attackSpeed * spells["AA"].windupVal)*(1+spells["AA"].extraWindup)
 end
 
 function OrbWalk()
@@ -160,7 +162,7 @@ function aaTick()
    -- PrintState(20, me.attackspeed)
    -- PrintState(21, me.baseattackspeed)
    -- PrintState(22, getAttackSpeed())   
-   -- PrintState(23, spells["AA"].windup)
+   -- PrintState(23, spells["AA"].baseWindup)
    -- PrintState(24, getWindup())
 
    -- we asked for an attack but it's been longer than the windup and we haven't gotten a shot so we must have clipped or something
@@ -408,7 +410,7 @@ function onSpellAA(unit, spell)
    if IAttack(unit, spell) then
       spells["AA"].baseAttackSpeed = 1 / (spell.animationTime * myHero.attackSpeed)
       spells["AA"].windupVal = 1 / (spell.windUpTime * myHero.attackSpeed)
-      spells["AA"].windup = 1 / (spell.windUpTime * spells["AA"].baseAttackSpeed)
+      spells["AA"].baseWindup = 1 / (spell.windUpTime * spells["AA"].baseAttackSpeed)
 
       if IsValid(spell.target) then
          lastAATarget = spell.target
