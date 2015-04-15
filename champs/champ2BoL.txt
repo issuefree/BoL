@@ -8,11 +8,11 @@ champ conversion to BoL
 
 
 	=	akali.lua
-	0	alistar.lua
+	+	alistar.lua
 	=	amumu.lua
 	=	anivia.lua
 	+	annie.lua
-	=	ashe.lua
+	+	ashe.lua
 	-	azir.lua
 	0	blitz.lua
 	+	brand.lua
