@@ -489,7 +489,7 @@ function createForPersist(object)
    if ListContains(object.name, ccNames) then
       local target = PersistOnTargets("cc", object, object.name, ENEMIES, ALLIES)
       if target then
-         pp("CC on "..target.name.." "..object.name)
+         pp("CC on "..target.charName.." "..object.name)
       end
    end
 
