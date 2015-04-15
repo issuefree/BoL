@@ -316,7 +316,7 @@ function onObjAA(object)
       shotFired = true 
 
       if time() - lastAttack > 2 then
-         pp("Got a weird object "..object.name)
+         -- pp("Got a weird object "..object.name)
       end
 
       if ModuleConfig.aaDebug then
