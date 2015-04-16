@@ -41,7 +41,6 @@ champ conversion to BoL
 	-	lulu.lua
 	0	malphite.lua
 	-	maokai.lua
-	-	masteryi.lua
 	0	morgana.lua
 	=	nasus.lua
 	=	nidalee.lua
