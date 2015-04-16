@@ -2,7 +2,7 @@ require "issuefree/timCommon"
 
 local showTimerRadius = 100
 local showVisionRangeKey = 18
-local showSameTeam = true
+local showSameTeam = false
 
 local types = {
    { label="Trinket Ward", color=yellowB, mm="W",
