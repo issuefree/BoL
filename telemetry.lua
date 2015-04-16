@@ -461,6 +461,7 @@ end
 
 function IsInRange(thing, target, source, extraRange)
    if not target then return false end
+   source = source or me
    local range
    if type(thing) ~= "number" then
       local spell = GetSpell(thing)
@@ -630,6 +631,7 @@ function SortByMaxHealth(things, thing, switch)
 end
 
 function SortByDistance(things, target, switch)
+   target = target or me
    table.sort(things, 
       function(a,b)
          if not b or not b.x then return false end
