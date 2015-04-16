@@ -18,7 +18,7 @@ function debugTick()
       if time() - testShot.castTime > 2 then
          testShot.object = nil
       else
-         if Point(testShot.object):valid() then
+         if testShot.object and testShot.object.valid then
             if GetDistance(testShot.object) > 200 then
                Circle(testShot.object)
                table.insert(testShot.points, Point(testShot.object))
@@ -149,7 +149,7 @@ local function onObject(object)
          if not exclude then
             pp("Particle: "..object.name)
             local delay = trunc(time() - testShot.castTime)
-            delay = delay - 2*.05 -- lag
+            delay = delay
             delay = delay * 10  -- leaguebot units 
             table.insert(testShotDelays, delay)
             pp("Delay: "..delay)
