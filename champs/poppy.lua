@@ -103,9 +103,38 @@ function Run()
 end
 
 function Action()
+   -- local creep = SortByDistance(CREEPS)[1]
+   -- if creep and IsInRange("charge", creep) then
+   --    if CanUse("charge") then
+   --       Cast("charge", creep)
+   --       Cast("blow", me)
+   --    elseif IsInAARange(creep) then
+   --       AA(creep)
+   --    end
+   --    return true
+   -- end
+
+   if CanUse("charge") then
+      local target = GetWeakestEnemy("charge")      
+      if target and not IsInAARange(target) then
+         if WillKill("charge", "blow", target) or
+            WillKill("charge", "AA", target)
+         then
+            MarkTarget(target)
+            Cast("charge", target)
+            if CanUse("blow") then
+               Cast("blow", me)
+            end
+            PrintAction("Charge for the finish")
+            return true
+         end
+      end
+   end
+
    local enemy = checkCharge()
    if enemy then
       UseItem("Deathfire Grasp", enemy)
+      MarkTarget(enemy)
       Cast("charge", enemy)
       PrintAction("Charge for slam", enemy)
       if CanUse("blow") then
