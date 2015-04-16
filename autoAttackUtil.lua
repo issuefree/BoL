@@ -21,9 +21,9 @@ require "issuefree/spellUtils"
 -- Particles used to be important but it is all timing based now. May as well throw them in...
 
       -- Ashe         = { speed = 2000, 
-      --                  extraWindup = 0,
+      --                  windupScale = .5, -- how much attack speed affects windup. 0.5 would reduce windup by half as much as normal
       --                  extraRange = 0,
-      --                  minMoveTime = .25,
+      --                  minMoveTime = 0,
       --                  particles = {"Ashe_Base_BA_mis", "Ashe_Base_Q_mis"},
       --                  attacks = {"attack", "frostarrow"},
       --                  resets={GetSpellInfo("Q").name} },
@@ -86,8 +86,7 @@ local minionAAData = {
 
 function loadAAData()
    spells["AA"].baseAttackSpeed = .625
-   spells["AA"].baseWindup = .4
-   spells["AA"].extraWindup = 0
+   spells["AA"].windupScale = .5 -- for safety
    spells["AA"].windupVal = 3
    -- BoL may not have the bug which necessitates the minMoveTime
    spells["AA"].minMoveTime = 0
@@ -106,7 +105,15 @@ function InitAAData(data)
 end
 
 function getAttackSpeed()
-   return me.attackSpeed
+   return me.attackSpeed * spells["AA"].baseAttackSpeed
+end
+
+function getBaseAttackSpeed()
+   return spells["AA"].baseAttackSpeed
+end
+
+function getBonusAttackSpeed()
+   return getAttackSpeed() - getBaseAttackSpeed()
 end
 
 function getAADuration()
@@ -114,7 +121,8 @@ function getAADuration()
 end
 
 function getWindup()
-   return (1 / (myHero.attackSpeed * spells["AA"].windupVal)*(1+spells["AA"].extraWindup)
+   local effAs = 1+((me.attackSpeed - 1)*spells["AA"].windupScale)
+   return 1 / (effAs * spells["AA"].windupVal)
 end
 
 function OrbWalk()
@@ -156,15 +164,6 @@ function AfterAttack()
 end
 
 function aaTick()
-   -- PrintState(0, getAADuration())
-   -- PrintState(1, 1/getAADuration())
-
-   -- PrintState(20, me.attackspeed)
-   -- PrintState(21, me.baseattackspeed)
-   -- PrintState(22, getAttackSpeed())   
-   -- PrintState(23, spells["AA"].baseWindup)
-   -- PrintState(24, getWindup())
-
    -- we asked for an attack but it's been longer than the windup and we haven't gotten a shot so we must have clipped or something
    if not shotFired and time() - lastAttack > getWindup() then
       woundUp = true
@@ -408,9 +407,12 @@ function onSpellAA(unit, spell)
    end
 
    if IAttack(unit, spell) then
-      spells["AA"].baseAttackSpeed = 1 / (spell.animationTime * myHero.attackSpeed)
-      spells["AA"].windupVal = 1 / (spell.windUpTime * myHero.attackSpeed)
-      spells["AA"].baseWindup = 1 / (spell.windUpTime * spells["AA"].baseAttackSpeed)
+      if not spells["AA"].baseAttackSpeed then
+         spells["AA"].baseAttackSpeed = 1 / (spell.animationTime * myHero.attackSpeed)
+      end
+      if not spells["AA"].windupVal then
+         spells["AA"].windupVal = 1 / (spell.windUpTime * myHero.attackSpeed)
+      end
 
       if IsValid(spell.target) then
          lastAATarget = spell.target
