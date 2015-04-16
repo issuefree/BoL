@@ -41,7 +41,7 @@ spells["jump"] = {
    ap=.5,
    delay=2,
    speed=12, --?
-   radius=300, --?
+   radius=250, --reticle
    noblock=true,
    cost=60,
    damOnTarget=
@@ -336,8 +336,8 @@ function Action()
    if CanUse("jump") then
       local targets = SortByDistance(ENEMIES, me, true)
       for _,target in ipairs(targets) do
-         if not IsInAARange(target) then
-            local point = GetSpellFireahead("jump", target)
+         local point = GetSpellFireahead("jump", target)
+         if not IsInAARange(point) then
             if ( not UnderTower(point) or GetHPerc(me) > .75 ) and
                IsInRange("jump", target) and 
                WillKill("jump", "charge", "AA", "AA", target) 
