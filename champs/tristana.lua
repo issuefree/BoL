@@ -52,10 +52,9 @@ spells["jump"] = {
          return 0
       end,
 } 
--- TODO needs complete rework in bot
 spells["charge"] = {
    key="E", 
-   range=GetAARange, -- TODO validate
+   range=GetAARange,
    rangeType="e2e",
    color=violet,
    base={60,70,80,90,100}, 
@@ -73,7 +72,7 @@ spells["charge"] = {
 } 
 spells["buster"] = {
    key="R", 
-   range=GetAARange, -- TODO validate
+   range=GetAARange,
    rangeType="e2e",
    color=red, 
    base={300,400,500}, 
