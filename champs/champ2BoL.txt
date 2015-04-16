@@ -8,15 +8,10 @@ champ conversion to BoL
 
 
 	=	akali.lua
-	+	alistar.lua
 	=	amumu.lua
 	=	anivia.lua
-	+	annie.lua
-	+	ashe.lua
 	-	azir.lua
 	0	blitz.lua
-	+	brand.lua
-	=	caitlyn.lua
 	-	cassiopeia.lua
 	0	chogath.lua
 	=	corki.lua
@@ -24,7 +19,6 @@ champ conversion to BoL
 	=	drmundo.lua
 	-	elise.lua
 	-	evelynn.lua
-	+	ezreal.lua
 	=	fiddlesticks.lua
 	-	galio.lua
 	0	gangplank.lua
@@ -37,36 +31,26 @@ champ conversion to BoL
 	0	janna.lua
 	=	jax.lua
 	0	jinx.lua
-	+	karma.lua
 	=	karthus.lua
 	-	kassadin.lua
 	=	katarina.lua
 	-	kayle.lua
 	-	kennen.lua
-	+	kog.lua
 	-	leblanc.lua
 	-	leesin.lua
 	-	leona.lua
 	-	lulu.lua
-	+	lux.lua
 	0	malphite.lua
 	0	malzahar.lua
 	-	maokai.lua
 	-	masteryi.lua
-	+	missfortune.lua
-	+	mordekaiser.lua
 	0	morgana.lua
 	=	nasus.lua
 	=	nidalee.lua
-	+	nunu.lua
-	+	olaf.lua
 	-	orianna.lua
-	+	pantheon.lua
-	-	poppy.lua
 	-	renekton.lua
 	-	riven.lua
 	-	rumble.lua
-	+	ryze.lua
 	-	shaco.lua
 	-	shyvana.lua
 	-	singed.lua
@@ -78,24 +62,15 @@ champ conversion to BoL
 	!	talon.lua
 	=	taric.lua
 	=	teemo.lua
-	+	template.lua
-	+	thresh.lua
 	!	tristana.lua
 	0	trundle.lua
 	-	tryndamere.lua
-	+	twistedfate.lua
 	-	twitch.lua
 	-	udyr.lua
-	+	urgot.lua
 	=	varus.lua
-	+	vayne.lua
-	+	veigar.lua
 	-	velkoz.lua
-	+	vladimir.lua
 	0	volibear.lua
 	0	warwick.lua
 	=	xerath.lua
 	-	xinzhao.lua
-	+	yorick.lua
 	0	zilean.lua
-	=	zyra.lua
