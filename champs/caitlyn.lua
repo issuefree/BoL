@@ -10,7 +10,6 @@ pp(" - farming w/headshot clears with piltover")
 InitAAData({
    speed = 2500,
    extraRange=-10,
-   minMoveTime=0,
    particles = {"caitlyn_Base_mis", "caitlyn_Base_passive"},
    attacks = {"attack", "CaitlynHeadshotMissile"}
 })
@@ -41,6 +40,7 @@ spells["pp"] = {
 spells["trap"] = {
    key="W", 
    range=800, 
+   color=blue,
    base={80,130,180,230,280}, 
    ap=.6,
    type="M",
