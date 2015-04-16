@@ -622,7 +622,6 @@ function MoveToTarget(t)
    if CanMove() then
       local pos = VP:GetPredictedPos(t, .5, t.ms, t, false)
       me:MoveTo(pos.x,pos.z)
-      CURSOR = Point(pos)
       PrintAction("MTT", t, 1)
       return true
    end
@@ -2001,7 +2000,7 @@ function AA(target, force)
    if IsValid(target) then
       if CanAttack() or force then
          SetAttacking()
-         me:Attack(target)      
+         me:Attack(target)
          -- needMove = true
          return true
       end
@@ -2077,7 +2076,7 @@ function MeleeMove()
          if not IsInAARange(target) then            
             -- if not RetreatingFrom(target) then
             Circle(target, lockRange, yellow)
-            if GetDistance(target, mousePos) < 350 then
+            if GetDistance(target, mousePos) < lockRange then
                Circle(target, lockRange, red, 3)
                if MoveToTarget(target) then
                   return true
