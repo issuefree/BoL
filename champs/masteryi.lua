@@ -4,7 +4,6 @@ require "issuefree/modules"
 pp("\nTim's Master Yi")
 
 InitAAData({
-   windup=.25,
    particles = {"Wuju_Trail"}
 })
 
@@ -49,6 +48,13 @@ spells["wuju"] = {
    type="T",
    cost=0,
 }
+spells["wujuBase"] = {
+   key="E",
+   base=0,
+   ad=.1,
+   type="P",
+   cost=0,
+}
 spells["highlander"] = {
   key="R",
   cost=100
@@ -75,10 +81,14 @@ function getAlphaKills(target, dam)
 end
 
 function Run()
-
-   if HasBuff("wuju", me) then
-      spells["AA"].bonus = GetSpellDamage("wuju")
+   if P.wujuBase then
+      spells["AA"].bonus = GetSpellDamage("wujuBase")
+   elseif P.wuju then
+      spells["AA"].bonus = GetSpellDamage("wuju") + GetSpellDamage("wujuBase")
+   else
+      spells["AA"].bonus = 0
    end
+
 
    if StartTickActions() then
       return true

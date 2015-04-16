@@ -40,7 +40,6 @@ champ conversion to BoL
 	-	leona.lua
 	-	lulu.lua
 	0	malphite.lua
-	0	malzahar.lua
 	-	maokai.lua
 	-	masteryi.lua
 	0	morgana.lua
@@ -61,7 +60,6 @@ champ conversion to BoL
 	!	talon.lua
 	=	taric.lua
 	=	teemo.lua
-	!	tristana.lua
 	0	trundle.lua
 	-	tryndamere.lua
 	-	twitch.lua
