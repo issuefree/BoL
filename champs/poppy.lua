@@ -4,7 +4,6 @@ require "issuefree/modules"
 pp("\nTim's Poppy")
 
 InitAAData({ 
-   windup=.3,
    particles = {"Poppy_DevastatingBlow_tar"},
    resets = {GetSpellInfo("Q").name},
 })
