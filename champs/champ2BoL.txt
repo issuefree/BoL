@@ -1,10 +1,11 @@
 champ conversion to BoL
-	unknown
-+	tested in game, seems ok
 =	tested solo, seems ok
 0	script read, nothing stands out as needing done
 -	unknown but probably needs work (object verification or something)
 !	tested and needs work
+
+
+
 
 
 	=	akali.lua

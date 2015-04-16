@@ -93,6 +93,7 @@ function Run()
 	-- auto stuff that should happen if you didn't do something more important
    if IsOn("lasthit") then
       if Alone() then
+         if HitMinionsInArea("blast", GetThreshMP(thing, .033, 2)) then
             return true
          end
 
