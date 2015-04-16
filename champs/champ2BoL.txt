@@ -13,7 +13,6 @@ champ conversion to BoL
 	=	anivia.lua
 	-	azir.lua
 	0	blitz.lua
-	-	cassiopeia.lua
 	0	chogath.lua
 	=	corki.lua
 	-	draven.lua
