@@ -79,7 +79,7 @@ ccNames = {
    "CurseBandages",
    "DarkBinding_tar", 
    "Morgana_Skin06_Q_Tar.troy",
-
+   "caitlyn_Base_yordleTrap_impact_debuf",
    "Global_Fear", 
    "Global_Taunt", 
    -- "leBlanc_shackle", 
