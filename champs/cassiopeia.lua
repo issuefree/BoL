@@ -11,7 +11,6 @@ pp("\nTim's Cassiopeia")
 
 InitAAData({ 
    speed = 1300,
-   -- extraRange=-10,
    particles = {"CassBasicAttack"} 
 })
 
@@ -28,7 +27,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["blast"] = {
    key="Q", 
-   range=825, 
+   range=825-10, 
    color=yellow, 
    base={25,38,52,65,78},
    ap=.45/3,
@@ -94,7 +93,6 @@ function Run()
 	-- auto stuff that should happen if you didn't do something more important
    if IsOn("lasthit") then
       if Alone() then
-         if HitMinionsInArea("blast", GetThreshMP(thing, .05, 2)) then
             return true
          end
 

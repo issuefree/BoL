@@ -1999,7 +1999,7 @@ end
 function AA(target, force)
    if IsValid(target) then
       if CanAttack() or force then
-         -- SetAttacking()
+         SetAttacking()
          me:Attack(target)
          -- needMove = true
          return true
