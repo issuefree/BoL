@@ -496,6 +496,7 @@ function IsInE2ERange(thing, target, source, extraRange)
 end
 
 function IsInAARange(target, source, extraRange)
+   source = source or me
    return IsInE2ERange("AA", target, source, extraRange)
 end
 
