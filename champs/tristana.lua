@@ -2,10 +2,17 @@ require "issuefree/timCommon"
 require "issuefree/modules"
 
 pp("\nTim's Tristana")
+pp(" - Track charge and charge stacks")
+pp(" - Disrupt with buster")
+pp(" - Execute with buster (if AA won't do the trick)")
+pp(" - Jump on targets if I can finish them with jump/charge/AA/AA")
+pp(" - Cast charge on stuff")
+pp(" - Target charged stuff with auto attacks")
+pp(" - Rapid fire if things are well in (100) attack range")
+
 
 InitAAData({
    speed = 2250,
-   minMoveTime=0,
    -- particles = {"TristannaBasicAttack_mis"}  -- Trists object is shared with minions. This could result in clipping. Can be turned back on for testing
 })
 
@@ -26,7 +33,6 @@ spells["rapid"] = {
    cost=0,
 } 
 
--- TODO rework for explosive charge
 spells["jump"] = {
    key="W", 
    range=900, 
@@ -36,7 +42,15 @@ spells["jump"] = {
    delay=2,
    speed=12, --?
    radius=300, --?
+   noblock=true,
    cost=60,
+   damOnTarget=
+      function(target)
+         if HasBuff("charge", target) then
+            return GetSpellDamage("jump")*.20*(getCharges()+1)
+         end
+         return 0
+      end,
 } 
 -- TODO needs complete rework in bot
 spells["charge"] = {
@@ -47,8 +61,15 @@ spells["charge"] = {
    base={60,70,80,90,100}, 
    ap=.5,
    adBonus={.5,.65,.80,.95,1.1},
-   radius=150,
+   radius=150, --?
    cost={70,75,80,85,90},
+   damOnTarget=
+      function(target)
+         if HasBuff("charge", target) and getCharges() > 0 then
+            return GetSpellDamage("charge")*.25*getCharges()
+         end
+         return 0
+      end,
 } 
 spells["buster"] = {
    key="R", 
@@ -211,6 +232,23 @@ function getJumpPoint()
    return point, predTarget
 end
 
+function getCharges()
+   if P.charge then
+      if find(P.charge.name, "_pulse") then
+         return 0
+      elseif find(P.charge.name, "_1") then
+         return 1
+      elseif find(P.charge.name, "_2") then
+         return 2
+      elseif find(P.charge.name, "_3") then
+         return 3
+      elseif find(P.charge.name, "_max") then
+         return 4
+      end
+   end
+   return 0
+end
+
 function Run()
    if StartTickActions() then
       return true
@@ -234,12 +272,6 @@ function Run()
       end
    end
 
-   -- auto stuff that always happen
-   if checkForHeals() then
-      return true
-   end
-
-
    -- high priority hotkey actions, e.g. killing enemies
 	if HotKey() and CanAct() then
 		if Action() then
@@ -260,23 +292,61 @@ function Run()
 end
 
 function Action()
-   if IsOn("jump") and 
-      CanUse("jump") and CanUse("buster") and
-      me.mana > (GetSpellCost("jump") + GetSpellCost("buster"))
-   then
-      if jumpPoint and GetDistance(jumpPoint) < GetSpellRange("jump") then
-         CastXYZ("jump", jumpPoint)
-         PrintAction("JUMP for kb to "..kbType)
+   -- if IsOn("jump") and 
+   --    CanUse("jump") and CanUse("buster") and
+   --    me.mana > (GetSpellCost("jump") + GetSpellCost("buster"))
+   -- then
+   --    if jumpPoint and GetDistance(jumpPoint) < GetSpellRange("jump") then
+   --       CastXYZ("jump", jumpPoint)
+   --       PrintAction("JUMP for kb to "..kbType)
+   --       return true
+   --    end
+   -- end
+
+   if CanUse("buster") then
+      local target = GetKills("buster", GetInRange(me, "buster", ENEMIES))[1]
+      if target and not WillKill("AA", target) then
+         Cast("buster", target)
+         PrintAction("Buster for execute", target)
          return true
       end
    end
 
-   if CanUse("buster") then
-      local target = GetKills("buster", GetInRange(me, "buster", ENEMIES))[1]
-      if target then
-         Cast("buster", target)
-         PrintAction("Buster for execute", target)
-         return true
+   -- version for just jumping on fully charged enemies
+   -- if CanUse("jump") then
+   --    -- if there's a target in jump range with 4 charges
+   --    if getCharges() == 4 then
+   --       local target = GetWithBuff("charge", ENEMIES)[1]         
+   --       if target and IsInRange("jump", target) then
+   --          -- and I can't kill them with an AA
+   --          if not IsInAARange(target) then
+   --             local point = GetSpellFireahead("jump", target)
+   --             Circle(point)
+   --             if WillKill("jump", "charge", "AA", "AA", target) then
+   --                Cast("jump", target)
+   --                PrintAction("Jump on charged", target)
+   --                return true
+   --             end
+   --          end
+   --       end
+   --    end
+   -- end
+
+   -- generic jump for finish
+   if CanUse("jump") then
+      local targets = SortByDistance(ENEMIES, me, true)
+      for _,target in ipairs(targets) do
+         if not IsInAARange(target) then
+            local point = GetSpellFireahead("jump", target)
+            if ( not UnderTower(point) or GetHPerc(me) > .75 ) and
+               IsInRange("jump", target) and 
+               WillKill("jump", "charge", "AA", "AA", target) 
+            then
+               Cast("jump", target)
+               PrintAction("Jump for finish", target)
+               return true
+            end
+         end
       end
    end
 
@@ -296,17 +366,12 @@ function Action()
       end
    end
 
--- TODO rework for new explosive charge
---   if CanUse("shot") then
---      if GetSpellInfo("E").level >= GetSpellInfo("Q").level then
---         if CastBest("shot") then
---            return true
---         end
---      end
---   end
+   if CastBest("charge") then
+      return true
+   end
 
    if CanUse("rapid") then
-      local target = GetWeakestEnemy("AA", -50)
+      local target = GetWeakestEnemy("AA", -100)
       if target then
          Cast("rapid", me)
          PrintAction("Rapid Fire", target)
@@ -314,7 +379,9 @@ function Action()
       end
    end
 
-   local target = GetMarkedTarget() or GetWeakestEnemy("AA")
+   local target = GetMarkedTarget() or 
+                  GetWeakest("AA", GetWithBuff("charge", GetInRange(me, "AA", ENEMIES))) or
+                  GetWeakestEnemy("AA")
    if AutoAA(target) then
       return true
    end
@@ -327,10 +394,8 @@ function FollowUp()
 end
 
 local function onObject(object)
-   PersistOnTargets("sadism", object, "TODO", ENEMIES)
-   PersistOnTargets("crow", object, "swain_demonForm", ENEMIES)
-   PersistOnTargets("meditate", object, "MasterYi_Base_W_Buf", ENEMIES)
-   PersistOnTargets("healthPotion", object, "GLOBAL_Item_Health", ENEMIES)
+   PersistOnTargets("charge", object, "Tristana_Base_E_charge_buff_", ENEMIES, TURRETS, CREEPS, MINIONS)
+   Persist("charge", object, "Tristana_Base_E_charge_buff_")
 end
 
 local function onSpell(unit, spell)
