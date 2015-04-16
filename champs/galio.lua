@@ -10,7 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Galio")
 
 InitAAData({ 
-   windup=.25,
 })
 
 -- SetChampStyle("marksman")
@@ -32,7 +31,7 @@ spells["smite"] = {
    base={80,135,190,245,300}, 
    ap=.6,
    delay=2.6, -- TestSkillShot
-   speed=12.5, 
+   speed=14, 
    noblock=true,
    radius=215, -- reticle
    cost={60,65,70,75,80},
@@ -110,7 +109,9 @@ end
 
 function Action()
    -- TestSkillShot("gust", nil, {"Launcher"})
-   if SkillShot("smite", nil, nil, .8) then
+   -- TestSkillShot("smite", "blast")
+
+   if SkillShot("smite") then
       return true
    end
 
