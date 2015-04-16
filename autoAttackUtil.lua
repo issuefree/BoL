@@ -246,7 +246,7 @@ function CanAttack()
 end
 
 function IsAttacking()
-   return time() < lastAttack + getWindup() - GetLatency()/4000
+   return time() < lastAttack + getWindup() -- - GetLatency()/4000
 end
 
 function JustAttacked()
