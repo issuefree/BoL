@@ -5,7 +5,6 @@ pp("\nTim's Twitch")
 
 InitAAData({ 
    speed = 2500,
-   -- extraRange=-10,
    particles = {"twitch_basicAttack_mis", "twitch_sprayandPray_mis"},
 })
 
@@ -83,7 +82,6 @@ function Run()
       if HotKey() then
          if GetDistance(mousePos) < 3000 then
             MoveToCursor()
-            CURSOR = Point(mousePos)
          end
       end
 

@@ -10,8 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Shaco")
 
 InitAAData({ 
-   windup=.25,
-   -- extraRange=-20,
 })
 
 -- SetChampStyle("marksman")
@@ -107,6 +105,16 @@ end
 
 function Action()
 
+   if CanUse("shiv") then
+      for _,enemy in ipairs(SortByHealth(GetInRange(me, "shiv", ENEMIES))) do
+         if not FacingMe(enemy) then
+            Cast("shiv", enemy)
+            PrintAction("shiv runner", target)
+            return true
+         end
+      end
+   end
+
    local target = GetMarkedTarget() or GetMeleeTarget()
    if AutoAA(target) then
       return true
@@ -120,7 +128,7 @@ end
 
 local function onCreate(object)
    if object.type == "obj_AI_Minion" then
-      Persist("clone", object, me.charName, me.team)
+      Persist("clone", object, me.name, me.team)
    end
 end
 

@@ -1,5 +1,4 @@
 champ conversion to BoL
-=	tested solo, seems ok
 0	script read, nothing stands out as needing done
 -	unknown but probably needs work (object verification or something)
 !	tested and needs work
@@ -8,63 +7,35 @@ champ conversion to BoL
 
 
 
-	=	akali.lua
-	=	amumu.lua
-	=	anivia.lua
 	-	azir.lua
 	0	blitz.lua
 	0	chogath.lua
-	=	corki.lua
 	-	draven.lua
-	=	drmundo.lua
 	-	elise.lua
-	-	evelynn.lua
-	=	fiddlesticks.lua
-	0	gangplank.lua
-	=	garen.lua
 	-	gnar.lua
 	-	gragas.lua
-	0	graves.lua
 	-	heimerdinger.lua
 	-	irelia.lua
-	0	janna.lua
-	=	jax.lua
 	0	jinx.lua
-	=	karthus.lua
 	-	kassadin.lua
-	=	katarina.lua
 	-	kayle.lua
 	-	leblanc.lua
 	-	leesin.lua
 	-	lulu.lua
-	0	malphite.lua
 	-	maokai.lua
 	0	morgana.lua
-	=	nasus.lua
-	=	nidalee.lua
 	-	orianna.lua
 	-	renekton.lua
 	-	riven.lua
 	-	rumble.lua
-	-	shaco.lua
 	-	shyvana.lua
 	-	singed.lua
 	-	sion.lua
 	0	sivir.lua
-	=	sona.lua
 	0	soraka.lua
 	-	swain.lua
 	!	talon.lua
-	=	taric.lua
-	=	teemo.lua
-	0	trundle.lua
 	-	tryndamere.lua
-	-	twitch.lua
-	-	udyr.lua
-	=	varus.lua
 	-	velkoz.lua
-	0	volibear.lua
-	0	warwick.lua
-	=	xerath.lua
 	-	xinzhao.lua
-	0	zilean.lua
+	!	zilean.lua
