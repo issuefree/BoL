@@ -34,7 +34,6 @@ champ conversion to BoL
 	-	kassadin.lua
 	=	katarina.lua
 	-	kayle.lua
-	-	kennen.lua
 	-	leblanc.lua
 	-	leesin.lua
 	-	leona.lua
