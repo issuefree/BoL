@@ -242,11 +242,11 @@ function CanAttack()
    if P.blind then
       return false
    end
-   return time() > getNextAttackTime() - GetLatency()/2000
+   return time() > getNextAttackTime() - GetPing()/2
 end
 
 function IsAttacking()
-   return time() < lastAttack + getWindup() -- - GetLatency()/4000
+   return time() < lastAttack + getWindup() -- - GetPing()/4
 end
 
 function JustAttacked()
