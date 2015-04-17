@@ -7,7 +7,7 @@ pp("\nTim's Lulu")
 SetChampStyle("support")
 
 InitAAData({
-	speed = 2500, windup=.2,
+	speed = 2500,
 	particles = {"LuluBasicAttack"}
 })
 
@@ -68,22 +68,7 @@ AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0} / {1}", 
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
-Persist("pix", me)
-pixTimeout = 0
-
 function Run()
-	if not IsValid(P.pix) or GetDistance(P.pix) > spells["pix"].leash or time() > pixTimeout then
-		Persist("pix", me)
-	end
-
-	-- since I can't predict what pix AA will hit I'm not counting the damage
-
-	-- if P.pix and GetDistance(P.pix) < 150 then
-	-- 	spells["AA"].bonus = GetSpellDamage("pix")
-	-- else
-	-- 	spells["AA"].bonus = 0
-	-- end
-
    if StartTickActions() then
       return true
    end
@@ -132,6 +117,7 @@ function Run()
 			end
 
 			-- weird angles on pix and since I can't detect pix makes creative stuff hard.
+			-- no longer true. can do creative stuff
 
 			-- if IsMe(P.pix) or not P.pix then
 			-- 	if KillMinionsInLine("doubleLance", 2) then
@@ -207,21 +193,12 @@ function FollowUp()
 end
 
 local function onCreate(object)
-	-- PersistBuff("pix", object, "pix object name") -- no object for pix!?!
+	Persist("pix", object, "RobotBuddy")
 end
 
 local function onSpell(unit, spell)
 	if IsOn("shield") then
 		CheckShield("help", unit, spell)
-	end
-
-	if ICast("help", unit, spell) then
-		if spell.target and spell.target.team == me.team then
-			pixTimeout = time() + spells["pix"].allyTimeout
-		else
-			pixTimeout = time() + spells["pix"].otherTimeout
-		end
-		Persist("pix", spell.target)
 	end
 end
 

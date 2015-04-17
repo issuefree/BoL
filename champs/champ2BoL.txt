@@ -22,7 +22,6 @@ champ conversion to BoL
 	-	leblanc.lua
 	-	leesin.lua
 	-	lulu.lua
-	-	maokai.lua
 	0	morgana.lua
 	-	orianna.lua
 	-	renekton.lua
