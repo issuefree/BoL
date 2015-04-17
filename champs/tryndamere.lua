@@ -10,7 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Tryndamere")
 
 InitAAData({ 
-   windup=.25,
    -- extraRange=-15,
    particles = {"tryndamere_weapontrail"},
 })

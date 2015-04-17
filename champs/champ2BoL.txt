@@ -21,7 +21,6 @@ champ conversion to BoL
 	-	kayle.lua
 	-	leblanc.lua
 	-	leesin.lua
-	-	lulu.lua
 	0	morgana.lua
 	-	orianna.lua
 	-	renekton.lua
@@ -34,7 +33,6 @@ champ conversion to BoL
 	0	soraka.lua
 	-	swain.lua
 	!	talon.lua
-	-	tryndamere.lua
 	-	velkoz.lua
 	-	xinzhao.lua
 	!	zilean.lua
