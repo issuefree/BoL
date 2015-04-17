@@ -23,6 +23,7 @@ require "issuefree/spellUtils"
       -- Ashe         = { speed = 2000, 
       --                  windupScale = .5, -- how much attack speed affects windup. 0.5 would reduce windup by half as much as normal
       --                  extraRange = 0,
+      --                  extraWindup = 0, -- % to slow down windup. .1 means windups take 10% longer than reported
       --                  minMoveTime = 0,
       --                  particles = {"Ashe_Base_BA_mis", "Ashe_Base_Q_mis"},
       --                  attacks = {"attack", "frostarrow"},
