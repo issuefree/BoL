@@ -620,7 +620,7 @@ end
 
 function MoveToTarget(t)
    if CanMove() then
-      local pos = VP:GetPredictedPos(t, .5, t.ms, t, false)
+      local pos = VP:GetPredictedPos(t, .5, t.ms, me, false)
       me:MoveTo(pos.x,pos.z)
       PrintAction("MTT", t, 1)
       return true
@@ -1762,6 +1762,7 @@ function OnTick()
    end
 
    TrackMyPosition()
+   TrackHeroPositions()
 
    if GetDistance(me, CURSOR) < 50 and CURSOR then
       ClearCursor()

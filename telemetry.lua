@@ -136,7 +136,7 @@ function ApproachAngle(attacker, target)
    if IsMe(attacker) then
       point = ProjectionA(me, GetMyDirection(), 25)
    else
-      point = VP:GetPredictedPos(attacker, 1, 1000, attacker, false)
+      point = VP:GetPredictedPos(attacker, 1, 1000, me, false)
       -- point = Point(GetFireahead(attacker, 3, 0))
    end
    local aa = RadsToDegs(math.abs( AngleBetween(attacker, target) - AngleBetween(attacker, point) ))
@@ -361,9 +361,8 @@ function IsUnblocked(target, thing, source, ...)
 end
 
 function FacingMe(target)
-   local d1 = GetDistance(target)
-   local p = VP:GetPredictedPos(target,.5,target.ms,target, false)   
-   local d2 = GetDistance(p)
+   local d1 = GetDistance(heroPos[target.charName][1])
+   local d2 = GetDistance(target)
    return d2 < d1 
 end
 
@@ -378,8 +377,28 @@ function TrackMyPosition()
    end
 end
 
+heroPos = {}
+function TrackHeroPositions()   
+   for _,hero in ipairs(concat(ENEMIES, ALLIES)) do
+      if not heroPos[hero.charName] then
+         heroPos[hero.charName] = {}
+      end
+      local pos = heroPos[hero.charName]
+      if #pos == 0 or GetDistance(pos[#pos], Point(hero)) > 1 then
+         table.insert(pos, Point(hero))
+         if #pos > trackTicks then
+            table.remove(pos, 1)
+         end
+      end
+   end
+end
+
 function GetMyLastPosition()
    return myPos[1]
+end
+
+function GetHeroDirection(hero)
+   return AngleBetween(heroPos[hero.charName][1], hero)
 end
 
 function GetMyDirection()
