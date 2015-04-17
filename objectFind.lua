@@ -95,6 +95,11 @@ function debugTick()
 end
 
 local function onSpell(unit, spell)
+   if testShot and IsMe(unit) then
+      pp("SpellName:  "..spell.name)
+      pp("BoL Windup: "..spell.windUpTime)
+   end
+
    if not ModuleConfig.debug then
       return
    end
@@ -123,7 +128,7 @@ local function onSpell(unit, spell)
    end
 end
 
-local function onObject(object)
+function objectFindCreateObject(object)
    if testShot and not testShot.object then
       if GetDistance(object) < 1000 and
          object.name ~= "LineMissile" and
@@ -191,6 +196,6 @@ function TestSkillShot(thing, name, excludes)
 end
 
 AddOnSpell(onSpell)
-AddOnCreate(onObject)
+AddOnCreate(objectFindCreateObject)
 
 AddOnTick(debugTick)
