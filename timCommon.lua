@@ -566,6 +566,10 @@ function cloneTarget(target)
    t.health = target.health
    t.maxHealth = target.maxHealth
    t.armor = target.armor
+   t.valid = true
+   t.visible = true
+   t.name = target.name
+   t.charName = target.charName
    return t
 end
 
