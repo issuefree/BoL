@@ -2,15 +2,9 @@ require "issuefree/timCommon"
 require "issuefree/modules"
 
 
--- Try to stick to one "action" per loop.
--- Action function should return 
---   true if they perform an action that takes time (most spells attacks)
---   false if no action or the spell takes no time
-
 pp("\nTim's Leona")
 
 InitAAData({
-   windup=.3,
    particles={"leona_basicattack_hit"},
    -- shield of daybreak attack handled by default
    resets={GetSpellInfo("Q").name}
@@ -45,7 +39,7 @@ spells["eclipse"] = {
 } 
 spells["blade"] = {
    key="E", 
-   range=700, 
+   range=875, 
    color=violet, 
    base={60,100,140,180,220}, 
    ap=.7,
