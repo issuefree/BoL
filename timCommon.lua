@@ -1689,7 +1689,7 @@ function OnTick()
    TICK_DELAY = time()-tt
    tt = time()
 
-   if time() - lastObjectCheck > .5 then   
+   if time() - lastObjectCheck > .25 then   
       for i = 1, objManager.iCount, 1 do
          local object = objManager:GetObject(i)
          if object and object.valid and object.name then

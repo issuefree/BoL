@@ -10,7 +10,7 @@ require "issuefree/modules"
 pp("\nTim's Maokai")
 
 InitAAData({ 
-   windup=.4, -- TODO
+   extraWindup=.2
 })
 
 -- SetChampStyle("marksman")
@@ -32,7 +32,7 @@ spells["smash"] = {
    base={70,115,160,205,250}, 
    ap=.4,
    delay=4, -- TestSkillShot
-   speed=18, 
+   speed=20, 
    width=120, -- reticle
    noblock=true,
    cost=45,
@@ -63,8 +63,8 @@ spells["sapling"] = {
    color=violet, 
    base={40,60,80,100,120}, 
    ap=.4,
-   delay=3.8, -- TestSkillShot
-   speed=10+5, -- might go deeper
+   delay=3.75, -- TestSkillShot
+   speed=10,  -- speed depends on distance. Max distance is like speed 12 short distance is like speed 300.
    noblock=true,
    radius=225, -- reticle (wiki says 175)
    cost={60,70,80,90,100},
@@ -129,8 +129,8 @@ function Run()
 end
 
 function Action()
-   -- TestSkillShot("sapling", "Maokai_sapling_mis")
-   -- TestSkillShot("smash", "maoki_trunkSmash_mis.troy")
+   -- TestSkillShot("sapling", "Maokai_Base_E_mis")
+   -- TestSkillShot("smash")
 
    if SkillShot("sapling") then
       return true
@@ -169,8 +169,8 @@ function FollowUp()
 end
 
 local function onCreate(object)
-   PersistBuff("sap", object, "maokai_passive_indicator_graveDigger.troy")
-   PersistBuff("maelstrom", object, "maoki_torrent_01_teamID_green.troy")
+   PersistBuff("sap", object, "Maokai_Base_P_active")
+   PersistBuff("maelstrom", object, "Maokai_Base_R_Aura")
 end
 
 local function onSpell(unit, spell)
