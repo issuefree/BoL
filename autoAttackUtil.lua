@@ -30,7 +30,7 @@ require "issuefree/spellUtils"
 
 function GetAARange(target)
    target = target or me
-   return target.range
+   return target.range + spells["AA"].extraRange
 end
 
 function IsMelee(target)
@@ -86,6 +86,8 @@ local minionAAData = {
 
 function loadAAData()
    spells["AA"].baseAttackSpeed = .625
+   spells["AA"].extraRange = 0
+   spells["AA"].extraWindup = 0
    spells["AA"].windupScale = .5 -- for safety
    spells["AA"].windupVal = 3
    -- BoL may not have the bug which necessitates the minMoveTime
@@ -122,7 +124,7 @@ end
 
 function getWindup()
    local effAs = 1+((me.attackSpeed - 1)*spells["AA"].windupScale)
-   return 1 / (effAs * spells["AA"].windupVal)
+   return (1 / (effAs * spells["AA"].windupVal))*(1+spells["AA"].extraWindup)
 end
 
 function OrbWalk()
