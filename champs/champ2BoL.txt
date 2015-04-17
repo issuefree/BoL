@@ -23,8 +23,7 @@ champ conversion to BoL
 	-	leesin.lua
 	0	morgana.lua
 	-	orianna.lua
-	-	renekton.lua
-	-	riven.lua
+	--	renekton.lua
 	-	rumble.lua
 	-	shyvana.lua
 	-	singed.lua

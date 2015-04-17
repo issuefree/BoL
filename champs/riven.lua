@@ -10,7 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Riven")
 
 InitAAData({
-   windup=.25,
    extraRange=20,
    resets = {GetSpellInfo("Q").name}
 })
@@ -121,7 +120,7 @@ function Run()
    spells["wings"].range = spells["wings"].rangeB + me.ms/10
 
 -- BoL FIGURE THIS OUT
-   if me.SpellTimeQ < -1 then
+   if GetCD("wings") > 1 then
       wingsStage = 1
    end
 
@@ -361,9 +360,6 @@ local function onSpell(unit, spell)
          wingsStage = wingsStage + 1 
       end
       lastWings = time()
-      if IsLoLActive() and IsChatOpen() == 0 then
-         send.key_press(SKeys.PgUp, 100)
-      end
    end
 
    if IsMe(unit) and spell.name == "RivenFengShuiEngine" then
