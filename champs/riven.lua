@@ -82,7 +82,6 @@ spells["windSlash"] = {
    speed=22,
    noblock=true,
    cone=30,
-   width=300, -- hack until I actually do the math for cone into fireahead
    type="P"   
 }
 
