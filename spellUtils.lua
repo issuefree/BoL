@@ -193,7 +193,7 @@ function Cast(thing, target, force)
    else
    	if spell.id then
    		local slot = GetInventorySlot(spell.id)
-   		CastSpell(slot, target)
+   		CastSpell(getISpell(slot), target)
    	else
    		CastSpell(getISpell(spell.key), target)
    	end
