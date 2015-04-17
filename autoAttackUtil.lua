@@ -227,6 +227,9 @@ function aaTick()
 
 end
 
+-- TODO rework this so that you can still attack after having called SetAttacking but no move or act.
+-- I want to keep trying to attack until I get the spell but I don't want to cancel the attack because
+-- I get a move command into the mix.
 function SetAttacking()
    lastAttack = time()
 end
