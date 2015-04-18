@@ -4,7 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Kayle")
 
 InitAAData({
-  speed = 1800, windup=.3,
+  speed = 1800,
   particles = {"RighteousFury_nova"}
 })
 
@@ -108,13 +108,6 @@ function Run()
 end
 
 function Action()
-   -- determine who I should attack
-   if me.ap > me.addDamage then
-      type = "MAGIC"
-   else
-      type = "PHYSICAL"
-   end
-
    if CastBest("reckoning") then
       UseItem("Deathfire Grasp", GetWeakestEnemy("reckoning"))
       return true

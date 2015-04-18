@@ -41,7 +41,7 @@ spells["boomerang"] = {
 } 
 spells["boulder"] = {
    key="--", 
-   range=1100+45, 
+   range=1100, 
    color=violet, 
    base={5,45,85,125,165}, 
    ad=1.2,
@@ -59,7 +59,7 @@ spells["hyper"] = {
 } 
 spells["wallop"] = {
    key="--", 
-   range=500, -- seems close
+   range=475, -- seems close
    color=yellow, 
    base={25,45,65,85,105}, 
    ad=1,

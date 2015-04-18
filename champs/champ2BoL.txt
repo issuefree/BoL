@@ -18,7 +18,6 @@ champ conversion to BoL
 	-	irelia.lua
 	0	jinx.lua
 	-	kassadin.lua
-	-	kayle.lua
 	-	leblanc.lua
 	-	leesin.lua
 	0	morgana.lua
