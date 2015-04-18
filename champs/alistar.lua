@@ -6,7 +6,7 @@ pp(" - Heal nearby allies")
 pp(" - Knock shit up, do the Ali dance.")
 
 InitAAData({ 
-   windup=.25
+   extraWindup=.2
 })
 
 AddToggle("heal", {on=true, key=112, label="Heal Team", auxLabel="{0}", args={"roar"}})
