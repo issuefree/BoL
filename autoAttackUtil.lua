@@ -151,7 +151,7 @@ local lastAAState = 0
 
 local lastAADelta = 0
 
-local ignoredObjects = {"Minion", "DrawFX", "issuefree", "Cursor_MoveTo", "Mfx", "yikes", "glow", "XerathIdle"}
+local ignoredObjects = {"Minion", "DrawFX", "issuefree", "Cursor_MoveTo", "Mfx", "yikes", "glow", "XerathIdle", "missile"}
 local aaObjects = {}
 local aaObjectTime = {}
 
@@ -166,7 +166,30 @@ function AfterAttack()
    end
 end
 
+
+local aaObj = nil
+local aaPos1 = nil
+local aaT1 = nil
+local aaPosE = nil
+local aaTE = nil
+
 function aaTick()
+   if aaObj and aaObj.valid then
+      aaPosE = Point(aaObj)
+      aaTE = time()
+      PrintState(-5, "OBJ")
+   elseif aaTE then
+      local dist = GetDistance(aaPos1, aaPosE)
+      local delta = aaTE - aaT1
+      pp(dist / delta)
+      aaObj = nil
+      aaPos1 = nil
+      aaT1 = nil
+      aaPosE = nil
+      aaTE = nil
+      PrintState(-5, "NOOBJ")
+   end
+
    -- we asked for an attack but it's been longer than the windup and we haven't gotten a shot so we must have clipped or something
    if not shotFired and time() - lastAttack > getWindup() then
       woundUp = true
@@ -314,7 +337,7 @@ function setAttackState(state)
 end
 
 function onObjAA(object)
-   if ListContains(object.name, spells["AA"].particles) 
+   if ListContains(object.name, spells["AA"].particles, false) 
       and GetDistance(object) < GetWidth(me)+250
    then
       shotFired = true 
@@ -326,19 +349,21 @@ function onObjAA(object)
       if ModuleConfig.aaDebug then
          local delta = time() - lastAAState         
          pp("AAP: "..trunc(delta).." "..object.name)
-
+         aaObj = object
+         aaPos1 = Point(object)
+         aaT1 = time()
       end
 
    end
    if ModuleConfig.aaDebug then
       if object and object.x and object.name and
-         GetDistance(object, me) < 250 
+         GetDistance(object, me) < GetWidth(me)+250 
       then
          if not ListContains(object.name, ignoredObjects) and
             not ListContains(object.name, aaObjects) and
-            not ListContains(object.name, spells["AA"].particles)
+            not ListContains(object.name, spells["AA"].particles, false)
          then         
-            if time() - lastAttack < .5 then
+            if time() - lastAttack < .75 then
                table.insert(aaObjects, object.name)
                table.insert(aaObjectTime, time() - lastAttack)
                pp(object.name)
