@@ -36,7 +36,7 @@ local function table_print(tt, indent, done)
       local sb = {}
       for key, value in pairs (tt) do
          table.insert(sb, string.rep (" ", indent)) -- indent it
-         if type (value) == "table" and not done [value] then
+         if type(value) == "table" and not done [value] then
             done [value] = true
             table.insert(sb, tostring(key).." = {\n");
             table.insert(sb, table_print (value, indent + 2, done))
