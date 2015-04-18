@@ -6,7 +6,7 @@ pp("\nTim's Vel'Koz")
 -- track deconstruction
 
 InitAAData({ 
-   windup=.25,
+   speed=2000,
    particles = {"Velkoz_Base_BA_Beam.troy"} 
 })
 
@@ -20,6 +20,13 @@ AddToggle("", {on=true, key=115, label=""})
 AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0} / {1}", args={GetAADamage, "disruption"}})
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
+
+function deconOnHit(target)
+   if HasBuff("deconstructionFull", target) then
+      return GetSpellDamage("deconstruction")
+   end
+   return 0
+end
 
 spells["deconstruction"] = {
    base=25,
@@ -35,8 +42,9 @@ spells["fission"] = {
    delay=2.6, -- testskillshot
    speed=12.5,  -- testskillshot
    width=65,  -- reticle
-   splitDist=1050, -- visual
+   splitDist=900, -- visual
    cost={40,45,50,55,60},
+   damOnTarget=deconOnHit,
 } 
 spells["rift"] = {
    key="W", 
@@ -54,6 +62,7 @@ spells["rift"] = {
    rechargeTime={18,17,16,15,14},
    charges=1,
    cost={50,55,60,65,70},
+   damOnTarget=deconOnHit,
 } 
 spells["disruption"] = {
    key="E", 
@@ -66,6 +75,7 @@ spells["disruption"] = {
    radius=225,  -- reticle
    noblock=true,
    cost={50,55,60,65,70},
+   damOnTarget=deconOnHit,
 } 
 spells["ray"] = {
    key="R", 
@@ -75,11 +85,22 @@ spells["ray"] = {
    ap=.6,
    width=125, -- guess
    cost=100,
+   damOnTarget=deconOnHit,
 } 
 
 local fissionAngle
 
 function Run()
+   if CanUse("fission") then
+      local p = Point(mousePos)
+      p.y = me.y
+      if IsInRange("fission", mousePos) then
+         LineBetween(me, p, 1, violet)
+         LineObject(p, spells["fission"].splitDist, AngleBetween(me, p)+math.pi/2, 1, violet)
+         LineObject(p, spells["fission"].splitDist, AngleBetween(me, p)-math.pi/2, 1, violet)
+      end
+   end
+
    for _,t in ipairs(GetWithBuff("deconstruction", CREEPS)) do
       Circle(t)
    end
@@ -241,7 +262,7 @@ function FollowUp()
 end
 
 local function onCreate(object)
-   PersistOnTargets("deconstruction", object, "Velkoz_Base_P_Research", ENEMIES)
+   PersistOnTargets("deconstruction", object, "Velkoz_Base_P_Research", ENEMIES, CREEPS)
    Persist("fission", object, "Velkoz_Base_Q_mis.troy")
 end
 

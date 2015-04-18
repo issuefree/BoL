@@ -1,19 +1,19 @@
 champ conversion to BoL
 -	unknown but probably needs work (object verification or something)
+0	unknown but probably needs work but I don't own.
 !	tested and needs work
 
-	--	draven.lua
+	0	draven.lua
 	-	irelia.lua
 	-	kassadin.lua
 	-	leblanc.lua
 	-	leesin.lua
 	-	orianna.lua
-	--	renekton.lua
+	0	renekton.lua
 	-	rumble.lua
-	-	shyvana.lua
+	0	shyvana.lua
 	-	singed.lua
 	-	sion.lua
-	!	talon.lua
-	-	velkoz.lua
+	!0	talon.lua
 	-	xinzhao.lua
 	!	zilean.lua
