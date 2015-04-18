@@ -4,7 +4,8 @@ require "issuefree/modules"
 pp("\nTim's Elise")
 
 InitAAData({
-   particles = {"Elise_spider_basicattack", "Elise_human_BasicAttack_mis"}
+   speed=1500,
+   particles = {"Elise_spider_basicattack", "Elise_Base_BA_mis"}
 })
 
 AddToggle("", {on=true, key=112, label=""})
@@ -31,7 +32,7 @@ spells["bite"] = {
    color=violet,
    base={60,100,140,180,220}, 
    targetMissingHealth=.08,
-   maxOnMobs={75,100,125,150,175}
+   maxOnMobs={75,100,125,150,175},
    cost=0,
 } 
 
@@ -91,6 +92,10 @@ function isSpider()
 end
 
 function Run()
+   for _,s in ipairs(GetPersisted("swarm")) do
+      Circle(s)
+   end
+
    spells["toxin"].targetHealth = .08 + me.ap/100*.03
    spells["bite"].targetMissingHealth = .08 + me.ap/100*.03
 
@@ -158,7 +163,7 @@ function Run()
 
    if CanUse("frenzy") and JustAttacked() and VeryAlone() then
       Cast("frenzy", me)
-      PrintAction("Frenzy alone")
+      PrintAction("Frenzy alone", nil, 1)
    end
 
 
@@ -280,7 +285,7 @@ function FollowUp()
 end
 
 local function onCreate(object)
-   Persist("swarm", object, "Spiderling")
+   -- PersistAll("swarm", object, "Spiderling")
    PersistOnTargets("web", object, "Elise_human_E_tar", ENEMIES)
 end
 
