@@ -6,7 +6,7 @@ pp("\nTim's Heimerdinger")
 SetChampStyle("caster")
 
 InitAAData({
-  speed = 1400, windup=.25,
+  speed = 1400,
   particles = {"Heimerdinger_Base_AA"}
 })
 
@@ -25,12 +25,13 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["turret"] = {
    key="Q", 
-   range=450,
+   range=450-25,
    turretRange=525,
    color=yellow,
    delay=2,
    speed=0,
    radius=100,
+   noblock=true,
    cost=20
 }
 spells["rockets"] = {
@@ -41,7 +42,7 @@ spells["rockets"] = {
    ap=.45,
    delay=2.4,  -- TestSkillShot
    speed=22,
-   width=50,
+   width=100,
    overShoot=-100,
    noblock=true,
    cost={70,80,90,100,110}
@@ -200,7 +201,7 @@ end
 
 local function onObject(object)
    PersistBuff("upgrade", object, "Heimerdinger_Base_R_Beam.troy")
-   PersistAll("sentry", object, "H-28G Evolution Turret")
+   PersistAll("sentry", object, "heimerdinger_turret_ring")
    PersistBuff("parts", object, "Heimer_Q_Ammo")
 end
 

@@ -3,7 +3,6 @@ champ conversion to BoL
 !	tested and needs work
 
 	--	draven.lua
-	-	heimerdinger.lua
 	-	irelia.lua
 	-	kassadin.lua
 	-	leblanc.lua
