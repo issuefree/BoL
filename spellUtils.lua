@@ -737,7 +737,14 @@ function IsGoodFireahead(thing, target, minChance)
    -- - 3: Target too slowed or/and too close , (~100% hit chance)
    -- - 4: Target inmmobile, (~100% hit chace)
    -- - 5: Target dashing or blinking. (~100% hit chance)
-   minChance = minChance or 2
+
+   if not minChance then
+      if GetMPerc() > .66 then
+         minChance = 1
+      else
+         minChance = 2
+      end
+   end
 
    if chance < minChance then
    	-- PrintAction("Low chance SS")
