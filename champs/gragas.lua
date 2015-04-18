@@ -64,13 +64,20 @@ spells["cask"] = {
 
 local barrelTime = 0
 
+function getBarrel()
+   if P.barrel and P.barrel.x and P.barrel.z then
+      return P.barrel
+   end
+   return nil
+end
+
 function Run()
    spells["AA"].bonus = 0
    if P.rage then
       spells["AA"].bonus = GetSpellDamage("rage", target)
    end
 
-   if P.barrel and CanUse("barrel") then
+   if getBarrel() and CanUse("barrel") then
       local mult = .5*math.min(time() - barrelTime, 2) / 2
       spells["barrel"].bonus = GetSpellDamage("barrel") * mult
    else
@@ -82,9 +89,9 @@ function Run()
    end
 
 
-   if P.barrel and CanUse("barrel") then
+   if getBarrel() and CanUse("barrel") then
       local spell = GetSpell("barrel")
-      local enemies = GetInRange(P.barrel, spell.radius, ENEMIES)
+      local enemies = GetInRange(getBarrel(), spell.radius, ENEMIES)
       for _,enemy in ipairs(enemies) do
          if WillKill("barrel", enemy) then
             Cast(spell, me, true)
@@ -92,19 +99,19 @@ function Run()
             break
          end
          local nextPos = VP:GetPredictedPos(enemy, .5, enemy.ms, me, false)
-         if GetDistance(P.barrel, nextPos) > spell.radius then
+         if GetDistance(getBarrel(), nextPos) > spell.radius then
             Cast(spell, me, true)
             PrintAction("Pop escapees", nil, 1)
             break
          end
       end
 
-      -- if #GetInRange(P.barrel, spells["barrel"].radius, ENEMIES) > 0 then
+      -- if #GetInRange(getBarrel(), spells["barrel"].radius, ENEMIES) > 0 then
       --    Cast("barrel", me, true)
       --    PrintAction("BOOM")
       -- end
 
-      local minions = GetInRange(P.barrel, spells["barrel"].radius, MINIONS)
+      local minions = GetInRange(getBarrel(), spells["barrel"].radius, MINIONS)
       local kills = GetKills("barrel", minions)
       if #kills >= 2 then
          Cast("barrel", me, true)
@@ -113,7 +120,7 @@ function Run()
 
    end
 
-   if not P.barrel then
+   if not getBarrel() then
       if CastAtCC("barrel") then
          return true
       end
@@ -125,7 +132,7 @@ function Run()
       end
    end
 
-   if IsOn("lasthit") and CanUse("barrel") and not P.barrel and VeryAlone() then
+   if IsOn("lasthit") and CanUse("barrel") and not getBarrel() and VeryAlone() then
       -- lasthit with barrel if it kills 3 minions or more
       if KillMinionsInArea("barrel") then
          return true
@@ -142,7 +149,7 @@ function Run()
 end
 
 function Action()
-   if not P.barrel then
+   if not getBarrel() then
       local target = SkillShot("barrel")
       if target then
          UseItem("Deathfire Grasp", target)

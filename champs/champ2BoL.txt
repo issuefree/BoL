@@ -1,34 +1,22 @@
 champ conversion to BoL
-0	script read, nothing stands out as needing done
 -	unknown but probably needs work (object verification or something)
 !	tested and needs work
 
-
-
-
-
 	-	azir.lua
-	0	blitz.lua
-	0	chogath.lua
 	-	draven.lua
 	-	elise.lua
 	-	gnar.lua
-	-	gragas.lua
 	-	heimerdinger.lua
 	-	irelia.lua
-	0	jinx.lua
 	-	kassadin.lua
 	-	leblanc.lua
 	-	leesin.lua
-	0	morgana.lua
 	-	orianna.lua
 	--	renekton.lua
 	-	rumble.lua
 	-	shyvana.lua
 	-	singed.lua
 	-	sion.lua
-	0	sivir.lua
-	0	soraka.lua
 	-	swain.lua
 	!	talon.lua
 	-	velkoz.lua
