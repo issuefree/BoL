@@ -245,7 +245,7 @@ function CanAttack()
    if P.blind then
       return false
    end
-   return IsAttacking() or time() > getNextAttackTime() - GetPing()/2
+   return time() > (getNextAttackTime() - GetPing()/2) -- or time() < (lastAttack + getWindup()/4)
 end
 
 function IsAttacking()
