@@ -189,9 +189,9 @@ end
 
 function PersistAll(label, object, name)
    if object and (not name or find(object.name, name)) then      
-      Persist(label..object.name, object)
-      PData[label..object.name].name = label
-      PData[label..object.name].time = time()
+      Persist(label..object.name..object.x, object)
+      PData[label..object.name..object.x].name = label
+      PData[label..object.name..object.x].time = time()
       return true
    end
 end
