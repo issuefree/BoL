@@ -4,6 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Karma")
 
 InitAAData({
+   speed=1500,
    particles = {"Karma_Base_BA_mis"}
 })
 
@@ -25,7 +26,7 @@ spells["flame"] = {
    delay=1.6,
    speed=17,
    width=100,
-   radius=250
+   radius=250,
    cost={50,55,60,65,70},
 }
 spells["soulflare"] = {
@@ -61,7 +62,11 @@ function Run()
       return true
    end
 
-   if CastAtCC("flame") then
+   local target = CastAtCC("flame", nil, true)
+   if target then
+      Cast("mantra", me)
+      Cast("flame", target)
+      PrintAction("Soulflare", target)
       return true
    end
 
@@ -114,37 +119,37 @@ function Action()
    end
 
    if CanUse("flame") then
-      if CanUse("mantra") then -- look for executes, then for clumps
-         local unblocked = GetUnblocked("flame", me, MINIONS, ENEMIES)
-         unblocked = FilterList(unblocked, function(item) return not IsMinion(item) end)
-         unblocked = SortByDistance(FilterList(unblocked, function(item) return IsGoodFireahead("flame", item) end))
-         for _,target in ipairs(unblocked) do -- aim for the closest guy I can kill
-            if GetSpellDamage("flame", target) < target.health and
-               GetSpellDamage("flame", target) + GetSpellDamage("soulflare", target) > target.health then
-               Cast("mantra", me)
-               UseItem("Deathfire Grasp", target)
-               CastFireahead("flame", target)
-               PrintAction("Soulflare for execute", target)
-               return true
-            end
-         end
-         local bestT
-         local bestH = 1
-         for _,target in ipairs(unblocked) do
-            local hits = #GetInRange(target, spells["flame"].radius, ENEMIES)
-            if hits > bestH then
-               bestT = target
-               bestH = hits
-            end
-         end
-         if bestT then
-            Cast("mantra", me)
-            UseItem("Deathfire Grasp", bestT)
-            CastFireahead("flame", bestT)
-            PrintAction("Soulflare for aoe", bestT)
-            return true
-         end
-      end
+      -- if CanUse("mantra") then -- look for executes, then for clumps
+      --    local unblocked = GetUnblocked("flame", me, MINIONS, ENEMIES)
+      --    unblocked = FilterList(unblocked, function(item) return not IsMinion(item) end)
+      --    unblocked = SortByDistance(FilterList(unblocked, function(item) return IsGoodFireahead("flame", item) end))
+      --    for _,target in ipairs(unblocked) do -- aim for the closest guy I can kill
+      --       if GetSpellDamage("flame", target) < target.health and
+      --          GetSpellDamage("flame", target) + GetSpellDamage("soulflare", target) > target.health then
+      --          Cast("mantra", me)
+      --          UseItem("Deathfire Grasp", target)
+      --          CastFireahead("flame", target)
+      --          PrintAction("Soulflare for execute", target)
+      --          return true
+      --       end
+      --    end
+      --    local bestT
+      --    local bestH = 1
+      --    for _,target in ipairs(unblocked) do
+      --       local hits = #GetInRange(target, spells["flame"].radius, ENEMIES)
+      --       if hits > bestH then
+      --          bestT = target
+      --          bestH = hits
+      --       end
+      --    end
+      --    if bestT then
+      --       Cast("mantra", me)
+      --       UseItem("Deathfire Grasp", bestT)
+      --       CastFireahead("flame", bestT)
+      --       PrintAction("Soulflare for aoe", bestT)
+      --       return true
+      --    end
+      -- end
 
       local target = GetSkillShot("flame")
       if target then
