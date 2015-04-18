@@ -10,6 +10,7 @@ require "issuefree/modules"
 pp("\nTim's Azir")
 
 InitAAData({ 
+   speed=1500,
    particles = {"Azir_Base_BA_Beam.troy"} 
 })
 
@@ -38,12 +39,13 @@ spells["conquer"] = {
 } 
 spells["arise"] = {
    key="W", 
-   range=450+50, 
+   range=450, -- + 50?
    color=violet,
 
    delay=2.4, -- TODO
    speed=0,
-   radius=350, -- hacky
+   radius=250, -- hacky
+   noblock=true,
 
    base=0,
    bonus=function() 
@@ -59,7 +61,7 @@ spells["arise"] = {
    cost=40,
 } 
 spells["soldier"] = {
-   range=375, 
+   range=310, 
    base=0,
    bonus=function() 
             local dam = {50,55,60,65,70,75,80,85,90,95,100,110,120,130,140,150,160,170}
@@ -197,7 +199,7 @@ end
 -- SetAutoJungle(AutoJungle)
 
 local function onCreate(object)
-   PersistAll("soldier", object, "AzirSoldier")
+   PersistAll("soldier", object, "Azir_Base_P_Soldier_Ring")
 end
 
 local function onSpell(unit, spell)

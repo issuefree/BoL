@@ -2,7 +2,6 @@ champ conversion to BoL
 -	unknown but probably needs work (object verification or something)
 !	tested and needs work
 
-	-	azir.lua
 	--	draven.lua
 	-	elise.lua
 	-	gnar.lua
