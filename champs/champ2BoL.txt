@@ -3,7 +3,7 @@ champ conversion to BoL
 !	tested and needs work
 
 	-	azir.lua
-	-	draven.lua
+	--	draven.lua
 	-	elise.lua
 	-	gnar.lua
 	-	heimerdinger.lua
@@ -17,7 +17,6 @@ champ conversion to BoL
 	-	shyvana.lua
 	-	singed.lua
 	-	sion.lua
-	-	swain.lua
 	!	talon.lua
 	-	velkoz.lua
 	-	xinzhao.lua

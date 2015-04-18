@@ -10,8 +10,7 @@ require "issuefree/modules"
 pp("\nTim's Swain")
 
 InitAAData({ 
-   speed = 1600, windup=.15,
-   -- extraRange=-25,
+   speed = 1600,
    particles = {"swainBasicAttack_mis"}
    -- "swain_basicAttack_bird_cas", "swain_basicAttack_cas", 
 })
@@ -138,7 +137,7 @@ function Action()
    end
 
    if CanUse("decrepify") then
-      local target = GetWithBuff("decrepify", ENEMIES)[1]
+      local target = GetWithBuff("torment", ENEMIES)[1]
       if target and IsInRange("decrepify", target) then
          Cast("decrepify", target)
          PrintAction("Decrepify tormented", target)
@@ -182,7 +181,7 @@ end
 
 local function onCreate(object)
    PersistBuff("crow", object, "swain_demonForm_idle.troy")
-   PersistOnTargets("decrepify", object, "swain_torment_marker.troy", ENEMIES)
+   PersistOnTargets("torment", object, "swain_torment_marker.troy", ENEMIES)
 end
 
 local function onSpell(unit, spell)
