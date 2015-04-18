@@ -100,7 +100,7 @@ spells["gnar"] = {
    adBonus=.2,
    ap=.5,
    type="P",
-   knockback=590-425+75
+   knockback=425 --590-425+75
 } 
 
 spells["AA"].damOnTarget = 
@@ -131,7 +131,6 @@ function Run()
       spells["gnar"].key = "R"
 
       InitAAData({ 
-         windup=.4,
          particles = {} 
       })      
    else
@@ -143,8 +142,8 @@ function Run()
       spells["gnar"].key = "--"
 
       InitAAData({ 
-         windup=.2,
-         particles = {"Gnar_Base_BA_mis.troy"} 
+         speed=1400,
+         particles = {"Gnar_Base_BA_mis"} 
       })      
    end
 
