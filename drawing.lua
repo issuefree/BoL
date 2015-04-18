@@ -13,6 +13,7 @@ cyanB    = 0xFF00FFFF
 cyan   = 0x7500FFFF
 violetB  = 0xFFFF00FF
 violet = 0x75FF00FF
+violetD = 0x25FF00FF
 
 -- text colors
 yellowT = 0xFFFFFF00
@@ -38,7 +39,7 @@ function LineObject(source, length, angle, width, color)
 	local proj = ProjectionA(source, angle, length)
 	p2 = WorldToScreen(D3DXVECTOR3(proj.x, proj.y, proj.z))
 
-	table.insert(DRAWS, {DrawLine, {p1.x, p1.y, p2.x, p2.y, width, cyan}})
+	table.insert(DRAWS, {DrawLine, {p1.x, p1.y, p2.x, p2.y, width, color}})
 end
 
 function LineBetween(object1, object2, width, color)	
@@ -92,7 +93,7 @@ function Circle(target, radius, color, thickness)
 	color = color or yellow
 	radius = radius or GetWidth(target)
 
-	if radius > 1500 then
+	if radius > 2000 then
 		return
 	end
 
