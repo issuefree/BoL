@@ -458,6 +458,7 @@ function IsValid(target)
       return false
    end
    if target.dead or 
+      target.health == 0 or
       target.invulnerable or
       not target.valid or
       not target.visible or
@@ -1387,6 +1388,9 @@ function GetHPerc(target)
 end
 function GetMPerc(target)
    if not target then target = me end
+   if target.maxMana == 0 then
+      return 1
+   end
    return target.mana/target.maxMana
 end
 
@@ -1807,7 +1811,7 @@ function OnTick()
    CheckTrinket()
 
    for _,callback in ipairs(TICK_CALLBACKS) do
-      dlog(callback[1])
+      -- dlog(callback[1])
    	callback[2]()
    end
    dlog("end ontick")
@@ -2545,12 +2549,12 @@ end
 function WillCollide(s, t)
    local dist = GetDistance(s,t)
    local cp = Point(s)
-   cp = Projection(cp,t,25)
+   cp = Projection(cp,t,10)
    while GetDistance(s, cp) < dist do
       if IsWall(cp:vector()) then --or #getNearPoints(cp) >= 1 then
          return cp
       end
-      cp = Projection(cp,t,25)
+      cp = Projection(cp,t,10)
    end
    return nil
 end
