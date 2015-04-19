@@ -101,16 +101,13 @@ function Run()
 
 	-- auto stuff that should happen if you didn't do something more important
    if IsOn("lasthit") and Alone() then
-      if GetThreshMP("surge") <= 1 then
-         local target = KillMinion("surge", nil, nil, true)
-         if target and #GetInRange(target, 500, ENEMIES) <= 1 then
-            Cast("surge", target)
-            PrintAction("Surge for LH")
-            StartChannel(.25)
-            return true
-         end
+      local target = KillMinion("surge", "lowMana", nil, true)
+      if target and #GetInRange(target, 500, ENEMIES) <= 1 then
+         Cast("surge", target)
+         PrintAction("Surge for LH")
+         StartChannel(.25)
+         return true
       end
-
    end
 
    if HotKey() and CanAct() then
