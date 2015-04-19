@@ -11,7 +11,6 @@ pp("\nTim's LeBlanc")
 
 InitAAData({
    speed = 1700,
-   -- extraRange=-10,
    particles = {"leBlancBasicAttack_mis"}
 })
 
@@ -142,6 +141,9 @@ spells["chains"] = {
    width=80, -- reticle
    cost=80,
 } 
+spells["mimic"] = {
+   key="R"
+}
 spells["mimicMalice"] = copy(spells["malice"])
 spells["mimicMalice"].base = {100,200,300}
 spells["mimicMalice"].ap = .6
@@ -424,7 +426,6 @@ end
 
 function Action()
    -- TestSkillShot("chains")
-
    if oore:run() or
       doore:run() or
       harrass:run() or
@@ -580,14 +581,14 @@ function FollowUp()
 end
 
 local function onCreate(object)
-   Persist("pad", object, "Leblanc_displacement_blink_indicator.troy")
-   Persist("padM", object, "Leblanc_displacement_blink_indicator_ult")
+   Persist("pad", object, "LeBlanc_Base_W_return_indicator.troy")
+   Persist("padM", object, "LeBlanc_Base_RW_return_indicator.troy")
 
-   local m = PersistOnTargets("mark", object, "leBlanc_displace_AOE_tar.troy", ENEMIES, MINIONS, CREEPS)
+   local m = PersistOnTargets("mark", object, "LeBlanc_Base_W_aoe_impact", ENEMIES, MINIONS, CREEPS)
    if m then
       MarkTarget(m)
    end
-   local m = PersistOnTargets("markM", object, "leBlanc_displace_AOE_tar_ult.troy", ENEMIES, MINIONS, CREEPS)
+   local m = PersistOnTargets("markM", object, "LeBlanc_Base_RW_aoe_impact", ENEMIES, MINIONS, CREEPS)
    if m then
       MarkTarget(m)
    end

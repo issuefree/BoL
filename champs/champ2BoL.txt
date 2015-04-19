@@ -4,7 +4,6 @@ champ conversion to BoL
 !	tested and needs work
 
 	0	draven.lua
-	-	leblanc.lua
 	-	leesin.lua
 	0	renekton.lua
 	0	shyvana.lua
