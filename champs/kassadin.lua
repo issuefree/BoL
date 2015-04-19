@@ -6,7 +6,6 @@ print("Tim's Kassadin")
 SetChampStyle("caster")
 
 InitAAData({
-	windup=.2,
 	resets = {GetSpellInfo("W").name}
 })
 
@@ -74,11 +73,7 @@ lastRift = 0
 riftStacks = 0
 
 function Run()
-	-- if P.blade then
-	-- 	spells["AA"].bonus = 0
-	-- else
-		spells["AA"].bonus = GetSpellDamage("bladePassive")
-	-- end
+	spells["AA"].bonus = GetSpellDamage("bladePassive")
 
 	if time() - lastRift > spells["rift"].timeout then
 		riftStacks = 0
