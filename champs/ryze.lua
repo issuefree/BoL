@@ -2,8 +2,8 @@ require "issuefree/timCommon"
 require "issuefree/modules"
 
 InitAAData({ 
-   baseAttackSpeed = 0.625,
-   speed = 2400, windup=.25,
+   speed = 2400, 
+   extraWindup = .1,
    particles = {"ManaLeach_mis"}
 })
 
