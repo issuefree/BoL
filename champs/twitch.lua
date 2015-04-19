@@ -155,7 +155,7 @@ function Action()
    if CanUse("cask") then      
       local hits, kills, score = GetBestArea(me, "cask", 1, 1, ENEMIES)
       if #hits >= 2 or
-         ( #hits == 1 and not IsInAARange(hits[1]) )
+         ( #hits == 1 and not IsInAARange(hits[1]) and not FacingMe(hits[1]) )
       then
          CastXYZ("cask", GetCastPoint(hits, "cask"))
          PrintAction("Cask")
