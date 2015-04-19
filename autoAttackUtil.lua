@@ -261,7 +261,7 @@ function ResetAttack(spell)
          PrintAction("Reset", spell.name)
       end
    end
-   lastAttack = time() - getAADuration()
+   lastAttack = time() - getAADuration() + getWindup()
 end
 
 function CanAttack()
