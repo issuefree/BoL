@@ -9,7 +9,6 @@ require "issuefree/modules"
 pp("\nTim's Lee Sin")
 
 InitAAData({ 
-   windup=.25
 })
 
 
