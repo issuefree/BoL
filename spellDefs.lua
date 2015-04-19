@@ -706,6 +706,9 @@ SPELL_DEFS = {
 	},
 	Twitch = {
 		twitchvenomcask={cc=SLOW, nodamage=true},
+		twitchvenomcaskmissile={},
+		twitchhideinshadows={},
+		twitchexpunge={},
 	},
 	Udyr={
 
