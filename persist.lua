@@ -226,7 +226,7 @@ end
 
 function PersistOnTargets(label, object, name, ...)
    if object and find(object.name, name) then
-      local target = SortByDistance(GetInRange(object, 50, concat(...)), object)[1]
+      local target = SortByDistance(GetInRange(object, 150, concat(...)), object)[1]
       if target then
          if not pOn[label] then
             pOn[label] = {}
