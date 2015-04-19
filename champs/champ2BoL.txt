@@ -7,4 +7,3 @@ champ conversion to BoL
 	0	renekton.lua
 	0	shyvana.lua
 	!0	talon.lua
-	!	zilean.lua

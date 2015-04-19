@@ -19,11 +19,14 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["bomb"] = {
    key="Q", 
-   range=695, 
+   range=900-25, 
    color=violet, 
-   base={90,145,200,260,320}, 
+   base={75,115,165,230,300}, 
    ap=.9,
+   delay=2.5,
+   speed=22,   -- tss
    radius=325,
+   noblock=true,
    cost={60,65,70,75,80},
 }
 spells["rewind"] = {
@@ -32,13 +35,13 @@ spells["rewind"] = {
 }
 spells["warp"] = {
    key="E", 
-   range=700, 
+   range=550, 
    color=yellow, 
    cost=50,
 }
 spells["chrono"] = {
    key="R", 
-   range=780, 
+   range=900, 
    color=green, 
    cost={125,150,175},
 } 
@@ -94,6 +97,8 @@ function Run()
 end
 
 function Action()
+   -- TestSkillShot("bomb", nil, {"warning", "explo", "k", "Unrevealed"})
+
    if GetWeakestEnemy("bomb") then
       if GetCD("bomb") > 3 and CanUse("rewind") then
          Cast("rewind", me)
@@ -112,6 +117,12 @@ function Action()
 end
 
 function FollowUp()
+   if not CanUse("bomb") then
+      local target = GetMarkedTarget() or GetWeakestEnemy("AA")
+      if AutoAA(target) then
+         return true
+      end
+   end
    return false
 end
 
