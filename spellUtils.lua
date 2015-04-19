@@ -398,6 +398,7 @@ function GetSpellInfo(thing, hero)
    if iSpell then
       return hero:GetSpellData(iSpell)
    else
+      pp(thing)
       return nil
    end
 end
