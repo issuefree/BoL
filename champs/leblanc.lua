@@ -442,7 +442,7 @@ function Action()
 
          if CanUse("malice") then
             Cast("Malice execute", target)
-            PrintAction("Malice execute", target)
+            PrintAction("Malice execute", target, .5)
             return true
          end
          if CanUse("mimic") and mimic == "malice" then
