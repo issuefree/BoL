@@ -6,8 +6,7 @@ pp("Tim's Soraka")
 SetChampStyle("support")
 
 InitAAData({ 
-	speed = 1000,
-	extraRange=-10,
+	speed = 900,
 	particles = {"Soraka_Base_BA_mis"}
 })
 
@@ -17,13 +16,17 @@ spells["starcall"] = {
 	color=violet,    
 	base={70,110,150,190,230},
 	ap=.35,
-	delay=2.4+5-6,
-	speed=15, --?
+	delay=2.4, --?
+	speed=10,  --?
 	radius=300-25, -- reticle
 	innerRadius=100,
 	noblock=true,
 	cost={70,75,80,85,90},
 }
+
+spells["starcallPinpoint"] = copy(spells["starcall"])
+spells["starcallPinpoint"].radius = spells["starcall"].innerRadius
+
 spells["heal"] = {
 	key="W", 
 	range=550,  
@@ -33,6 +36,7 @@ spells["heal"] = {
 	type="H",
 	cost={20,25,30,35,40}
 }
+
 spells["equinox"] = {
 	key="E", 
 	range=925,  
@@ -62,6 +66,10 @@ AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
 function Run()
+	if CREEP_ACTIVE then
+		PrintState(0, "Creep Active")
+	end
+
    if StartTickActions() then
       return true
    end
@@ -112,10 +120,33 @@ function Action()
 	-- 	return true
 	-- end
 
-	-- TODO starcall less when I'm full health!?
-	if SkillShot("starcall") then
-		return true
-   end
+	if CanUse("starcall") then
+		if GetHPerc() > .75 then -- for harrass and damage
+			if GetMPerc() > .9 then -- throw em with abandon
+				if SkillShot("starcall") then
+					PrintAction("harass", nil, 1)
+					return true
+				end
+			elseif GetMPerc() > .66 then -- lower mana
+				if SkillShot("starcallPinpoint") then
+					PrintAction("PP", nil, 1)
+					return true
+			   end
+			end
+		else -- for healing
+			if GetMPerc() > GetHPerc() then -- I have more mana than health. hit something
+				if SkillShot("starcall") then
+					PrintAction("M > H", nil, 1)
+					return true
+				end
+			else -- I have more health than mana so be carefull but still hit stuff
+				if SkillShot("starcall", nil, nil, 3) then
+					PrintAction("< M", nil, 1)
+					return true
+				end
+			end
+		end
+	end
 
 	return false		
 end
@@ -196,7 +227,7 @@ function Wish()
 			for _,enemy in ipairs(ENEMIES) do
 				if GetDistance(ally, enemy) < 1000 then
 					-- PlaySound("Beep")
-					LineBetween(me, ally)
+					LineBetween(me, ally, 10, greenB)
 					-- return false
 				end
 			end
@@ -205,7 +236,7 @@ function Wish()
 	return false
 end
 
-function AutoJungle()
+local function AutoJungle()
    local creep = GetBiggestCreep(GetInRange(me, "AA", CREEPS))
    if AA(creep) then
       PrintAction("AA "..creep.charName)
