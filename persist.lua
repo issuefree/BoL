@@ -85,7 +85,7 @@ ccNames = {
    -- "leBlanc_shackle", 
    "LOC_Stun",
    "LOC_Suppress",
-   "LOC_Taunt",
+   -- "LOC_Taunt",
    "LuxLightBinding_tar.troy",
    "maokai_elementalAdvance_root_01", 
    "monkey_king_ult_unit_tar_02",
