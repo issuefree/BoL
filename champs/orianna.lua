@@ -10,7 +10,7 @@ require "issuefree/modules"
 pp("\nTim's Orianna")
 
 InitAAData({ 
-   speed = 1300, windup=.25,
+   speed = 1300,
    particles = {"OrianaBasicAttack_mis"} 
 })
 
@@ -42,9 +42,7 @@ spells["windup"] = {
    end
 }
 spells["AA"].bonus = function(target) 
-   if target then
-      return GetSpellDamage("windup", target, true) 
-   end
+   return GetSpellDamage("windup", target, true) 
 end
 
 spells["attack"] = {
@@ -91,19 +89,17 @@ spells["shockwave"] = {
    cost={100,125,150}
 } 
 
+local ball = me
 function Run()
+   ball = P.ball or me
+
    if StartTickActions() then
       return true
    end
 
-   -- auto stuff that always happen
-   -- if CheckDisrupt("shockwave") then
-   --    return true
-   -- end
-
-   -- if CastAtCC("attack") then
-   --    return true
-   -- end
+   if CastAtCC("attack") then
+      return true
+   end
 
    -- high priority hotkey actions, e.g. killing enemies
 	if HotKey() and CanAct() then
@@ -115,8 +111,7 @@ function Run()
 	-- auto stuff that should happen if you didn't do something more important
    if IsOn("lasthit") then
       if Alone() then
-         local ball = P.ball or me            
-         
+
          if CanUse("attack") then
             local hits, kills, score = GetBestLine(ball, "attack", .05, .95, GetInRange(me, "attack", MINIONS))
             if score > GetThreshMP("attack", .1, 1.5) then
@@ -155,8 +150,7 @@ end
 
 function Action()
    -- TestSkillShot("attack")
-   local ball = P.ball or me
-   
+
    if CanUse("attack") then
       local hits, kills, score = GetBestLine(ball, "attack", 1, 5, GetInRange(me, "attack", ENEMIES))
       if score >= 1 then

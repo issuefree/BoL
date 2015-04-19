@@ -6,7 +6,6 @@ champ conversion to BoL
 	0	draven.lua
 	-	leblanc.lua
 	-	leesin.lua
-	-	orianna.lua
 	0	renekton.lua
 	-	rumble.lua
 	0	shyvana.lua
