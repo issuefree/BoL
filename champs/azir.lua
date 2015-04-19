@@ -188,7 +188,7 @@ function FollowUp()
    return false
 end
 
--- function AutoJungle()
+--local function AutoJungle()
 --    local creep = GetBiggestCreep(GetInRange(me, "AA", CREEPS))
 --    local score = ScoreCreeps(creep)
 --    if AA(creep) then

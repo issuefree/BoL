@@ -142,7 +142,7 @@ function FollowUp()
    return false
 end
 
-function AutoJungle()
+local function AutoJungle()
    local creeps = GetInRange(me, "cull", CREEPS)
    if #creeps > 0 then
       Cast("cull", me)

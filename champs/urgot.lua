@@ -182,7 +182,7 @@ function FollowUp()
    return false
 end
 
-function AutoJungle()
+local function AutoJungle()
    local creep = GetBiggestCreep(GetInRange(me, "hunter", CREEPS))
    if CanUse("hunter") then
       local score = ScoreCreeps(creep)

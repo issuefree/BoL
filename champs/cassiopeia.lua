@@ -210,7 +210,7 @@ function FollowUp()
    return false
 end
 
-function AutoJungle()
+local function AutoJungle()
    if JungleAoE("miasma") then
       return true
    end

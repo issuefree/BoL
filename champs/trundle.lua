@@ -114,7 +114,7 @@ function FollowUp()
    return false
 end
 
-function AutoJungle()
+local function AutoJungle()
    if ModAAJungle("chomp") then
       return true
    end
