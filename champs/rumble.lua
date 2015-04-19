@@ -2,11 +2,6 @@ require "issuefree/timCommon"
 require "issuefree/modules"
 
 
--- Try to stick to one "action" per loop.
--- Action function should return 
---   true if they perform an action that takes time (most spells attacks)
---   false if no action or the spell takes no time
-
 pp("\nTim's Rumble")
 
 InitAAData({ 
@@ -193,7 +188,7 @@ end
 -- SetAutoJungle(AutoJungle)
 
 local function onCreate(object)
-   Persist("harpoon", object, "RumbleGrenadeMissile")
+   Persist("harpoon", object, "rumble_taze_mis")
    PersistBuff("overheating", object, "rumble_overheat")
 end
 
