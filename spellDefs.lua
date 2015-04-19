@@ -271,13 +271,13 @@ SPELL_DEFS = {
 	},
    Jax={
       jaxleapstrike={type="dash", ends="target", overShoot=-50},
-      jaycetotheskies={type="dash", ends="target"},
+      jaxcounterstrike={},
    },
 	Jayce = {
 		jayceaccelerationgate={},
 		jaycestancegth={},
 		jaycestancehtg={},
-		jaycetotheskies={},
+      jaycetotheskies={type="dash", ends="target"},
 		jaycestaticfield={},
 		jaycehypercharge={},
 		jaycethunderingblow={},
