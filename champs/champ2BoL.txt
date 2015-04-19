@@ -11,5 +11,4 @@ champ conversion to BoL
 	-	rumble.lua
 	0	shyvana.lua
 	!0	talon.lua
-	-	xinzhao.lua
 	!	zilean.lua

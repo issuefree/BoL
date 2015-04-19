@@ -61,11 +61,6 @@ spells["sweep"] = {
    cost=100
 } 
 
-spells["AA"].damOnTarget = 
-   function(target)
-      return 0
-   end
-
 function Run()
    if StartTickActions() then
       return true
