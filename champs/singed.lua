@@ -57,7 +57,7 @@ function Run()
          CastBuff("poison")
       end
       if not CanChargeTear() and VeryAlone() and #GetInRange(me, 500, CREEPS, MINIONS) == 0 then
-         Cast("poison", false)
+         CastBuff("poison", false)
       end
    end
 
