@@ -1,12 +1,6 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
-
--- Try to stick to one "action" per loop.
--- Action function should return 
---   true if they perform an action that takes time (most spells attacks)
---   false if no action or the spell takes no time
-
 pp("\nTim's Singed")
 
 AddToggle("move", {on=true, key=112, label="Move to Mouse"})
@@ -43,11 +37,6 @@ spells["potion"] = {
    key="R", 
    cost=150
 } 
-
-spells["AA"].damOnTarget = 
-   function(target)
-      return 0
-   end
 
 function Run()
    if StartTickActions() then
