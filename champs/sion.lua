@@ -10,9 +10,6 @@ require "issuefree/modules"
 pp("\nTim's Sion")
 
 InitAAData({ 
---    minMoveTime = 0,
-   -- extraRange=10,
---    particles = {"TeemoBasicAttack_mis", "Toxicshot_mis"} 
 })
 
 SetChampStyle("bruiser")
@@ -128,7 +125,7 @@ function Run()
             local minions = GetUnblocked("roar", me, MINIONS)
             local minion, score = SelectFromList( minions, 
                function(item)                  
-                  local hits = getRoarCollisions(item)
+                  local hits = getRoarCollisions(item, CREEPS, MINIONS, PETS, ENEMIES)
                   local score, kills = scoreHits("roarKB", hits, .05, .95)
                   local s1 = scoreHits("roar", {item}, .05, .95)
                   score = score + s1
@@ -172,7 +169,7 @@ function Action()
       local throws = GetUnblocked("roar", me, PETS, CREEPS, MINIONS)
       local throw, score = SelectFromList( throws, 
          function(item)                  
-            local hits = getRoarCollisions(item)
+            local hits = getRoarCollisions(item, ENEMIES)
             local score = scoreHits("roarKB", hits, 1, 5)
             return score            
          end )
@@ -208,17 +205,17 @@ end
 -- end   
 -- SetAutoJungle(AutoJungle)
 
-function getRoarCollisions(target)
+function getRoarCollisions(target, ...)
    return removeItems( GetInLine( target, 
                                   {width=GetWidth(target)}, 
                                   Projection(me, target, spells["roar"].range + spells["roar"].knockback), 
-                                  GetInRange(target, spells["roar"].range + spells["roar"].knockback, CREEPS, MINIONS, ENEMIES) ),
+                                  GetInRange(target, spells["roar"].range + spells["roar"].knockback, concat(...)) ),
                        {target} )
 end
 
 local function onCreate(object)
    PersistBuff("onslaught", object, "Sion_Base_R_Cas.troy")
-   PersistBuff("glory", object, "Passive_Skin")
+   PersistBuff("glory", object, "Sion_Base_Passive_Skin")
 
    if Persist("smashEnd", object, "Sion_Base_Q_Hit") then
       smashStartTime = nil
