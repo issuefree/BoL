@@ -1453,9 +1453,7 @@ end
 
 
 function GetWeakest(thing, list)
-   if not list or #list == 0 then
-      return nil
-   end
+   list = list or ENEMIES
 
    local type = "M"
    
@@ -2176,7 +2174,7 @@ function UseItem(itemName, target, force)
       itemName == "Blade of the Ruined King"
    then
       if not target or not IsInRange(item, target) then
-         target = GetWeakest(item)
+         target = GetWeakestEnemy(item)
       end
       if target then
          CastSpellTarget(slot, target)
