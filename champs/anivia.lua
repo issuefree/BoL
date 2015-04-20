@@ -10,6 +10,7 @@ pp(" - Storm for minion clear")
 
 InitAAData({
    speed = 1050,
+   extraWindup=.2,
    particles = {"cryoBasicAttack"}
 })
 
@@ -160,7 +161,7 @@ function Action()
    end
 
    if not P.orb and not P.orbTemp then
-      if SkillShot("orb") then
+      if SkillShot("orb", nil, nil, 3) then
          return true
       end
    end
