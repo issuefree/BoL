@@ -15,7 +15,7 @@ spells["cleaver"] = {
    base={80,130,180,230,280},
    type="M",
    width=60, -- patch notes
-   delay=2.3,  -- tss
+   delay=.23,  -- tss
    speed=20,
    showFireahead=true   
 }

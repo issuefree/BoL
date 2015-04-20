@@ -26,7 +26,7 @@ spells["bomb"] = {
    base={80,130,180,230,280},
    ap=.5,
    adBonus=.5,
-   delay=1.4,
+   delay=.14,
    speed=10,    -- Patch Notes
    radius=300,
    cost={60,70,80,90,100},
@@ -38,7 +38,7 @@ spells["valk"] = {
    color=yellow, 
    base={150,225,300,375,450}, 
    ap=1,
-   delay=2,
+   delay=.2,
    speed=12,
    width=200,
    cost=100,
@@ -67,7 +67,7 @@ spells["barrage"] = {
    ad={.2,.3,.4},
    scale=function() if bigOne then return 1.5 end end,
 
-   delay=.7,
+   delay=.07,
    speed=20,
    width=80,
 
