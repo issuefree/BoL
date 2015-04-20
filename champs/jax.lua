@@ -12,7 +12,8 @@ pp(" - lasthit with empower")
 
 
 InitAAData({
-	extraRange=-20,
+	-- extraRange=-20,
+	extraWindup=.1,
 	particles = {"RelentlessAssault_tar", "EmpowerTwoHit"},
 	attacks={"JaxBasicAttack", "JaxCritAttack", "jaxrelentless"},
 	resets = {GetSpellInfo("W").name}
@@ -94,7 +95,7 @@ function Run()
 
 	if P.counter and GetWeakestEnemy("counter") and CanUse("counter") then
 		Cast("counter", me)
-		PrintAction("Stun")
+		PrintAction("Stun", nil, .5)
 	end
 
 	if HotKey() and CanAct() then
@@ -179,7 +180,7 @@ function Action()
 
 	if GetWeakestEnemy("counter") and CanUse("counter") and not P.counter then
 		Cast("counter", me)
-		PrintAction("start counter")
+		PrintAction("start counter", nil, .5)
 	end
 
    local target = GetMarkedTarget() or GetMeleeTarget()
