@@ -24,7 +24,7 @@ spells["barrel"] = {
    base={80,120,160,200,240},
    ap=.6,
    delay=2,
-   speed=12,
+   speed=1200,
    radius=275,
    noblock=true,
    overShoot=50,
@@ -57,7 +57,7 @@ spells["cask"] = {
    base={200,300,400}, 
    ap=.7,
    delay=1.6,
-   speed=30,
+   speed=3000,
    radius=400,
    cost=100,
 }

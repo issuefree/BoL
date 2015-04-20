@@ -27,7 +27,7 @@ spells["binding"] = {
    base={80,135,190,245,300}, 
    ap=.9,
    delay=2,
-   speed=12,
+   speed=1200,
    width=90,
    cost={50,60,70,80,90}
 }

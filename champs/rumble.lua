@@ -55,7 +55,7 @@ spells["harpoon"] = {
    base={45,70,95,120,145}, 
    ap=.4,
    delay=2.4,  --tss
-   speed=20,   --tss
+   speed=2000,   --tss
    width=100,  --reticle
    scale=function(target)
       if dangerZone() then

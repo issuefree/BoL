@@ -40,7 +40,7 @@ function debugTick()
                speed = total/(#testShot.points-1)
                table.insert(testShotSpeeds, speed)
                pp("Speed: "..trunc(speed))
-               pp("\n -> "..trunc(sum(testShotDelays)/#testShotDelays).." "..trunc(sum(testShotSpeeds)/#testShotSpeeds/100).." <-")
+               pp("\n -> "..trunc(sum(testShotDelays)/#testShotDelays).." "..trunc(sum(testShotSpeeds)/#testShotSpeeds).." <-")
                testShot = nil
             end
          end

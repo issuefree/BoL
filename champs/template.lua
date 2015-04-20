@@ -35,7 +35,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 --    base={60,110,160,210,260}, 
 --    ap=.7,
 --    delay=2,
---    speed=12,
+--    speed=1200,
 --    width=80,
 --    cost={10,20,30,40,50}
 --} 
@@ -46,7 +46,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 --    base={60,110,160,210,260}, 
 --    ap=.7,
 --    delay=2,
---    speed=12,
+--    speed=1200,
 --    width=80,
 --    cost={10,20,30,40,50}
 --} 
@@ -57,7 +57,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 --    base={60,110,160,210,260}, 
 --    ap=.7,
 --    delay=2,
---    speed=12,
+--    speed=1200,
 --    width=80,
 --    cost={10,20,30,40,50}
 --} 
@@ -68,7 +68,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 --    base={60,110,160,210,260}, 
 --    ap=.7,
 --    delay=2,
---    speed=12,
+--    speed=1200,
 --    width=80,
 --    cost={10,20,30,40,50}
 --} 

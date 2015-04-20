@@ -27,7 +27,7 @@ spells["bomb"] = {
    ap=.5,
    adBonus=.5,
    delay=1.4,
-   speed=10,    -- Patch Notes
+   speed=1000,    -- Patch Notes
    radius=300,
    cost={60,70,80,90,100},
    noblock=true
@@ -39,7 +39,7 @@ spells["valk"] = {
    base={150,225,300,375,450}, 
    ap=1,
    delay=2,
-   speed=12,
+   speed=1200,
    width=200,
    cost=100,
    noblock=true
@@ -68,7 +68,7 @@ spells["barrage"] = {
    scale=function() if bigOne then return 1.5 end end,
 
    delay=.7,
-   speed=20,
+   speed=2000,
    width=80,
 
    useCharges=true,

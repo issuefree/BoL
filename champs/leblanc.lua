@@ -137,7 +137,7 @@ spells["chains"] = {
    base={40,65,90,115,140}, 
    ap=.5,
    delay=2.5, -- testskillshot
-   speed=17, -- testskillshot
+   speed=1700, -- testskillshot
    width=80, -- reticle
    cost=80,
 } 

@@ -34,7 +34,7 @@ spells["hunter"] = {
    ad=.85,
    type="P",
    delay=1.5, -- TestSkillShot
-   speed=16,
+   speed=1600,
    width=65,  -- reticle
    cost=40
 }
@@ -51,7 +51,7 @@ spells["charge"] = {
    adBonus=.6,
    type="P",
    delay=2.7,
-   speed=15,
+   speed=1500,
    noblock=true,
    radius=300,
    cost={50,55,60,65,70}

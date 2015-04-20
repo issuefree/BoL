@@ -55,7 +55,7 @@ spells["alias"] = {
 
    -- skill shots
    delay=2,                   -- delay between casting and the missile firing, must be set for skillshots
-   speed=12,                  -- speed of the missile, must be set for skillshots, 0 means it doesn't travel
+   speed=1200,                  -- speed of the missile, must be set for skillshots, 0 means it doesn't travel
    width=80,                  -- width of the missile for linear skill shots
    radius=150,                -- radius of the affect, usually for nonlinear skill shots
       -- usually you only use width or radius not both
@@ -695,11 +695,11 @@ function GetSpellFireahead(thing, target)
 
    local point, chance
 	if IsPointAoE(spell) then
-      point, chance = VP:GetCircularCastPosition(target, spell.delay/10, spell.radius, GetSpellRange(spell), spell.speed*100, me, IsBlockedSkillShot(thing))
+      point, chance = VP:GetCircularCastPosition(target, spell.delay/10, spell.radius, GetSpellRange(spell), spell.speed, me, IsBlockedSkillShot(thing))
    elseif IsConeAoE(spell) then
-      point, chance = VP:GetConeAOECastPosition(target, spell.delay/10, spell.cone, GetSpellRange(spell), spell.speed*100, me)
+      point, chance = VP:GetConeAOECastPosition(target, spell.delay/10, spell.cone, GetSpellRange(spell), spell.speed, me)
 	else --   if IsLinearSkillShot(spell) then
-      point, chance = VP:GetLineCastPosition(target, spell.delay/10, spell.width, GetSpellRange(spell), spell.speed*100, me, IsBlockedSkillShot(thing))
+      point, chance = VP:GetLineCastPosition(target, spell.delay/10, spell.width, GetSpellRange(spell), spell.speed, me, IsBlockedSkillShot(thing))
    end
    return point, chance
 end

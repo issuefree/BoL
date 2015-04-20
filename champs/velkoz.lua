@@ -53,7 +53,7 @@ spells["rift"] = {
    base={30,50,70,90,110}, 
    ap=.25,
    delay=3.5, -- guess
-   speed=15,  -- guess
+   speed=1500,  -- guess
    width=90,  -- reticle
    noblock=true,
 

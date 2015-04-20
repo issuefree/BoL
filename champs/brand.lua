@@ -30,7 +30,7 @@ spells["sear"] = {
    base={80,120,160,200,240}, 
    ap=.65,
    delay=2.4,  -- tss
-   speed=16,   -- tss
+   speed=1600,   -- tss
    width=80,   -- reticle
    cost=50
 }

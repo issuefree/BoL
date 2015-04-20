@@ -28,7 +28,7 @@ spells["bandage"] = {
   base={80,130,180,230,280}, 
   ap=.7,
   delay=1.6,
-  speed=20,
+  speed=2000,
   width=80,
   cost={80,90,100,110,120}
 }

@@ -33,7 +33,7 @@ spells["conquer"] = {
    base={65,85,105,125,145}, 
    ap=.5,
    delay=2.4,
-   speed=12,
+   speed=1200,
    width=80,
    cost=70,
 } 

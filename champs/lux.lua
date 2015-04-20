@@ -42,7 +42,7 @@ spells["binding"] = {
    base={60,110,160,210,260}, 
    ap=.7,
    delay=2.2,  -- testskillshot
-   speed=12,
+   speed=1200,
    width=80,
    cost={50,60,70,80,90},
    noblock=true  -- I don't really want to write a UnblockedBy2OrMoreEnemies...
@@ -54,7 +54,7 @@ spells["barrier"] = {
    base={80,105,130,155,180}, 
    ap=.35,
    delay=2,  -- testskillshot
-   speed=15,
+   speed=1500,
    width=80,
    cost=60
 }
@@ -65,7 +65,7 @@ spells["singularity"] = {
    base={60,105,150,195,240}, 
    ap=.6,
    delay=2, -- testskillshot
-   speed=12,
+   speed=1200,
    canCast=function() return GetSpellInfo("E").name ~= "luxlightstriketoggle" and not P.singularity end,
    noblock=true,
    radius=350-25,

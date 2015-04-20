@@ -45,7 +45,7 @@ spells["breath"] = {
    base={60,100,140,180,220}, 
    ap=.6,
    delay=2,
-   speed=15,
+   speed=1500,
    width=80,
    noblock=true
 } 
@@ -56,7 +56,7 @@ spells["binding"] = {
    base={175,300,425}, 
    ap=.7,
    delay=2,
-   speed=12,
+   speed=1200,
    width=150,
    noblock=true
 } 

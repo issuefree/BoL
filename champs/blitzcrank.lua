@@ -23,7 +23,7 @@ spells["grab"] = {
    base={80,135,190,245,300}, 
    ap=1,
    delay=2,
-   speed=17,
+   speed=1700,
    width=80,
    cost=100
 }
