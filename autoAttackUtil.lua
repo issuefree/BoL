@@ -21,7 +21,7 @@ require "issuefree/spellUtils"
 -- Particles used to be important but it is all timing based now. May as well throw them in...
 
       -- Ashe         = { speed = 2000, 
-      --                  windupScale = .5, -- how much attack speed affects windup. 0.5 would reduce windup by half as much as normal
+      --                  windupScale = 1, -- how much attack speed affects windup. 0.5 would reduce windup by half as much as normal
       --                  extraRange = 0,
       --                  extraWindup = 0, -- % to slow down windup. .1 means windups take 10% longer than reported
       --                  minMoveTime = 0,
@@ -89,7 +89,7 @@ function loadAAData()
    spells["AA"].baseAttackSpeed = .625
    spells["AA"].extraRange = 0
    spells["AA"].extraWindup = 0
-   spells["AA"].windupScale = .5 -- for safety
+   spells["AA"].windupScale = .75 -- for safety
    spells["AA"].windupVal = 3
    -- BoL may not have the bug which necessitates the minMoveTime
    spells["AA"].minMoveTime = 0
@@ -219,7 +219,7 @@ function aaTick()
    end
 
    if ModuleConfig.aaDebug then
-      PrintState(1, "APS:"..trunc(1/getAADuration(),2).."  WU:"..trunc(getWindup(),2) )
+      PrintState(1, "APS:"..trunc(1/getAADuration(),2).."  Dur: "..trunc(getAADuration(),2).."  WU:"..trunc(getWindup(),2) )
 
       if CanAttack() then
          setAttackState(0)
@@ -434,13 +434,21 @@ function onSpellAA(unit, spell)
       ResetAttack(spell)
    end
 
+   -- if IAttack(unit, spell) then
+   --    pp("Dist: "..GetDistance(spell.target))
+   --    pp("e2er: "..GetDistance(spell.target)-GetWidth(me)/2-GetWidth(spell.target)/2)
+   --    if IsInAARange(spell.target) then
+   --       spells["AA"].extraRange = spells["AA"].extraRange - 5
+   --       pp("hit in range -5:  "..GetAARange())
+   --    else
+   --       spells["AA"].extraRange = spells["AA"].extraRange + 5
+   --       pp("hit out of range +5:  "..GetAARange())
+   --    end
+   -- end
+
    if IAttack(unit, spell) then
-      if not spells["AA"].baseAttackSpeed then
          spells["AA"].baseAttackSpeed = 1 / (spell.animationTime * myHero.attackSpeed)
-      end
-      if not spells["AA"].windupVal then
          spells["AA"].windupVal = 1 / (spell.windUpTime * myHero.attackSpeed)
-      end
 
       if IsValid(spell.target) then
          lastAATarget = spell.target
