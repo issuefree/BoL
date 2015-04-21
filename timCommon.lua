@@ -1294,7 +1294,7 @@ function GetImpactTime(source, target, delay, speed)
    if speed then
       travelTime = dist/speed
    end
-   return time() + delay/1000 + travelTime
+   return time() + delay + travelTime
 end
 
 INCOMING_DAMAGE = {}
@@ -1337,8 +1337,7 @@ function WillKill(...)
                   speed = speed*10
                end
             end
-            -- err on the side of slow so I don't beat things there
-            local impactTime = GetImpactTime(me, target, getWindup()*1000/4, speed)
+            local impactTime = GetImpactTime(me, target, getWindup(), speed)
             local incdDam = 0
             for _,incd in ipairs(INCOMING_DAMAGE) do
                if incd.time < impactTime then

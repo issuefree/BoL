@@ -50,7 +50,7 @@ spells["siphon"] = {
    base={70,115,160,205,250}, 
    ap=.6,
    type="M",
-   delay=2,
+   delay=.2,
    speed=0,
    noblock=true,
 }

@@ -43,7 +43,7 @@ spells["hook"] = {
    base={80,120,160,200,240}, 
    ap=.5,
 
-   delay=5,       -- tss
+   delay=.5,       -- tss
    speed=1900,      -- tss
    width=65,      -- reticle
    

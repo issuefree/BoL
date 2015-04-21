@@ -52,7 +52,7 @@ spells["slice"] = {
    base={30,60,90,120,150}, 
    ad=.9,
    type="P",
-   delay=2,
+   delay=.2,
    speed=1200,
    width=75,
    scale=function() if GetMPerc(me) >= .5 then return 1.5 end end

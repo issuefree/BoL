@@ -28,7 +28,7 @@ spells["inc"] = {
    cost={70,80,90,100,110}, 
    ap=.85, 
    cone=50,  -- checked through DrawSpellCone aagainst the reticle
-   delay=2,
+   delay=.2,
    speed=0,
    noblock=true
 }
