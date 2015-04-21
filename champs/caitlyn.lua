@@ -9,6 +9,7 @@ pp(" - farming w/headshot clears with piltover")
 
 InitAAData({
    speed = 2500,
+   windupScale=.5,
    particles = {"caitlyn_Base_mis", "caitlyn_Base_passive"},
    attacks = {"attack", "CaitlynHeadshotMissile"}
 })
