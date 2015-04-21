@@ -89,7 +89,7 @@ function Run()
 
       if Alone() and CanUse("cleaver") then
          for _,minion in ipairs(GetUnblocked("cleaver", me, MINIONS)) do
-            if GetDistance(minion) > spells["agony"].range and 
+            if GetDistance(minion) > GetSpellRange("agony") and 
                WillKill("cleaver", minion)
             then
                CastXYZ("cleaver", minion)

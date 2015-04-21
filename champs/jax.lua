@@ -12,7 +12,6 @@ pp(" - lasthit with empower")
 
 
 InitAAData({
-	-- extraRange=-20,
 	extraWindup=.1,
 	particles = {"RelentlessAssault_tar", "EmpowerTwoHit"},
 	attacks={"JaxBasicAttack", "JaxCritAttack", "jaxrelentless"},
@@ -161,7 +160,7 @@ function Action()
    if CanUse("leap") then
 	   local target = GetMarkedTarget() or GetWeakestEnemy("leap")
 	   if target and
-	   	GetDistance(target) < spells["leap"].range and
+	   	GetDistance(target) < GetSpellRange("leap") and
 	   	not IsInAARange(target, me, 50)
 	   then
 	   	if CanUse("counter") and not P.counter then

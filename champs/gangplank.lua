@@ -106,8 +106,8 @@ function Action()
 
 	if not Alone() and CanUse("morale") then
 		local manaThresh = 1
-		manaThresh = manaThresh - .1*#GetInRange(me, spells["morale"].range, ALLIES)
-		manaThresh = manaThresh - .05*#GetInRange(me, spells["gun"].range, ENEMIES)
+		manaThresh = manaThresh - .1*#GetInRange(me, GetSpellRange("morale"), ALLIES)
+		manaThresh = manaThresh - .05*#GetInRange(me, GetSpellRange("gun"), ENEMIES)
 		
 		if GetMPerc(me) > manaThresh then
 			Cast("morale", me)

@@ -75,7 +75,7 @@ function Run()
    end
 
    if IsOn("crow") and P.crow and
-      Alone() and #GetInRange(me, spells["crow"].range+50, MINIONS, CREEPS) == 0 
+      Alone() and #GetInRange(me, GetSpellRange("crow")+50, MINIONS, CREEPS) == 0 
    then
       CastBuff("crow", false)
    end

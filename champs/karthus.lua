@@ -4,8 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Karthus")
 
 InitAAData({
-   speed = 1250, windup=.55,
-   -- extraRange=-15,
+   speed = 1250,
    particles = {"Karthus_Base_AA_tar", "Karthus_Base_AA_mis"},
 })
 
@@ -78,7 +77,7 @@ function Run()
    end   
 
    if CanUse("defile") and P.defile then
-      if #GetInRange(me, spells["defile"].range+50, ENEMIES, MINIONS, CREEPS, PETS) == 0 then
+      if #GetInRange(me, GetSpellRange("defile")+50, ENEMIES, MINIONS, CREEPS, PETS) == 0 then
          CastBuff("defile", false)
       end
    end
@@ -87,7 +86,7 @@ function Run()
       CanUse("lay") and GetMPerc(me) > .66 and
       Alone()
    then
-      if #GetInRange(me, spells["defile"].range+50, ENEMIES, MINIONS, CREEPS) == 0 then
+      if #GetInRange(me, GetSpellRange("defile")+50, ENEMIES, MINIONS, CREEPS) == 0 then
          CastXYZ("lay", GetCastPoint(mousePos, "lay"))
          return true
       end
