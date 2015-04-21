@@ -40,16 +40,16 @@ end
 
 local minionAAData = {
    basic={
-      delay=.400,
+      delay=400,
    },
    caster={
-      delay=.484, speed=650
+      delay=484, speed=650
    },
    mech={
-      delay=.365, speed=1200
+      delay=365, speed=1200
    },
    turret={
-      delay=.150, speed=1200
+      delay=150, speed=1200
    },
 }
 

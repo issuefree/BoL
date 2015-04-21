@@ -32,7 +32,7 @@ spells["conquer"] = {
    color=yellow, 
    base={65,85,105,125,145}, 
    ap=.5,
-   delay=.24,
+   delay=2.4,
    speed=12,
    width=80,
    cost=70,
@@ -42,7 +42,7 @@ spells["arise"] = {
    range=450, -- + 50?
    color=violet,
 
-   delay=.24, -- TODO
+   delay=2.4, -- TODO
    speed=0,
    radius=250, -- hacky
    noblock=true,
