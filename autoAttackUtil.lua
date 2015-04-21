@@ -125,7 +125,7 @@ end
 
 function getWindup()
    local effAs = 1+((me.attackSpeed - 1)*spells["AA"].windupScale)
-   return (1 / (effAs * spells["AA"].windupVal))*(1+spells["AA"].extraWindup)
+   return math.max(.15, (1 / (effAs * spells["AA"].windupVal))*(1+spells["AA"].extraWindup))
 end
 
 function OrbWalk()
