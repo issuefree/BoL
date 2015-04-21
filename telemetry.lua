@@ -506,7 +506,6 @@ function IsInE2ERange(thing, target, source, extraRange)
    extraRange = extraRange or 0
 
    -- if I'm facing away from my target take downt he range a touch so I don't do weird orbwalks
-   if IsMe(source) and ApproachAngle(me, target) > 60 then
       extraRange = extraRange - 20
    else
       extraRange = extraRange + 20
