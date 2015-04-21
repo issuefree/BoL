@@ -17,7 +17,6 @@ pp("\nTim's Thresh")
 
 InitAAData({
    speed=1000, --??
-   -- extraRange=15,
 })
 
 local souls = 0

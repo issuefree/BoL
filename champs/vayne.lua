@@ -17,7 +17,6 @@ pp("\nTim's Vayne")
 
 InitAAData({
    speed = 2000,
-   -- extraRange=-10,
    resets={GetSpellInfo("Q").name},
    particles = {"vayne_basicAttack_mis.troy", "vayne_critAttack_mis.troy", "vayne_ult_mis.troy"}
 })

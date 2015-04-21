@@ -5,7 +5,6 @@ pp("\nTim's Sona")
 
 InitAAData({ 
    speed = 1600,
-   -- extraRange=-20,
    particles = {"Sona_Base_BA", "PowerChord_mis"}
 })
 

@@ -7,8 +7,6 @@ SetChampStyle("marksman")
 
 InitAAData({ 
    speed = 2000,
-   minMoveTime=0,
-   -- extraRange=-25,
    particles = {"Ezreal_basicattack_mis", "Ezreal_critattack_mis"}
 })
 

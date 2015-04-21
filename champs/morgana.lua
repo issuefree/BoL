@@ -6,8 +6,7 @@ pp(" - Auto shield CC")
 pp(" - Soil CC'd enemies")
 
 InitAAData({
-   speed = 1600, windup=.15,
-   extraRange=-10,
+   speed = 1600,
    particles = {"FallenAngelBasicAttack_mis", "FallenAngelBasicAttack2_mis"}
 })
 

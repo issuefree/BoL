@@ -124,7 +124,6 @@ function Run()
 
    if isCougar then
       InitAAData({ -- cougar
-         extraRange=-10,
          resets = {GetSpellInfo("Q").name},   
       })
       spells["jav"].key = "--"

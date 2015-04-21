@@ -5,9 +5,7 @@ pp("\nTim's Teemo")
 
 InitAAData({ 
 	speed = 1300, 
-	minMoveTime = 0,
-	-- extraRange = -20,
-	particles = {"TeemoBasicAttack_mis", "Toxicshot_mis"},
+	particles = {"TeemoBasicAttack_mis", "Teemo_Base_E_mis"},
 	resets={GetSpellInfo("Q").name} -- wiki says so
 })
 
