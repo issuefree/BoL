@@ -78,7 +78,7 @@ elseif GetSpellInfo("F").name == "SummonerHeal" then
 end
 
 spells["AA"] = {
-   range=function() return me.range end,
+   range=GetAARange,
    rangeType="e2e",
    extraRange=0,
    base={0}, 
@@ -1332,12 +1332,9 @@ function WillKill(...)
                speed = 1500
                pp("No speed set "..thing)
             end
-            if not IsMelee(me) then
-               while speed < 1000 do
-                  speed = speed*10
-               end
-            end
-            local impactTime = GetImpactTime(me, target, getWindup(), speed)
+            -- getWindup()/2 so we fire a little later. better to chase a shot by a bit than lead it.
+            -- also seems like any fudge so we don't clip will get accounted for here
+            local impactTime = GetImpactTime(me, target, getWindup()/2, speed)
             local incdDam = 0
             for _,incd in ipairs(INCOMING_DAMAGE) do
                if incd.time < impactTime then
