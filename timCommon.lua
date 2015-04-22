@@ -1294,7 +1294,7 @@ function GetImpactTime(source, target, delay, speed)
    if speed then
       travelTime = dist/speed
    end
-   return time() + delay/1000 + travelTime
+   return time() + delay + travelTime
 end
 
 INCOMING_DAMAGE = {}
