@@ -193,12 +193,15 @@ function ClearState(state)
    printStates[state+1] = ""
 end
 
-function find(source, target)
+function find(source, target, exact)
    if not source or not target then
       return false
    end
    if string.len(target) == 0 then
       return false
+   end
+   if exact then
+      return source == target
    end
    return string.find(string.lower(source), string.lower(target))
 end

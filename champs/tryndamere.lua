@@ -185,7 +185,7 @@ end
 
 local function onCreate(object)
    PersistBuff("undying", object, "UndyingRage_buf.troy")
-   PersistBuff("spin", object, "Slash.troy")
+   PersistBuff("spin", object, "Slash.troy", 250, true)
 end
 
 local function onSpell(unit, spell)
