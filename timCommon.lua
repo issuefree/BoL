@@ -39,33 +39,7 @@ function OnUnload()
 	LOG_FILE:close()
 end
 
--- send = require "Common/SendInput"
-
--- require "Common/SKeys"
-
-
--- function CanAct()
---    return yayo.CanMove()
--- end
--- function CanMove()
---    return yayo.CanMove()
--- end
--- function CanAttack()
---    return yayo.CanAttack()
--- end
-
--- SetScriptTimer(10)
-
-FRAME = time()
-
 CREEP_ACTIVE = false
-
--- if GetSpellInfo("Q").level == 0 and
---    GetSpellInfo("W").level == 0 and
---    GetSpellInfo("E").level == 0
--- then
---    me:MoveTo(me.x, me.z)
--- end
 
 healSpell = {range=700+GetWidth(me), color=green, summoners=true}
 
@@ -1678,40 +1652,57 @@ function BlockingMove(move_dest)
 
 end
 
-TICK_DELAY = .05
 -- Common stuff that should happen every time
 
 lastObjectName = {}
-local lastObjectCheck = time()
+lastObjectIndex = 1
+
+desiredFrameRate = 50
+-- maxTimeToCycle = .5
+desiredFrameTime = 1/desiredFrameRate
+objectsPerCycle = 10000
+
 local tt = time()
-
-
+frames = {}
 function OnTick()
-   -- if time() - loadtime < 1 then
-   --    return
-   -- end
-   FRAME = time()
-   Text(""..trunc(1/(time()-tt),1), 1800, 60, 0xFFCCEECC);
-   TICK_DELAY = time()-tt
+   table.insert(frames, time()-tt)
    tt = time()
-
-   if time() - lastObjectCheck > .25 then   
-      for i = 1, objManager.iCount, 1 do
-         local object = objManager:GetObject(i)
-         if object and object.valid and object.name then
-            if lastObjectName[i] == object.name then
-               -- existing object
-            else
-               lastObjectName[i] = object.name
-               doCreateObj(object)
-            end
-         else
-            lastObjectName[i] = nil
-         end
-      end
-      lastObjectCheck = time()
+   while #frames > 10 do
+      table.remove(frames, 1)
    end
 
+   local frameTime = sum(frames)/#frames
+   local fps = 1/frameTime
+
+   if fps > desiredFrameRate then
+      objectsPerCycle = math.min(objectsPerCycle+50, 10000)
+   else
+      objectsPerCycle = math.max(objectsPerCycle-50, 500)
+   end
+
+   local cycleTime = (objManager.iCount / objectsPerCycle)*frameTime
+
+   Text(""..trunc(fps,1), 1800, 60, 0xFFCCEECC);
+   Text(""..trunc(objectsPerCycle,1), 1800, 75, 0xFFCCEECC);
+   Text(""..trunc(cycleTime,1), 1800, 90, 0xFFCCEECC);
+
+   for i = lastObjectIndex, math.min(lastObjectIndex+objectsPerCycle, objManager.iCount), 1 do
+      local object = objManager:GetObject(i)
+      if object and object.valid and object.name then
+         if lastObjectName[i] == object.name then
+            -- existing object
+         else
+            lastObjectName[i] = object.name
+            doCreateObj(object)
+         end
+      else
+         lastObjectName[i] = nil
+      end
+   end
+   lastObjectIndex = lastObjectIndex + objectsPerCycle
+   if lastObjectIndex >= objManager.iCount then
+      latObjectIndex = 1
+   end
 
    for _,spell in pairs(spells) do
       if spell.key == "Q" or
