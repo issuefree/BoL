@@ -23,7 +23,7 @@ spells["jav"] = {
    cost={50,60,70,80,90},
    width=40,  -- from patch notes
    delay=.15,  -- testskillshot
-   speed=12.5,  -- testskillshot
+   speed=1250,  -- testskillshot
    cd=6
 }
 spells["takedown"] = {

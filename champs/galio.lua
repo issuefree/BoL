@@ -49,7 +49,7 @@ spells["gust"] = {
    base={60,105,150,195,240}, 
    ap=.5,
    delay=.24, -- TestSkillShot
-   speed=12.5, 
+   speed=1250, 
    width=125, -- reticle
    cost={70,75,80,85,90},
 } 

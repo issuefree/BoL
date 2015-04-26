@@ -34,7 +34,7 @@ spells["spittle"] = {
    ap=.5,
    cost=60,
    delay=.12,
-   speed=17.5,
+   speed=1750,
    width=80,
    cost=60
 }
