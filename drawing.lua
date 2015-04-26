@@ -91,7 +91,7 @@ function Circle(target, radius, color, thickness)
 
 	thickness = thickness or 1
 	color = color or yellow
-	radius = radius or GetWidth(target)
+	radius = radius or GetWidth(target)/2
 
 	if radius > 2000 then
 		return
