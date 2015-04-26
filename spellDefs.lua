@@ -249,6 +249,7 @@ SPELL_DEFS = {
 		heimerdingerw={key="W"},
 		heimerdingere={key="E", range=950, radius=225, time=2, ss=true, show=true, isline=false, cc=STUN},
 		heimerdingerr={key="R"},
+		heimerdingereult={key="E"},
 	},
 	Irelia = {
 		ireliatranscendentblades={range=1200, radius=80, time=0.8, ss=true, isline=true},
@@ -260,6 +261,7 @@ SPELL_DEFS = {
 		howlinggale={range=1700, radius=100, time=3, ss=true, show=true, isline=true, dodgeByObject=true},
 		sowthewind={cc=SLOW},
       reapthewhirlwind={type="stall"},
+      eyeofthestorm={},
 	},
 	JarvanIV = {
 		jarvanivdragonstrike={range=770, radius=70, time=1, ss=true, isline=true, cc=KNOCK, physical=true},
@@ -607,7 +609,10 @@ SPELL_DEFS = {
 		shyvanaimmolatedragon={},
 	},
 	Sion = {
-		sionq={type="stall"},
+		sionq={key="Q", type="stall"},
+		sionw={key="W"},
+		sione={key="E"},
+		sionpassivespeed={},
   	},
 	Sivir = {
 		sivirq={key="Q", range=1000, radius=100, time=1, ss=true, isline=true, physical=true},
@@ -865,7 +870,8 @@ function GetSpellDef(name, spellName)
 			end
 			pp("No def for "..name)
 			pp(string.lower(spellName).."={},")
-			PlaySound("Beep")
+			print("Spell Def needed: "..name.." "..spellName)
+			-- PlaySound("Beep")
 			table.insert(ignoredSpells, spellName)
 		end
 	else
