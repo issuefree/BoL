@@ -7,7 +7,8 @@ pp("\nTim's Lulu")
 SetChampStyle("support")
 
 InitAAData({
-	speed = 2500,
+	speed = 1450,
+	extraWindup=.2,
 	particles = {"LuluBasicAttack"}
 })
 
@@ -25,15 +26,13 @@ spells["lance"] = {
 	color=violet, 
 	base={80,125,170,215,260}, 
 	ap=.5,
-	delay=2.6, -- testskillshot
-	speed=15, -- testskillshot
+	delay=.26, -- testskillshot
+	speed=1500, -- testskillshot
 	width=50,
 	noblock=true,
 	cost={60,65,70,75,80}
 }
-spells["doubleLance"] = copy(spells["lance"])
-spells["doubleLance"].base = mult(spells["lance"].base, 2)
-spells["doubleLance"].ap = spells["lance"].ap * 2
+spells["pixLance"] = copy(spells["lance"])
 
 spells["whimsy"] = {
 	key="W", 
@@ -69,6 +68,7 @@ AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
 function Run()
+	P.pix = P.pix or me
    if StartTickActions() then
       return true
    end
@@ -111,44 +111,44 @@ function Run()
 
 	if IsOn("lasthit") then
 		if Alone() then
-			local killsNeeded = 2
-			if KillMinionsInLine("lance", killsNeeded) then
-				return true
+			-- not last hitting with pix because her auto attack is blocked and slow and probably not worth the effort
+
+			if CanUse("lance") then
+				local myHits,myKills,myScore    = GetBestLine(me, "lance", .05, .95, MINIONS)
+				local pixHits,pixKills,pixScore = GetBestLine(P.pix, "lance", .05, .95, MINIONS)
+
+				local hits = nil
+				local kills = nil
+				local score = nil
+				local lanceSource = nil
+				local spellName = "lance"
+
+				if myScore >= pixScore then
+					if myScore > GetThreshMP("lance", .1, 1.5) then
+						hits = myHits
+						kills = myKills
+						score = myScore
+						spellName = "lance"
+						lanceSource = "me"
+					end
+				else
+					if pixScore > GetThreshMP("lance", .1, 1.5) then
+						hits = pixHits
+						kills = pixKills
+						score = pixScore
+						spellName = "pixLance"
+						lanceSource = "pix"
+					end
+				end
+				if hits then
+			      local point = GetCastPoint(hits, "lance")
+			      CastXYZ("lance", point)
+			      AddWillKill(kills, spellName)
+			      PrintAction("Lance from "..lanceSource.." for LH", score)
+			      return true
+			  	end
 			end
 
-			-- weird angles on pix and since I can't detect pix makes creative stuff hard.
-			-- no longer true. can do creative stuff
-
-			-- if IsMe(P.pix) or not P.pix then
-			-- 	if KillMinionsInLine("doubleLance", 2) then
-			-- 		return true
-			-- 	end
-			-- else
-			-- 	local myHits,myKills = GetBestLine(me, "lance", .5, .5, MINIONS)
-			-- 	local pixHits = GetInLine(P.pix, "lance", GetAngularCenter(myHits), MINIONS)
-			-- 	local pixKills = GetKills("lance", pixHits)
-
-			-- 	-- things both lances hit but neither killed
-			-- 	local bothHits = GetIntersection(myHits, pixHits)
-			-- 	bothHits = RemoveFromList(bothHits, myKills)
-			-- 	bothHits = RemoveFromList(bothHits, pixKills)
-
-			-- 	pixKills = RemoveFromList(pixKills, myKills)
-			-- 	local allKills = concat(myKills, pixKills)				
-
-			-- 	for _,hit in ipairs(bothHits) do
-			-- 		if WillKill("doubleLance", hit) then
-			-- 			table.insert(allKills, hit)
-			-- 		end
-			-- 	end
-
-			-- 	if #allKills >= killsNeeded then
-			-- 		CastXYZ("lance", GetAngularCenter(myHits))
-			-- 		AddWillKill(allKills, "lance")
-			-- 		PrintAction("Lance for LH", #allKills)
-			-- 		return true
-			-- 	end
-			-- end
 		end
 	end
 
@@ -178,12 +178,25 @@ function Action()
 		return true
 	end
 
-	if IsMe(P.pix) or not P.pix then
-	   local target = GetMarkedTarget() or GetWeakestEnemy("AA")
-	   if AutoAA(target) then
-	      return true
-	   end
+	-- pix lance
+	if CanUse("lance") then
+		local enemies = SortByHealth(GetInRange(P.pix, "lance", ENEMIES), "lance")
+		for _,e in ipairs(enemies) do
+			local point, chance = GetSpellFireahead("lance", e, P.pix)
+			if (GetMPerc() > .66 and chance >= 1) or
+				chance >= 2 
+			then
+				CastXYZ("lance", point)
+				PrintAction("Lance from Pix", e)
+				return true
+			end
+		end
 	end
+
+   local target = GetMarkedTarget() or GetWeakestEnemy("AA")
+   if AutoAA(target) then
+      return true
+   end
 
 	return false
 end
