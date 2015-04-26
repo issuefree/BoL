@@ -836,6 +836,8 @@ SPELL_DEFS = {
 		ziggsr={range=5300, radius=550, time=3, ss=true, isline=false},
 	},
 	Zilean = {
+		zileanq={},
+		rewind={},
 		timewarp={},
 		timebomb={},
 	},
