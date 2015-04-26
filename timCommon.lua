@@ -285,7 +285,6 @@ function doCreateObj(object)
       return
    end
 
-
    createForPersist(object)
 
    for spell, info in pairs(DISRUPTS) do
@@ -433,7 +432,6 @@ function IsValid(target)
    end
    if target.dead or 
       target.health == 0 or
-      target.invulnerable or
       not target.valid or
       not target.visible or      
       target.name == "" or target.charName == "" or
@@ -1307,13 +1305,8 @@ function WillKill(...)
                speed = 1500
                pp("No speed set "..thing)
             end
-            if not IsMelee(me) then
-               while speed < 1000 do
-                  speed = speed*10
-               end
-            end
             -- err on the side of slow so I don't beat things there
-            local impactTime = GetImpactTime(me, target, getWindup()*1000/4, speed)
+            local impactTime = GetImpactTime(me, target, getWindup()/4, speed)
             local incdDam = 0
             for _,incd in ipairs(INCOMING_DAMAGE) do
                if incd.time < impactTime then
@@ -1668,10 +1661,6 @@ local startTime = time()
 local tt = time()
 frames = {.1}
 function OnTick()
-   if time() - startTime < .5 then
-      return
-   end
-
    table.insert(frames, time()-tt)
    tt = time()
    while #frames > 10 do
@@ -1693,22 +1682,24 @@ function OnTick()
    Text(""..trunc(objectsPerCycle,1), 1800, 75, 0xFFCCEECC);
    Text(""..trunc(cycleTime,1), 1800, 90, 0xFFCCEECC);
 
-   for i = lastObjectIndex, math.min(lastObjectIndex+objectsPerCycle, objManager.iCount), 1 do
-      local object = objManager:GetObject(i)
-      if object and object.valid and object.name then
-         if lastObjectName[i] == object.name then
-            -- existing object
+   if time() - startTime > .5 then
+      for i = lastObjectIndex, math.min(lastObjectIndex+objectsPerCycle, objManager.iCount), 1 do
+         local object = objManager:GetObject(i)
+         if object and object.valid and object.name then
+            if lastObjectName[i] == object.name then
+               -- existing object
+            else
+               lastObjectName[i] = object.name
+               doCreateObj(object)
+            end
          else
-            lastObjectName[i] = object.name
-            doCreateObj(object)
+            lastObjectName[i] = nil
          end
-      else
-         lastObjectName[i] = nil
       end
-   end
-   lastObjectIndex = lastObjectIndex + objectsPerCycle
-   if lastObjectIndex >= objManager.iCount then
-      lastObjectIndex = 1
+      lastObjectIndex = lastObjectIndex + objectsPerCycle
+      if lastObjectIndex >= objManager.iCount then
+         lastObjectIndex = 1
+      end
    end
 
    for _,spell in pairs(spells) do
