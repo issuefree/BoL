@@ -1,1 +1,2 @@
-Check on karthus validity when dead
+I'm clipping auto attacks when things leave range after I've tried to attack.
+	This happens especially for melee.
