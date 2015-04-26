@@ -100,7 +100,7 @@ function PrintAction(str, target, timeout)
       return
    end
    if str ~= lastAction and not ListContains(str, lastActions) then
-      local ttl = math.floor((time() - lastActionTime)*100)/100
+      local ttl = trunc(time() - lastActionTime, 2)
       local out = " # "..str
       if target then
          if type(target) == "string" or
@@ -435,8 +435,9 @@ function IsValid(target)
       target.health == 0 or
       target.invulnerable or
       not target.valid or
-      not target.visible or
-      target.name == "" or target.charName == ""
+      not target.visible or      
+      target.name == "" or target.charName == "" or
+      HasBuff("invulnerable", target)
    then
       return false
    end
@@ -1662,9 +1663,15 @@ desiredFrameRate = 50
 desiredFrameTime = 1/desiredFrameRate
 objectsPerCycle = 10000
 
+local startTime = time()
+
 local tt = time()
-frames = {}
+frames = {.1}
 function OnTick()
+   if time() - startTime < .5 then
+      return
+   end
+
    table.insert(frames, time()-tt)
    tt = time()
    while #frames > 10 do
@@ -1701,7 +1708,7 @@ function OnTick()
    end
    lastObjectIndex = lastObjectIndex + objectsPerCycle
    if lastObjectIndex >= objManager.iCount then
-      latObjectIndex = 1
+      lastObjectIndex = 1
    end
 
    for _,spell in pairs(spells) do
@@ -1732,12 +1739,6 @@ function OnTick()
    end
 
    for _,spell in pairs(spells) do
-
-      -- if spell.delay and spell.speed then
-      --    for _,enemy in ipairs(ENEMIES) do
-      --       TrackSpellFireahead(spell, enemy)
-      --    end
-      -- end
 
       if spell.useCharges and GetSpellLevel(spell.key) > 0 then
          if not spell.lastRecharge then
