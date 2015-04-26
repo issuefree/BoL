@@ -256,7 +256,7 @@ function CastFireahead(thing, target)
 
    local spell = GetSpell(thing)
    if not spell.speed then spell.speed = 2000 end
-   if not spell.delay then spell.delay = 1.6 end
+   if not spell.delay then spell.delay = .25 end
 
    local point = GetSpellFireahead(spell, target)
    if spell.overShoot then
@@ -695,11 +695,11 @@ function GetSpellFireahead(thing, target)
 
    local point, chance
 	if IsPointAoE(spell) then
-      point, chance = VP:GetCircularCastPosition(target, spell.delay, spell.radius, GetSpellRange(spell), spell.speed*100, me, IsBlockedSkillShot(thing))
+      point, chance = VP:GetCircularCastPosition(target, spell.delay, spell.radius, GetSpellRange(spell), spell.speed, me, IsBlockedSkillShot(thing))
    elseif IsConeAoE(spell) then
-      point, chance = VP:GetConeAOECastPosition(target, spell.delay, spell.cone, GetSpellRange(spell), spell.speed*100, me)
+      point, chance = VP:GetConeAOECastPosition(target, spell.delay, spell.cone, GetSpellRange(spell), spell.speed, me)
 	else --   if IsLinearSkillShot(spell) then
-      point, chance = VP:GetLineCastPosition(target, spell.delay, spell.width, GetSpellRange(spell), spell.speed*100, me, IsBlockedSkillShot(thing))
+      point, chance = VP:GetLineCastPosition(target, spell.delay, spell.width, GetSpellRange(spell), spell.speed, me, IsBlockedSkillShot(thing))
    end
    return point, chance
 end
