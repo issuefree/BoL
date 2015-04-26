@@ -599,6 +599,7 @@ end
 function MoveToTarget(t)
    if CanMove() then
       local pos = VP:GetPredictedPos(t, .5, t.ms, me, false)
+      if GetDistance(pos) > 150 then
          me:MoveTo(pos.x,pos.z)
       end
       PrintAction("MTT", t, 1)
