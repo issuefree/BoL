@@ -167,10 +167,6 @@ end
 
 
 function Action()
-   if CanUse("blades") and CanUse("sinister") and CanUse("shunpo") then
-      UseItem("Deathfire Grasp", GetWeakestEnemy("blades"))
-   end
-   
    -- blades and sinister are no brainers   
    if CanUse("blades") then
       local target = GetMarkedTarget() or GetWeakestEnemy("blades")

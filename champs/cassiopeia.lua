@@ -158,8 +158,6 @@ function Action()
    if CanUse("fang") then
       local target = GetWeakest("fang", GetWithBuff("poison", GetInRange(me, "fang", ENEMIES)))
       if target then
-         UseItem("Deathfire Grasp", target)
-
          Cast("fang", target)
          PrintAction("Fang poisoned", target)
          return true

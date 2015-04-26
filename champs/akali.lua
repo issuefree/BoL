@@ -115,7 +115,6 @@ function Action()
    if CanUse("mark") then
       local target = GetMarkedTarget() or GetWeakestEnemy("mark")
       if target and not HasBuff("mark", target) then
-         UseItem("Deathfire Grasp", target)
          Cast("mark", target)
          PrintAction("Mark", target)
          return true
@@ -134,7 +133,6 @@ function Action()
       if target and 
          ( not IsInRange("AA", target) or ( IsOn("ultSpam") and JustAttacked() ) )
       then
-         UseItem("Deathfire Grasp", target)
          Cast("dance", target)
          PrintAction("Dance", target)
          return true

@@ -107,9 +107,6 @@ function Action()
       end
    end
 
-   if CanUse("bomb") then
-      UseItem("Deathfire Grasp", GetWeakestEnemy("bomb"))
-   end
    if CastBest("bomb") then
       return true
    end

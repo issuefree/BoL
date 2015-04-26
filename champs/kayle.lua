@@ -109,7 +109,6 @@ end
 
 function Action()
    if CastBest("reckoning") then
-      UseItem("Deathfire Grasp", GetWeakestEnemy("reckoning"))
       return true
    end
 

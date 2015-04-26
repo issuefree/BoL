@@ -145,7 +145,6 @@ function Action()
 	if CanUse("scream") then
 		local target = GetMarkedTarget() or GetWeakestEnemy("scream")
 		if target then
-			UseItem("Deathfire Grasp", target)
 			Cast("scream", target)
 			PrintAction("Scream", target)
 			return true

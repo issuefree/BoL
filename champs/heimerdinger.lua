@@ -161,7 +161,6 @@ function Action()
       --       if not P.upgrade then
       --          Cast("upgrade", me)
       --       end
-      --       UseItem("Deathfire Grasp", target)
       --       CastFireahead("rockets", target)
       --       PrintAction("Rockets (UPGRADE)", target)
       --       return true

@@ -12,7 +12,7 @@ local SILENCE = 1
 
 ignoredSpells = {
 	"attack", "recall", "potion", "summoner", "IronStylus", "item", "ZhonyasHourglass",
-	"DeathfireGrasp", "totem", "ward", "BilgewaterCutlass", "ItemSwordOfFeastAndFamine",
+	"totem", "ward", "BilgewaterCutlass", "ItemSwordOfFeastAndFamine",
 	"trinket", "HealthBomb", "RanduinsOmen", "YoumusBlade", "FlaskOfCrystalWater", 
 	"ElixirOfWrath", "HextechGunblade", "Muramana", "shurelyascrest", "lanternwally",
 	"kalistarallydash", "hextechsweeper", "quicksilversash", "dummy",

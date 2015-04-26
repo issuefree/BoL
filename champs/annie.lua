@@ -5,7 +5,7 @@ pp("\nTim's Annie")
   
 InitAAData({ 
    baseAttackSpeed = .579,
-   speed = 1000, windup = .35,
+   speed = 1000,
    particles = {"annie_basicattack"} 
 })
 
@@ -170,7 +170,6 @@ function Action()
    if CanUse("tibbers") and not P.tibbers then
       local hits, kills, score = GetBestArea(me, "tibbers", 1, 3, ENEMIES)
       if score >= 2 then
-         UseItem("Deathfire Grasp", GetWeakest("tibbers", hits))
          CastXYZ("tibbers", GetCastPoint(hits, "tibbers"))
          PrintAction("Tibbers for AoE")
          return true
@@ -186,9 +185,6 @@ function Action()
          if ( IsOn("stoke") and not P.stun ) or -- hold off on incinerate if you're holding a stun and they're at the edge of range
             GetDistance(target) < 525 
          then
-            if CanUse("dis") then
-               UseItem("Deathfire Grasp", target)
-            end
             Cast("inc", target)
             PrintAction("Incinerate", target)
             return true
@@ -199,9 +195,6 @@ function Action()
    if CanUse("dis") then
       local target = GetMarkedTarget() or GetWeakestEnemy("dis")
       if target then
-         if CanUse("inc") then
-            UseItem("Deathfire Grasp", target)
-         end
          Cast("dis", target)
          PrintAction("Disintigrate", target)
          return true

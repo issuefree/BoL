@@ -148,7 +148,6 @@ function Action()
             end
          end
          if bestT and GetDistance(bestT) < GetSpellRange(spell) then
-            UseItem("Deathfire Grasp", bestT)
             Cast("burst", bestT)
             PrintAction("Burst for damage", enemy)
             return true
@@ -156,11 +155,7 @@ function Action()
       end
    end
 
-   if CanUse("strike") then
-      UseItem("Deathfire Grasp", GetWeakestEnemy("strike"))
-   end
-   -- TODO for skill change
-   if CastBest("strike") then
+   if SkillShot("strike") then
       return true
    end
 

@@ -156,10 +156,6 @@ function Action()
       end
    end
 
-   if CanUse("siphon") then
-      UseItem("Deathfire Grasp", GetWeakestEnemy("siphon"))
-   end
-
    if CastBest("siphon") then
       return true
    end

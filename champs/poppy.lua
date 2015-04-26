@@ -133,7 +133,6 @@ function Action()
 
    local enemy = checkCharge()
    if enemy then
-      UseItem("Deathfire Grasp", enemy)
       MarkTarget(enemy)
       Cast("charge", enemy)
       PrintAction("Charge for slam", enemy)
@@ -146,7 +145,6 @@ function Action()
 
    local target = GetMarkedTarget() or GetMeleeTarget()
    if target then
-      UseItem("Deathfire Grasp", target)
       if AutoAA(target, "blow") then
          return true
       end

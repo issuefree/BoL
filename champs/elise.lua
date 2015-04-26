@@ -240,7 +240,6 @@ end
 
 function Action()   
    if isSpider() then   
-      UseItem("Deathfire Grasp", GetWeakestEnemy("bite"))
       if CastBest("bite") then
          return true
       end
@@ -250,7 +249,6 @@ function Action()
          return true
       end
    else
-      UseItem("Deathfire Grasp", GetWeakestEnemy("toxin"))
       if CastBest("toxin") then
          return true
       end

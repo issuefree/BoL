@@ -75,9 +75,6 @@ function getComboDamage(target, spells)
       end
    end
 
-   if CanUse("Deathfire Grasp") then
-      dam = dam * 1.2
-   end
    if target then
       dam = dam + CalculateDamage(target, Damage(target.maxHealth * .15, "M"))
    end
@@ -280,7 +277,6 @@ oore:addState("distortion",
 oore:addState("malice",
    function(combo)
       if CanUse("malice") then
-         UseItem("Deathfire Grasp", combo.target)
          if IsInRange("malice", combo.target) then
             Cast("malice", combo.target)
             PrintAction(combo, combo.target)
@@ -334,7 +330,6 @@ doore:addState("malice",
    function(combo)
       if CanUse("malice") then
          if IsInRange("malice", combo.target) then
-            UseItem("Deathfire Grasp", combo.target)
             Cast("malice", combo.target)
             PrintAction(combo, combo.target)
          else
@@ -438,8 +433,6 @@ function Action()
    for _,target in ipairs(GetInRange(me, "malice", ENEMIES)) do
       if getComboDamage(target) > target.health then
          
-         UseItem("Deathfire Grasp", target)
-
          if CanUse("malice") then
             Cast("Malice execute", target)
             PrintAction("Malice execute", target, .5)
@@ -496,8 +489,6 @@ function Action()
    then
       local target = GetWeakestEnemy("malice")
       if target then
-         UseItem("Deathfire Grasp", target)
-
          Cast("malice", target)
          PrintAction("Start Combo Malice", target)
          return true

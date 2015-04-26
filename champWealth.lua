@@ -187,7 +187,6 @@ itemPrices = {
    [3723] = {name="Enchantment: Warrior", price=2250},
    [3401] = {name="Face of the Mountain", price=2200},
    [3405] = {name="Bonetooth Necklace", price=0},
-   [3128] = {name="Deathfire Grasp", price=3100},
    [3411] = {name="Bonetooth Necklace", price=0},
    [3417] = {name="Bonetooth Necklace", price=0},
    [3301] = {name="Ancient Coin", price=365},

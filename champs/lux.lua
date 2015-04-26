@@ -12,7 +12,7 @@ pp(" - AA flared")
 SetChampStyle("caster")
 
 InitAAData({
-   speed = 1550, windup=.2,
+   speed = 1550,
    particles = {"LuxBasicAttack"}
 })
 
@@ -227,11 +227,9 @@ function Action()
    -- peel if necessary, else hit someone weak
    if CanUse("binding") then
       if SkillShot("binding", "peel") then
-         UseItem("Deathfire Grasp", GetWeakestEnemy("binding"))
          return true
       end
       if SkillShot("binding") then
-         UseItem("Deathfire Grasp", GetWeakestEnemy("binding"))
          return true
       end
    end
@@ -245,7 +243,6 @@ function Action()
          local center = GetAngularCenter(hits)
          LineBetween(me, center, spells["spark"].width)
          if IsOn("spark") then
-            UseItem("Deathfire Grasp", GetWeakest("spark", hits))
             CastXYZ("spark", center)
             PrintAction("Spark for AoE")
             return true

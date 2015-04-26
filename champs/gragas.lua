@@ -150,9 +150,7 @@ end
 
 function Action()
    if not getBarrel() then
-      local target = SkillShot("barrel")
-      if target then
-         UseItem("Deathfire Grasp", target)
+      if SkillShot("barrel") then
          return true
       end
    end

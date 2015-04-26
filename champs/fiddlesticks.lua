@@ -121,7 +121,6 @@ function Action()
          local target = GetMarkedTarget() or GetWeakestEnemy("drain", 0, 50)
          if target then
             Cast("drain", target)
-            UseItem("Deathfire Grasp", target)
             PrintAction("Drain", target)
             return true
          end

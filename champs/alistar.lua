@@ -86,7 +86,6 @@ function Action()
    then
       local target = GetWeakestEnemy("headbutt")
       if target then
-         UseItem("Deathfire Grasp", target)
          Cast("headbutt", target)
          PrintAction("Headbutt to start combo", target)
          return true

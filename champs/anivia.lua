@@ -153,7 +153,6 @@ function Action()
 
       local target = GetWeakest("spike", GetWithBuff("freeze", GetInRange(me, "spike", ENEMIES)))
       if target then
-         UseItem("Deathfire Grasp", target)
          Cast("spike", target)
          PrintAction("Spike chilled", target)
          return true

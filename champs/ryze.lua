@@ -87,9 +87,6 @@ function Run()
 end
 
 function Action()
-   if CanUse("prison") and CanUse("overload") and CanUse("flux") then
-      UseItem("Deathfire Grasp", GetWeakestEnemy("overload"))
-   end
    if CanUse("prison") then
       local target = GetWeakestEnemy("prison", 0, 15)
       if target then

@@ -122,13 +122,6 @@ function Action()
    -- TestSkillShot("sear")
    -- TestSkillShot("pillar", "BrandPOF_tar.troy")
 
-   if CanUse("conflag") and CanUse("sear") and CanUse("pillar") then
-      local target = UseItem("Deathfire Grasp", target)
-      if target then
-         UseItem("Deathfire Grasp", target)
-      end
-   end
-   
    if CastBest("conflag") then
       return true
    end
