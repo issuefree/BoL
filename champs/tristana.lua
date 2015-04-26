@@ -12,8 +12,9 @@ pp(" - Rapid fire if things are well in (100) attack range")
 
 
 InitAAData({
-   speed = 2250,
-   -- particles = {"TristannaBasicAttack_mis"}  -- Trists object is shared with minions. This could result in clipping. Can be turned back on for testing
+   speed=2250,
+   extraWindup=-.1,
+   particles={"Tristana_Base_BA_mis"}  -- Trists object is shared with minions. This could result in clipping. Can be turned back on for testing
 })
 
 SetChampStyle("marksman")
