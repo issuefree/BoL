@@ -8,7 +8,6 @@ SetChampStyle("support")
 
 InitAAData({
 	speed = 1450,
-	extraWindup=.2,
 	particles = {"LuluBasicAttack"}
 })
 

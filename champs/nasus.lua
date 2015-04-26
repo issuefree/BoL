@@ -16,8 +16,6 @@ function setStrikes(val)
 end
 
 InitAAData({
-   baseAttackSpeed = 0.638,
-   windup=.3,
    particles = {"nassus_siphonStrike_tar"},
    resets = {GetSpellInfo("Q").name}
 })
