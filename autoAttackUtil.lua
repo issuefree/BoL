@@ -178,6 +178,9 @@ function aaTick()
       aaPosE = Point(aaObj)
       aaTE = time()
       PrintState(-5, "OBJ")
+      local dist = GetDistance(aaPos1, aaPosE)
+      local delta = aaTE - aaT1
+      pp(dist / delta)
    elseif aaTE then
       local dist = GetDistance(aaPos1, aaPosE)
       local delta = aaTE - aaT1
