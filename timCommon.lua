@@ -599,7 +599,8 @@ end
 function MoveToTarget(t)
    if CanMove() then
       local pos = VP:GetPredictedPos(t, .5, t.ms, me, false)
-      me:MoveTo(pos.x,pos.z)
+         me:MoveTo(pos.x,pos.z)
+      end
       PrintAction("MTT", t, 1)
       return true
    end
@@ -725,7 +726,6 @@ function KillMinion(thing, method, force, targetOnly)
       if targetOnly then
          return target
       end
-
 
       AddWillKill(target, thing)
 
@@ -1305,8 +1305,10 @@ function WillKill(...)
                speed = 1500
                pp("No speed set "..thing)
             end
-            -- err on the side of slow so I don't beat things there
-            local impactTime = GetImpactTime(me, target, getWindup()/4, speed)
+            -- removing windup from this calc. 
+            -- I can get it close enough to orbwalk but not reliably close enough for timing lasthits against minion attacks
+            -- and it's better to shoot late than early.
+            local impactTime = GetImpactTime(me, target, getWindup()*0, speed)
             local incdDam = 0
             for _,incd in ipairs(INCOMING_DAMAGE) do
                if incd.time < impactTime then
@@ -2059,20 +2061,21 @@ function ModAAJungle(thing)
 end
 
 function MeleeMove()
-   local lockRange = 350
+   local lockRange = 500
    if CanMove() then   
       local target = GetMarkedTarget() or GetMeleeTarget()
       if target then
-         if not IsInAARange(target) then            
-            -- if not RetreatingFrom(target) then
-            Circle(target, lockRange, yellow)
+         Circle(target, lockRange, yellowB, 4)
+
+         -- if not IsInAARange(target) then
             if GetDistance(target, mousePos) < lockRange then
-               Circle(target, lockRange, red, 3)
+               Circle(target, 150, redB, 3)
                if MoveToTarget(target) then
                   return true
                end
             end
-         end
+         -- end
+
       else        
          -- MoveToCursor() 
          -- return false
