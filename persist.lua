@@ -180,8 +180,10 @@ end
 function PersistPet(object, charName, name)
    if find(object.charName, charName) or find(object.name, name) then
       if object.team == me.team then
+         -- pp("Persist my pet "..object.name)
          return PersistAll("MYPET", object)
       else
+         -- pp("Persist enemy pet "..object.name)
          return PersistAll("PET", object)
       end
    end   
@@ -207,15 +209,16 @@ function GetPersisted(name)
 end
 
 -- find an object only near me and persist it
-function PersistBuff(label, object, name, dist)
+function PersistBuff(label, object, name, dist, exact)
    if not dist then
       dist = 150
    end
-   if object and find(object.name, name) then
+   if object and find(object.name, name, exact) then
       if GetDistance(object) < dist then
          P[label] = object
          PData[label] = {}
          PData[label].name = object.name
+         -- pp("Persisting "..object.name.." as "..label)
          return true
       elseif GetDistance(object) < 500 then
          -- pp("Found "..label.." at distance "..math.floor(GetDistance(object)))
@@ -518,8 +521,6 @@ function createForPersist(object)
    --iceborn gauntlet
    PersistBuff("iceborn", object, "bluehands_buf", 100)
 
-   PersistOnTargets("dfg", object, "deathFireGrasp_tar", ENEMIES)
-
    PersistOnTargets("hemoplague", object, "Vladimir_Base_R_debuff.troy", ENEMIES)
 
    PersistBuff("blind", object, "Global_miss.troy")
@@ -527,8 +528,8 @@ function createForPersist(object)
 
    PersistBuff("muramana", object, "ItemMuramanaToggle")
 
-   PersistBuff("manaPotion", object, "GLOBAL_Item_Mana")
-   PersistBuff("healthPotion", object, "GLOBAL_Item_Health")
+   PersistBuff("manaPotion", object, "Global_Item_Mana")
+   PersistBuff("healthPotion", object, "Global_Item_Health")
 
    for _,spell in pairs(spells) do
       if spell.modAA and spell.object then
@@ -537,18 +538,33 @@ function createForPersist(object)
    end
 
 
-   -- CREDIT TO LUA for inspiration in his IsInvulnerable script.
    PersistOnTargets("invulnerable", object, "eyeforaneye", ENEMIES) -- kayle intervention
    PersistOnTargets("invulnerable", object, "nickoftime", ENEMIES) -- zilean chronoshift
    PersistOnTargets("invulnerable", object, "UndyingRage_buf", ENEMIES) -- trynd ult
-   PersistOnTargets("invulnerable", object, "VladSanguinePool_buf", ENEMIES) -- vlad sanguine pool   
+   PersistOnTargets("invulnerable", object, "VladSanguinePool_buf", ENEMIES) -- vlad sanguine pool
+
+   if find(object.name, "Karthus_Base_P_Avatar") then
+      for _,target in ipairs(ENEMIES) do
+         if find(target.charName, "Karthus") then
+            Persist("invulnerable"..target.name, object)
+            PData["invulnerable"..target.name].unit = target
+            PData["invulnerable"..target.name].time = time()
+            if not pOn["invulnerable"] then
+               pOn["invulnerable"] = {}
+            end
+            table.insert(pOn["invulnerable"], "invulnerable"..target.name)
+            break
+         end
+      end
+   end
+
    -- if I am the target of diplomatic immunity don't bother recording diplomatic immunity
    PersistBuff("diplomaticImmunityTarget", object, "DiplomaticImmunity_tar")
    if not P.diplomaticImmunityTarget then
       PersistOnTargets("invulnerable", object, "DiplomaticImmunity_buf", ENEMIES) -- poppy diplomatic immunity
    end
 
-   PersistOnTargets("bansheesVeil", object, "bansheesveil_buf", ENEMIES) -- vlad sanguine pool
+   PersistOnTargets("bansheesVeil", object, "bansheesveil_buf", ENEMIES)
 
    PersistOnTargets("spellImmune", object, "Sivir_Base_E_shield", ENEMIES)
    PersistOnTargets("spellImmune", object, "nocturne_shroudofDarkness_shield", ENEMIES)
