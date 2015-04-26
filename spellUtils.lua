@@ -54,8 +54,8 @@ spells["alias"] = {
    knockback=400,             -- if the spell has knockback this is how far it knocks them back
 
    -- skill shots
-   delay=2,                   -- delay between casting and the missile firing, must be set for skillshots
-   speed=12,                  -- speed of the missile, must be set for skillshots, 0 means it doesn't travel
+   delay=.2,                   -- delay between casting and the missile firing, must be set for skillshots
+   speed=1200,                  -- speed of the missile, must be set for skillshots, 0 means it doesn't travel
    width=80,                  -- width of the missile for linear skill shots
    radius=150,                -- radius of the affect, usually for nonlinear skill shots
       -- usually you only use width or radius not both

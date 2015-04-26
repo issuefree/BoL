@@ -52,7 +52,7 @@ spells["attack"] = {
    base={60,90,120,150,180}, 
    ap=.5,
    delay=0,    --tss
-   speed=12,   --tss
+   speed=1200,   --tss
    radius=160-25, --TODO
    noblock=true,
    overShoot=100,
@@ -77,7 +77,7 @@ spells["protect"] = {
    base={60,90,120,150,180}, 
    ap=.3,
    delay=0,    --tss
-   speed=12,   --tss
+   speed=1200,   --tss
    width=160-25,  --TODO
    cost=60
 } 

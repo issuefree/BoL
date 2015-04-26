@@ -54,8 +54,8 @@ spells["harpoon"] = {
    color=violet, 
    base={45,70,95,120,145}, 
    ap=.4,
-   delay=2.4,  --tss
-   speed=20,   --tss
+   delay=.24,  --tss
+   speed=2000,   --tss
    width=100,  --reticle
    scale=function(target)
       if dangerZone() then
@@ -69,7 +69,7 @@ spells["equalizer"] = {
    color=red, 
    base={650,925,1000}, 
    ap=1.5,
-   delay=5,       --TODO
+   delay=.5,       --TODO
    speed=0,
    cost={10,20,30,40,50}
 } 

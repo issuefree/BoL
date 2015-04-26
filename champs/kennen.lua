@@ -32,8 +32,8 @@ spells["shuriken"] = {
    color=violet, 
    base={75,115,155,195,235}, 
    ap=.75,
-   delay=1.8,  --tss
-   speed=17,   --tss
+   delay=.18,  --tss
+   speed=1700,   --tss
    width=55+20,   --reticle
    cost={65,60,55,50,45},
 } 

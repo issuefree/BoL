@@ -39,7 +39,7 @@ spells["standaside"] = {
    adBonus=.5,
    type="P",
    delay=.24, --TestSkillShot
-   speed=14, 
+   speed=1400, 
    width=135,
    noblock=true,
    overShoot=100,
@@ -52,7 +52,7 @@ spells["death"] = {
     adBonus=1.1,
     type="P",
     delay=.8, -- ?
-    speed=30, -- ?
+    speed=3000, -- ?
     width=175,
     cost=120,
 }

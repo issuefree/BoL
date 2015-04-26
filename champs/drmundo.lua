@@ -11,12 +11,12 @@ InitAAData({
 spells["cleaver"] = {
    key="Q", 
    range=1000, -- - 100
-   color=darkViolet, 
+   color=violet, 
    base={80,130,180,230,280},
    type="M",
    width=60, -- patch notes
    delay=.23,  -- tss
-   speed=20,
+   speed=2000,
    showFireahead=true   
 }
 spells["agony"] = {

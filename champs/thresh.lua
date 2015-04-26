@@ -43,8 +43,8 @@ spells["hook"] = {
    base={80,120,160,200,240}, 
    ap=.5,
 
-   delay=5,       -- tss
-   speed=19,      -- tss
+   delay=.5,       -- tss
+   speed=1900,      -- tss
    width=65,      -- reticle
    
    cost=80
@@ -57,7 +57,7 @@ spells["lantern"] = {
    ap=.4,
    
    delay=.5,      -- tss
-   speed=14,      -- tss
+   speed=1400,      -- tss
    radius=300,    -- reticle
 
    cost={50,55,60,65,70}
@@ -70,7 +70,7 @@ spells["flay"] = {
    ap=.4,
 
    delay=.3,      --tss
-   speed=15,      --tss
+   speed=1500,      --tss
    width=150,     --reticle
    noblock=true,
 

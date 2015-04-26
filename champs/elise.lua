@@ -43,7 +43,7 @@ spells["spiderling"] = {
    base={75,125,175,225,275}, 
    ap=.8,
    delay=.2,
-   speed=12,
+   speed=1200,
    width=80,
    cost={60,70,80,90,100}
 } 
@@ -57,7 +57,7 @@ spells["cocoon"] = {
    range=1075, -- patch notes
    color=yellow, 
    delay=.2,
-   speed=16, -- patch notes
+   speed=1600, -- patch notes
    width=55,  -- patch notes
    cost=50,
    showFireahead=true

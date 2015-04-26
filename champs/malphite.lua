@@ -51,8 +51,8 @@ spells["force"] = {
    color=red, 
    base={200,300,400}, 
    ap=1,
-   delay=2,
-   speed=18,
+   delay=.2,
+   speed=1800,
    radius=300,
    cost=100
 } 

@@ -36,7 +36,7 @@ spells["boomerang"] = {
    ad=1.15,
    type="P",
    delay=.24, -- testskillshot
-   speed=18,  -- testskillshot
+   speed=1800,  -- testskillshot
    width=55,  -- patch notes
 } 
 spells["boulder"] = {
@@ -47,7 +47,7 @@ spells["boulder"] = {
    ad=1.2,
    type="P",
    delay=.49, -- testskillshot
-   speed=20,  -- testskillshot
+   speed=2000,  -- testskillshot
    width=90,  -- wiki
    radius=45
 } 
@@ -65,7 +65,7 @@ spells["wallop"] = {
    ad=1,
    type="P",
    delay=.6,   -- testskillshot
-   speed=50,  -- instant but line
+   speed=5000,  -- instant but line
    width=125, -- visual
    noblock=true,
 } 
@@ -77,7 +77,7 @@ spells["hop"] = {
    maxHealth=.06,
    type="P",
    delay=.24,  -- ?
-   speed=12,   -- ?
+   speed=1200,   -- ?
    radius=150, -- reticle
 } 
 spells["crunch"] = {
