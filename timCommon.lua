@@ -731,6 +731,8 @@ function KillMinion(thing, method, force, targetOnly)
 
       if spell.name and spell.name == "attack" then
          if AA(target) then
+            pp("Health: "..target.health)
+            pp("Damage: "..GetAADamage(target))
             PrintAction("Kill "..targetBy.." minion")
             return target
          end
