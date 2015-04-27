@@ -259,22 +259,20 @@ function Run()
    if IsOn("lasthit") then
       if Alone() then
          if KillMinionsInArea("hail") then
-            -- PauseToggle("lasthit", .75)
             return true
          end
       end
 
       if VeryAlone() then
-         if CanUse("arrow") and not P.charging then
-            local minions = FilterList(MINIONS, function(item) return not IsInAARange(item) end)
-            local hits, kills, score = GetBestLine(me, "maxArrow", .1, 1, minions, ENEMIES)
-            if score > GetThreshMP("arrow", .1, 1.5) then
-               StartArrow()
-               PrintAction("Starting arrow for LH", #kills)
-               --PauseToggle("lasthit", .75)
-               return true
-            end
-         end
+         -- if CanUse("arrow") and not P.charging then
+         --    local minions = FilterList(MINIONS, function(item) return not IsInAARange(item) end)
+         --    local hits, kills, score = GetBestLine(me, "maxArrow", .1, 1, minions, ENEMIES)
+         --    if score > GetThreshMP("arrow", .1, 1.5) then
+         --       StartArrow()
+         --       PrintAction("Starting arrow for LH", #kills)
+         --       return true
+         --    end
+         -- end
       end
    end
 
