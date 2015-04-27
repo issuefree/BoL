@@ -542,6 +542,12 @@ function createForPersist(object)
    PersistOnTargets("invulnerable", object, "nickoftime", ENEMIES) -- zilean chronoshift
    PersistOnTargets("invulnerable", object, "UndyingRage_buf", ENEMIES) -- trynd ult
    PersistOnTargets("invulnerable", object, "VladSanguinePool_buf", ENEMIES) -- vlad sanguine pool
+   if PersistOnTargets("invulnerable", object, "zhonya_ring_self_skin.troy", ENEMIES, ALLIES) then -- zhonya's hourglass
+      pp("zhonyas activated")
+   end
+   if find(object.name, "zhonya") then
+      pp(object.name)
+   end
 
    if find(object.name, "Karthus_Base_P_Avatar") then
       for _,target in ipairs(ENEMIES) do
