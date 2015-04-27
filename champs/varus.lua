@@ -80,6 +80,7 @@ spells["quiver"] = {
    ap=.25
 } 
 spells["blight"] = {
+   key="W",
    base=0,
    targetMaxHealth={.02,.0275,.035,.0425,.05},
    targetMaxHealthAP={.0002}
@@ -94,6 +95,7 @@ spells["hail"] = {
    delay=.72-.2, -- tests at 7.2 for VarusECircleGreen
    speed=0, -- tests at 0
    radius=275-10,  -- tested visusally
+   noblock=true,
    cost=80,
    damOnTarget=getBlightDamage
 } 
@@ -124,9 +126,8 @@ spells["AA"].damOnTarget =
 local chargeStartTime = 0
 
 function Run()
-   if P.charging then      
+   if P.charging then
       local chargeDuration = math.min(time() - chargeStartTime, spells["arrow"].chargeTime)
-
       local chargeRatio = chargeDuration/spells["arrow"].chargeTime
 
       local addRange = spells["arrow"].maxRange - spells["arrow"].baseRange
@@ -145,6 +146,7 @@ function Run()
       spells["arrow"].base = GetLVal(spells["arrow"], "baseBase")
       spells["arrow"].ad = spells["arrow"].baseAd
    end
+
 
    spells["AA"].bonus = GetSpellDamage("quiver")
 
@@ -311,36 +313,36 @@ function Action()
       end
    end
 
-   if CanUse("arrow") and not P.charging then
-      local enemies = SortByDistance(GetInRange(me, "maxArrow", ENEMIES))
-      if not P.blighting then
-         for _,enemy in ipairs(enemies) do
-            if getBlightStacks(enemy) == 3 then -- TODO add some more reasons to start arrows
-               StartArrow()
-               PrintAction("Start arrow for blight finish")
-               return true
-            end
-         end
-      end
+   -- if CanUse("arrow") and not P.charging then
+   --    local enemies = SortByDistance(GetInRange(me, "maxArrow", ENEMIES))
+   --    if not P.blighting then
+   --       for _,enemy in ipairs(enemies) do
+   --          if getBlightStacks(enemy) == 3 then -- TODO add some more reasons to start arrows
+   --             StartArrow()
+   --             PrintAction("Start arrow for blight finish")
+   --             return true
+   --          end
+   --       end
+   --    end
 
-      local target = GetWeakestEnemy("maxArrow")
-      if target and WillKill("maxArrow", target) and
-         ( not IsInAARange(target) or not WillKill("AA", target) )
-      then
-         StartArrow()
-         PrintAction("Start arrow for execute")
-         return true
-      end
+   --    local target = GetWeakestEnemy("maxArrow")
+   --    if target and WillKill("maxArrow", target) and
+   --       ( not IsInAARange(target) or not WillKill("AA", target) )
+   --    then
+   --       StartArrow()
+   --       PrintAction("Start arrow for execute")
+   --       return true
+   --    end
 
-      if #enemies > 0 and GetDistance(enemies[1]) > GetSpellRange("arrow") then
-         local target = GetWeakestEnemy("maxArrow")
-         if target and GetMPerc(me) > .5 then
-            StartArrow()
-            PrintAction("Start arrow for poke")
-            return true
-         end
-      end
-   end
+   --    if #enemies > 0 and GetDistance(enemies[1]) > GetSpellRange("arrow") then
+   --       local target = GetWeakestEnemy("maxArrow")
+   --       if target and GetMPerc(me) > .5 then
+   --          StartArrow()
+   --          PrintAction("Start arrow for poke")
+   --          return true
+   --       end
+   --    end
+   -- end
 
    local target = GetMarkedTarget() or GetWeakestEnemy("AA")
    if AutoAA(target) then
@@ -357,7 +359,6 @@ function StartArrow(timeout)
    Circle(me, spells["arrow"].range, violetB, 5)
 end
 
-local sx, sy
 function FinishArrow(t)
    if P.charging then
       LineBetween(me, t, spells["arrow"].width, violetB)
