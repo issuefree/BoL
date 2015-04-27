@@ -10,7 +10,7 @@ require "issuefree/modules"
 pp("\nTim's Malzahar")
 
 InitAAData({ 
-   speed = 1500,
+   speed = 2000,
    extraWindup=.1,
    particles = {"AlzaharBasicAttack_mis"}
 })
