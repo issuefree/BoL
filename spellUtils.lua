@@ -204,7 +204,12 @@ end
 function CastXYZ(thing, x,y,z)
    local spell = GetSpell(thing)
    if not spell then return end
-   local p = Point(x,y,z)
+   local p
+   if type(x) == "number" then
+      p = Point(x,y,z)
+   else
+      p = Point(x)
+   end
    CastSpell(getISpell(spell.key), p.x, p.z)
 end
 
@@ -398,6 +403,7 @@ function GetSpellInfo(thing, hero)
    if iSpell then
       return hero:GetSpellData(iSpell)
    else
+      pp(debug.trackback())
       pp(thing)
       return nil
    end
