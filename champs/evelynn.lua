@@ -210,7 +210,7 @@ local function jungle()
          return true
       end
    end
-end   
+end
 SetAutoJungle(jungle)
 
 local function onCreate(object)
