@@ -3,3 +3,8 @@ I might have something better now
 		This happens especially for melee.
 
 Nunu autojungle
+
+Need to detect Zhonas
+
+Double check missile speed on 
+	sona
