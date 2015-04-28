@@ -212,16 +212,6 @@ function FollowUp()
    return false
 end
 
---local function AutoJungle()
---    local creep = GetBiggestCreep(GetInRange(me, "AA", CREEPS))
---    local score = ScoreCreeps(creep)
---    if AA(creep) then
---       PrintAction("AA "..creep.charName)
---       return true
---    end
--- end   
--- SetAutoJungle(AutoJungle)
-
 local function onCreate(object)
    Persist("ball", object, "TheDoomBall")
    PersistOnTargets("windup1", object, "TODO", MINIONS, CREEPS, PETS, ENEMIES)

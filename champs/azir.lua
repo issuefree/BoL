@@ -188,16 +188,6 @@ function FollowUp()
    return false
 end
 
---local function AutoJungle()
---    local creep = GetBiggestCreep(GetInRange(me, "AA", CREEPS))
---    local score = ScoreCreeps(creep)
---    if AA(creep) then
---       PrintAction("AA "..creep.charName)
---       return true
---    end
--- end   
--- SetAutoJungle(AutoJungle)
-
 local function onCreate(object)
    PersistAll("soldier", object, "Azir_Base_P_Soldier_Ring")
 end

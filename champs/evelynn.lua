@@ -1,17 +1,12 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
-
--- Try to stick to one "action" per loop.
--- Action function should return 
---   true if they perform an action that takes time (most spells attacks)
---   false if no action or the spell takes no time
-
 pp("\nTim's Evelynn")
 
 InitAAData({ 
    particles = {"EvelynnBasicAttack_tar"}
 })
+
 AddToggle("stealth", {on=false, key=112, label="Stealth Mode"})
 AddToggle("jungle", {on=true, key=113, label="Jungle"})
 AddToggle("", {on=true, key=114, label=""})
