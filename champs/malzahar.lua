@@ -2,17 +2,20 @@ require "issuefree/timCommon"
 require "issuefree/modules"
 
 
--- Try to stick to one "action" per loop.
--- Action function should return 
---   true if they perform an action that takes time (most spells attacks)
---   false if no action or the spell takes no time
-
 pp("\nTim's Malzahar")
+pp(" -- Lasthit with visions chains")
+pp(" -- Lasthit with void bars")
+pp(" -- Disrupt with void")
+pp(" -- Hit cc'd with zone and void")
+pp(" -- AoE with void")
+pp(" -- zone and grasp likely kills")
+pp("")
+
 
 InitAAData({ 
-   speed = 2000,
-   extraWindup=.1,
-   particles = {"AlzaharBasicAttack_mis"}
+   speed=2000,
+   extraWindup=.3,
+   particles={"Malzahar_Base_BA_mis"}
 })
 
 SetChampStyle("caster")
@@ -22,19 +25,19 @@ AddToggle("", {on=true, key=113, label=""})
 AddToggle("", {on=true, key=114, label=""})
 AddToggle("", {on=true, key=115, label=""})
 
-AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0}", args={GetAADamage}})
+AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0} / {1} / {2}", args={GetAADamage, "visions", "void"}})
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["void"] = {
    key="Q", 
    range=900, 
-   color=violet, 
+   color=cyan, 
    base={80,135,190,245,300}, 
    ap=.8,
    delay=.8-.3, -- testskillshot
    speed=0,
-   width=400,
+   radius=75, -- this is just a circle in the center. slightly large
    noblock=true,
    cost={80,85,90,95,100},
 } 
@@ -54,10 +57,10 @@ spells["zone"] = {
 spells["visions"] = {
    key="E",
    range=650, 
-   color=blue, 
+   color=violet, 
    base={80,140,200,260,320}, 
    ap=.8,
-   radius=300,
+   radius=450,
    cost={60,75,90,105,120},
 } 
 spells["grasp"] = {
@@ -73,11 +76,31 @@ spells["grasp"] = {
    cost=100,
 } 
 
+function getVoidHits(target, targets)
+   local hits = {}
+   table.insert(hits, target)
+   hits = concat(hits, GetInLine(target, "void", ProjectionA(target, 90, 200), targets))
+   hits = concat(hits, GetInLine(target, "void", ProjectionA(target, -90, 200), targets))
+   return uniques(hits)
+end
+
+local lastVisionsLoc = nil
+
 function Run()
+   if P.visions then
+      if lastVisionsLoc then
+         local jump = GetDistance(P.visions, lastVisionsLoc)
+         if jump > spells["visions"].radius then
+            pp("New visions jump record "..jump)
+            spells["visions"].radius = jump
+         end
+      end
+      lastVisionsLoc = Point(P.visions)
+   end
+
    if StartTickActions() then
       return true
    end
-
 
    -- auto stuff that always happen
    if CheckDisrupt("void") then
@@ -99,15 +122,46 @@ function Run()
 
 	-- auto stuff that should happen if you didn't do something more important
    if IsOn("lasthit") then
-      local target = KillMinion("visions", "strong", nil, true)
-      if target then
-         -- there's something to bounce to
-         if #GetInRange(target, spells["visions"].radius, MINIONS, ENEMIES) > 1 then
-            Cast("visions", target)
-            PrintAction("Visions minion for LH")
+
+      -- Don't LH with visions if I have an active visions
+      if not P.visions then
+         local target = KillMinion("visions", {"strong", "lowMana"}, nil, true)
+         if target then
+            -- there's something to bounce to
+            if #GetInRange(target, spells["visions"].radius, MINIONS, ENEMIES) > 1 then
+               Cast("visions", target)
+               PrintAction("Visions minion for LH")
+               return true
+            end
+         end
+      end
+
+      if CanUse("void") then
+         -- get all minions in void range plus some fudge factor to look at width and radius
+         local bestT = nil
+         local bestS = 0
+         local bestH = {}
+         local minions = GetInRange(me, GetSpellRange("void")+200, MINIONS)
+         for _,minion in ipairs(minions) do
+            local hits = {}
+            if IsInRange("void", minion, me, spells["void"].radius) then
+               hits = getVoidHits(minion, minions)
+               score = scoreHits("void", hits, .05, .95)
+
+               if not bestT or score > bestS then
+                  bestT = minion
+                  bestS = score
+                  bestH = hits
+               end
+            end
+         end
+         if bestS > GetThreshMP("void", .1, 1.5) then
+            CastXYZ("void", GetCastPoint(bestT, "void"))
+            PrintAction("Void for LH", bestS)
             return true
          end
       end
+
    end
    
    -- low priority hotkey actions, e.g. killing minions, moving
@@ -126,6 +180,17 @@ function Action()
 
    if CastBest("visions") then
       return true
+   end
+
+   -- void for aoe want 2 hits
+   if CanUse("void") then
+      local targets = GetGoodFireaheads("void", 1, ENEMIES)
+      local target, score = SelectFromList(targets, getVoidHits, targets)
+      if score >= 2 then
+         CastXYZ("void", GetCastPoint(target, "void"))
+         PrintAction("Void for AoE", score)
+         return true
+      end
    end
 
    if SkillShot("void") then
@@ -152,9 +217,11 @@ function Action()
    end
 
 
-   local target = GetMarkedTarget() or GetWeakestEnemy("AA")
-   if AutoAA(target) then
-      return true
+   if not CanUse("visions") then -- I seem to recall seeing it prefer AA to visions.
+      local target = GetMarkedTarget() or GetWeakestEnemy("AA")
+      if AutoAA(target) then
+         return true
+      end
    end
 
    return false
@@ -164,6 +231,7 @@ function FollowUp()
 end
 
 local function onCreate(object)
+   Persist("visions", object, "Malzahar_Base_E_buf.troy")
 end
 
 local function onSpell(unit, spell)
