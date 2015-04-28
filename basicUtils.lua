@@ -139,6 +139,23 @@ function concat(...)
    return resTable
 end
 
+function uniques(t)
+   local result = {}
+   for i,item in ipairs(t) do
+      local unique = true
+      for _,res in ipairs(result) do
+         if item == res then
+            unique = false
+            break
+         end
+      end
+      if unique then
+         table.insert(result, item)
+      end
+   end
+   return result
+end
+
 function removeItems(list, items)
    local resTable = {}
    for _,t in ipairs(list) do
