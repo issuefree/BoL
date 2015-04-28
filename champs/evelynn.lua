@@ -53,7 +53,7 @@ spells["ravage"] = {
 spells["embrace"] = {
    key="R",
    range=650,
-   radius=350, -- test
+   radius=250, -- wiki
    color=red,
    base=0, 
    targetHealth={.15,.20,.25},
@@ -132,28 +132,6 @@ function Run()
       end
    end
 
-   if IsOn("jungle") and Alone() then
-      if JustAttacked() then
-         if CanUse("spike") then
-            local creeps = GetInRange(me, "spike", CREEPS)
-            if #creeps > 0 then
-               Cast("spike", me)
-               PrintAction("Spike in jungle")
-               return true
-            end
-         end
-
-         if CanUse("ravage") then
-            local creep = SortByMaxHealth(GetInRange(me, "spike", CREEPS), nil, true)[1]
-            if creep then
-               Cast("ravage", creep)
-               PrintAction("Ravage in jungle")
-               return true
-            end
-         end
-      end
-   end
-
    -- low priority hotkey actions, e.g. killing minions, moving
    if HotKey() and CanAct() then
       if FollowUp() then
@@ -165,14 +143,23 @@ function Run()
 end
 
 function Action()
-   -- probably cast early
-   -- probably hold off casting if there are people just out of range
+   -- TODO probably hold off casting if there are people just out of range
+   -- TODO I really only want to cast this if there's a hard engage
+      -- The shield is a big part of this spell. Should I only embrace if I'm directly engaged?
+      -- Trying: if I can spike people and I'm "skirmishing" then go hard
+         -- This won't embrace if I'm dueling...
    if CanUse("embrace") then
-      local hits, kills, score = GetBestArea(me, "embrace", 1, 1, ENEMIES)
-      if #hits >= 2 then
-         CastXYZ("embrace", GetCastPoint(hits, "embrace"))
-      elseif #hits == 1 and GetHPerc(hits[1]) > .75 then
-         CastXYZ("embrace", hits[1])
+      if #GetInRange(me, "spike", ENEMIES) >= 1 and Skirmishing() then
+         local hits, kills, score = GetBestArea(me, "embrace", 1, 1, ENEMIES)
+         if #hits >= 2 then
+            CastXYZ("embrace", GetCastPoint(hits, "embrace"))
+            PrintAction("Embrace for hits", #hits)
+            return true
+         elseif #hits == 1 and GetHPerc(hits[1]) > .75 then
+            CastXYZ("embrace", hits[1])
+            PrintAction("Embrace solo")
+            return true
+         end
       end
    end
 
@@ -191,9 +178,40 @@ function Action()
 
    return false
 end
+
 function FollowUp()
    return false
 end
+
+local function jungle()
+   if IsOn("jungle") and (Alone() or not P.walk) then
+      if JustAttacked() then
+         if CanUse("spike") then
+            local creeps = GetInRange(me, "spike", CREEPS)
+            if #creeps > 0 then
+               Cast("spike", me)
+               PrintAction("Spike in jungle")
+               return true
+            end
+         end
+
+         if CanUse("ravage") then
+            local creep = GetBiggestCreep(GetInRange(me, "ravage", CREEPS))
+            if creep then
+               Cast("ravage", creep)
+               PrintAction("Ravage in jungle")
+               return true
+            end
+         end
+      end
+
+      if AA(creep) then
+         PrintAction("AA "..creep.charName)
+         return true
+      end
+   end
+end   
+SetAutoJungle(jungle)
 
 local function onCreate(object)
    Persist("walk", object, "Evelynn_Ring_Green")
