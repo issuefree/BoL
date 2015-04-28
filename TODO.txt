@@ -2,9 +2,8 @@ I might have something better now
 	I'm clipping auto attacks when things leave range after I've tried to attack.
 		This happens especially for melee.
 
-Nunu autojungle
-
-Need to detect Zhonas
+-?	Nunu autojungle
+-?	Need to detect Zhonas
 
 Double check missile speed on 
 	sona

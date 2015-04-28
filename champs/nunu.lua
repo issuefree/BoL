@@ -66,6 +66,23 @@ spells["zero"] = {
 
 local lastBoil = time()
 
+function canBoil()
+	return CanUse("boil") and
+	       time() - lastBoil > 12
+end
+
+function boilADC()
+	if ADC and
+	   ADC.name ~= me.name and
+	   GetDistance(ADC) < GetSpellRange("boil")
+	then
+		Cast("boil", ADC)
+		PrintAction("Boil", ADC)
+		return true
+	end
+	return false
+end
+
 function Run()
 	if P.visionary then
 		spells["consume"].cost = 0
@@ -104,16 +121,8 @@ function Run()
 end
 
 function Action()
-	if IsOn("boil") then
-		if CanUse("boil") and
-		   time() - lastBoil > 12 and 
-		   ADC and
-		   ADC.name ~= me.name and
-		   GetDistance(ADC) < GetSpellRange("boil")
-		then
-			Cast("boil", ADC)
-			PrintAction("Boil", ADC)
-			lastBoil = time()
+	if IsOn("boil") and canBoil() then
+		if boilADC() then
 			return true
 		end
 	end
@@ -143,11 +152,59 @@ function Action()
    return false
 end
 
+local function jungle()
+   local creep = GetBiggestCreep(GetInRange(me, "AA", CREEPS))
+   local score = ScoreCreeps(creep)
+
+   if CanUse("consume") then
+   	if VeryAlone() then
+   		Cast("consume", creep)
+   		PrintAction("Consume biggest creep", creep)
+   		return true
+   	end
+
+   	if WillKill("consume", creep) then
+   		Cast("consume", creep)
+   		PrintAction("Consume for jungle kill", creep)
+   		return true
+   	end
+   end
+
+   if IsOn("boil") and canBoil() then
+   	if boilADC() then
+   		return true
+   	end
+   	
+   	local targets = GetInRange(me, "boil", ALLIES, MYMINIONS)
+   	if targets[1] and 
+   		( not IsMe(targets[1]) or not targets[2] )
+   	then
+   		Cast("boil", targets[1])
+   		PrintAction("Boil near")
+   		return true
+   	end
+
+   	Cast("boil", me)
+   	PrintAction("Boil me in the jungle")
+   	return true
+   end
+
+   if AA(creep) then
+      PrintAction("AA "..creep.charName)
+      return true
+   end
+end   
+SetAutoJungle(jungle)
+
 local function onObject(object)
 	PersistBuff("visionary", object, "Visionary_buf")
+	PersistBuff("boil")
 end
 
 local function onSpell(unit, spell)
+	if ICast("boil", unit, spell) then
+		lastBoil = time()
+	end
 end
 
 AddOnCreate(onObject)
