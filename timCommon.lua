@@ -2062,7 +2062,7 @@ function ModAAJungle(thing)
 end
 
 function MeleeMove()
-   local lockRange = 500
+   local lockRange = 400
    if CanMove() then   
       local target = GetMarkedTarget() or GetMeleeTarget()
       if target then
