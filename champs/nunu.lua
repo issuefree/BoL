@@ -153,40 +153,69 @@ function Action()
 end
 
 local function jungle()
-   local creep = GetBiggestCreep(GetInRange(me, "AA", CREEPS))
-   local score = ScoreCreeps(creep)
+   local camp = GetInRange(me, "iceblast", CREEPS)
+   local creep = GetBiggestCreep(camp)
+   local campScore = ScoreCreeps(creep)
+
+   -- I don't want to spam spells if I'm low mana
+   -- I don't want to waste spells if I don't need them for the camp
+   -- Using spells on 3+ pt camps will help with success (more health, less risk, enable ganking (can't gank with low health))
+   -- Using spells on 2 pt camps will help with speed at the cost of mana
+   -- Don't use spells on 1 pt camps.
 
    if CanUse("consume") then
-   	if VeryAlone() then
-   		Cast("consume", creep)
-   		PrintAction("Consume biggest creep", creep)
-   		return true
-   	end
+   	if campScore > GetThreshMP("consume", .05, 2) then
+	   	if VeryAlone() then
+	   		Cast("consume", creep)
+	   		PrintAction("Consume biggest creep", creep)
+	   		return true
+	   	end
+	   end
 
-   	if WillKill("consume", creep) then
+   	-- if there are any enemies nearby make sure we consume for the kill
+   	-- we do not want to have buffs/dragon/baron stolen
+   	if ScoreCreeps(creep) >= 4 and
+   		WillKill("consume", creep) 
+   	then
    		Cast("consume", creep)
-   		PrintAction("Consume for jungle kill", creep)
+   		PrintAction("Consume for jungle kill secure", creep)
    		return true
    	end
    end
 
-   if IsOn("boil") and canBoil() then
-   	if boilADC() then
-   		return true
+   if CanUse("iceblast") then
+   	if campScore > GetThreshMP("iceblast", .05, 3) then
+   		-- I want to iceblast for big damage and AS slow
+   		-- I don't want to blow an iceblast into a nearly dead creep
+   		if not WillKill("iceblast", creep) then
+	   		Cast("iceblast", creep)
+	   		PrintAction("Iceblast in jungle", creep)
+	   		return true
+	   	end
    	end
-   	
-   	local targets = GetInRange(me, "boil", ALLIES, MYMINIONS)
-   	if targets[1] and 
-   		( not IsMe(targets[1]) or not targets[2] )
-   	then
-   		Cast("boil", targets[1])
-   		PrintAction("Boil near")
-   		return true
-   	end
+   end
 
-   	Cast("boil", me)
-   	PrintAction("Boil me in the jungle")
-   	return true
+
+   if canBoil() then
+   	-- boil if it's less than 15% of my mana
+   	if 1 > GetThreshMP("boil", .15, 0) then
+	   	if boilADC() then
+	   		return true
+	   	end
+	   	
+	   	local targets = GetInRange(me, "boil", ALLIES, MYMINIONS)
+	   	if targets[1] and 
+	   		( not IsMe(targets[1]) or not targets[2] )
+	   	then
+	   		Cast("boil", targets[1])
+	   		PrintAction("Boil near")
+	   		return true
+	   	end
+
+	   	Cast("boil", me)
+	   	PrintAction("Boil me in the jungle")
+	   	return true
+	   end
    end
 
    if AA(creep) then
@@ -198,7 +227,6 @@ SetAutoJungle(jungle)
 
 local function onObject(object)
 	PersistBuff("visionary", object, "Visionary_buf")
-	PersistBuff("boil")
 end
 
 local function onSpell(unit, spell)
