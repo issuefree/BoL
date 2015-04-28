@@ -173,6 +173,8 @@ local aaT1 = nil
 local aaPosE = nil
 local aaTE = nil
 
+local speeds = {}
+
 function aaTick()
    if aaObj and aaObj.valid then
       aaPosE = Point(aaObj)
@@ -181,10 +183,17 @@ function aaTick()
       local dist = GetDistance(aaPos1, aaPosE)
       local delta = aaTE - aaT1
       pp(dist / delta)
+      table.insert(speeds, dist/delta)
    elseif aaTE then
       local dist = GetDistance(aaPos1, aaPosE)
       local delta = aaTE - aaT1
+
+      table.remove(speeds, 1)
+      local avgSpeed = sum(speeds)/#speeds
       pp(dist / delta)
+
+      pp("final "..avgSpeed)
+      pp(speeds[1])
       aaObj = nil
       aaPos1 = nil
       aaT1 = nil
