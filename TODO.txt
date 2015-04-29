@@ -6,3 +6,7 @@ I might have something better now
 
 Double check missile speed on 
 	sona
+
+Optimize object maintenance cycle. This _seems_ to be the biggest source of performance issues.
+	I've added an early abort for some common objects that I don't think I care about. (minions, minion attacks etc)
+	I might add an early abort if an object is processed. E.g. if an object is a creep there's no need to check if it's a buff also.
