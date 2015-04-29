@@ -445,20 +445,10 @@ function createForPersist(object)
 
    if object.team ~= me.team then
       PersistAll("TURRET", object, "Turret_T")
-      -- PersistAll("MINIONS", object, "Minion")
    else
       PersistAll("MYTURRET", object, "Turret_T")
-      -- PersistAll("MYMINIONS", object, "Minion")
    end
 
-   -- local inhibKey = "_Idle"
-   -- if GetMap() == 8 then
-   --    inhibKey = "inhibitor_idle"
-   --    nexusKey = "nexus_idle"
-   -- else
-   --    inhibKey = "inhibit_gem"
-   --    nexusKey = "nexus_on"
-   -- end
    if find(object.type, "Barracks") then
       if object.team == me.team then
          table.insert(MYINHIBS, object)
@@ -495,14 +485,6 @@ function createForPersist(object)
          pp("CC on "..target.charName.." "..object.name)
       end
    end
-
-   -- for _,enemy in ipairs(ENEMIES) do
-   --    if enemy.y - me.y > 75 then
-   --       PersistOnTargets("cc", enemy, enemy.name, ENEMIES)
-   --    else
-   --       P["cc"..enemy.networkID] = nil
-   --    end
-   -- end
 
    if find(object.name, "Ward") then
       table.insert(WARDS, object)
