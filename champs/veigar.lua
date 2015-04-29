@@ -9,11 +9,10 @@ pp(" - Hit good Primordial Burst targets while trying not to waste")
 pp(" - Clear minion waves with Dark Matter")
 
 InitAAData({
-   speed = 1050,
+   speed = 1100,
    particles = {"permission_basicAttack_mis"}   
 })
 
--- TODO needs complete rework for patch
 spells["strike"] = {
    key="Q", 
    range=950-25, 
@@ -21,7 +20,7 @@ spells["strike"] = {
    base={80,125,170,215,260}, 
    ap=.6,
    speed=2000, -- wiki
-   delay=.6, -- TEST
+   delay=.25, -- TEST
    width=75, -- TEST,
    cost={60,65,70,75,80},
 }
@@ -31,17 +30,19 @@ spells["dark"] = {
    color=red,    
    base={120,170,220,270,320}, 
    ap=1, 
-   delay=.1,
+   delay=1.5,
    speed=0,
    noblock=true,
-   radius=250-25,
+   radius=225-25,
    cost={70,75,80,85,90},
 }
 spells["event"] = {
    key="E", 
    range=700, 
    color=yellow, 
-   radius=400,
+   radius=375,
+   delay=.75,
+   noblock=true,
    cost={80,85,90,95,100},
 }
 spells["burst"] = {
@@ -51,6 +52,12 @@ spells["burst"] = {
    base={250,375,500}, 
    ap=1,
    cost=125,
+   damOnTarget=
+      function(target)
+         if target then
+            return target.ap*.8
+         end
+      end,
 }
 
 AddToggle("", {on=true, key=112, label=""})
@@ -74,7 +81,9 @@ function Run()
    -- end
 
    -- looking for the stun obj and throwing darks at it
-   if CastAtCC("dark") then
+   if CastAtCC("dark") or
+      CastAtCC("strike")
+   then
       return true
    end
 
@@ -95,27 +104,28 @@ function Run()
          return true
       end
    end
-   EndTickActions()
+
+   EndTickActions(true)
 end
 
 function Action()
-   local target = GetWeakestEnemy("event", 250)
-   if target then
-      if CanUse("event") then
-         if FacingMe(target) then
-            local point = Projection(me, target, GetDistance(target)-250)
-            CastXYZ("event", point)
-            PrintAction("Event Horizon <-", target)
-            return true
-         else
-            local point = Projection(me, target, math.min(GetSpellRange("event"), GetDistance(target)+250))
-            CastXYZ("event", point)
-            PrintAction("Event Horizon ->", target)
-            return true
-         end            
-      end
+   -- TestSkillShot("strike")
+   
+   if CanUse("event") and ( Skirmishing() or (CanUse("dark") and me.mana > GetSpellCost("dark") + GetSpellCost("event")) ) then
+      local enemies = SortByDistance(GetInRange(me, "event", ENEMIES))
+      for _,enemy in ipairs(enemies) do
+         local pred, chance = GetSpellFireahead("event", enemy)
+         if chance >= 1 then
+            local pos = Projection(pred, enemy, 150)
+            if IsInRange("event", pos) then
+               CastXYZ("event", pos)
+               PrintAction("Event horizon", enemy)
+               return true
+            end
+         end
+      end      
    end
-      
+
    if CanUse("burst") then
       -- if there aren't any of those lets find a good target
       -- I want to do the largest % remaining health but
@@ -123,7 +133,7 @@ function Action()
       -- one in range.
       -- So I'm thinking 2 things:
       --  Look for targets at +50% range and don't fire unless it's the best one of those
-      --  Don't fire unless it will do 25% of their remaining health
+      --  Don't fire unless it will do 50% of their remaining health
 
       local spell = spells["burst"]
       local bestS = 0
@@ -132,7 +142,7 @@ function Action()
 
       -- look for 1 hit kills
       for _,enemy in ipairs(GetInRange(me, GetSpellRange(spell)*1.5 ,ENEMIES)) do
-         local tDam = CalculateDamage(enemy, burstBase + enemy.ap)
+         local tDam = GetSpellDamage("burst", enemy)
          -- one hit kill in range. kill it.
          if tDam > enemy.health and GetDistance(enemy) < GetSpellRange(spell) then
             Cast("burst", enemy)
@@ -141,7 +151,7 @@ function Action()
          end
 
          local score = tDam/enemy.health
-         if score > .25 then
+         if score > .5 then
             if not bestT or score > bestS then
                bestS = score
                bestT = enemy
@@ -159,11 +169,17 @@ function Action()
       return true
    end
 
+   if not CanUse("strike") then
+      local target = GetMarkedTarget() or GetWeakestEnemy("AA")
+      if AutoAA(target) then
+         return true
+      end
+   end
+
    return false
 end
 
 function FollowUp()
-   -- TODO DON'T USE THE AUTO LAST HITTER
    if IsOn("lasthit") and not CanUse("strike") and Alone() then
       if KillMinion("AA") then
          return true
