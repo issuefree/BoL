@@ -98,7 +98,6 @@ function Run()
 		spells["zero"].cost = spells["zero"].baseCost
 	end
 
-
    if StartTickActions() then
       return true
    end
@@ -155,7 +154,7 @@ end
 local function jungle()
    local camp = GetInRange(me, "iceblast", CREEPS)
    local creep = GetBiggestCreep(camp)
-   local campScore = ScoreCreeps(creep)
+   local campScore = ScoreCreeps(camp)
 
    -- I don't want to spam spells if I'm low mana
    -- I don't want to waste spells if I don't need them for the camp
@@ -164,7 +163,7 @@ local function jungle()
    -- Don't use spells on 1 pt camps.
 
    if CanUse("consume") then
-   	if campScore > GetThreshMP("consume", .05, 2) then
+   	if campScore >= GetThreshMP("consume", .05, 2) then
 	   	if VeryAlone() then
 	   		Cast("consume", creep)
 	   		PrintAction("Consume biggest creep", creep)
@@ -184,7 +183,7 @@ local function jungle()
    end
 
    if CanUse("iceblast") then
-   	if campScore > GetThreshMP("iceblast", .05, 3) then
+   	if campScore >= GetThreshMP("iceblast", .05, 3) then
    		-- I want to iceblast for big damage and AS slow
    		-- I don't want to blow an iceblast into a nearly dead creep
    		if not WillKill("iceblast", creep) then
@@ -198,7 +197,7 @@ local function jungle()
 
    if canBoil() then
    	-- boil if it's less than 15% of my mana
-   	if 1 > GetThreshMP("boil", .15, 0) then
+   	if 1 >= GetThreshMP("boil", .15, 0) then
 	   	if boilADC() then
 	   		return true
 	   	end
