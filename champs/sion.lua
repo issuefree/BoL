@@ -25,7 +25,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["smash"] = {
    key="Q", 
-   range=800, -- TODO
+   range=800, -- TODO wiki says 300-600
    color=yellow, 
    base={20,40,60,80,100}, 
    ad=.65,
@@ -52,7 +52,7 @@ spells["smash"] = {
 spells["furnace"] = {
    key="W", 
    range=525, 
-   color=blue, 
+   color=cyan, 
    base={40,65,90,115,140}, 
    ap=.4,
    targetMaxHealth={.1,.11,.12,.13,.14},
