@@ -40,7 +40,7 @@ function debugTick()
                speed = total/(#testShot.points-1)
                table.insert(testShotSpeeds, speed)
                pp("Speed: "..trunc(speed))
-               pp("\n -> "..trunc(sum(testShotDelays)/#testShotDelays).." "..trunc(sum(testShotSpeeds)/#testShotSpeeds/100).." <-")
+               pp("\n -> "..trunc(sum(testShotDelays)/#testShotDelays).." "..trunc(sum(testShotSpeeds)/#testShotSpeeds).." <-")
                testShot = nil
             end
          end
@@ -155,7 +155,6 @@ function objectFindCreateObject(object)
             pp("Particle: "..object.name)
             local delay = trunc(time() - testShot.castTime)
             delay = delay
-            delay = delay * 10  -- leaguebot units 
             table.insert(testShotDelays, delay)
             pp("Delay: "..delay)
             testShot.object = object
