@@ -280,8 +280,25 @@ local function drawCommon()
    end
 end
 
+
+local ignoredObjectNames = {
+   "DrawFX",
+   -- "missile",
+   "empty.troy",
+   "SRU_Chaos_CM_BA",
+   "SRU_Chaos_MM_BA",
+   "SRU_Order_CM_BA",
+   "SRU_Order_MM_BA",
+   "Minion_T",
+}
 function doCreateObj(object)
    if not (object and object.x and object.z) then
+      return
+   end
+
+   if ListContains(object.name, ignoredObjectNames) or
+      object.name == "missile"
+   then
       return
    end
 
@@ -1931,8 +1948,8 @@ function AutoJungle()
    end
 end   
 
-function EndTickActions()
-   if IsOn("lasthit") and Alone() then
+function EndTickActions(noLastHit)
+   if IsOn("lasthit") and Alone() and not noLastHit then
       if KillMinion("AA") then
          return true
       end
