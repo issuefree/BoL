@@ -318,6 +318,9 @@ function GetWidth(unit)
       return 70
    end
    local width = GetDistance(unit, minbb)
+   -- minbb is distance to the corner of the bounding box (a square)
+   -- root(2) gives the leg so a circle with radius width is contained in the box.
+   width = width/math.sqrt(2)
    -- BoL is returning ridiculous widths
    if width > 500 then
       return 100
@@ -347,7 +350,7 @@ function IsBlocked(target, thing, source, ...)
    for _,blocker in ipairs(concat(...)) do
       if GetDistance(source, target) > GetDistance(source, blocker) then
          local blockPoint = Projection(source, target, GetDistance(source, blocker))
-         if GetDistance(blocker, blockPoint) < (width/2 + GetWidth(blocker)) then
+         if GetDistance(blocker, blockPoint) < (width/2 + GetWidth(blocker)/2) then
             -- pp(blocker.name.." blocking "..target.name)
             return true
          end

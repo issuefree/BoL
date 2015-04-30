@@ -707,7 +707,7 @@ function GetSpellFireahead(thing, target, source)
    elseif IsConeAoE(spell) then
       point, chance = VP:GetConeAOECastPosition(target, spell.delay, spell.cone, GetSpellRange(spell), spell.speed, source)
 	else --   if IsLinearSkillShot(spell) then
-      point, chance = VP:GetLineCastPosition(target, spell.delay, spell.width, GetSpellRange(spell), spell.speed, source, IsBlockedSkillShot(thing))
+      point, chance = VP:GetLineCastPosition(target, spell.delay, spell.width/2, GetSpellRange(spell), spell.speed, source, IsBlockedSkillShot(thing))
    end
    return point, chance
 end
