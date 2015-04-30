@@ -424,17 +424,22 @@ end
 
 
 function createForPersist(object)
+   local gotObj = false
+
    if IsMinorCreep(object) then
       table.insert(MINORCREEPS, object)
       table.insert(CREEPS, object)
+      gotObj = true
    end
    if IsBigCreep(object) then
       table.insert(BIGCREEPS, object)
       table.insert(CREEPS, object)
+      gotObj = true
    end
    if IsMajorCreep(object) then
       table.insert(MAJORCREEPS, object)
       table.insert(CREEPS, object)
+      gotObj = true
       if object.name == "Dragon" then
          Persist("DRAGON", object)
       end
@@ -443,87 +448,122 @@ function createForPersist(object)
       end
    end
 
+   if gotObj then
+      return
+   end
+
    if object.team ~= me.team then
-      PersistAll("TURRET", object, "Turret_T")
+      if PersistAll("TURRET", object, "Turret_T") then
+         return 
+      end
    else
-      PersistAll("MYTURRET", object, "Turret_T")
+      if PersistAll("MYTURRET", object, "Turret_T") then
+         return 
+      end
    end
 
    if find(object.type, "Barracks") then
       if object.team == me.team then
          table.insert(MYINHIBS, object)
+         return 
       else
          table.insert(INHIBS, object)
+         return 
       end
    end
    
-   PersistAll("destroyed", object, "DestroyedBuilding")
-   PersistAll("destroyed", object, "Dest_")
+   if PersistAll("destroyed", object, "DestroyedBuilding") then
+      gotObj = true
+   end
+   if PersistAll("destroyed", object, "Dest_") then
+      gotObj = true
+   end
 
+   if gotObj then
+      return
+   end
 
    if find(object.name, nexusKey) then
       if find(object.name, "order") then
          if me.team == 100 then
             table.insert(MYNEXUS, object)
+            return 
          else
             table.insert(NEXUS, object)
+            return 
          end
       else
          if me.team == 100 then
             table.insert(NEXUS, object)
+            return 
          else
             table.insert(MYNEXUS, object)
+            return 
          end
       end
    end
 
-   PersistOnTargets("recall", object, "TeleportHome", ENEMIES, ALLIES)
+   if gotObj then
+      return
+   end
+
+   if PersistOnTargets("recall", object, "TeleportHome", ENEMIES, ALLIES) then
+      return 
+   end
+
+   if find(object.name, "Ward") then
+      table.insert(WARDS, object)
+      return 
+   end
+
+   if PersistToTrack(object, "Ashe_Base_R_mis", "Ashe", "EnchantedCrystalArrow") or
+      PersistToTrack(object, "HowlingGale_mis", "Janna", "HowlingGale") or
+      PersistToTrack(object, "Ezreal_TrueShot_mis", "Ezreal", "EzrealTrueshotBarrage") 
+   then
+      return 
+   end
 
    if ListContains(object.name, ccNames) then
       local target = PersistOnTargets("cc", object, object.name, ENEMIES, ALLIES)
       if target then
          pp("CC on "..target.charName.." "..object.name)
+         return 
       end
    end
 
-   if find(object.name, "Ward") then
-      table.insert(WARDS, object)
-   end
-
-   PersistToTrack(object, "Ashe_Base_R_mis", "Ashe", "EnchantedCrystalArrow")
-   PersistToTrack(object, "HowlingGale_mis", "Janna", "HowlingGale")
-   PersistToTrack(object, "Ezreal_TrueShot_mis", "Ezreal", "EzrealTrueshotBarrage")
-
    --sheen / trinity
-   PersistBuff("enrage", object, "enrage_buf", 100)
-
+   if PersistBuff("enrage", object, "enrage_buf", 100) or
    --lich bane
-   PersistBuff("lichbane", object, "purplehands_buf", 100)
-
+      PersistBuff("lichbane", object, "purplehands_buf", 100) or
    --iceborn gauntlet
-   PersistBuff("iceborn", object, "bluehands_buf", 100)
-
-   PersistOnTargets("hemoplague", object, "Vladimir_Base_R_debuff.troy", ENEMIES)
-
-   PersistBuff("blind", object, "Global_miss.troy")
-   PersistBuff("silence", object, "LOC_Silence.troy")
-
-   PersistBuff("muramana", object, "ItemMuramanaToggle")
-
-   PersistBuff("manaPotion", object, "Global_Item_Mana")
-   PersistBuff("healthPotion", object, "Global_Item_Health")
+      PersistBuff("iceborn", object, "bluehands_buf", 100) or
+      PersistOnTargets("hemoplague", object, "Vladimir_Base_R_debuff.troy", ENEMIES) or
+      PersistBuff("blind", object, "Global_miss.troy") or
+      PersistBuff("silence", object, "LOC_Silence.troy") or
+      PersistBuff("muramana", object, "ItemMuramanaToggle") or
+      PersistBuff("manaPotion", object, "Global_Item_Mana") or
+      PersistBuff("healthPotion", object, "Global_Item_Health")
+   then
+      return 
+   end
 
    for _,spell in pairs(spells) do
       if spell.modAA and spell.object then
-         PersistBuff(spell.modAA, object, spell.object, 200)
+         if PersistBuff(spell.modAA, object, spell.object, 200) then
+            return 
+         end
       end
    end
 
 
-   PersistOnTargets("invulnerable", object, "eyeforaneye", ENEMIES) -- kayle intervention
-   PersistOnTargets("invulnerable", object, "nickoftime", ENEMIES) -- zilean chronoshift
-   PersistOnTargets("invulnerable", object, "UndyingRage_buf", ENEMIES) -- trynd ult
-   PersistOnTargets("invulnerable", object, "VladSanguinePool_buf", ENEMIES) -- vlad sanguine pool
+   if PersistOnTargets("invulnerable", object, "eyeforaneye", ENEMIES) or -- kayle intervention
+      PersistOnTargets("invulnerable", object, "nickoftime", ENEMIES) or -- zilean chronoshift
+      PersistOnTargets("invulnerable", object, "UndyingRage_buf", ENEMIES) or -- trynd ult
+      PersistOnTargets("invulnerable", object, "VladSanguinePool_buf", ENEMIES) -- vlad sanguine pool
+   then
+      return 
+   end
+
    if PersistOnTargets("invulnerable", object, "zhonya_ring_self_skin.troy", ENEMIES, ALLIES) then -- zhonya's hourglass
       pp("zhonyas activated")
    end
@@ -541,7 +581,7 @@ function createForPersist(object)
                pOn["invulnerable"] = {}
             end
             table.insert(pOn["invulnerable"], "invulnerable"..target.name)
-            break
+            return 
          end
       end
    end
@@ -552,45 +592,58 @@ function createForPersist(object)
       PersistOnTargets("invulnerable", object, "DiplomaticImmunity_buf", ENEMIES) -- poppy diplomatic immunity
    end
 
-   PersistOnTargets("bansheesVeil", object, "bansheesveil_buf", ENEMIES)
+   if PersistOnTargets("bansheesVeil", object, "bansheesveil_buf", ENEMIES) then
+      return
+   end
 
-   PersistOnTargets("spellImmune", object, "Sivir_Base_E_shield", ENEMIES)
-   PersistOnTargets("spellImmune", object, "nocturne_shroudofDarkness_shield", ENEMIES)
+   if PersistOnTargets("spellImmune", object, "Sivir_Base_E_shield", ENEMIES) or
+      PersistOnTargets("spellImmune", object, "nocturne_shroudofDarkness_shield", ENEMIES)
+   then
+      return
+   end
 
 
    -- PETS
    -- zyra
-   PersistPet(object, nil, "ZyraThornPlant")
-   PersistPet(object, nil, "ZyraGraspingPlant")
-   
-   -- malzahar
-   PersistPet(object, "Voidling")
+   if PersistPet(object, nil, "ZyraThornPlant") or
+      PersistPet(object, nil, "ZyraGraspingPlant") or
+      
+      -- malzahar
+      PersistPet(object, "Voidling") or
+      
+      -- yorick
+      PersistPet(object, "Inky") or
+      PersistPet(object, "Blinky") or
+      PersistPet(object, "Clyde") or
 
-   -- yorick
-   PersistPet(object, "Inky")
-   PersistPet(object, "Blinky")
-   PersistPet(object, "Clyde")
+      -- heimerdinger
+      PersistPet(object, "H-28G Evolution Turret") or
+
+      -- leblanc
+      PersistPet(object, "LeblancImage")
+   then
+      return
+   end
+   
    if object.type == "obj_AI_Minion" then
       for _,hero in ipairs(concat(ENEMIES, ALLIES, me)) do
          if object.charName == hero.charName then
             PersistPet(object, object.charName)
-            break
+            return
          end
       end
    end
 
-   -- heimerdinger
-   PersistPet(object, "H-28G Evolution Turret")
-
-   -- leblanc
-   PersistPet(object, "LeblancImage")
-
    -- morde (-- hard to test)
 
    -- shaco
-   PersistPet(object, "Jack In The Box")
+   if PersistPet(object, "Jack In The Box") then
+      return
+   end
    if object.type == "obj_AI_Minion" and P.shacoClone then
-      PersistPet(object, P.shacoClone.charName)
+      if PersistPet(object, P.shacoClone.charName) then
+         return
+      end
    end
 
 end
