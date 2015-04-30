@@ -2520,22 +2520,22 @@ end
 
 function GetInventorySlot(item, hero)
 	hero = hero or me
-    if hero:getInventorySlot(ITEM_1) == item then
-        return 1
-    elseif hero:getInventorySlot(ITEM_2) == item then
-        return 2
-    elseif hero:getInventorySlot(ITEM_3) == item then
-        return 3
-    elseif hero:getInventorySlot(ITEM_4) == item then
-        return 4
-    elseif hero:getInventorySlot(ITEM_5) == item then
-        return 5
-    elseif hero:getInventorySlot(ITEM_6) == item then
-        return 6
-    elseif hero:getInventorySlot(ITEM_7) == item then
-        return 7
-    end
-    return nil
+   if hero:getInventorySlot(ITEM_1) == item then
+      return 1
+   elseif hero:getInventorySlot(ITEM_2) == item then
+      return 2
+   elseif hero:getInventorySlot(ITEM_3) == item then
+      return 3
+   elseif hero:getInventorySlot(ITEM_4) == item then
+      return 4
+   elseif hero:getInventorySlot(ITEM_5) == item then
+      return 5
+   elseif hero:getInventorySlot(ITEM_6) == item then
+      return 6
+   elseif hero:getInventorySlot(ITEM_7) == item then
+      return 7
+   end
+   return nil
 end
 
 function OnDraw()
