@@ -2540,6 +2540,8 @@ end
 
 function OnDraw()
    dlog("start od")
+   -- DrawHitBox(me)
+
    for _,callback in ipairs(DRAW_CALLBACKS) do
    	callback()
    end	
@@ -2561,6 +2563,19 @@ function WillCollide(s, t)
    return nil
 end
 
+function WillCollideBush(s, t)
+   local dist = GetDistance(s,t)
+   local cp = Point(s)
+   cp = Projection(cp,t,10)
+   while GetDistance(s, cp) < dist do
+      if IsWallOfGrass(cp:vector()) then --or #getNearPoints(cp) >= 1 then
+         return cp
+      end
+      cp = Projection(cp,t,10)
+   end
+   return nil
+end
+
 function GetNearestWall(target, dist)
    local wallPoint
    local wallDist
@@ -2574,5 +2589,21 @@ function GetNearestWall(target, dist)
    end
    if wallPoint then
       return wallPoint
+   end
+end
+
+function GetNearestBush(target, dist)
+   local bushPoint
+   local bushDist
+   local points = GetCircleLocs(target, dist)
+   for _,point in ipairs(points) do
+      local cp = WillCollideBush(target, point)
+      if cp and ( not bushPoint or GetDistance(cp) < bushDist ) then
+         bushPoint = cp
+         bushDist = GetDistance(cp)
+      end
+   end
+   if bushPoint then
+      return bushPoint
    end
 end
