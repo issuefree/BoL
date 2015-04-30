@@ -20,8 +20,8 @@ spells["strike"] = {
    base={80,125,170,215,260}, 
    ap=.6,
    speed=2000, -- wiki
-   delay=.25, -- TEST
-   width=75, -- TEST,
+   delay=.4, -- tss
+   width=85, -- reticle
    cost={60,65,70,75,80},
 }
 spells["dark"] = {
