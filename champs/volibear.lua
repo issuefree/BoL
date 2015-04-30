@@ -1,21 +1,18 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
-
--- Try to stick to one "action" per loop.
--- Action function should return 
---   true if they perform an action that takes time (most spells attacks)
---   false if no action or the spell takes no time
-
 pp("\nTim's Volibear")
 
-AddToggle("move", {on=true, key=112, label="Move to Mouse"})
+AddToggle("", {on=true, key=112, label=""})
 AddToggle("", {on=true, key=113, label=""})
 AddToggle("", {on=true, key=114, label=""})
 AddToggle("", {on=true, key=115, label=""})
 
 AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0}", args={GetAADamage}})
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
+AddToggle("move", {on=true, key=118, label="Move to Mouse"})
+
+InitAAData({})
 
 spells["thunder"] = {
    key="Q", 
@@ -28,7 +25,7 @@ spells["frenzy"] = {
    range=400,
    color=violet, 
    base={80,125,170,215,260}, 
-   bonusHealth=.15,
+   targetMissingHealth=.01,
    type="P",
    cost=35
 } 
@@ -49,17 +46,9 @@ spells["claws"] = {
    cost=100
 } 
 
-spells["AA"].damOnTarget = 
-   function(target)
-      if target then
-         return GetSpellDamage("frenzy") * (1-GetHPerc(target))
-      end
-      return 0
-   end
-
 function Run()
-   local bonusHealth = me.maxHealth - 440*(me.level-1)*86
-   spell["frenzy"].bonus = bonusHealth * .15
+   local bonusHealth = math.round(me.maxHealth - (584.48+(me.level-1)*63.5))
+   spells["frenzy"].bonus = bonusHealth * .15
 
    if StartTickActions() then
       return true
