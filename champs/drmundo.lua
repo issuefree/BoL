@@ -4,7 +4,6 @@ require "issuefree/modules"
 pp("Tim's Mundo")
 
 InitAAData({
-   windup = .2,
    extraRange=10,
 })
 
@@ -14,10 +13,11 @@ spells["cleaver"] = {
    color=violet, 
    base={80,130,180,230,280},
    type="M",
-   width=60, -- patch notes
+   width=80, -- reticle -- wiki says 60
    delay=.23,  -- tss
    speed=2000,
-   showFireahead=true   
+   showFireahead=true,
+   cost=0,
 }
 spells["agony"] = {
    key="W",
@@ -25,13 +25,15 @@ spells["agony"] = {
    color=red, 
    base={35,50,65,80,95},
    type="M", 
-   ap=.2
+   ap=.2,
+   cost=0,
 }
 spells["masochism"] = {
    key="E",
    base={40,55,70,85,100},
    mhp={0.4,0.55,0.7,0.85,1},
-   type="P"
+   type="P",
+   cost=0,
 }
 
 AddToggle("", {on=true, key=112, label=""})
