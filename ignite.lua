@@ -1,6 +1,22 @@
 require "issuefree/timCommon"
 
-local ignite = {range=600, color=red, base={50}, lvl=20, type="T"}
+local ignite = {
+   range=600, 
+   color=red, 
+   base={50}, 
+   lvl=20, 
+   type="T"
+}
+local snowball = {
+   range=2500,
+   color=blue,
+   base=20,
+   level=10,
+   type="T",
+   delay=.1, -- tss
+   speed=1100, -- tss
+   width=50, -- reticle
+}
 
 if GetSpellInfo("D").name == "summonerdot" then
    ignite.key = "D"
@@ -12,15 +28,35 @@ elseif GetSpellInfo("F").name == "summonerdot" then
 -- print("Ignite in "..ignite.key)
 end
 
+if GetSpellInfo("D").name == "summonersnowball" then
+   snowball.key = "D"
+   spells["snowball"] = snowball
+-- print("Ignite in "..ignite.key)
+elseif GetSpellInfo("F").name == "summonersnowball" then
+   snowball.key = "F"
+   spells["snowball"] = snowball
+-- print("Ignite in "..ignite.key)
+end
+
 function igniteTick()
    local inRange = GetInRange(me, "ignite", ENEMIES)
    for _,enemy in ipairs(inRange) do      
       if CanUse("ignite") and WillKill("ignite", enemy) then
          Cast("ignite", enemy)
          PrintAction("Ignite for kill", enemy, 1)
-         return
+         return true
       end      
    end
+
+   if CanUse("snowball") then
+      local targets = SortByDistance(GetGoodFireaheads("snowball", 2))
+      if targets[1] then
+         CastFireahead("snowball", targets[1])
+         PrintAction("Snowball", targets[1])
+         return true
+      end
+   end
+
 end
 
 local function onSpell(unit, spell)
