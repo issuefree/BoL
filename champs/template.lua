@@ -10,7 +10,7 @@ require "issuefree/modules"
 pp("\nTim's Template")
 
 InitAAData({ 
---    speed = 1300, windup=.25,
+--    speed = 1300,
 --    minMoveTime = 0,
 --    extraRange=-20,
 --    particles = {"TeemoBasicAttack_mis", "Toxicshot_mis"} 
