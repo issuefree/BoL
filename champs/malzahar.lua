@@ -84,6 +84,10 @@ function getVoidHits(target, targets)
    return uniques(hits)
 end
 
+function getNumVoidHits(target, targets)
+   return #getVoidHits(target, targets)
+end
+
 local lastVisionsLoc = nil
 
 function Run()
@@ -185,7 +189,7 @@ function Action()
    -- void for aoe want 2 hits
    if CanUse("void") then
       local targets = GetGoodFireaheads("void", 1, ENEMIES)
-      local target, score = SelectFromList(targets, getVoidHits, targets)
+      local target, score = SelectFromList(targets, getNumVoidHits, targets)
       if score >= 2 then
          CastXYZ("void", GetCastPoint(target, "void"))
          PrintAction("Void for AoE", score)
