@@ -31,7 +31,11 @@ require "issuefree/spellUtils"
 
 function GetAARange(target)
    target = target or me
-   return target.range + spells["AA"].extraRange
+   if IsMe(target) then
+      return target.range + spells["AA"].extraRange
+   else
+      return target.range
+   end
 end
 
 function IsMelee(target)
