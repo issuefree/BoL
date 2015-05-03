@@ -1172,9 +1172,9 @@ function GetKills(thing, list)
 end
 
 function CanChargeTear()
-   local slot = GetInventorySlot(ITEMS["Tear of the Goddess"].id) or
-                GetInventorySlot(ITEMS["Archangel's Staff"].id) or
-                GetInventorySlot(ITEMS["Manamune"].id)
+   local slot = GetInventorySlot(ITEMS["Tear of the Goddess"]) or
+                GetInventorySlot(ITEMS["Archangel's Staff"]) or
+                GetInventorySlot(ITEMS["Manamune"])
    if not slot then
       return false
    end
@@ -1257,7 +1257,7 @@ end
 
 function GetAADamage(target)   
    local damage = GetSpellDamage("AA", target, true)
-   
+
    for name,spell in pairs(spells) do
       if spell.modAA and P[spell.modAA] then
          modSpell = copy(spell)
@@ -2139,7 +2139,7 @@ function GetItem(itemName)
    local item = ITEMS[itemName]
    if not item then return nil end
 
-   local slot = GetInventorySlot(item.id)
+   local slot = GetInventorySlot(item)
    if not slot then return nil end
    slot = tostring(slot)
 
@@ -2149,7 +2149,7 @@ end
 local flaskCharges = 3
 function UseItem(itemName, target, force)
    local item = ITEMS[itemName]
-   local slot = GetInventorySlot(item.id)
+   local slot = GetInventorySlot(item)
    if not slot or slot == 0 then return end   
    slot = tostring(slot)
 
@@ -2520,19 +2520,40 @@ end
 
 function GetInventorySlot(item, hero)
 	hero = hero or me
-   if hero:getInventorySlot(ITEM_1) == item then
+
+   if type(item) == "number" then
+      item = GetItemByID(item)
+   end
+
+   if not item then return end
+
+   if hero:getInventorySlot(ITEM_1) == item.id or
+      (hero:getItem(ITEM_1) and hero:getItem(ITEM_1).name == item.name)
+   then
       return 1
-   elseif hero:getInventorySlot(ITEM_2) == item then
+   elseif hero:getInventorySlot(ITEM_2) == item.id or
+      (hero:getItem(ITEM_2) and hero:getItem(ITEM_2).name == item.name)
+   then
       return 2
-   elseif hero:getInventorySlot(ITEM_3) == item then
+   elseif hero:getInventorySlot(ITEM_3) == item.id or
+      (hero:getItem(ITEM_3) and hero:getItem(ITEM_3).name == item.name)
+   then
       return 3
-   elseif hero:getInventorySlot(ITEM_4) == item then
+   elseif hero:getInventorySlot(ITEM_4) == item.id or
+      (hero:getItem(ITEM_4) and hero:getItem(ITEM_4).name == item.name)
+   then
       return 4
-   elseif hero:getInventorySlot(ITEM_5) == item then
+   elseif hero:getInventorySlot(ITEM_5) == item.id or
+      (hero:getItem(ITEM_5) and hero:getItem(ITEM_5).name == item.name)
+   then
       return 5
-   elseif hero:getInventorySlot(ITEM_6) == item then
+   elseif hero:getInventorySlot(ITEM_6) == item.id or
+      (hero:getItem(ITEM_6) and hero:getItem(ITEM_6).name == item.name)
+   then
       return 6
-   elseif hero:getInventorySlot(ITEM_7) == item then
+   elseif hero:getInventorySlot(ITEM_7) == item.id or
+      (hero:getItem(ITEM_7) and hero:getItem(ITEM_7).name == item.name)
+   then
       return 7
    end
    return nil

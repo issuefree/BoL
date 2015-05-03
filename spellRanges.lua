@@ -46,7 +46,7 @@ function rangeTick()
    
    local ranges = {}
    for name, item in pairs(ITEMS) do
-      if GetInventorySlot(item.id) and item.range and item.color then
+      if GetInventorySlot(item) and item.range and item.color then
          local range = item.range
          while ranges[range] do
             range = range+1

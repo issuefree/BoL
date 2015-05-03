@@ -159,7 +159,7 @@ function GetCD(thing, hero)
 
    local cd
    if spell.id then -- item
-      cd = GetSpellInfo(tostring(GetInventorySlot(spell.id))).currentCd
+      cd = GetSpellInfo(tostring(GetInventorySlot(spell))).currentCd
    else
       cd = GetSpellInfo(spell.key).currentCd
    end
@@ -192,7 +192,7 @@ function Cast(thing, target, force)
    	CastFireahead(spell, target)
    else
    	if spell.id then
-   		local slot = GetInventorySlot(spell.id)
+   		local slot = GetInventorySlot(spell)
    		CastSpell(getISpell(slot), target)
    	else
    		CastSpell(getISpell(spell.key), target)
@@ -298,7 +298,7 @@ function CanUse(thing)
       --    return CanAttack()
       -- end
       if thing.id then -- item
-         return IsCooledDown(GetInventorySlot(thing.id))
+         return IsCooledDown(GetInventorySlot(thing))
       elseif thing.key then -- spell
       	if not ListContains(thing.key, {"Q","W","E","R","D","F"}) then
       		return false
@@ -323,6 +323,7 @@ function CanUse(thing)
       else  -- spells without keys are always ready
          return true
       end
+   -- TODO this won't work with the new getinventoryslot
    elseif type(thing) == "number" then -- item id
       return IsCooledDown(GetInventorySlot(thing))
    else -- string
@@ -336,7 +337,7 @@ function CanUse(thing)
             return true -- a defined spell without a key prob auto attack
          end
       elseif ITEMS[thing] then  -- passed in the name of an item
-         return IsCooledDown(GetInventorySlot(ITEMS[thing].id))
+         return IsCooledDown(GetInventorySlot(ITEMS[thing]))
       else -- other string must be a slot
          if thing == "D" or thing == "F" then
             return IsCooledDown(thing)
@@ -494,7 +495,6 @@ function GetSpellDamage(thing, target, ignoreResists)
    if spell.modAA and P[spell.modAA] then -- if the mod is on then the damage should already be in the AA
 		return GetAADamage()
    end
-
    damage = damage + Damage(GetLVal(spell, "base", target), spell.type or "M")
    damage = damage + GetLVal(spell, "ap", target)*me.ap
    damage = damage + GetLVal(spell, "ad", target)*me.totalDamage
@@ -526,10 +526,10 @@ function GetSpellDamage(thing, target, ignoreResists)
    end
 
    if spell.scale then
-   	local scale = GetLVal(spell, "scale", target)
-   	if scale then
-   		damage = damage * scale
-   	end
+      local scale = GetLVal(spell, "scale", target)
+      if scale then
+         damage = damage * scale
+      end
    end
 
    if type(damage) ~= "number" and damage.type ~= "H" then
@@ -560,12 +560,12 @@ function GetSpellDamage(thing, target, ignoreResists)
    -- add spellblade if it's not on to account for it's activation.
    -- if it's on AA will account for it so don't add it.
    if spell.modAA and not P[spell.modAA] then
-   	-- if the mod is off then add the aa damage here
-   	damage = damage + GetAADamage() + GetSpellbladeDamage(false) - GetSpellbladeDamage(true)
+      -- if the mod is off then add the aa damage here
+      damage = damage + GetAADamage() + GetSpellbladeDamage(false) - GetSpellbladeDamage(true)
    end
 
    if spell.offModAA then
-   	damage = damage + GetSpellbladeDamage(false) - GetSpellbladeDamage(true)
+      damage = damage + GetSpellbladeDamage(false) - GetSpellbladeDamage(true)
    end
 
    if spell.onHit then
@@ -580,7 +580,7 @@ function GetSpellDamage(thing, target, ignoreResists)
          damage.m = damage.m*1.12
       end
       if not ignoreResists then
-      	damage = CalculateDamage(target, damage)
+         damage = CalculateDamage(target, damage)
       end
    end
 
@@ -598,39 +598,40 @@ end
 function GetOnHitDamage(target, needSpellbladeActive) -- gives your onhit damage broken down by magic,phys
    local damage = Damage()
 
-   if GetInventorySlot(ITEMS["Nashor's Tooth"].id) then
+   if GetInventorySlot(ITEMS["Nashor's Tooth"]) then
       damage = damage + GetSpellDamage(ITEMS["Nashor's Tooth"])
    end
-   if GetInventorySlot(ITEMS["Wit's End"].id) then
+
+   if GetInventorySlot(ITEMS["Wit's End"]) then
       damage = damage + GetSpellDamage(ITEMS["Wit's End"])
    end
 
    damage = damage + GetSpellbladeDamage(needSpellbladeActive)
 
-	if GetInventorySlot(ITEMS["Feral Flare"].id) then
+	if GetInventorySlot(ITEMS["Feral Flare"]) then
       damage = damage + GetSpellDamage(ITEMS["Feral Flare"])
    end
 
    if target then
-	   if GetInventorySlot(ITEMS["Blade of the Ruined King"].id) then
+	   if GetInventorySlot(ITEMS["Blade of the Ruined King"]) then
          damage = damage + Damage(target.health*.08, "P")
 	   end
 
-	   if GetInventorySlot(ITEMS["Kitae's Bloodrazor"].id) then
+	   if GetInventorySlot(ITEMS["Kitae's Bloodrazor"]) then
          damage = damage + Damage(target.maxHealth*.025, "M")
 	   end
 
-   	if GetInventorySlot(ITEMS["Feral Flare"].id) then
+   	if GetInventorySlot(ITEMS["Feral Flare"]) then
          if IsCreep(target) or IsMinion(target) then
          	damage = damage + GetSpellDamage(ITEMS["Feral Flare"])*2
          end
       end
 
 	   if IsCreep(target) then
-	   	if GetInventorySlot(ITEMS["Madred's Razors"].id) then
+	   	if GetInventorySlot(ITEMS["Madred's Razors"]) then
 	         damage = damage + GetSpellDamage(ITEMS["Madred's Razors"])
 	      end
-	   	if GetInventorySlot(ITEMS["Wriggle's Lantern"].id) then
+	   	if GetInventorySlot(ITEMS["Wriggle's Lantern"]) then
 	         damage = damage + GetSpellDamage(ITEMS["Wriggle's Lantern"])
 	      end
 		end

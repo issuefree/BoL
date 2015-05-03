@@ -50,7 +50,7 @@ local function cleanseObj(object)
 		end
 		
 		local item = ITEMS["Quicksilver Sash"]
-		local slot = GetInventorySlot(item.id)
+		local slot = GetInventorySlot(item)
 		if slot and CheckCC(object, byItem) then
 			CastSpellTarget(slot, me)
 			pp("Removed "..object.name.." with QSS.")
@@ -58,7 +58,7 @@ local function cleanseObj(object)
 		end
 
 		local item = ITEMS["Mercurial Scimitar"]
-		local slot = GetInventorySlot(item.id)
+		local slot = GetInventorySlot(item)
 		if slot and CheckCC(object, byItem) then
 			CastSpellTarget(slot, me)
 			pp("Removed "..object.name.." with MS.")
@@ -73,7 +73,7 @@ local function cleanseObj(object)
 	end
 
 	local item = ITEMS["Mikael's Crucible"]
-	local slot = GetInventorySlot(item.id)
+	local slot = GetInventorySlot(item)
 	if slot then
 		if CheckCC(object, byItem) then
 			if GetDistance(ADC, object) < 75 then
