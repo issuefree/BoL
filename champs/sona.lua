@@ -4,7 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Sona")
 
 InitAAData({ 
-   speed = 1600,
+   speed = 1500,
    -- extraRange=-20,
    particles = {"Sona_Base_BA", "PowerChord_mis"}
 })
