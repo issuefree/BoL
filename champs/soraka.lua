@@ -123,7 +123,7 @@ function Action()
 	if CanUse("starcall") then
 		if GetHPerc() > .75 then -- for harrass and damage
 			if GetMPerc() > .9 then -- throw em with abandon
-				if SkillShot("starcall") then
+				if SkillShot("starcall", nil, nil, 2) then
 					PrintAction("harass", nil, 1)
 					return true
 				end
@@ -135,7 +135,7 @@ function Action()
 			end
 		else -- for healing
 			if GetMPerc() > GetHPerc() then -- I have more mana than health. hit something
-				if SkillShot("starcall") then
+				if SkillShot("starcall", nil, nil, 2) then
 					PrintAction("M > H", nil, 1)
 					return true
 				end
