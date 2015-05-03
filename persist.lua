@@ -561,6 +561,7 @@ function createForPersist(object)
       PersistOnTargets("invulnerable", object, "UndyingRage_buf", ENEMIES) or -- trynd ult
       PersistOnTargets("invulnerable", object, "VladSanguinePool_buf", ENEMIES) -- vlad sanguine pool
    then
+      pp("Invulnerable", object.name)
       return 
    end
 
@@ -580,6 +581,22 @@ function createForPersist(object)
             if not pOn["invulnerable"] then
                pOn["invulnerable"] = {}
             end
+            table.insert(pOn["invulnerable"], "invulnerable"..target.name)
+            return 
+         end
+      end
+   end
+
+   if find(object.name, "KogMaw_Base_P_foam") then
+      for _,target in ipairs(ENEMIES) do
+         if find(target.charName, "KogMaw") then
+            Persist("invulnerable"..target.name, object)
+            PData["invulnerable"..target.name].unit = target
+            PData["invulnerable"..target.name].time = time()
+            if not pOn["invulnerable"] then
+               pOn["invulnerable"] = {}
+            end
+            pp("here")
             table.insert(pOn["invulnerable"], "invulnerable"..target.name)
             return 
          end
