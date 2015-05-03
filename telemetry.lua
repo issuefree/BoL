@@ -320,7 +320,7 @@ function GetWidth(unit)
    local width = GetDistance(unit, minbb)
    -- minbb is distance to the corner of the bounding box (a square)
    -- root(2) gives the leg so a circle with radius width is contained in the box.
-   width = width/math.sqrt(2)
+   --width = width/math.sqrt(2)
    -- BoL is returning ridiculous widths
    if width > 500 then
       return 100
@@ -525,7 +525,6 @@ end
 
 function GetInRange(source, thing, ...)
    assert(type(source) == "table" or type(source) == "userdata")
-   -- assert(type(concat(...)[1]) ~= "nil")
 
    local range
    if type(thing) ~= "number" then
