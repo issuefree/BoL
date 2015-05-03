@@ -21,21 +21,17 @@ local snowball = {
 if GetSpellInfo("D").name == "summonerdot" then
    ignite.key = "D"
    spells["ignite"] = ignite
--- print("Ignite in "..ignite.key)
 elseif GetSpellInfo("F").name == "summonerdot" then
    ignite.key = "F"
    spells["ignite"] = ignite
--- print("Ignite in "..ignite.key)
 end
 
 if GetSpellInfo("D").name == "summonersnowball" then
    snowball.key = "D"
    spells["snowball"] = snowball
--- print("Ignite in "..ignite.key)
 elseif GetSpellInfo("F").name == "summonersnowball" then
    snowball.key = "F"
    spells["snowball"] = snowball
--- print("Ignite in "..ignite.key)
 end
 
 function igniteTick()
@@ -48,12 +44,14 @@ function igniteTick()
       end      
    end
 
-   if CanUse("snowball") then
-      local targets = SortByDistance(GetGoodFireaheads("snowball", 2))
-      if targets[1] then
-         CastFireahead("snowball", targets[1])
-         PrintAction("Snowball", targets[1])
-         return true
+   if HotKey() then
+      if CanUse("snowball") and GetSpellInfo(snowball.key).name == "summonersnowball" then
+         local targets = SortByDistance(GetGoodFireaheads("snowball", 2, ENEMIES))
+         if targets[1] then
+            CastFireahead("snowball", targets[1])
+            PrintAction("Snowball", targets[1], 1)
+            return true
+         end
       end
    end
 
@@ -72,7 +70,7 @@ local function onSpell(unit, spell)
    end
 end
 
-if spells["ignite"] then
-   AddOnTick(igniteTick)
-   AddOnSpell(onSpell)
-end
+-- if spells["ignite"] then
+-- end
+AddOnTick(igniteTick)
+AddOnSpell(onSpell)
