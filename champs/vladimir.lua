@@ -43,15 +43,18 @@ spells["transfusion"] = {
    range=600, -- -25,
    color=violet, 
    base={90,125,160,195,230}, 
-   ap=.6
+   ap=.6,
+   cost=0,
 } 
 spells["transfusionHeal"] = {
    base={15,25,35,45,55}, 
-   ap=.25
+   ap=.25,
+   cost=0,
 } 
 spells["pool"] = {
    key="W",
-   radius=150
+   radius=150,
+   cost=0,
 } 
 spells["tides"] = {
    key="E", 
@@ -60,7 +63,8 @@ spells["tides"] = {
    base={60,85,110,135,160}, 
    ap=.45,
    healthCost={30,40,50,60,70},
-   stackTime=10
+   stackTime=10,
+   cost=0,
 }
 spells["tideStack"] = {
    base=spells["tides"].base
@@ -72,7 +76,8 @@ spells["plague"] = {
    base={168,280,392}, 
    ap=.784,
    radius=375, -- reticle
-   timeout=5
+   timeout=5,
+   cost=0,
 } 
 
 local tideStacks = 0
