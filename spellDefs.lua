@@ -270,6 +270,7 @@ SPELL_DEFS = {
 			range=650, radius=300, time=1.5, ss=true, isline=false, physical=true,
 			type="dash", ends="point"
 		},
+		jarvanivgoldenaegis={},
 	},
    Jax={
       jaxleapstrike={type="dash", ends="target", overShoot=-50},
