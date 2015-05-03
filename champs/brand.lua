@@ -7,6 +7,7 @@ SetChampStyle("caster")
 
 InitAAData({
   speed = 1975,
+  extraWindup=.1,
   particles = {"BrandBasicAttack", "BrandCritAttack"}
 })
 
@@ -167,6 +168,14 @@ function Action()
             return true
          end
 
+      end
+   end
+
+   if CanUse("pillar") then
+      if GetMPerc() > .75 then
+         if SkillShot("pillar") then
+            return true
+         end
       end
    end
 
