@@ -172,8 +172,27 @@ local wall = {}
 --    end
 -- end
 
+local xc, yc = 1750, 100
+local function PrintLine(str, line, col)
+   Text(str,xc+col*25,yc+line*15,0xFFCCEECC);
+end
+local enemyCache = {}
+
 local function drawCommon()
    -- DrawHeroWealth()
+   
+   PrintLine("MR", 0, 4)
+   PrintLine("AR", 0, 5)
+   for i,enemy in ipairs(ENEMIES) do
+      enemyCache[enemy.charName] = cloneTarget(enemy)
+   end
+   local i = 0
+   for _,enemy in pairs(enemyCache) do
+      i = i+1
+      PrintLine(enemy.charName, i, 1)
+      PrintLine(trunc(enemy.magicArmor,0), i, 4)
+      PrintLine(trunc(enemy.armor,0), i, 5)
+   end
 
    if me.dead then
       return
@@ -557,6 +576,7 @@ function cloneTarget(target)
    t.health = target.health
    t.maxHealth = target.maxHealth
    t.armor = target.armor
+   t.magicArmor = target.magicArmor
    t.valid = true
    t.visible = true
    t.name = target.name
