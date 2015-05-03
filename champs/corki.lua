@@ -26,9 +26,9 @@ spells["bomb"] = {
    base={80,130,180,230,280},
    ap=.5,
    adBonus=.5,
-   delay=.14,
+   delay=.24,
    speed=1000,    -- Patch Notes
-   radius=300,
+   radius=300-50,
    cost={60,70,80,90,100},
    noblock=true
 }
