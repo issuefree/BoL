@@ -316,6 +316,9 @@ end
 
 -- remove the items from list2 from list1
 function RemoveFromList(list1, list2)
+   if type(list2) ~= "table" then
+      list2 = {list2}
+   end
    return FilterList(list1, function(item) return not ListContains(item, list2) end)
 end
 
