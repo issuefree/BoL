@@ -13,8 +13,8 @@ pp(" - lasthit artillery >= 2 if no stacks and alone")
 SetChampStyle("marksman")
 
 InitAAData({
-   speed = 1800,
-   particles = {"KogMawBasicAttack", "KogMawBioArcaneBarrage_mis"}
+   speed=1800,
+   particles={"KogMawBasicAttack", "KogMawBioArcaneBarrage_mis"}
 })
 
 AddToggle("", {on=true, key=112, label=""})
