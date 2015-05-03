@@ -14,10 +14,12 @@ pp("\nTim's Vayne")
 --    condemn away alister when he headbutts
 --    condemn away blitz when he pulls
 --    condemn away darius when he pulls
+--    I seem to be rolling after I already shoot to finish rings.
 
 InitAAData({
    speed = 2000,
-   -- extraRange=-10,
+   extraRange=-15,
+   extraWindup=.05,
    resets={GetSpellInfo("Q").name},
    particles = {"vayne_basicAttack_mis.troy", "vayne_critAttack_mis.troy", "vayne_ult_mis.troy"}
 })
