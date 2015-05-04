@@ -16,6 +16,8 @@ ignoredSpells = {
 	"trinket", "HealthBomb", "RanduinsOmen", "YoumusBlade", "FlaskOfCrystalWater", 
 	"ElixirOfWrath", "HextechGunblade", "Muramana", "shurelyascrest", "lanternwally",
 	"kalistarallydash", "hextechsweeper", "quicksilversash", "dummy",
+
+	"snowballfollowupcast",
 }
 
 SPELL_DEFS = {
@@ -303,7 +305,7 @@ SPELL_DEFS = {
 		karmaq={key="Q"},
 		karmasolkimshield={key="E"},
 		karmamantra={key="R"},
-
+		karmaspiritbind={},
 	},
 	Karthus = {
 		laywaste={key="Q", range=875, radius=150, time=1, ss=true, isline=false},
@@ -327,6 +329,7 @@ SPELL_DEFS = {
 			range=700, radius=150, time=1, ss=true, isline=true, point=true,
 			type="dash", ends="point"
 		},
+		netherblade={},
 	},
 	Katarina = {
 		katarinaq={},
