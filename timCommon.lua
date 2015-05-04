@@ -36,7 +36,7 @@ function OnLoad()
 end
 
 function OnUnload()
-	LOG_FILE:close()
+	-- LOG_FILE:close()
 end
 
 CREEP_ACTIVE = false
@@ -1601,7 +1601,6 @@ function GetPing()
 end
 
 function OnProcessSpell(unit, spell)
-   dlog("start ops")
    if ModuleConfig.ass and IsEnemy(unit) then
       local shot = GetSpellShot(unit, spell)
       if shot and not shot.dodgeByObject then
@@ -1662,7 +1661,6 @@ function OnProcessSpell(unit, spell)
       callback(unit, spell)
    end
 
-   dlog("end ops")
 end
 
 DODGING = false
@@ -1836,10 +1834,8 @@ function OnTick()
    CheckTrinket()
 
    for _,callback in ipairs(TICK_CALLBACKS) do
-      -- dlog(callback[1])
    	callback[2]()
    end
-   dlog("end ontick")
 end
 
 DISRUPTS = {
@@ -2024,10 +2020,6 @@ function EndTickActions(noLastHit)
 
    PrintAction()
    return false
-end
-
-function IsLoLActive()
-   return tostring(winapi.get_foreground_window()) == "League of Legends (TM) Client"
 end
 
 function AA(target, force)
@@ -2301,7 +2293,7 @@ function UseItem(itemName, target, force)
 
 
    elseif itemName == "Mikael's Crucible" then
-      -- It can heal or it can cleans
+      -- It can heal or it can cleanse
       -- heal is better the lower they are so how about scan in range heros and heal the lowest under 25%
       -- the cleanse is trickier. should I save it for higher priority targets or just use it on the first who needs it?\
       -- I took (or tried to) take out the slows so it will only work on harder cc.
@@ -2584,7 +2576,6 @@ function GetInventorySlot(item, hero)
 end
 
 function OnDraw()
-   dlog("start od")
    -- DrawHitBox(me)
 
    for _,callback in ipairs(DRAW_CALLBACKS) do
@@ -2592,7 +2583,6 @@ function OnDraw()
    end	
 
    DoDraws()
-   dlog("end od")
 end
 
 function WillCollide(s, t)

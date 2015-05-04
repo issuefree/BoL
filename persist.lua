@@ -650,15 +650,18 @@ end
 
 function createForPersist(object)
    if persistCreeps(object) then
+      log("Creep created: "..object.charName, "object")
       return
    end
 
    if persistBuildings(object) then
+      log("Building created: "..object.charName, "object")
       return
    end
 
    if find(object.name, "Ward") then
       table.insert(WARDS, object)
+      log("Ward created: "..object.charName, "object")
       return 
    end
 
@@ -678,10 +681,12 @@ function createForPersist(object)
    end
 
    if persistBuffs(object) then
+      log("Buff created: "..object.name, "object")
       return
    end
 
    if persistPets(object) then
+      log("Pet created: "..object.charName, "object")
       return
    end
 

@@ -518,30 +518,20 @@ function SaveConfig(name, config)
    file:close()
 end
 
-LOG_FILE = nil
-DEBUG_LOG_FILE = nil
-function log(text)
-   if not LOG_FILE then
-         LOG_FILE = io.open(BOL_PATH.."BOL.log", "w")
+LOG_FILES = {}
+ACTIVE_LOGS = {"base", "spelldefs"}
+
+function log(text, logType)
+   logType = logType or "base"
+   if ACTIVE_LOGS[logType] then
+      if not LOG_FILES[logType] then
+         local mode = "a"
+         if logType == "base" then
+            mode = "w"
+         end
+         LOG_FILES[logType] = io.open(BOL_PATH..logType..".log", mode)
+      end
+      LOG_FILES[logType]:write(text)
+      LOG_FILES[logType]:flush()
    end
-   LOG_FILE:write(text)
-   LOG_FILE:flush()
 end
-
-DO_LOG = false
-function dlog(text)
-   if not DO_LOG then return end
-
-   if not DEBUG_LOG_FILE then
-      DEBUG_LOG_FILE = io.open(BOL_PATH.."boldebug.log", "a")
-   end
-   DEBUG_LOG_FILE:write(text.."\n")
-   DEBUG_LOG_FILE:flush()
-end
-
-function onSplat(foo)
-   pp(foo)
-   pp(debug.traceback())
-end
-
-AddBugsplatCallback(onSplat)

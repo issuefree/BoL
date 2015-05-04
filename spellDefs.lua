@@ -874,14 +874,14 @@ function GetSpellDef(name, spellName)
 					return
 				end
 			end
-			pp("No def for "..name)
-			pp(string.lower(spellName).."={},")
+			log("No def for "..name, "spelldefs")
+			log(string.lower(spellName).."={},", "spelldefs")
 			print("Spell Def needed: "..name.." "..spellName)
-			-- PlaySound("Beep")
 			table.insert(ignoredSpells, spellName)
 		end
 	else
-		pp("No defs for "..name)
+		print("No defs for "..name)
+		log("No defs for "..name, "spelldefs")
 	end
 	return nil
 end
