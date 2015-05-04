@@ -1,6 +1,8 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
+-- TODO do something with auto stun
+
 pp("Tim's Taric")
 pp(" - Heal")
 
