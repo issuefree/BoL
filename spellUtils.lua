@@ -213,32 +213,6 @@ function CastXYZ(thing, x,y,z)
    CastSpell(getISpell(spell.key), p.x, p.z)
 end
 
--- local sx, sy
--- function CastClick(thing, x,y,z)
---    local spell = GetSpell(thing)
---    if not spell then return end
-   
---    local p = Point(x,y,z)
-
---    if IsLoLActive() and IsChatOpen() == 0 then
---       if sx == nil then
---          sx = GetCursorX()
---          sy = GetCursorY()
---       end
---       ClickSpellXYZ(spell.key, p.x, p.y, p.z, 0)
---       DoIn(
---          function() 
---             if sx then 
---                send.mouse_move(sx, sy) 
---                sx = nil
---                sy = nil
---             end
---          end, 
---          .1 
---       )
---    end
--- end
-
 function CastBuff(spell, switch)
    if CanUse(spell) then
       if P[spell] and switch == false then
