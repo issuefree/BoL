@@ -143,7 +143,7 @@ function Action()
    -- TestSkillShot("bomb", "Q_Mis")
    -- TestSkillShot("barrage")
 
-   if SkillShot("bomb") then
+   if SkillShot("bomb", nil, nil, 3) then
       return true
    end
 
