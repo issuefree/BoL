@@ -3,3 +3,11 @@
 Optimize object maintenance cycle. This _seems_ to be the biggest source of performance issues.
 	- I've added an early abort for some common objects that I don't think I care about. (minions, minion attacks etc)
 	- I might add an early abort if an object is processed. E.g. if an object is a creep there's no need to check if it's a buff also.
+
+
+My disrupt and prediction stuff is pretty spread out and confusing.
+	I should be able to detect invulnerablity by spell as well as by object. By spell should be WAY more reliable but doesn't work if I don't see the cast.
+		I don't need to find and process the zhonya's object and pair it with a player. If I see them use the item I know how long it lasts etc. The risk of not seeing them use invuln seems low as why would they use it if noone can see them.
+
+Fix ward detection to get rid of obsolete wards.
+	If I don't see something trigger it won't auto clear. I don't know the fix for this but I need a fix for this.
