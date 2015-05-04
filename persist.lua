@@ -422,8 +422,7 @@ function IsCreep(creep)
    return creep.team == 300
 end   
 
-
-function createForPersist(object)
+local function persistCreeps(object)
    local gotObj = false
 
    if IsMinorCreep(object) then
@@ -449,26 +448,29 @@ function createForPersist(object)
    end
 
    if gotObj then
-      return
+      return true
    end
 
+end
+
+local function persistBuildings(object)
    if object.team ~= me.team then
       if PersistAll("TURRET", object, "Turret_T") then
-         return 
+         return true
       end
    else
       if PersistAll("MYTURRET", object, "Turret_T") then
-         return 
+         return true
       end
    end
 
    if find(object.type, "Barracks") then
       if object.team == me.team then
          table.insert(MYINHIBS, object)
-         return 
+         return true
       else
          table.insert(INHIBS, object)
-         return 
+         return true
       end
    end
    
@@ -480,35 +482,179 @@ function createForPersist(object)
    end
 
    if gotObj then
-      return
+      return true
    end
 
    if find(object.name, nexusKey) then
       if find(object.name, "order") then
          if me.team == 100 then
             table.insert(MYNEXUS, object)
-            return 
+            return true
          else
             table.insert(NEXUS, object)
-            return 
+            return true
          end
       else
          if me.team == 100 then
             table.insert(NEXUS, object)
-            return 
+            return true
          else
             table.insert(MYNEXUS, object)
-            return 
+            return true
          end
       end
    end
 
    if gotObj then
+      return true
+   end
+
+end   
+
+local function persistBuffs(object)
+   if PersistOnTargets("recall", object, "TeleportHome", ENEMIES, ALLIES) then
+      return true
+   end
+
+   --sheen / trinity
+   if PersistBuff("enrage", object, "enrage_buf", 100) or
+   --lich bane
+      PersistBuff("lichbane", object, "purplehands_buf", 100) or
+   --iceborn gauntlet
+      PersistBuff("iceborn", object, "bluehands_buf", 100) or
+      PersistOnTargets("hemoplague", object, "Vladimir_Base_R_debuff.troy", ENEMIES) or
+      PersistBuff("blind", object, "Global_miss.troy") or
+      PersistBuff("silence", object, "LOC_Silence.troy") or
+      PersistBuff("muramana", object, "ItemMuramanaToggle") or
+      PersistBuff("manaPotion", object, "Global_Item_Mana") or
+      PersistBuff("healthPotion", object, "Global_Item_Health")
+   then
+      return true
+   end
+
+   if PersistOnTargets("invulnerable", object, "eyeforaneye", ENEMIES) or -- kayle intervention
+      PersistOnTargets("invulnerable", object, "nickoftime", ENEMIES, ALLIES) or -- zilean chronoshift
+      PersistOnTargets("invulnerable", object, "UndyingRage_buf", ENEMIES, ALLIES) or -- trynd ult
+      PersistOnTargets("invulnerable", object, "Vladimir_Base_W_buf.troy", ENEMIES) -- vlad sanguine pool
+   then
+      -- pp("Invulnerable: "..object.name)
+      return true
+   end
+
+   if PersistOnTargets("invulnerable", object, "zhonya_ring_self_skin.troy", ENEMIES, ALLIES) then -- zhonya's hourglass
+      -- pp("Invulnerable: "..object.name)
+      return true
+   end
+
+   if find(object.name, "Karthus_Base_P_Avatar") then
+      for _,target in ipairs(ENEMIES) do
+         if find(target.charName, "Karthus") then
+            Persist("invulnerable"..target.name, object)
+            PData["invulnerable"..target.name].unit = target
+            PData["invulnerable"..target.name].time = time()
+            if not pOn["invulnerable"] then
+               pOn["invulnerable"] = {}
+            end
+            table.insert(pOn["invulnerable"], "invulnerable"..target.name)
+            -- pp("Karthus invulnerable")
+            return  true
+         end
+      end
+   end
+
+   if find(object.name, "KogMaw_Base_P_foam") then
+      for _,target in ipairs(ENEMIES) do
+         if find(target.charName, "KogMaw") then
+            Persist("invulnerable"..target.name, object)
+            PData["invulnerable"..target.name].unit = target
+            PData["invulnerable"..target.name].time = time()
+            if not pOn["invulnerable"] then
+               pOn["invulnerable"] = {}
+            end
+            -- pp("KogMaw invulnerable")
+            table.insert(pOn["invulnerable"], "invulnerable"..target.name)
+            return true
+         end
+      end
+   end
+
+   -- if I am the target of diplomatic immunity don't bother recording diplomatic immunity
+   PersistBuff("diplomaticImmunityTarget", object, "DiplomaticImmunity_tar")
+   if not P.diplomaticImmunityTarget then
+      PersistOnTargets("invulnerable", object, "DiplomaticImmunity_buf", ENEMIES) -- poppy diplomatic immunity
+   end
+
+   if PersistOnTargets("bansheesVeil", object, "bansheesveil_buf", ENEMIES) then
+      return true
+   end
+
+   if PersistOnTargets("spellImmune", object, "Sivir_Base_E_shield", ENEMIES) or
+      PersistOnTargets("spellImmune", object, "nocturne_shroudofDarkness_shield", ENEMIES)
+   then
+      return true
+   end
+
+   for _,spell in pairs(spells) do
+      if spell.modAA and spell.object then
+         if PersistBuff(spell.modAA, object, spell.object, 200) then
+            return true
+         end
+      end
+   end
+
+end
+
+local function persistPets(object)
+   -- zyra
+   if PersistPet(object, nil, "ZyraThornPlant") or
+      PersistPet(object, nil, "ZyraGraspingPlant") or
+      
+      -- malzahar
+      PersistPet(object, "Voidling") or
+      
+      -- yorick
+      PersistPet(object, "Inky") or
+      PersistPet(object, "Blinky") or
+      PersistPet(object, "Clyde") or
+
+      -- heimerdinger
+      PersistPet(object, "H-28G Evolution Turret") or
+
+      -- leblanc
+      PersistPet(object, "LeblancImage")
+   then
+      return true
+   end
+   
+   if object.type == "obj_AI_Minion" then
+      for _,hero in ipairs(concat(ENEMIES, ALLIES, me)) do
+         if object.charName == hero.charName then
+            PersistPet(object, object.charName)
+            return true
+         end
+      end
+   end
+
+   -- morde (-- hard to test)
+
+   -- shaco
+   if PersistPet(object, "Jack In The Box") then
+      return true
+   end
+   if object.type == "obj_AI_Minion" and P.shacoClone then
+      if PersistPet(object, P.shacoClone.charName) then
+         return true
+      end
+   end
+end
+
+function createForPersist(object)
+   if persistCreeps(object) then
       return
    end
 
-   if PersistOnTargets("recall", object, "TeleportHome", ENEMIES, ALLIES) then
-      return 
+   if persistBuildings(object) then
+      return
    end
 
    if find(object.name, "Ward") then
@@ -531,135 +677,12 @@ function createForPersist(object)
       end
    end
 
-   --sheen / trinity
-   if PersistBuff("enrage", object, "enrage_buf", 100) or
-   --lich bane
-      PersistBuff("lichbane", object, "purplehands_buf", 100) or
-   --iceborn gauntlet
-      PersistBuff("iceborn", object, "bluehands_buf", 100) or
-      PersistOnTargets("hemoplague", object, "Vladimir_Base_R_debuff.troy", ENEMIES) or
-      PersistBuff("blind", object, "Global_miss.troy") or
-      PersistBuff("silence", object, "LOC_Silence.troy") or
-      PersistBuff("muramana", object, "ItemMuramanaToggle") or
-      PersistBuff("manaPotion", object, "Global_Item_Mana") or
-      PersistBuff("healthPotion", object, "Global_Item_Health")
-   then
-      return 
-   end
-
-   for _,spell in pairs(spells) do
-      if spell.modAA and spell.object then
-         if PersistBuff(spell.modAA, object, spell.object, 200) then
-            return 
-         end
-      end
-   end
-
-
-   if PersistOnTargets("invulnerable", object, "eyeforaneye", ENEMIES) or -- kayle intervention
-      PersistOnTargets("invulnerable", object, "nickoftime", ENEMIES, ALLIES) or -- zilean chronoshift
-      PersistOnTargets("invulnerable", object, "UndyingRage_buf", ENEMIES, ALLIES) or -- trynd ult
-      PersistOnTargets("invulnerable", object, "Vladimir_Base_W_buf.troy", ENEMIES) -- vlad sanguine pool
-   then
-      pp("Invulnerable: "..object.name)
-      return 
-   end
-
-   if PersistOnTargets("invulnerable", object, "zhonya_ring_self_skin.troy", ENEMIES, ALLIES) then -- zhonya's hourglass
-      pp("Invulnerable: "..object.name)
+   if persistBuffs(object) then
       return
    end
 
-   if find(object.name, "Karthus_Base_P_Avatar") then
-      for _,target in ipairs(ENEMIES) do
-         if find(target.charName, "Karthus") then
-            Persist("invulnerable"..target.name, object)
-            PData["invulnerable"..target.name].unit = target
-            PData["invulnerable"..target.name].time = time()
-            if not pOn["invulnerable"] then
-               pOn["invulnerable"] = {}
-            end
-            table.insert(pOn["invulnerable"], "invulnerable"..target.name)
-            pp("Karthus invulnerable")
-            return 
-         end
-      end
-   end
-
-   if find(object.name, "KogMaw_Base_P_foam") then
-      for _,target in ipairs(ENEMIES) do
-         if find(target.charName, "KogMaw") then
-            Persist("invulnerable"..target.name, object)
-            PData["invulnerable"..target.name].unit = target
-            PData["invulnerable"..target.name].time = time()
-            if not pOn["invulnerable"] then
-               pOn["invulnerable"] = {}
-            end
-            pp("KogMaw invulnerable")
-            table.insert(pOn["invulnerable"], "invulnerable"..target.name)
-            return 
-         end
-      end
-   end
-
-   -- if I am the target of diplomatic immunity don't bother recording diplomatic immunity
-   PersistBuff("diplomaticImmunityTarget", object, "DiplomaticImmunity_tar")
-   if not P.diplomaticImmunityTarget then
-      PersistOnTargets("invulnerable", object, "DiplomaticImmunity_buf", ENEMIES) -- poppy diplomatic immunity
-   end
-
-   if PersistOnTargets("bansheesVeil", object, "bansheesveil_buf", ENEMIES) then
+   if persistPets(object) then
       return
-   end
-
-   if PersistOnTargets("spellImmune", object, "Sivir_Base_E_shield", ENEMIES) or
-      PersistOnTargets("spellImmune", object, "nocturne_shroudofDarkness_shield", ENEMIES)
-   then
-      return
-   end
-
-
-   -- PETS
-   -- zyra
-   if PersistPet(object, nil, "ZyraThornPlant") or
-      PersistPet(object, nil, "ZyraGraspingPlant") or
-      
-      -- malzahar
-      PersistPet(object, "Voidling") or
-      
-      -- yorick
-      PersistPet(object, "Inky") or
-      PersistPet(object, "Blinky") or
-      PersistPet(object, "Clyde") or
-
-      -- heimerdinger
-      PersistPet(object, "H-28G Evolution Turret") or
-
-      -- leblanc
-      PersistPet(object, "LeblancImage")
-   then
-      return
-   end
-   
-   if object.type == "obj_AI_Minion" then
-      for _,hero in ipairs(concat(ENEMIES, ALLIES, me)) do
-         if object.charName == hero.charName then
-            PersistPet(object, object.charName)
-            return
-         end
-      end
-   end
-
-   -- morde (-- hard to test)
-
-   -- shaco
-   if PersistPet(object, "Jack In The Box") then
-      return
-   end
-   if object.type == "obj_AI_Minion" and P.shacoClone then
-      if PersistPet(object, P.shacoClone.charName) then
-         return
-      end
    end
 
 end
