@@ -557,19 +557,17 @@ function createForPersist(object)
 
 
    if PersistOnTargets("invulnerable", object, "eyeforaneye", ENEMIES) or -- kayle intervention
-      PersistOnTargets("invulnerable", object, "nickoftime", ENEMIES) or -- zilean chronoshift
-      PersistOnTargets("invulnerable", object, "UndyingRage_buf", ENEMIES) or -- trynd ult
-      PersistOnTargets("invulnerable", object, "VladSanguinePool_buf", ENEMIES) -- vlad sanguine pool
+      PersistOnTargets("invulnerable", object, "nickoftime", ENEMIES, ALLIES) or -- zilean chronoshift
+      PersistOnTargets("invulnerable", object, "UndyingRage_buf", ENEMIES, ALLIES) or -- trynd ult
+      PersistOnTargets("invulnerable", object, "Vladimir_Base_W_buf.troy", ENEMIES) -- vlad sanguine pool
    then
-      pp("Invulnerable", object.name)
+      pp("Invulnerable: "..object.name)
       return 
    end
 
    if PersistOnTargets("invulnerable", object, "zhonya_ring_self_skin.troy", ENEMIES, ALLIES) then -- zhonya's hourglass
-      pp("zhonyas activated")
-   end
-   if find(object.name, "zhonya") then
-      pp(object.name)
+      pp("Invulnerable: "..object.name)
+      return
    end
 
    if find(object.name, "Karthus_Base_P_Avatar") then
@@ -582,6 +580,7 @@ function createForPersist(object)
                pOn["invulnerable"] = {}
             end
             table.insert(pOn["invulnerable"], "invulnerable"..target.name)
+            pp("Karthus invulnerable")
             return 
          end
       end
@@ -596,7 +595,7 @@ function createForPersist(object)
             if not pOn["invulnerable"] then
                pOn["invulnerable"] = {}
             end
-            pp("here")
+            pp("KogMaw invulnerable")
             table.insert(pOn["invulnerable"], "invulnerable"..target.name)
             return 
          end
