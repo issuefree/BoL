@@ -1710,6 +1710,10 @@ function OnTick()
    local frameTime = sum(frames)/#frames
    local fps = 1/frameTime
 
+   if fps < 20 then
+      return
+   end
+
    if fps > desiredFrameRate then
       objectsPerCycle = math.min(objectsPerCycle+50, 10000)
    else
