@@ -12,6 +12,7 @@ pp("\nTim's Vladimir")
 
 InitAAData({ 
    speed = 1400,
+   extraRange=-10,
    particles = {"Vladimir_Base_BA_mis.troy"}
 })
 
@@ -219,9 +220,11 @@ function Action()
       return true
    end
 
-   local target = GetMarkedTarget() or GetWeakestEnemy("AA")
-   if AutoAA(target) then
-      return true
+   if not CanUse("tides") and not CanUse("transfusion") then
+      local target = GetMarkedTarget() or GetWeakestEnemy("AA")
+      if AutoAA(target) then
+         return true
+      end
    end
 
    return false
