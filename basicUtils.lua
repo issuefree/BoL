@@ -519,7 +519,9 @@ function SaveConfig(name, config)
 end
 
 LOG_FILES = {}
-ACTIVE_LOGS = {"base", "spelldefs"}
+ACTIVE_LOGS = {}
+ACTIVE_LOGS["base"] = true
+ACTIVE_LOGS["spelldefs"] = true
 
 function log(text, logType)
    logType = logType or "base"
