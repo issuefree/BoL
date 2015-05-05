@@ -28,7 +28,7 @@ spells["bloom"] = {
    delay=.8-.1, -- TestSkillShot
    speed=0,
    noblock=true,
-   radius=225, -- reticle
+   radius=225-25, -- reticle
    name="ZyraQFissure",
    cost={75,80,85,90,95},
 }
