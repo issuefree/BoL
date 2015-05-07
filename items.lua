@@ -54,8 +54,8 @@ ITEMS["Iceborn Gauntlet"] = {id=3025, base={0}, adBase=1.25, itemType="P"}
 -- Tear
 ITEMS["Tear of the Goddess"] = {id=3070, name="TearsDummySpell"}
 ITEMS["Archangel's Staff"] = {id=3003}
-ITEMS["Manamune"] = {id=3004}
-ITEMS["Muramana"] = {id=3042}
+ITEMS["Manamune"] = {id=3004, name="ManamuneDummySpell"}
+ITEMS["Muramana"] = {id=3042, name="Muramana"}
 
 ITEMS["Crystaline Flask"] = {id=2041}
 
