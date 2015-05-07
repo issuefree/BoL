@@ -93,7 +93,10 @@ SPELL_DEFS = {
 		brandwildfire={},
 	},
 	Braum = {
-		spellnameq={range=1000, radius=175, time=1, ss=true, isline=true, block=true, cc=SLOW},
+		braumq={range=1000, radius=175, time=1, ss=true, isline=true, block=true, cc=SLOW},
+		braumw={},
+		braume={},
+		braumrwrapper={},
 	},
 	Caitlyn = {
 		caitlynheadshotmissile={physical=true},
@@ -463,12 +466,16 @@ SPELL_DEFS = {
       meditate={type="stall"},
       wujustyle={},
       masteryidoublestrike={},
+      highlander={},
    },
 	MissFortune = {
 		missfortunericochetshot={physical=true},
 		missfortunescattershot={range=800, radius=400, time=3, ss=true, isline=false},
       missfortunebullettime={tupe="stall"},
       missfortuneviciousstrikes={},
+	},
+	Mordekaiser = {
+
 	},
 	Morgana = {
 		darkbindingmissile={key="Q", range=1300, radius=110, time=1.5, ss=true, show=true, perm=true, block=true, isline=true, cc=BIND},
