@@ -675,7 +675,7 @@ function GetSpellFireahead(thing, target, source)
    local spell = GetSpell(thing)
 
    source = source or me
-
+ 
    local point, chance
 	if IsPointAoE(spell) then
       point, chance = VP:GetCircularCastPosition(target, spell.delay, spell.radius, GetSpellRange(spell), spell.speed, source, IsBlockedSkillShot(thing))
@@ -683,7 +683,7 @@ function GetSpellFireahead(thing, target, source)
       point, chance = VP:GetConeAOECastPosition(target, spell.delay, spell.cone, GetSpellRange(spell), spell.speed, source)
 	else --   if IsLinearSkillShot(spell) then
       point, chance = VP:GetLineCastPosition(target, spell.delay, spell.width/2, GetSpellRange(spell), spell.speed, source, IsBlockedSkillShot(thing))
-   end
+   end   
    return point, chance
 end
 
@@ -723,6 +723,9 @@ function IsGoodFireahead(thing, target, minChance)
    -- - 5: Target dashing or blinking. (~100% hit chance)
 
    if not minChance then
+      if IsPointAoE(spell) then
+         minChance = 3
+      end
       if GetMPerc() > .66 then
          minChance = 1
       else
@@ -759,7 +762,6 @@ function IsGoodFireahead(thing, target, minChance)
    		return false
    	end
    end
-
 	return true
 end
 
