@@ -5,6 +5,7 @@ pp("\nTim's Twitch")
 
 InitAAData({ 
    speed = 2500,
+   extraRange=-10,
    particles = {"twitch_basicAttack_mis", "twitch_sprayandPray_mis"},
 })
 
