@@ -522,6 +522,7 @@ LOG_FILES = {}
 ACTIVE_LOGS = {}
 ACTIVE_LOGS["base"] = true
 ACTIVE_LOGS["spelldefs"] = true
+-- ACTIVE_LOGS["prediction"] = true
 
 function log(text, logType)
    logType = logType or "base"
@@ -533,7 +534,11 @@ function log(text, logType)
          end
          LOG_FILES[logType] = io.open(BOL_PATH..logType..".log", mode)
       end
-      LOG_FILES[logType]:write(text)
+      if logType == "base" then
+         LOG_FILES[logType]:write(text)
+      else
+         LOG_FILES[logType]:write(trunc(time(),1)..": "..text.."\n")
+      end
       LOG_FILES[logType]:flush()
    end
 end
