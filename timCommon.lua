@@ -1124,6 +1124,11 @@ function GetSkillShot(thing, purpose, targets, minChance)
    else
       target = GetWeakest(spell, targets)
    end
+
+   if target then
+      local _,chance = GetSpellFireahead(spell, target)
+      log(GetSpellInfo(spell.key).name.." -> "..target.charName.." "..chance, "prediction")
+   end
    
    return target
 end
