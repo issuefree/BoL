@@ -86,7 +86,7 @@ local minionAAData = {
 
 --    }
 
---    return champData[me.name] or {}
+--    return champData[me.charName] or {}
 -- end
 
 function loadAAData()
@@ -313,7 +313,7 @@ function CanMove()
    -- the windup time passes, CanMove enables, I chase.
    -- So if I tried to attack an enemy don't try to move until the AA timer resets rather than the windup is over
    if IsEnemy(lastAATarget) and not IsInAARange(lastAATarget) and not shotFired then
-      -- pp("don't abort have target "..lastAATarget.name)      
+      -- pp("don't abort have target "..lastAATarget.charName)      
       return false
    end
    if time() - lastAttack > spells["AA"].minMoveTime then

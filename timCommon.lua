@@ -2327,7 +2327,7 @@ function UseItem(itemName, target, force)
       for _,hero in ipairs(GetInRange(me, crucibleRange, ALLIES)) do
          if GetHPerc(hero) < .25 then
             CastSpellTarget(slot, hero)
-            pp("heal "..hero.name.." "..hero.health/hero.maxHealth, nil, 1)
+            pp("heal "..hero.charName.." "..hero.health/hero.maxHealth, nil, 1)
          end
       end
 

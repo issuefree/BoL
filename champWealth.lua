@@ -260,7 +260,7 @@ end
 
 function sortWealth(a,b)
    if a.wealth == b.wealth then
-      return a.name > b.name
+      return a.charName > b.charName
    end
    return a.wealth > b.wealth
 end
@@ -286,13 +286,13 @@ function DrawHeroWealth()
 		end	
 		local foundHero = false
 		for i,cw in ipairs(teamWealth) do
-			if cw.name == hero.name then
+			if cw.charName == hero.charName then
 				cw.wealth = wealth
 				foundHero = true
 			end
 		end
 		if not foundHero then
-			table.insert(teamWealth, {name=hero.name,wealth=wealth})
+			table.insert(teamWealth, {name=hero.charName,wealth=wealth})
 		end
 	end
 	
@@ -301,7 +301,7 @@ function DrawHeroWealth()
 
 	local total = 0
 	for i, cw in ipairs(myTeamWealth) do
-		PrintLine(cw.name, 2+i, 0)
+		PrintLine(cw.charName, 2+i, 0)
 		PrintLine(cw.wealth, 2+i, 15)
 		total = total + cw.wealth
 	end
@@ -309,7 +309,7 @@ function DrawHeroWealth()
 
 	local total = 0
 	for i, cw in ipairs(enemyTeamWealth) do
-		PrintLine(cw.name, 2+i, 25)
+		PrintLine(cw.charName, 2+i, 25)
 		PrintLine(cw.wealth, 2+i, 40)
 		total = total + cw.wealth
 	end

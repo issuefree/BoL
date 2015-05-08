@@ -351,7 +351,7 @@ function IsBlocked(target, thing, source, ...)
       if GetDistance(source, target) > GetDistance(source, blocker) then
          local blockPoint = Projection(source, target, GetDistance(source, blocker))
          if GetDistance(blocker, blockPoint) < (width/2 + GetWidth(blocker)/2) then
-            -- pp(blocker.name.." blocking "..target.name)
+            -- pp(blocker.charName.." blocking "..target.charName)
             return true
          end
       end

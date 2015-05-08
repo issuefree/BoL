@@ -15,10 +15,10 @@ local player = GetSelf()
 
 for i=1, objManager:GetMaxHeroes(), 1 do
     local hero = objManager:GetHero(i)
-    if hero ~= nil and (hero.name == "MonkeyKing" or hero.name == "Shaco" or hero.name == "LeBlanc" or hero.name == "Yorick" or hero.name == "Mordekaiser") then 
-    if hero.name == "LeBlanc" then lbTemp = hero end
-    load = true
-    table.insert(champions,hero)
+    if hero ~= nil and (hero.charName == "MonkeyKing" or hero.charName == "Shaco" or hero.charName == "LeBlanc" or hero.name == "Yorick" or hero.name == "Mordekaiser") then 
+       if hero.charName == "LeBlanc" then lbTemp = hero end
+       load = true
+       table.insert(champions,hero)
     end
 end
 
@@ -52,15 +52,15 @@ if load then
                     else
                         for i,hero in ipairs(champions) do
                             if object ~= hero then
-                                if object.name == "Yorick" and hero.name == "Yorick" then
+                                if object.name == "Yorick" and hero.charName == "Yorick" then
                                     clone = {object = object,tick = GetClock(),duration = 10000}
                                     table.insert(clones,clone)
                                 end
-                                if object.name == "Leblanc" and hero.name == "Leblanc" then
+                                if object.name == "Leblanc" and hero.charName == "Leblanc" then
                                     clone = {object = object,tick = GetClock(),duration = 8000}
                                     table.insert(clones,clone)
                                 end
-                                if object.name == "Shaco" and hero.name == "Shaco" then
+                                if object.name == "Shaco" and hero.charName == "Shaco" then
                                     clone = {object = object,tick = GetClock(),duration = 18000}
                                     table.insert(clones,clone)
                                 end

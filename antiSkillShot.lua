@@ -8,7 +8,7 @@ function assTick()
 
    for _,enemy in ipairs(ENEMIES) do
       if IsValid(enemy) then
-         local spells = GetSpellShots(enemy.name)
+         local spells = GetSpellShots(enemy.charName)
          if spells then
             for _,spell in pairs(spells) do
                if spell.perm and spell.key and GetSpellInfo(spell.key).level > .5 then

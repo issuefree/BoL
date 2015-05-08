@@ -94,7 +94,7 @@ function CheckShield(thing, unit, spell, type)
       if type ~= "CHECK" then
          Cast(shield, spell.target)
       end
-      PrintAction("["..spell.target.name.."] - "..unit.name.."'s "..spell.name)
+      PrintAction("["..spell.target.name.."] - "..unit.charName.."'s "..spell.name)
       return spell.target
    end
 
@@ -115,7 +115,7 @@ function CheckShield(thing, unit, spell, type)
          if type ~= "CHECK" then
             Cast(shield, ally)
          end
-         PrintAction("("..ally.name..") - "..unit.name.."'s "..spell.name)
+         PrintAction("("..ally.name..") - "..unit.charName.."'s "..spell.name)
          return ally
       end
    end

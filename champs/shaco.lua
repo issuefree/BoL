@@ -128,7 +128,7 @@ end
 
 local function onCreate(object)
    if object.type == "obj_AI_Minion" then
-      Persist("clone", object, me.name, me.team)
+      Persist("clone", object, me.charName, me.team)
    end
 end
 

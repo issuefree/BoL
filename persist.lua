@@ -439,10 +439,10 @@ local function persistCreeps(object)
       table.insert(MAJORCREEPS, object)
       table.insert(CREEPS, object)
       gotObj = true
-      if object.name == "Dragon" then
+      if object.charName == "Dragon" then
          Persist("DRAGON", object)
       end
-      if object.name == "Worm" then
+      if object.charName == "Worm" then
          Persist("BARON", object)
       end
    end

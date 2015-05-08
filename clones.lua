@@ -16,15 +16,15 @@ function checkClones(object)
 	else
 		for _,hero in ipairs(ENEMIES) do
 			if object ~= hero then
-				if object.name == "Yorick" and hero.name == "Yorick" then
+				if object.name == "Yorick" and hero.charName == "Yorick" then
 					clone = {object = object,tick = GetClock(),duration = 10000}
 					table.insert(clones,clone)
 				end
-				if object.name == "Leblanc" and hero.name == "Leblanc" then
+				if object.name == "Leblanc" and hero.charName == "Leblanc" then
 					clone = {object = object,tick = GetClock(),duration = 8000}
 					table.insert(clones,clone)
 				end
-				if object.name == "Shaco" and hero.name == "Shaco" then
+				if object.name == "Shaco" and hero.charName == "Shaco" then
 					clone = {object = object,tick = GetClock(),duration = 18000}
 					table.insert(clones,clone)
 				end
@@ -34,7 +34,7 @@ function checkClones(object)
 end
 
 for i=1, objManager:GetMaxHeroes() do
-	if ListContains(objManager:GetHero(i).name, cloningHeroes) then 
+	if ListContains(objManager:GetHero(i).charName, cloningHeroes) then 
 		load = true
 		AddOnCreate(checkClones)
 		break

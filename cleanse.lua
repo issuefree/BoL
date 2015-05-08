@@ -32,7 +32,7 @@ end
 local function cleanseObj(object)
 	if not ModuleConfig.cleanse then return end
 	if object and GetDistance(object) < 75 then
-		if me.name == "Gangplank" and CanUse("W") and
+		if me.charName == "Gangplank" and CanUse("W") and
 		   CheckCC(object, byAbil) 
 		then
 			Cast("W", me)
@@ -40,7 +40,7 @@ local function cleanseObj(object)
 			return
 		end
 		
-		if me.name == "Olaf" and CanUse("R") and
+		if me.charName == "Olaf" and CanUse("R") and
 			CheckCC(object, byAbil) and
 			not Alone()
       then
