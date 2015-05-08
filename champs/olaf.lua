@@ -99,8 +99,8 @@ function Run()
 
 
          for i,creep in ipairs(creeps) do
-            if ListContains(creep.name, MajorCreepNames, true) or 
-               ListContains(creep.name, BigCreepNames, true) 
+            if IsBigCreep(creep) or 
+               IsMajorCreep(creep) 
             then
                if CanUse("axe") and GetMPerc(me) > .66 then 
                   CastXYZ("axe", creep)
