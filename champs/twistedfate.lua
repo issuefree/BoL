@@ -105,7 +105,7 @@ function Run()
       spells["card"] = nil
    end
 
-   if Alone() and not gating then
+   if VeryAlone() and not gating then
    	card = "blue"
    else
    	card = "gold"
