@@ -40,7 +40,7 @@ ITEMS["Mikael's Crucible"]  = {id=3222, name="ItemMorellosBane", range=750, item
 
 --On Hit
 ITEMS["Wit's End"] = {id=3091, base={42}, itemType="M"}
-ITEMS["Nashor's Tooth"] = {id=3115, base={15}, ap=.15, itemType="M"}
+ITEMS["Nashor's Tooth"] = {id=3115, name="Malady", base={15}, ap=.15, itemType="M"}
 ITEMS["Kitae's Bloodrazor"] = {id=3186, itemType="M"}
 ITEMS["Madred's Razors"] = {id=3106, base=50, itemType="M"}
 ITEMS["Wriggle's Lantern"] = {id=3154, base=75, itemType="M"}
@@ -53,7 +53,7 @@ ITEMS["Iceborn Gauntlet"] = {id=3025, base={0}, adBase=1.25, itemType="P"}
 
 -- Tear
 ITEMS["Tear of the Goddess"] = {id=3070, name="TearsDummySpell"}
-ITEMS["Archangel's Staff"] = {id=3003}
+ITEMS["Archangel's Staff"] = {id=3003, name="ArchAngelsDummySpell"}
 ITEMS["Manamune"] = {id=3004, name="ManamuneDummySpell"}
 ITEMS["Muramana"] = {id=3042, name="Muramana"}
 
