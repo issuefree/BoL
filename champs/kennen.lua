@@ -11,6 +11,7 @@ pp("\nTim's Kennen")
 
 InitAAData({ 
    speed = 1350,
+   extraRange=-10,
    attacks={"KennenBasicAttack", "KennenMegaProc"},
    particles = {"KennenBasicAttack_mis"} 
 })
