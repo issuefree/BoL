@@ -78,7 +78,7 @@ ccNames = {
    "Amumu_Ultwrap", 
    "CurseBandages",
    "DarkBinding_tar", 
-   "Morgana_Skin06_Q_Tar.troy",
+   "Morgana_Base_Q_Tar_Buf.troy",
    "caitlyn_Base_yordleTrap_impact_debuf",
    "Global_Fear", 
    "Global_Taunt", 
@@ -456,10 +456,12 @@ end
 local function persistBuildings(object)
    if object.team ~= me.team then
       if PersistAll("TURRET", object, "Turret_T") then
+         -- log("Turret", "persist")
          return true
       end
    else
       if PersistAll("MYTURRET", object, "Turret_T") then
+         -- log("My turret", "persist")
          return true
       end
    end
@@ -467,52 +469,50 @@ local function persistBuildings(object)
    if find(object.type, "Barracks") then
       if object.team == me.team then
          table.insert(MYINHIBS, object)
+         -- log("My Inhib", "persist")
          return true
       else
          table.insert(INHIBS, object)
+         -- log("Inhib", "persist")
          return true
       end
    end
    
-   if PersistAll("destroyed", object, "DestroyedBuilding") then
-      gotObj = true
-   end
-   if PersistAll("destroyed", object, "Dest_") then
-      gotObj = true
-   end
+   -- if PersistAll("destroyed", object, "DestroyedBuilding") then
+   --    gotObj = true
+   -- end
+   -- if PersistAll("destroyed", object, "Dest_") then
+   --    gotObj = true
+   -- end
 
-   if gotObj then
-      return true
-   end
+   -- if gotObj then
+   --    return true
+   -- end
 
-   if find(object.name, nexusKey) then
-      if find(object.name, "order") then
-         if me.team == 100 then
-            table.insert(MYNEXUS, object)
-            return true
-         else
-            table.insert(NEXUS, object)
-            return true
-         end
-      else
-         if me.team == 100 then
-            table.insert(NEXUS, object)
-            return true
-         else
-            table.insert(MYNEXUS, object)
-            return true
-         end
-      end
-   end
-
-   if gotObj then
-      return true
-   end
-
+   -- if find(object.name, nexusKey) then
+   --    if find(object.name, "order") then
+   --       if me.team == 100 then
+   --          table.insert(MYNEXUS, object)
+   --          return true
+   --       else
+   --          table.insert(NEXUS, object)
+   --          return true
+   --       end
+   --    else
+   --       if me.team == 100 then
+   --          table.insert(NEXUS, object)
+   --          return true
+   --       else
+   --          table.insert(MYNEXUS, object)
+   --          return true
+   --       end
+   --    end
+   -- end
 end   
 
 local function persistBuffs(object)
    if PersistOnTargets("recall", object, "TeleportHome", ENEMIES, ALLIES) then
+      log("Got a recall object", "persist")
       return true
    end
 
@@ -537,12 +537,12 @@ local function persistBuffs(object)
       PersistOnTargets("invulnerable", object, "UndyingRage_buf", ENEMIES, ALLIES) or -- trynd ult
       PersistOnTargets("invulnerable", object, "Vladimir_Base_W_buf.troy", ENEMIES) -- vlad sanguine pool
    then
-      -- pp("Invulnerable: "..object.name)
+      pp("INVULNERABLE: "..object.name)
       return true
    end
 
    if PersistOnTargets("invulnerable", object, "zhonya_ring_self_skin.troy", ENEMIES, ALLIES) then -- zhonya's hourglass
-      -- pp("Invulnerable: "..object.name)
+      pp("INVULNERABLE: "..object.name)
       return true
    end
 
@@ -556,7 +556,7 @@ local function persistBuffs(object)
                pOn["invulnerable"] = {}
             end
             table.insert(pOn["invulnerable"], "invulnerable"..target.name)
-            -- pp("Karthus invulnerable")
+            log("Karthus dead", "persist")
             return  true
          end
       end
@@ -571,7 +571,7 @@ local function persistBuffs(object)
             if not pOn["invulnerable"] then
                pOn["invulnerable"] = {}
             end
-            -- pp("KogMaw invulnerable")
+            log("Kog dead", "persist")
             table.insert(pOn["invulnerable"], "invulnerable"..target.name)
             return true
          end
@@ -585,18 +585,21 @@ local function persistBuffs(object)
    end
 
    if PersistOnTargets("bansheesVeil", object, "bansheesveil_buf", ENEMIES) then
+      -- log("veil", "persist")
       return true
    end
 
    if PersistOnTargets("spellImmune", object, "Sivir_Base_E_shield", ENEMIES) or
       PersistOnTargets("spellImmune", object, "nocturne_shroudofDarkness_shield", ENEMIES)
    then
+      log("spell immune "..object.name, "persist")
       return true
    end
 
    for _,spell in pairs(spells) do
       if spell.modAA and spell.object then
          if PersistBuff(spell.modAA, object, spell.object, 200) then
+            log("modAA "..object.name, "persist")
             return true
          end
       end
@@ -650,25 +653,29 @@ end
 
 function createForPersist(object)
    if persistCreeps(object) then
-      log("Creep created: "..object.charName, "object")
+      log("Creep created: "..object.charName, "persist")
       return
    end
 
    if persistBuildings(object) then
-      log("Building created: "..object.charName, "object")
+      -- log("Building created: "..object.name, "persist")
       return
    end
 
    if find(object.name, "Ward") then
-      table.insert(WARDS, object)
-      log("Ward created: "..object.charName, "object")
-      return 
+      if find(object.name, "forward") then
+      else         
+         table.insert(WARDS, object)
+         log("Ward created: "..object.name, "persist")
+         return 
+      end
    end
 
    if PersistToTrack(object, "Ashe_Base_R_mis", "Ashe", "EnchantedCrystalArrow") or
       PersistToTrack(object, "HowlingGale_mis", "Janna", "HowlingGale") or
       PersistToTrack(object, "Ezreal_TrueShot_mis", "Ezreal", "EzrealTrueshotBarrage") 
    then
+      log("Persist to track", "persist")
       return 
    end
 
@@ -676,17 +683,18 @@ function createForPersist(object)
       local target = PersistOnTargets("cc", object, object.name, ENEMIES, ALLIES)
       if target then
          pp("CC on "..target.charName.." "..object.name)
+         pp("CC on "..target.charName.." "..object.name, "persist")
          return 
       end
    end
 
    if persistBuffs(object) then
-      log("Buff created: "..object.name, "object")
+      log("Buff created: "..object.name, "persist")
       return
    end
 
    if persistPets(object) then
-      log("Pet created: "..object.charName, "object")
+      log("Pet created: "..object.charName, "persist")
       return
    end
 
