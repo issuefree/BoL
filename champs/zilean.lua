@@ -53,7 +53,7 @@ function Run()
 
    if IsOn("autoChrono") and CanUse("chrono") then
       for _,ally in ipairs(SortByHealth(GetInRange(me, "chrono", ALLIES))) do
-         if GetHPerc(ally) < .2 and #GetInRange(ally, 500, ENEMIES) then
+         if GetHPerc(ally) < .2 and #GetInRange(ally, 500, ENEMIES) >= 2 then
             Cast("chrono", ally)
             PrintAction("Chrono low health", ally)
             return true
