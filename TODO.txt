@@ -12,4 +12,3 @@ My disrupt and prediction stuff is pretty spread out and confusing.
 Fix ward detection to get rid of obsolete wards.
 	If I don't see something trigger it won't auto clear. I don't know the fix for this but I need a fix for this.
 
-Add item name support for archange's staff.
