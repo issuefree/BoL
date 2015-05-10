@@ -157,7 +157,11 @@ SPELL_DEFS = {
 		dravenrcast={range=50000, radius=100, time=4, ss=true, show=true, isline=true, physical=true},
 	},
 	DrMundo = {
+		infectedcleavermissile={},
 		infectedcleavermissilecast={key="Q", range=1000, radius=60, time=1, ss=true, perm=true, block=true, isline=true, block=true, cc=SLOW},
+		burningagony={key="W"},
+		masochism={},
+		sadism={},
 	},
 	Elise = {
 		elisehumanq={},
@@ -278,8 +282,10 @@ SPELL_DEFS = {
 		jarvanivgoldenaegis={},
 	},
    Jax={
-      jaxleapstrike={type="dash", ends="target", overShoot=-50},
-      jaxcounterstrike={},
+      jaxleapstrike={key="Q", type="dash", ends="target", overShoot=-50},
+      jaxempowertwo={key="W"},
+      jaxcounterstrike={key="E"},
+      jaxrelentlessassault={},
    },
 	Jayce = {
 		jayceaccelerationgate={},
@@ -456,8 +462,10 @@ SPELL_DEFS = {
 	 		cc=STUN,
 	 		type="dash", ends="target"
 	 	},
+	 	maokaisapling2boom={},
 	 	maokaitrunkline={},
 	 	maokaidrain3={},
+	 	maokaidrain3toggle={},
 		maokaitrunklinemissile={range=600, radius=100, time=1, ss=true, isline=true, cc=SLOW},
 		maokaisapling2={range=1100, radius=350, time=1, ss=true, isline=false},
 	},
@@ -572,9 +580,10 @@ SPELL_DEFS = {
    Riven={
       rivenfeint={type="dash", ends="max", range=325},
       rivenmartyr={},
-      riventricleave={},
+      riventricleave={type="dash", ends="point", range=325},
       rivenfengshuiengine={},
       rivenizunablade={},
+      riventricleavebuffer={}
    },
  	Rumble = {
 		rumblegrenademissile={range=1000, radius=100, time=1.5, ss=true, isline=true},
@@ -853,8 +862,11 @@ SPELL_DEFS = {
 		timebomb={},
 	},
 	Zyra = {
-		zyraqfissure={range=800, radius=275, time=1.5, ss=true},
-		zyragraspingroots={range=1100, radius=90, time=2, ss=true, show=true, isline=true, cc=BIND},
+		zyraqfissure={key="Q", range=800, radius=275, time=1.5, ss=true},
+		zyraseed={key="W"},
+		zyragraspingroots={key="E", range=1100, radius=90, time=2, ss=true, show=true, isline=true, cc=BIND},
+		zyrabramblezone={key="R", cc=KNOCK},
+		zyrapassivedeathmanager={},
 	},
 }
 
