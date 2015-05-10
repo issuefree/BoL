@@ -521,8 +521,9 @@ end
 LOG_FILES = {}
 ACTIVE_LOGS = {}
 ACTIVE_LOGS["base"] = true
+ACTIVE_LOGS["persist"] = true
 ACTIVE_LOGS["spelldefs"] = true
--- ACTIVE_LOGS["prediction"] = true
+ACTIVE_LOGS["prediction"] = true
 
 function log(text, logType)
    logType = logType or "base"
@@ -532,7 +533,7 @@ function log(text, logType)
          if logType == "base" then
             mode = "w"
          end
-         LOG_FILES[logType] = io.open(BOL_PATH..logType..".log", mode)
+         LOG_FILES[logType] = io.open(BOL_PATH.."logs/"..logType..".log", mode)
       end
       if logType == "base" then
          LOG_FILES[logType]:write(text)
