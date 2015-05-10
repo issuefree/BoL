@@ -10,7 +10,7 @@ pp(" - artillery people based on mana/their health")
 pp(" - lasthit ooze >= 3 if mana > .5 and very alone")
 pp(" - lasthit artillery >= 2 if no stacks and alone")
 
-SetChampStyle("marksman")
+-- SetChampStyle("marksman")
 
 InitAAData({
    speed=1800,
@@ -142,7 +142,6 @@ function Run()
 end
 
 function Action()
-
    -- TestSkillShot("spittle")
 
    if SkillShot("spittle") then
