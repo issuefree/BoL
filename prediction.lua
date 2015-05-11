@@ -3,8 +3,8 @@ require "issuefree/telemetry"
 require "issuefree/spellDefs"
 
 function PredictEnemy(unit, spell)
-   -- if IsEnemy(unit) then
-   if IsHero(unit) then
+   if IsEnemy(unit) then
+   -- if IsHero(unit) then
       local def = GetSpellDef(unit.charName, spell.name)
       if def and def.type then
          local predName = unit.charName..".pred"
