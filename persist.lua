@@ -512,7 +512,7 @@ end
 
 local function persistBuffs(object)
    if PersistOnTargets("recall", object, "TeleportHome", ENEMIES, ALLIES) then
-      log("Got a recall object", "persist")
+      -- log("Got a recall object", "persist")
       return true
    end
 
@@ -653,7 +653,7 @@ end
 
 function createForPersist(object)
    if persistCreeps(object) then
-      log("Creep created: "..object.charName, "persist")
+      -- log("Creep created: "..object.charName, "persist")
       return
    end
 
@@ -666,7 +666,7 @@ function createForPersist(object)
       if find(object.name, "forward") then
       else         
          table.insert(WARDS, object)
-         log("Ward created: "..object.name, "persist")
+         -- log("Ward created: "..object.name, "persist")
          return 
       end
    end
@@ -675,26 +675,26 @@ function createForPersist(object)
       PersistToTrack(object, "HowlingGale_mis", "Janna", "HowlingGale") or
       PersistToTrack(object, "Ezreal_TrueShot_mis", "Ezreal", "EzrealTrueshotBarrage") 
    then
-      log("Persist to track", "persist")
+      -- log("Persist to track", "persist")
       return 
    end
 
    if ListContains(object.name, ccNames) then
-      local target = PersistOnTargets("cc", object, object.name, ENEMIES, ALLIES)
+      local target = PersistOnTargets("cc", object, object.name, ENEMIES)
       if target then
          pp("CC on "..target.charName.." "..object.name)
-         pp("CC on "..target.charName.." "..object.name, "persist")
+         log("CC on "..target.charName.." "..object.name, "persist")
          return 
       end
    end
 
    if persistBuffs(object) then
-      log("Buff created: "..object.name, "persist")
+      -- log("Buff created: "..object.name, "persist")
       return
    end
 
    if persistPets(object) then
-      log("Pet created: "..object.charName, "persist")
+      -- log("Pet created: "..object.charName, "persist")
       return
    end
 
