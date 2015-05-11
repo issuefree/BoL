@@ -54,6 +54,7 @@ SPELL_DEFS = {
 		infernalguardian={key="R", range=600, perm=true, cc=STUN},
 		incinerate={},
 		moltenshield={},
+		infernalguardianguide={},
 	},
 	Anivia = {
 		flashfrostspell={range=1100, radius=90, time=2, ss=true, show=true, isline=true, cc=STUN},
@@ -393,6 +394,7 @@ SPELL_DEFS = {
 		},
 		leblancslidereturn={range=1000, radius=50, time=1, ss=true, isline=false},
 		leblancslidereturnm={range=1000, radius=50, time=1, ss=true, isline=false},
+		leblancchaosorb={},
 	},
 	LeeSin = {
 		blindmonkqone={key="Q", range=975, radius=150, time=1, ss=true, block=true, perm=true, isline=true, block=true, physical=true},
@@ -439,6 +441,10 @@ SPELL_DEFS = {
 	},
 	Lulu = {
 		luluq={range=925, radius=50, time=1, ss=true, isline=true, cc=SLOW},
+		luluqmissile={},
+		luluw={},
+		lulue={},
+		lulur={},
 	},
 	Malphite = {
 		seismicshard={cc=SLOW},
@@ -507,7 +513,10 @@ SPELL_DEFS = {
 	},
 	Nautilus = {
 		nautilusanchordrag={key="Q", range=950, radius=80, time=1.5, ss=true, perm=true, block=true, isline=true},
+		nautilusanchordragmissile={},
 		nautilusgrandline={cc=KNOCK},
+		nautilussplashzone={},
+		nautiluspiercinggaze={},
 	},
 	Nidalee = {
 		javelintoss={key="Q", range=1500, radius=40, time=1.5, ss=true, block=true, perm=true, show=true, isline=true},
@@ -611,6 +620,7 @@ SPELL_DEFS = {
 		hallucinatefull={},
 		jackinthebox={},
 		twoshivpoison={},
+		hallucinateguide={},
 	},
 	Shen = {
 		shenshadowdash={
@@ -714,6 +724,13 @@ SPELL_DEFS = {
 		tristanae={},
 		tristanar={cc=KNOCK},
 	},
+	Trundle = {
+		trundleq={},
+		trundletrollsmash={},
+		trundledesecrate={},
+		trundlecircle={},
+		trundlepain={},
+	},
 	Tryndamere = {
 		slashcast={},
 		slash={
@@ -736,7 +753,9 @@ SPELL_DEFS = {
 		twitchexpunge={},
 	},
 	Udyr={
-
+		udyrbearstance={},
+		udyrtigerstance={},
+		udyrturtlestance={},
 	},
 	Urgot = {
 		urgotheatseekingmissile={},
