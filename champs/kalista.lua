@@ -136,7 +136,6 @@ function Run()
             #rendKills >=2
          then
             if KillMinion("rend", "lowMana") then
-               -- PrintAction("Rend for LH", #rendKills)
                return true
             end
          end
