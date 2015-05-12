@@ -711,7 +711,7 @@ function KillMinion(thing, method, force, targetOnly)
       ListContains("ignoreMana", method)
    then
       ignoreMana = true
-   elseif ListContains("lowMana", method) then
+   elseif ListContains("lowMana", method) then -- use this for spells that refund mana or you want a more generous mana threshold
       thresh = .2
    end
 
@@ -2658,7 +2658,7 @@ function GetNearestBush(target, dist)
    end
 end
 
-function getHeroByName(name)
+function GetHeroByName(name)
    for i,enemy in ipairs(ENEMIES) do
       if enemy.charName == name then
          return enemy
