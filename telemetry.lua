@@ -498,6 +498,7 @@ function IsInRange(thing, target, source, extraRange)
 end
 
 function IsInE2ERange(thing, target, source, extraRange)
+   assert(extraRange == nil or type(extraRange) == "number")
    if not target then return false end
    source = source or me
    local range
