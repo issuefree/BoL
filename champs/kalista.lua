@@ -2,16 +2,14 @@ require "issuefree/timCommon"
 require "issuefree/modules"
 
 pp("\nTim's Kalista")
+pp(" - Soulmarked included in AA damage for lasthit")
+pp(" - Rend stacks: LHing, executes, timeout, escapes")
+pp(" - Pierce for LH")
 
--- TODO: track oathsworn?
--- TODO: track enemies and minions that my oathsworn has hit for easier lasthits or maximize damage
-
--- There may be some weird stuff to do here for her kiting due to her passive
 InitAAData({ 
---    speed = 1300,
---    minMoveTime = 0,
---    extraRange=-20,
---    particles = {"TeemoBasicAttack_mis", "Toxicshot_mis"} 
+   speed = 2000,
+   extraWindup=.3,
+   particles = {"Kalista_Base_BA_Spear_mis.troy"} 
 })
 
 SetChampStyle("marksman")
@@ -21,7 +19,7 @@ AddToggle("", {on=true, key=113, label=""})
 AddToggle("", {on=true, key=114, label=""})
 AddToggle("", {on=true, key=115, label=""})
 
-AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0}", args={GetAADamage}})
+AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0} / {1}", args={GetAADamage, "pierce"}})
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
@@ -32,11 +30,13 @@ spells["pierce"] = {
    base={10,70,130,190,250}, 
    ad=1,
    type="P",
-   delay=.25,   -- ???
-   speed=1200, -- ???
-   width=80,   -- ???
+   delay=.45,  -- tss
+   speed=2200, -- tss
+   width=60,   -- reticle
    cost={50,55,60,65,70}
 } 
+spells["pierceNB"] = copy(spells["pierce"])
+spells["pierceNB"].noblock = true
 
 spells["sentinel"] = {
    key="W", 
@@ -66,9 +66,10 @@ spells["soulmarked"] = {
    end
 } 
 
--- TODO: track spears
 spells["rend"] = {
    key="E", 
+   range=900,
+   color=yellow,
    cost=40,
    base=0,
    type="P",
@@ -105,7 +106,9 @@ spells["AA"].damOnTarget =
    end
 
 function getRendStacks(target)
--- TODO track and return stacks
+   if HasBuff("rend", target) then
+      return #GetInRange(target, 50, GetPersisted("rend"))
+   end
    return 0
 end
 
@@ -120,21 +123,22 @@ function Run()
       return true
    end
 
-   -- high priority hotkey actions, e.g. killing enemies
 	if HotKey() and CanAct() then
 		if Action() then
 			return true
 		end
 	end
 
-	-- auto stuff that should happen if you didn't do something more important
    if IsOn("lasthit") then
       if CanUse("rend") then
-         local rendKills = GetKills("rend", MINIONS)
-         if #rendKills >= 1 then
-            Cast("rend", me)
-            PrintAction("Rend for LH", #rendKills)
-            return true
+         local rendKills = GetKills("rend", GetInRange(me, "rend", MINIONS))
+         if (JustAttacked() and #rendKills >= 1) or
+            #rendKills >=2
+         then
+            if KillMinion("rend", "lowMana") then
+               -- PrintAction("Rend for LH", #rendKills)
+               return true
+            end
          end
       end
 
@@ -147,7 +151,6 @@ function Run()
       end
    end
    
-   -- low priority hotkey actions, e.g. killing minions, moving
    if HotKey() and CanAct() then
       if FollowUp() then
          return true
@@ -158,20 +161,23 @@ function Run()
 end
 
 function Action()
-
+   -- TestSkillShot("pierce", nil, {"precast"})
    if CanUse("pierce") then
-      -- TODO look at skillshot with pierce if I cast through an almost dead minion
-      -- since this is a larger pool of targets I should do this before I check for
-      -- unblocked skillshots      
-
-      if SkillShot("pierce") then
-         return true
+      local targets = GetInRange(me, GetSpellRange(spell)+500, ENEMIES)
+      targets = SortByHealth(GetGoodFireaheads("pierceNB", 2, targets), "pierce")
+      for i,target in ipairs(targets) do
+         local blockers = FilterList(MINIONS, function(thing) return not WillKill("pierce", thing) end)
+         if IsUnblocked(target, "pierce", me, ENEMIES, blockers, PETS) then
+            CastFireahead("pierce", target)
+            PrintAction("Pierce", target)
+            return true
+         end
       end
    end   
 
    if CanUse("rend") then
       -- Execute with rend if I can
-      local rendKills = GetKills("rend", ENEMIES)
+      local rendKills = GetKills("rend", GetInRange(me, "rend", ENEMIES))
       if #rendKills >= 1 then
          Cast("rend", me)
          PrintAction("Rend for execute", rendKills[1])
@@ -181,11 +187,15 @@ function Action()
       local rendttl = spells["rend"].timeout
       local rendttlstacks = 0
       for name,timeout in pairs(rendTimeouts) do
-         if timeout > time() then
+         local hero = GetHeroByName(name)
+         -- pp(name.."  "..timeout.." "..time())
+         if time() > timeout then
             rendTimeouts[name] = nil
          else
-            rendttl = math.min(rendttl, rendTimeouts[name] - time())
-            rendttlstacks = getRendStacks(getHeroByName(name))
+            if IsInRange("rend", hero) then
+               rendttl = math.min(rendttl, rendTimeouts[name] - time())
+               rendttlstacks = getRendStacks(GetHeroByName(name))
+            end
          end
       end
 
@@ -200,9 +210,20 @@ function Action()
             return true
          end
       end
+
+      for _,enemy in ipairs(GetInRange(me, "rend", GetWithBuff("rend", ENEMIES))) do
+         if getRendStacks(enemy) >= 3 then
+            local nextPos = VP:GetPredictedPos(enemy, .5, enemy.ms, enemy, false)
+            if GetDistance(nextPos) > GetSpellRange("rend") then
+               Cast("rend", me)
+               PrintAction("Rend escapee", enemy)
+               return true
+            end
+         end
+      end
    end
 
-   local soulmarked = GetWeakestEnemy("AA", GetWithBuff("soulmarked", ENEMIES))
+   local soulmarked = GetWeakest("AA", GetWithBuff("soulmarked", ENEMIES))
 
    local target = GetMarkedTarget() or soulmarked or GetWeakestEnemy("AA")
    if AutoAA(target) then
@@ -212,6 +233,32 @@ function Action()
    return false
 end
 function FollowUp()
+   if HotKey() and IsOn("clear") and Alone() then
+
+      if CanAttack() then
+         local minion = SortByHealth(GetWithBuff("rend", GetInAARange(me, MINIONS)), "AA", true)[1]
+         if minion then
+            if AA(minion) then
+               PrintAction("Hit rended minion")
+               return true
+            end
+         end
+         if HitMinion("AA", "strong") then
+            return true
+         end
+      end
+
+      if CanUse("Tiamat") or CanUse("Ravenous Hydra") then
+         local minions = GetInRange(me, item, MINIONS)
+         if #minions >= 2 then
+            Cast("Tiamat", me)
+            Cast("Ravenous Hydra", me)
+            PrintAction("Crescent for clear")
+            return true
+         end
+      end
+
+   end
    return false
 end
 
@@ -226,12 +273,16 @@ end
 -- SetAutoJungle(jungle)
 
 local function onCreate(object)
-   PersistOnTargets("soulmarked", object, "TODO", ENEMIES, PETS, MINIONS, CREEPS)
-   local rended = PersistOnTargets("rend", object, "TODO", ENEMIES)
+   PersistOnTargets("soulmarked", object, "Kalista_Base_P_Blade_Left", ENEMIES, PETS, MINIONS, CREEPS)
+
+   PersistAll("rend", object, "Kalista_Base_E_Spear_tar")
+
+   local rended = PersistOnTargets("rend", object, "Kalista_Base_E_Spear_tar", ENEMIES)
    if rended then
       rendTimeouts[rended.charName] = time()+spells["rend"].timeout
    end
-   PersistOnTargets("rend", object, "TODO", PETS, MINIONS, CREEPS)
+
+   PersistOnTargets("rend", object, "Kalista_Base_E_Spear_tar", PETS, MINIONS, CREEPS)
 end
 
 local function onSpell(unit, spell)
