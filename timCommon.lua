@@ -1185,7 +1185,8 @@ function GetNearestIndex(target, list)
    return nearInd  
 end
 
-function GetKills(thing, list)
+function GetKills(thing, ...)
+   local list = concat(...)
    list = RemoveWillKills(list, thing)
    local result = FilterList(list, 
       function(item) 
@@ -2645,5 +2646,13 @@ function GetNearestBush(target, dist)
    end
    if bushPoint then
       return bushPoint
+   end
+end
+
+function getHeroByName(name)
+   for i,enemy in ipairs(ENEMIES) do
+      if enemy.charName == name then
+         return enemy
+      end
    end
 end
