@@ -42,12 +42,15 @@ SPELL_DEFS = {
 			type="dash", ends="target", overShoot=-25,
 		},
 		triumphantroar={},
+		ferocioushowl={},
+		pulverize={},
 	},
 	Amumu = {
 		bandagetoss={
 			range=1100, radius=80, time=1, ss=true, isline=true, block=true, cc=STUN, 
 			type="dash", ends="target"
 		},
+		tantrum={},
 	},
 	Annie = {
 		disintegrate={key="Q", cc=STUN},
@@ -309,7 +312,12 @@ SPELL_DEFS = {
 		},
 	},
 	Kalista = {
-
+		kalistaw={},
+		kalistar={},
+		kalistarx={},
+		kalistamysticshot={},
+		kalistaexpungewrapper={},
+		kalistaexpunge={},
 	},
 	Karma = {
 		karmaq={key="Q"},
@@ -356,6 +364,10 @@ SPELL_DEFS = {
 	Kennen = {
 		kennenshurikenhurlmissile1={range=1050, radius=75, time=1, ss=true, isline=true, block=true},
 		kennenshurikenstorm={}, --TODO
+		kennenbringthelight={},
+		kennenmegaproc={},
+		kennenlightningrush={},
+		kennenlrcancel={},
 	},
 	Khazix = {
 		khazixq={},
@@ -443,6 +455,7 @@ SPELL_DEFS = {
 		luluq={range=925, radius=50, time=1, ss=true, isline=true, cc=SLOW},
 		luluqmissile={},
 		luluw={},
+		luluwtwo={},
 		lulue={},
 		lulur={},
 	},
@@ -555,6 +568,9 @@ SPELL_DEFS = {
 	},
    Poppy={
       poppyheroiccharge={type="dash", ends="target", overShoot=300},
+      poppydevastatingblow={},
+      poppyparagonofdemacia={},
+      poppydiplomaticimmunity={},
    },
   	Quinn = {
   		quinnq={},
@@ -568,6 +584,7 @@ SPELL_DEFS = {
 	},
 	Rammus = {
 		puncturingtaunt={cc=TAUNT, nodamage=true},
+		powerball={},
 	},
 	Renekton = {
 		-- RenektonSliceAndDice={range=450, radius=80, time=1, ss=true, isline=true, physical=true},
@@ -840,16 +857,18 @@ SPELL_DEFS = {
    XinZhao={
       xenzhaosweep={type="dash", ends="target"},
       xenzhaobattlecry={},
+      xenzhaocombotarget={},
+      xenzhaothrust={},
+      xenzhaoparry={},
+   },
+   Yasuo={
+      yasuodashwrapper={type="dash", ends="max", range=300},
+      yasuowmovingwall={},
       yasuoqw={},
       yasuoq={},
       yasuodummyspell={},
       yasuorknockupcombow={},
       yasuordummyspell={},
-
-   },
-   Yasuo={
-      yasuodashwrapper={type="dash", ends="max", range=300},
-      yasuowmovingwall={},
    },
   	Zac = {
 		zacq={range=550, radius=100, time=1, ss=true, isline=true, cc=SLOW},
@@ -879,6 +898,8 @@ SPELL_DEFS = {
 		rewind={},
 		timewarp={},
 		timebomb={},
+		zileanqattachaudio={},
+		chronoshift={},
 	},
 	Zyra = {
 		zyraqfissure={key="Q", range=800, radius=275, time=1.5, ss=true},
