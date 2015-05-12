@@ -6,7 +6,7 @@ require "issuefree/drawing"
 require "issuefree/items"
 require "issuefree/autoAttackUtil"
 require "issuefree/persist"
--- require "issuefree/prediction"
+require "issuefree/prediction"
 require "issuefree/spellUtils"
 require "issuefree/toggles"
 
@@ -1617,7 +1617,7 @@ function OnProcessSpell(unit, spell)
       StartChannel(1)
    end
 
-   -- PredictEnemy(unit, spell)
+   PredictEnemy(unit, spell)
 
    for _,name in ipairs(channeledSpells) do
       if ICast(name, unit, spell) then
@@ -2393,14 +2393,23 @@ function CastAtCC(thing, hardCCOnly, targetOnly)
          return 
       end
 
+      -- for _,enemy in ipairs(SortByHealth(ENEMIES, thing)) do
+      --    local pred, chance = GetSpellFireahead(thing, enemy)
+      --    if chance >= 4 then
+      --       if IsInRange(range, pred) then
+      --          target = pred
+      --          prediction = true
+      --          break
+      --       end
+      --    end
+      -- end
+
       for _,enemy in ipairs(SortByHealth(ENEMIES, thing)) do
-         local pred, chance = GetSpellFireahead(thing, enemy)
-         if chance >= 4 then
-            if IsInRange(range, pred) then
-               target = pred
-               prediction = true
-               break
-            end
+         local pred = P[enemy.name..".pred"]
+         if IsInRange(range, pred) then
+            target = pred
+            prediction = true
+            break
          end
       end
 
