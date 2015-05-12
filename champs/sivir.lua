@@ -4,7 +4,7 @@ require "issuefree/modules"
 print("\nTim's Sivir")
 
 InitAAData({
-   speed=1400, windup=.15,
+   speed=1400, extraWindup=.15,
    resets={GetSpellInfo("W").name},
    particles={"sivirbasicattack_mis", "sivirbasicattack2_mis", "SivirRicochetAttack_mis"}
 })
