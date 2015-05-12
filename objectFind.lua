@@ -128,18 +128,23 @@ local function onSpell(unit, spell)
    end
 end
 
+local TSS_IGNORE = {
+   "DrawFX",
+   "FountainHeal",
+   "LevelProp",
+   "Minion",
+   "Audio",
+   "Mfx",
+   "ElixirSight",
+   "SRU_"
+}
+
 function objectFindCreateObject(object)
    if testShot and not testShot.object then
       if GetDistance(object) < 1000 and
          object.name ~= "LineMissile" and
          object.name ~= "missile" and
-         not find(object.name, "DrawFX") and
-         not find(object.name, "FountainHeal") and
-         not find(object.name, "LevelProp") and
-         not find(object.name, "Minion") and
-         not find(object.name, "Audio") and
-         not find(object.name, "Mfx") and
-         not find(object.name, "ElixirSight") and
+         not ListContains(object.name, TSS_IGNORE) and
          ( not testShot.name or find(object.name, testShot.name) )
       then
          local exclude = false
