@@ -93,9 +93,9 @@ function Circle(target, radius, color, thickness)
 	color = color or yellow
 	radius = radius or GetWidth(target)
 
-	if radius > 2000 then
-		return
-	end
+	-- if radius > 2000 then
+	-- 	return
+	-- end
 
 	table.insert(DRAWS, {DrawCircle3D, {target.x, target.y, target.z, radius, thickness, color, 50}})
 end
