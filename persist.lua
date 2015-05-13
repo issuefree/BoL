@@ -280,6 +280,7 @@ function CleanPersistedObjects()
    for name,obj in pairs(P) do
       if not obj or 
          not obj.valid or
+         not PData[name] or
          not obj.name == PData[name].name
       then
          -- pp("Clean "..name)
