@@ -3,6 +3,8 @@ require "issuefree/telemetry"
 -- circle colors
 yellowB  = 0xFFFFFF00
 yellow = 0x75FFFF00
+orangeB = 0xFFFF9900
+orange = 0x75FF9900
 greenB   = 0xFF00FF00
 green  = 0x7500FF00
 redB     = 0xFFFF0000
