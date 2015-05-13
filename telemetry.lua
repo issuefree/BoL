@@ -288,6 +288,7 @@ function GetAngularCenter(targets, source)
 end
 
 function GetCastPoint(targets, thing, source)
+   assert(type(targets) ~= "string")
    source = source or me
    local point
    if type(targets) == "table" and not targets.x then
