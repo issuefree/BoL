@@ -173,8 +173,9 @@ local wall = {}
 -- end
 
 local xc, yc = 1750, 100
-local function PrintLine(str, line, col)
-   Text(str,xc+col*25,yc+line*15,0xFFCCEECC);
+local function PrintLine(str, line, col, color)
+   color = color or 0xFFCCEECC
+   Text(str,xc+col*25,yc+line*15,color);
 end
 local enemyCache = {}
 
@@ -188,10 +189,35 @@ local function drawCommon()
    end
    local i = 0
    for _,enemy in pairs(enemyCache) do
-      i = i+1
+      i = i+2
       PrintLine(enemy.charName, i, 1)
-      PrintLine(trunc(enemy.magicArmor,0), i, 4)
-      PrintLine(trunc(enemy.armor,0), i, 5)
+      local effM = math.max(math.ceil(enemy.magicArmor*me.magicPenPercent - me.magicPen), 0)
+      local damM = trunc(100/(100+effM), 2)
+      local effA = math.max(math.ceil(enemy.armor*me.armorPenPercent - me.armorPen), 0)
+      local damA = trunc(100/(100+effA), 2)
+      local color = greenB
+      if damM > .9 then
+         color = greenB
+      elseif damM > .75 then
+         color = yellowB
+      elseif damM > .5 then
+         color = orangeB
+      else
+         color = redB
+      end
+      PrintLine(damM, i, 4, color)
+      if damA > .9 then
+         color = greenB
+      elseif damA > .75 then
+         color = yellowB
+      elseif damA > .5 then
+         color = orangeB
+      else
+         color = redB
+      end
+      PrintLine(damA, i, 5, color)
+      PrintLine(trunc(effM, 0).."/"..trunc(enemy.magicArmor,0), i+1, 3)
+      PrintLine(trunc(effA,0).."/"..trunc(enemy.armor,0), i+1, 5)
    end
 
    if me.dead then
