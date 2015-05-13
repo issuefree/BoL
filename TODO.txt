@@ -13,3 +13,9 @@ Fix ward detection to get rid of obsolete wards.
 	If I don't see something trigger it won't auto clear. I don't know the fix for this but I need a fix for this.
 
 Change GetSkillShot to take a "purpose" to prefer higher chance hit or weaker targets.
+
+Code up smite champs if I have the item
+
+Code up being oathbound to kalista
+
+I don't like having to hold the button for jungle. especially for melee toons. I'd like to start the jungle and have it auto jungle until the camp is dead or I'm out of range or I cancel it or something.
