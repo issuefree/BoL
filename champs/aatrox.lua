@@ -5,6 +5,13 @@ require "issuefree/modules"
 -- TODO: track if I'm thirst or price
 
 pp("\nTim's Aatrox")
+pp(" - Manage thirst/price depending on health")
+pp(" - Hit stuff if I'm low health to power thirst")
+pp(" - Dive disrupt")
+pp(" - Blades/Flight LH")
+pp(" - Some diving (could be better)")
+pp(" - Some auto ult (could be better)")
+pp(" - Jungle")
 
 InitAAData({ 
    extraWindup=.1,
@@ -34,7 +41,8 @@ spells["flight"] = {
    adBonus=.6,
    delay=.25,  -- ???
    speed=1200, -- ???
-   radius=GetWidth(me),
+   radius=250-25, -- reticle
+   kbRadius=150,
    noblock=true,
    cost=0
 } 
@@ -151,6 +159,12 @@ function Run()
             return true
          end
       end
+
+      if VeryAlone() then
+         if KillMinionsInArea("flight", 2) then
+            return true
+         end
+      end
    end
    
    -- low priority hotkey actions, e.g. killing minions, moving
@@ -200,7 +214,6 @@ function Action()
 
    if IsOn("ult") then
       local inRange = GetInRange(me, "massacre", ENEMIES)
-      -- local stretchRange = GetInRange(me, GetSpellRange("massacre")+100, ENEMIES)
       if Skirmishing() and #inRange >= 2 then
          Cast("massacre", me)
          PrintAction("Massacre for AoE", #inRange)
@@ -208,9 +221,12 @@ function Action()
       end
 
       if not CanUse("flight") and not CanUse("blades") and CanUse("massacre") then
-         Cast("massacre", me)
-         PrintAction("Massacre for execute")
-         return true
+         local target = GetKills(GetInRange(me, "massacre"))[1]
+         if target then
+            Cast("massacre", me)
+            PrintAction("Massacre for execute")
+            return true
+         end
       end
 
 
@@ -224,20 +240,36 @@ function Action()
    return false
 end
 function FollowUp()
-
-
    return false
 end
 
---local function jungle()
---    local creep = GetBiggestCreep(GetInRange(me, "AA", CREEPS))
---    local score = ScoreCreeps(creep)
---    if AA(creep) then
---       PrintAction("AA "..creep.charName)
---       return true
---    end
--- end   
--- SetAutoJungle(jungle)
+local function jungle()
+   if CanUse("flight") then
+      local hits, kills, score = GetBestArea(me, "flight", 1, .5, CREEPS)
+      if score >= 3 then
+         CastXYZ("flight", GetCastPoint(hits, "flight"))
+         PrintAction("Flight in the jungle", score)
+         return true
+      end
+   end
+
+   if CanUse("blades") then
+      local hits, kills, score = GetBestLine(me, "blades", 1, .5, CREEPS)
+      if #hits >= 1 then
+         CastXYZ("blades", GetCastPoint(hits, "blades"))
+         PrintAction("Blades in the jungle", score)
+         return true
+      end
+   end
+
+   local creep = GetBiggestCreep(GetInRange(me, "AA", CREEPS))
+   -- local score = ScoreCreeps(creep)
+   if AA(creep) then
+      PrintAction("AA "..creep.charName)
+      return true
+   end
+end   
+SetAutoJungle(jungle)
 
 local function onCreate(object)
    PersistBuff("thirst", object, "Aatrox_Base_W_WeaponLife.troy")
