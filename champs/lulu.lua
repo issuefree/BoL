@@ -21,11 +21,11 @@ spells["pix"] = {
 
 spells["lance"] = {
 	key="Q", 
-	range=925, 
+	range=925-75, 
 	color=violet, 
 	base={80,125,170,215,260}, 
 	ap=.5,
-	delay=.26, -- testskillshot
+	delay=.26+.2, -- testskillshot
 	speed=1500, -- testskillshot
 	width=50,
 	noblock=true,
@@ -67,6 +67,7 @@ AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
 function Run()
+	Circle(P.pix)
 	P.pix = P.pix or me
    if StartTickActions() then
       return true
