@@ -27,13 +27,13 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["blast"] = {
    key="Q", 
-   range=825-10, 
+   range=825-25, 
    color=yellow, 
    base={25,38,52,65,78},
    ap=.45/3,
    -- base={75,115,155,195,235},
    -- ap=.35,
-   delay=.5, -- hard to test but delay is 2.4 plus .6 from wiki.
+   delay=.5+.25,
    speed=0,
    noblock=true,
    radius=150,
