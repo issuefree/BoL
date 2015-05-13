@@ -7,6 +7,7 @@ require "issuefree/modules"
 pp("\nTim's Aatrox")
 
 InitAAData({ 
+   extraWindup=.1,
 --    speed = 1300,
 --    minMoveTime = 0,
 --    extraRange=-20,
@@ -17,7 +18,7 @@ InitAAData({
 -- SetChampStyle("caster")
 
 AddToggle("dive", {on=false, key=112, label="Dive"})
-AddToggle("ult", {on=false, key=113, label="Auto Ult"})
+AddToggle("ult", {on=true, key=113, label="Auto Ult"})
 AddToggle("", {on=true, key=114, label=""})
 AddToggle("", {on=true, key=115, label=""})
 
@@ -65,9 +66,9 @@ spells["blades"] = {
    ap=.6,
    bonusAd=.6,
    type="M",
-   delay=.25,  -- ???
-   speed=1200, -- ???
-   width=80,   -- ???
+   delay=.35,  -- tss
+   speed=1200, -- tss
+   width=80,   -- ??? I don't really have anything for this shape
    noblock=true,
    cost=0
 } 
@@ -83,20 +84,24 @@ spells["massacre"] = {
 
 spells["AA"].damOnTarget = 
    function(target)
-      if P.price and bloodStacked then
+      if P.priceStacked then
          return GetSpellDamage("price")
       end
    end
 
-local bloodStacked = false
 
 function Run()
+   spells["AA"].bonus = 0
+   if P.priceStacked then
+      spells["AA"].bonus = GetSpellDamage("price")
+   end
+
    if StartTickActions() then
       return true
    end
 
    -- auto stuff that always happen
-   if IsOn("dive") and CheckDisrupt("dive") then
+   if IsOn("dive") and CheckDisrupt("flight") then
       return true
    end
 
@@ -110,6 +115,34 @@ function Run()
 			return true
 		end
 	end
+
+   if P.price then
+      if VeryAlone() and GetHPerc() < .9 then
+         Cast("thirst", me)
+         PrintAction("Thirst alone to top off")
+         return true
+      end
+
+      if GetHPerc() < .5 then
+         Cast("thirst", me)
+         PrintAction("Thirst to heal")
+         return true
+      end
+   end
+
+   if P.thirst then
+      if GetHPerc() > .9 then
+         Cast("price", me)
+         PrintAction("Price since I'm full")
+         return true
+      end
+
+      if Engaged() and GetHPerc() > .75 then
+         Cast("price", me)
+         PrintAction("Price for damage") -- since I'm full enough
+         return true
+      end
+   end
 
 	-- auto stuff that should happen if you didn't do something more important
    if IsOn("lasthit") then
@@ -128,6 +161,14 @@ function Run()
    end
 
    EndTickActions()
+
+   if HotKey() then
+      if P.thirst and GetHPerc(me) < .5 then
+         if HitMinion("AA", "strong") then
+            return true
+         end
+      end
+   end
 end
 
 function Action()
@@ -148,26 +189,34 @@ function Action()
       end
 
       local target = GetSkillShot("flight")
-      if WillKill("flight", "AA", "blades", "massacre", target) then
-         CastFireahead("flight", target)
-         PrintAction("Dive for execute", target)
-         return true
+      if target then
+         if WillKill("flight", "AA", "blades", "massacre", target) then
+            CastFireahead("flight", target)
+            PrintAction("Dive for execute", target)
+            return true
+         end
       end
    end
 
    if IsOn("ult") then
       local inRange = GetInRange(me, "massacre", ENEMIES)
-      local stretchRange = GetInRange(me, GetSpellRange("massacre")+100, ENEMIES)
-      if #inRange >= 2 and #stretchRange <= #inRange then
+      -- local stretchRange = GetInRange(me, GetSpellRange("massacre")+100, ENEMIES)
+      if Skirmishing() and #inRange >= 2 then
          Cast("massacre", me)
          PrintAction("Massacre for AoE", #inRange)
          return true
       end
 
+      if not CanUse("flight") and not CanUse("blades") and CanUse("massacre") then
+         Cast("massacre", me)
+         PrintAction("Massacre for execute")
+         return true
+      end
+
+
    end
 
-   local target = GetMarkedTarget() or GetWeakestEnemy("AA")
-   -- local target = GetMarkedTarget() or GetMeleeTarget()
+   local target = GetMarkedTarget() or GetMeleeTarget()
    if AutoAA(target) then
       return true
    end
@@ -175,6 +224,8 @@ function Action()
    return false
 end
 function FollowUp()
+
+
    return false
 end
 
@@ -189,8 +240,11 @@ end
 -- SetAutoJungle(jungle)
 
 local function onCreate(object)
-   PersistBuff("thirst", object, "TODO")
-   PersistBuff("price", object, "TODO")
+   PersistBuff("thirst", object, "Aatrox_Base_W_WeaponLife.troy")
+   PersistBuff("price", object, "Aatrox_Base_W_WeaponPower.troy")
+
+   PersistBuff("thirstStacked", object, "Aatrox_Base_W_Buff_Life.troy")
+   PersistBuff("priceStacked", object, "Aatrox_Base_W_Buff_Power.troy")
 end
 
 local function onSpell(unit, spell)
