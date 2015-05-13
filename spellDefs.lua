@@ -15,7 +15,7 @@ ignoredSpells = {
 	"totem", "ward", "BilgewaterCutlass", "ItemSwordOfFeastAndFamine",
 	"trinket", "HealthBomb", "RanduinsOmen", "YoumusBlade", "FlaskOfCrystalWater", 
 	"ElixirOfWrath", "HextechGunblade", "Muramana", "shurelyascrest", "lanternwally",
-	"kalistarallydash", "hextechsweeper", "quicksilversash", "dummy",
+	"kalistarallydash", "hextechsweeper", "quicksilversash", "dummy", "oracleextractsight",
 
 	"snowballfollowupcast",
 }
@@ -62,6 +62,9 @@ SPELL_DEFS = {
 	Anivia = {
 		flashfrostspell={range=1100, radius=90, time=2, ss=true, show=true, isline=true, cc=STUN},
 		frostbite={},
+		crystallize={},
+		flashfrost={},
+		glacialstorm={},
 	},
 	Ashe = {
 		volley={block=true, cc=SLOW, physical=true},
@@ -371,6 +374,8 @@ SPELL_DEFS = {
 	},
 	Khazix = {
 		khazixq={},
+		khazixqevo={},
+		khazixqlong={},
 		khazixw={range=1000, radius=120, time=0.5, ss=true, isline=true, cc=SLOW, physical=true},
 		khazixwlong={range=1000, radius=150, time=1, ss=true, isline=true, cc=SLOW, physical=true},
 		khazixwevo={},
@@ -466,6 +471,7 @@ SPELL_DEFS = {
 			type="dash", ends="point"
 		},
 		landslide={},
+		obduracy={},
 	},
 	Malzahar = {
 		alzaharcallofthevoid={range=900, radius=100, time=1, ss=true, isline=false, cc=SILENCE},
@@ -519,10 +525,10 @@ SPELL_DEFS = {
 		namie={},
 	},
 	Nasus = {
-		nasusw={cc=SLOW, nodamage=true},
-		nasusq={}, -- siphon
-		nasuse={}, -- spirit fire
-		nasusr={},
+		nasusq={key="Q"}, -- siphon
+		nasusw={key="W", cc=SLOW, nodamage=true},
+		nasuse={key="W"}, -- spirit fire
+		nasusr={key="R"},
 	},
 	Nautilus = {
 		nautilusanchordrag={key="Q", range=950, radius=80, time=1.5, ss=true, perm=true, block=true, isline=true},
@@ -563,18 +569,21 @@ SPELL_DEFS = {
 		orianaizunacommand={range=825, radius=90, time=1.5, ss=true, isline=false},
 	},
 	Pantheon = {
-		pantheon_throw={physical=true},
-      pantheonw={type="dash", ends="target", overShoot=-50},
+		pantheonq={key="Q", physical=true},
+      pantheonw={key="W", type="dash", ends="target", overShoot=-50},
+      pantheone={key="E"},
+      pantheonrfall={key="R"},
+      pantheonrjump={key="R"},
 	},
    Poppy={
+      poppydevastatingblow={key="Q"},
       poppyheroiccharge={type="dash", ends="target", overShoot=300},
-      poppydevastatingblow={},
       poppyparagonofdemacia={},
-      poppydiplomaticimmunity={},
+      poppydiplomaticimmunity={key="R"},
    },
   	Quinn = {
-  		quinnq={},
-		quinnqmissile={range=1025, radius=40, time=1, ss=true, isline=true, cc=BLIND, physical=true},
+  		quinnq={key="Q"},
+		quinnqmissile={key="Q", range=1025, radius=40, time=1, ss=true, isline=true, cc=BLIND, physical=true},
 		quinnvalorq={},
 		quinnw={},
 		quinne={},
@@ -597,11 +606,11 @@ SPELL_DEFS = {
       renektonreignofthetyrant={},
   	},
 	Rengar = {
-		rengarq={},
-		rengarw={},
-		rengare={cc=STUN, physical=true},
-		rengarefinal={},
-		rengarr={},
+		rengarq={key="Q"},
+		rengarw={key="W"},
+		rengare={key="E", cc=STUN, physical=true},
+		rengarefinal={key="E"},
+		rengarr={key="R"},
 	},
    Riven={
       rivenfeint={type="dash", ends="max", range=325},
@@ -616,10 +625,11 @@ SPELL_DEFS = {
 		rumblecarpetbomb={range=1700, radius=100, time=1.5, ss=true, isline=true},
 	},
 	Ryze = {
-		runeprison={cc=BIND},
-		overload={speed=1400},
-		spellflux={},
-		desperatepower={},
+		ryzeq={},
+		ryzew={cc=BIND},
+		ryzee={},
+		ryzer={},
+		ryzepassivespell={},
 	},
 	Sejuani = {
 		sejuaniglacialprison={range=1150, radius=180, time=1, ss=true, isline=true, cc=STUN},
@@ -762,6 +772,12 @@ SPELL_DEFS = {
 		redcard={cc=SLOW},
 		yellowcard={cc=STUN},
 		wildcards={range=1450, radius=80, time=1, ss=true, show=true, isline=true},
+		pickacard={},
+		goldcardlock={},
+		bluecardlock={},
+		redcardlock={},
+		destiny={},
+		gate={},
 	},
 	Twitch = {
 		twitchvenomcask={cc=SLOW, nodamage=true},
@@ -859,6 +875,8 @@ SPELL_DEFS = {
       xenzhaobattlecry={},
       xenzhaocombotarget={},
       xenzhaothrust={},
+      xenzhaothrust2={},
+      xenzhaothrust3={},
       xenzhaoparry={},
    },
    Yasuo={
