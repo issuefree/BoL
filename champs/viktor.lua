@@ -1,15 +1,14 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
--- TODO: 
--- TODO: 
-
 pp("\nTim's Viktor")
 
 InitAAData({ 
    speed = 2300,
+   extraWindup=.1,
    -- extraRange=-20,
---    particles = {"TeemoBasicAttack_mis", "Toxicshot_mis"} 
+   particles = {"ViktorBasicAttack_mis", "Viktor_Base_Q_Aug_Mis"},
+   attacks={"attack", "viktorqbuff"}
 })
 
 SetChampStyle("caster")
