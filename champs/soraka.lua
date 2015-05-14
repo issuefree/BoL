@@ -66,10 +66,6 @@ AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
 function Run()
-	if CREEP_ACTIVE then
-		PrintState(0, "Creep Active")
-	end
-
    if StartTickActions() then
       return true
    end
