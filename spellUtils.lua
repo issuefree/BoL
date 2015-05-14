@@ -378,7 +378,7 @@ function GetSpellInfo(thing, hero)
    if iSpell then
       return hero:GetSpellData(iSpell)
    else
-      pp(debug.trackback())
+      pp(debug.traceback())
       pp(thing)
       return nil
    end
@@ -723,13 +723,10 @@ function IsGoodFireahead(thing, target, minChance)
    -- - 5: Target dashing or blinking. (~100% hit chance)
 
    if not minChance then
-      if IsPointAoE(spell) then
-         minChance = 3
-      end
       if GetMPerc() > .66 then
-         minChance = 1
-      else
          minChance = 2
+      else
+         minChance = 2.5
       end
    end
 
