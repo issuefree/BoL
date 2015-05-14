@@ -266,8 +266,10 @@ function aaTick()
 
 end
 
+local printNextSpell = false
 function SetAttacking()
-   lastAttack = time()
+   -- lastAttack = time()
+   printNextSpell = true
 end
 
 function ResetAttack(spell)
@@ -423,6 +425,16 @@ end
 lastAATarget = nil
 
 function onSpellAA(unit, spell)
+   if printNextSpell then
+      if IsMe(unit) then
+         if not IAttack(unit, spell) then
+            pp("NEW ATTACK SPELL: ")
+            pp(spell.name)
+            print("NEW ATTACK SPELL: "..spell.name)
+            printNextSpell = false
+         end
+      end
+   end
    if unit.team == me.team and IsMinion(unit) and GetDistance(unit) < 1000 then
       if spell.target and IsMinion(spell.target) then
          local delay, speed
@@ -451,12 +463,8 @@ function onSpellAA(unit, spell)
    end
 
    if IAttack(unit, spell) then
-      if not spells["AA"].baseAttackSpeed then
-         spells["AA"].baseAttackSpeed = 1 / (spell.animationTime * myHero.attackSpeed)
-      end
-      if not spells["AA"].windupVal then
-         spells["AA"].windupVal = 1 / (spell.windUpTime * myHero.attackSpeed)
-      end
+      spells["AA"].baseAttackSpeed = 1 / (spell.animationTime * myHero.attackSpeed)
+      spells["AA"].windupVal = 1 / (spell.windUpTime * myHero.attackSpeed)
 
       if IsValid(spell.target) then
          lastAATarget = spell.target
