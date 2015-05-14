@@ -1990,6 +1990,7 @@ function AutoJungle()
    if CREEP_ACTIVE then
       local creep = GetNearestCreep()
       Circle(creep, 500, yellow, 3)
+      if (HotKey() or GetDistance(mousePos, creep) < 500) then
          if autoJungleFunction then
             return autoJungleFunction()
          end
