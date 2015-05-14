@@ -1986,17 +1986,20 @@ function JungleAoE(thing)
    end
 end
 
-function AutoJungle()   
-   if HotKey() and CREEP_ACTIVE then
-      if autoJungleFunction then
-         return autoJungleFunction()
+function AutoJungle()
+   if CREEP_ACTIVE then
+      local creep = GetNearestCreep()
+      Circle(creep, 500, yellow, 3)
+      if (HotKey() or (IsOn("jungle") and GetDistance(mousePos, creep) < 500)) then
+         if autoJungleFunction then
+            return autoJungleFunction()
+         end
+         local creep = GetBiggestCreep(GetInE2ERange(me, GetAARange()+100, CREEPS))
+         if AA(creep) then
+            PrintAction("AA "..creep.charName)
+            return true
+         end
       end
-      local creep = GetBiggestCreep(GetInRange(me, "AA", CREEPS))
-      if AA(creep) then
-         PrintAction("AA "..creep.charName)
-         return true
-      end
-
    end
 end   
 
