@@ -130,7 +130,7 @@ function FollowUp()
 end
 
 --local function jungle()
---    local creep = GetBiggestCreep(GetInRange(me, "AA", CREEPS))
+--    local creep = GetBiggestCreep(GetInE2ERange(me, GetAARange()+100, CREEPS))
 --    local score = ScoreCreeps(creep)
 --    if AA(creep) then
 --       PrintAction("AA "..creep.charName)
