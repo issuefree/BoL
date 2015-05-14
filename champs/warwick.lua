@@ -14,7 +14,7 @@ local thirstDam = {3,3.5,4,4.5,5,5.5,6,6.5,7,8,9,10,11,12,13,14,15,16}
 AddToggle("", {on=true, key=112, label=""})
 AddToggle("", {on=true, key=113, label=""})
 AddToggle("", {on=true, key=114, label=""})
-AddToggle("", {on=true, key=115, label=""})
+AddToggle("jungle", {on=true, key=115, label="Jungle", auxLabel="{0}", args={function() return CREEP_ACTIVE or "" end}})
 
 AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0}", args={GetAADamage}})
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
@@ -104,6 +104,36 @@ end
 function FollowUp()
    return false
 end
+
+local function jungle()
+   -- local score = ScoreCreeps(creep)
+
+   if CanUse("strike") then
+      if GetMPerc() > GetHPerc() then
+         local creep = GetBiggestCreep(GetInRange(me, "strike", CREEPS))
+         Cast("strike", creep)
+         PrintAction("Strike in the jungle")
+         return true
+      end
+   end
+
+   if GetMPerc() > .75 and CanUse("howl") then
+      local creeps = GetInRange(me, 750, CREEPS)
+      local score = ScoreCreeps(creeps)
+      if score >= 3 then
+         Cast("howl", me)
+         PrintAction("Howl in the jungle")
+         return true
+      end
+   end
+
+   local creep = GetBiggestCreep(GetInE2ERange(me, GetAARange()+100, CREEPS))
+   if AA(creep) then
+      PrintAction("AA "..creep.charName)
+      return true
+   end
+end   
+SetAutoJungle(jungle)
 
 local function onObject(object)
 end
