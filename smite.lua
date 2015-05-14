@@ -4,14 +4,16 @@ local smite = {range=750, base=0}
 local smiteDam = {390,410,430,450,480,510,540,570,600,640,680,720,760,800,850,900,950,1000}
 local smiteTargets = {}
 
-local smiteSpells = {"summonersmite", "itemsmiteaoe", "s5_summonersmitequick"}
+local smiteSpells = {"summonersmite", "itemsmiteaoe"}
 
 if ListContains(GetSpellInfo("D").name, smiteSpells) then
    smite.key = "D"
    spells["smite"] = smite
+   spells["smite"].name = GetSpellInfo("D").name
 elseif ListContains(GetSpellInfo("F").name, smiteSpells) then
    smite.key = "F"
    spells["smite"] = smite
+   spells["smite"].name = GetSpellInfo("F").name
 end
 
 function smiteTick()
@@ -31,6 +33,16 @@ function smiteTick()
             CastSpellTarget(smite.key, target)
             PrintAction("SMITE", target, 1)
             break 
+         end
+      end
+
+      if spells["smite"].name == "s5_summonersmiteduel" then
+         local target = GetWeakestEnemy("smite")
+         if target then
+            MarkTarget(target)
+            Cast("smite", target)
+            PrintAction("Smite", target)
+            return true
          end
       end
    end
