@@ -357,8 +357,9 @@ end
 
 local function cleanCreeps(list, names)
    for i,unit in rpairs(list) do
-      if not unit or not unit.valid
-         -- unit.dead or
+      if not unit or 
+         not unit.valid or
+         unit.dead
          -- unit.x == nil or 
          -- unit.y == nil or
          -- not ListContains(unit.name, names)
