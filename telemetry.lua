@@ -602,6 +602,7 @@ function GetAllInRange(target, thing, ...)
    return result
 end
 
+-- returns all targets between source and point based on the width of thing
 function GetInLine(source, thing, point, targets)
    local spell = GetSpell(thing) or thing
    local width = spell.width or spell.radius*2
