@@ -4,8 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Annie")
   
 InitAAData({ 
-   baseAttackSpeed = .579,
-   speed = 1000,
+   speed = 1200,
    particles = {"annie_basicattack"} 
 })
 

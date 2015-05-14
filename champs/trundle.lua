@@ -53,6 +53,7 @@ spells["pillar"] = {
    range=1000, 
    color=yellow, 
    radius=350, -- reticle
+   knockback=225,
    cost=60,
 }
 spells["subjugate"] = {

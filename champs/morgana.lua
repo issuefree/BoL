@@ -35,7 +35,8 @@ spells["soil"] = {
    key="W", 
    range=900, 
    color=violet, 
-   base={24,38,52,66,80}, 
+   -- listing 2 ticks here, can't remember why though (probably for last hits, 1 tick on cast 1 tick before they get out)
+   base={16,32,48,64,80}, 
    ap=.22,
    radius=275,
    delay=.2,

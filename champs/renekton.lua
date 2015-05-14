@@ -33,6 +33,7 @@ spells["cull"] = {
    type="P",
    scale=function() if GetMPerc(me) >= .5 then return 1.5 end end
 } 
+
 spells["predator"] = {
    key="W", 
    base={10,30,50,70,90}, 
@@ -41,7 +42,7 @@ spells["predator"] = {
    onHit=true,
    modAA="predator",
    object="Renekton_Weapon_Hot.troy",
-   range=GetAARange,
+   range=function() return GetAARange() + 50 end,
    rangeType="e2e",
    scale=function() if GetMPerc(me) >= .5 then return 1.5 end end
 } 

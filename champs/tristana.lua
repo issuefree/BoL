@@ -66,7 +66,7 @@ spells["charge"] = {
    damOnTarget=
       function(target)
          if HasBuff("charge", target) and getCharges() > 0 then
-            return GetSpellDamage("charge")*.25*getCharges()
+            return GetSpellDamage("charge")*.3*getCharges()
          end
          return 0
       end,
