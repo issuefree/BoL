@@ -7,8 +7,6 @@ pp(" - Ham in jungle")
 pp(" - Axe peeps")
 
 InitAAData({
-   windup=.4,
-   minMoveTime=0   
 })
 
 AddToggle("", {on=true, key=112, label="- - -"})
