@@ -507,6 +507,12 @@ SPELL_DEFS = {
       missfortunebullettime={tupe="stall"},
       missfortuneviciousstrikes={},
 	},
+   MonkeyKing={
+   	monkeykingnimbus={type="dash", ends="target"},
+   	monkeykingdecoy={},
+   	monkeykingspintowin={},
+	},
+
 	Mordekaiser = {
 
 	},
@@ -594,6 +600,8 @@ SPELL_DEFS = {
 	Rammus = {
 		puncturingtaunt={cc=TAUNT, nodamage=true},
 		powerball={},
+		defensiveballcurl={},
+		tremors2={},
 	},
 	Renekton = {
 		-- RenektonSliceAndDice={range=450, radius=80, time=1, ss=true, isline=true, physical=true},
@@ -626,8 +634,11 @@ SPELL_DEFS = {
 	},
 	Ryze = {
 		ryzeq={},
+		ryzerq={},
 		ryzew={cc=BIND},
+		ryzerw={cc=BIND},
 		ryzee={},
+		ryzere={},
 		ryzer={},
 		ryzepassivespell={},
 	},
@@ -855,11 +866,6 @@ SPELL_DEFS = {
       hunterscall={key="W"},
       bloodscent={},
    },	
-   MonkeyKing={
-   	monkeykingnimbus={type="dash", ends="target"},
-   	monkeykingdecoy={},
-   	monkeykingspintowin={},
-	},
 	Xerath = {
 		xerathlocuspulse={},
 		xerathmagespear={},
@@ -888,6 +894,14 @@ SPELL_DEFS = {
       yasuorknockupcombow={},
       yasuordummyspell={},
    },
+	Yorick = {
+		yorickdecayed={},
+		yoricksummondecayed={},
+		yorickravenous={},
+		yoricksummonravenous={},
+		yorickspectral={},
+		yorickreviveally={},
+	},
   	Zac = {
 		zacq={range=550, radius=100, time=1, ss=true, isline=true, cc=SLOW},
 		zacw={},
