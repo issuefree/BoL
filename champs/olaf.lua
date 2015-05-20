@@ -9,8 +9,8 @@ pp(" - Axe peeps")
 InitAAData({
 })
 
-AddToggle("", {on=true, key=112, label="- - -"})
-AddToggle("jungle", {on=true, key=113, label="Jungle"})
+AddToggle("", {on=true, key=112, label=""})
+AddToggle("", {on=true, key=113, label=""})
 AddToggle("", {on=true, key=114, label=""})
 AddToggle("", {on=true, key=115, label=""})
 
@@ -81,48 +81,6 @@ function Run()
       end
    end
    
-   if IsOn("jungle") then
-      local creeps = GetInRange(me, GetSpellRange("swing"), CREEPS)
-      
-      if #creeps > 0 and JustAttacked() then -- justattacked keeps me from aggroing by accident
-         if CanUse("axe") and GetMPerc(me) > .5 then
-            local hits, _, score = GetBestLine(me, "axe", 1, 2, creeps)
-            if score >= 2 then            
-               local target = SortByDistance(hits)[#hits]
-               CastXYZ("axe", Point(target))
-               PrintAction("Axe for jungle aoe", score)
-               return true
-            end
-         end
-
-
-         for i,creep in ipairs(creeps) do
-            if IsBigCreep(creep) or 
-               IsMajorCreep(creep) 
-            then
-               if CanUse("axe") and GetMPerc(me) > .66 then 
-                  CastXYZ("axe", creep)
-                  PrintAction("Axe for jungle")
-                  return true
-               end
-               if CanUse("swing") then
-                  Cast("swing", creep)
-                  PrintAction("Swing for jungle", creep)
-                  return true
-               end
-
-            end
-
-            if CanUse("swing") and WillKill("swing", creep) and #creeps >= 2 then
-               Cast("swing", creep)
-               PrintAction("Execute creep")
-               return true
-            end
-
-         end
-      end
-   end
-
    if HotKey() and CanAct() then
       if FollowUp() then
          return true
@@ -167,17 +125,17 @@ end
 
 function FollowUp()
    if IsOn("clear") and Alone() then
-      if me.mana/me.maxMana > .75 then
+      if GetMPerc() > .75 then
          if HitMinionsInLine("axe", 3) then
             PrintAction("Axe for clear")
             return true
          end
-      elseif me.mana/me.maxMana > .66 then
+      elseif GetMPerc() > .66 then
          if HitMinionsInLine("axe", 4) then
             PrintAction("Axe for clear")
             return true
          end
-      elseif me.mana/me.maxMana > .5 then
+      elseif GetMPerc() > .5 then
          if HitMinionsInLine("axe", 5) then
             PrintAction("Axe for clear")
             return true
@@ -195,6 +153,55 @@ function FollowUp()
 
    return false
 end
+
+local function jungle()
+   local creeps = GetInRange(me, GetSpellRange("swing"), CREEPS)
+   
+   if #creeps > 0 then
+      if CanUse("axe") and GetMPerc(me) > .5 then
+         local hits, _, score = GetBestLine(me, "axe", 1, 2, creeps)
+         if score >= 2 then            
+            local target = SortByDistance(hits)[#hits]
+            CastXYZ("axe", Point(target))
+            PrintAction("Axe for jungle aoe", score)
+            return true
+         end
+      end
+
+      for i,creep in ipairs(creeps) do
+         if IsBigCreep(creep) or 
+            IsMajorCreep(creep) 
+         then
+            if CanUse("axe") and GetMPerc(me) > .66 then 
+               CastXYZ("axe", creep)
+               PrintAction("Axe for jungle")
+               return true
+            end
+            if CanUse("swing") then
+               Cast("swing", creep)
+               PrintAction("Swing for jungle", creep)
+               return true
+            end
+
+         end
+
+         if CanUse("swing") and WillKill("swing", creep) then
+            Cast("swing", creep)
+            PrintAction("Execute creep")
+            return true
+         end
+
+      end
+   end
+
+   local creep = GetBiggestCreep(GetInE2ERange(me, GetAARange()+100, CREEPS))
+   local score = ScoreCreeps(creep)
+   if AA(creep) then
+      PrintAction("AA "..creep.charName)
+      return true
+   end
+end   
+SetAutoJungle(jungle)
 
 local function onObject(object)
    PersistBuff("strikes", object, "olaf_viciousStrikes_self")
