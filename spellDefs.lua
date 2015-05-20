@@ -162,6 +162,8 @@ SPELL_DEFS = {
 	Draven = {
 		dravendoubleshot={range=1050, radius=125, time=1, ss=true, isline=true, cc=SLOW, physical=true},
 		dravenrcast={range=50000, radius=100, time=4, ss=true, show=true, isline=true, physical=true},
+		dravenspinning={},
+		dravenfury={},
 	},
 	DrMundo = {
 		infectedcleavermissile={},
@@ -259,6 +261,10 @@ SPELL_DEFS = {
 	},
    Hecarim={
       hecarimult={type="dash", ends="point", range=1000},
+      hecarimramp={},
+      hecarimw={},
+      hecarimrapidslash={},
+      hecarimramp={},
    },
 	Heimerdinger = {
 		heimerdingerq={key="Q"},
@@ -321,6 +327,7 @@ SPELL_DEFS = {
 		kalistamysticshot={},
 		kalistaexpungewrapper={},
 		kalistaexpunge={},
+		kalistamysticshotmis={},
 	},
 	Karma = {
 		karmaq={key="Q"},
@@ -412,6 +419,7 @@ SPELL_DEFS = {
 		leblancslidereturn={range=1000, radius=50, time=1, ss=true, isline=false},
 		leblancslidereturnm={range=1000, radius=50, time=1, ss=true, isline=false},
 		leblancchaosorb={},
+		leblancchaosorbm={},
 	},
 	LeeSin = {
 		blindmonkqone={key="Q", range=975, radius=150, time=1, ss=true, block=true, perm=true, isline=true, block=true, physical=true},
@@ -612,6 +620,7 @@ SPELL_DEFS = {
       renektonpreexecute={},
       renektonsuperexecute={},
       renektonreignofthetyrant={},
+      renektonexecute={},
   	},
 	Rengar = {
 		rengarq={key="Q"},
@@ -666,6 +675,8 @@ SPELL_DEFS = {
 			type="dash", ends="max"
 		},
       shenstandunited={type="stall"},
+      shenfeint={},
+      shenvorpalstar={},
 	},
 	Shyvana = {
    	shyvanatransformcast={type="dash", ends="point", range=1000},	
@@ -680,7 +691,9 @@ SPELL_DEFS = {
 		sionq={key="Q", type="stall"},
 		sionw={key="W"},
 		sione={key="E"},
+		sionr={},
 		sionpassivespeed={},
+		sionwdetonate={},
   	},
 	Sivir = {
 		sivirq={key="Q", range=1000, radius=100, time=1, ss=true, isline=true, physical=true},
@@ -795,6 +808,7 @@ SPELL_DEFS = {
 		twitchvenomcaskmissile={},
 		twitchhideinshadows={},
 		twitchexpunge={},
+		twitchfullautomatic={},
 	},
 	Udyr={
 		udyrbearstance={},
@@ -890,9 +904,14 @@ SPELL_DEFS = {
       yasuowmovingwall={},
       yasuoqw={},
       yasuoq={},
+      yasuoq2w={},
+      yasuoq3w={},
+      yasuoq2={},
+      yasuoq3={},
       yasuodummyspell={},
       yasuorknockupcombow={},
       yasuordummyspell={},
+      tempyasuormissile={},
    },
 	Yorick = {
 		yorickdecayed={},
@@ -901,6 +920,7 @@ SPELL_DEFS = {
 		yoricksummonravenous={},
 		yorickspectral={},
 		yorickreviveally={},
+		yorickreviveallyguide={},
 	},
   	Zac = {
 		zacq={range=550, radius=100, time=1, ss=true, isline=true, cc=SLOW},
