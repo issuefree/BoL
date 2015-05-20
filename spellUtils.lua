@@ -481,6 +481,11 @@ function GetSpellDamage(thing, target, ignoreResists)
    damage = damage + GetLVal(spell, "armor", target)*me.armor
    damage = damage + GetLVal(spell, "lvl", target)*me.level
    damage = damage + GetLVal(spell, "bonus", target)
+
+   if spell.byLevel and type(spell.byLevel == "table") then
+      damage = damage + spell.byLevel[me.level]
+   end
+   
    if target then
       local targetMaxHealth = GetLVal(spell, "targetMaxHealth", target)
       targetMaxHealth = targetMaxHealth + GetLVal(spell, "targetMaxHealthAP", target)*me.ap
