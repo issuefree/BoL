@@ -15,7 +15,7 @@ InitAAData({
 })
 
 AddToggle("dive", {on=false, key=112, label="Dive"})
-AddToggle("", {on=true, key=113, label="- - -"})
+AddToggle("", {on=true, key=113, label=""})
 AddToggle("", {on=true, key=114, label=""})
 AddToggle("", {on=true, key=115, label=""})
 
@@ -30,7 +30,14 @@ spells["spear"] = {
    base={65,105,145,185,225}, 
    adBonus=1.4,
    type="P",
-   cost=45
+   cost=45,
+   scale=function(target) 
+      if GetSpellLevel("E") >= 1 then
+         if target and GetHPerc(target) < .15 then 
+            return 2 
+         end 
+      end
+   end,
 }
 spells["aegis"] = {
    key="W", 
@@ -64,12 +71,21 @@ spells["skyfall"] = {
    channel=true,
    channelTime=2
 }
+spells["AA"].scale=function(target) 
+      if GetSpellLevel("E") >= 1 then
+         if target and GetHPerc(target) < .15 then 
+            return 2 
+         end 
+      end
+   end,
+
 
 local strikeTime = nil
 function Run()
    if not P.strike and strikeTime then
       pp(time() - strikeTime)
-      strikeTime = nil   end
+      strikeTime = nil
+   end
    if StartTickActions() then
       return true
    end
