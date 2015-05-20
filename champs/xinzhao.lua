@@ -36,7 +36,7 @@ spells["talon"] = {
 } 
 spells["cry"] = {
    key="W", 
-   base={26,32,38,44,50}, 
+   base={30,35,40,45,50}, 
    ap=.7,
    type="H",
    cost=40,
@@ -48,12 +48,13 @@ spells["charge"] = {
    base={70,110,150,190,230}, 
    ap=.6,
    type="M",
-   radius=function() return GetWidth(me) + 112.5 end,  --TODO test
+   -- radius=function() return GetWidth(me) + 112.5 end,  --TODO test
    cost=60,
 } 
 spells["sweep"] = {
    key="R", 
-   range=function() return GetWidth(me) + 187.5 end,  --TODO test
+   range=375,  --TODO test
+   rangeType="e2e",
    color=red, 
    base={75,175,275},
    adBonus=1,
@@ -66,16 +67,12 @@ function Run()
       return true
    end
 
-   -- auto stuff that always happen
-
-   -- high priority hotkey actions, e.g. killing enemies
 	if HotKey() and CanAct() then
 		if Action() then
 			return true
 		end
 	end
 
-	-- auto stuff that should happen if you didn't do something more important   
    if IsOn("lasthit") then
       if Alone() then
          if ModAAFarm("talon") then
@@ -84,7 +81,6 @@ function Run()
       end
    end      
    
-   -- low priority hotkey actions, e.g. killing minions, moving
    if HotKey() and CanAct() then
       if FollowUp() then
          return true
@@ -115,7 +111,7 @@ function Action()
       end
    end
 
-   if CanUse("challenge") then
+   if CanUse("sweep") then
       local target = GetMarkedTarget() or GetWeakestEnemy("sweep")
       if target and HasBuff("challenge", target) then
          if #GetInRange(target, "sweep", ENEMIES) >= 2 then
@@ -134,6 +130,17 @@ function Action()
    return false
 end
 function FollowUp()
+   if IsOn("lasthit") then
+      if Alone() then
+         if GetHPerc(me) < .75 then
+            if HitMinion("AA", "strong") then
+               PrintAction("..for heal", nil, .5)
+               return true
+            end
+         end
+      end
+   end
+
    return false
 end
 
