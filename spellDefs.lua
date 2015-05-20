@@ -16,9 +16,31 @@ ignoredSpells = {
 	"trinket", "HealthBomb", "RanduinsOmen", "YoumusBlade", "FlaskOfCrystalWater", 
 	"ElixirOfWrath", "HextechGunblade", "Muramana", "shurelyascrest", "lanternwally",
 	"kalistarallydash", "hextechsweeper", "quicksilversash", "dummy", "oracleextractsight",
+	"elixirofsorcery",
 
 	"snowballfollowupcast",
 }
+
+-- some spells cause predictable movement patterns that we can take advantage of:
+--[[
+	spell={
+		duration=seconds		How long the prediction is valid for. If a stall has a duration of 2 that character will be there for 2 seconds.
+									Duration doesn't quite make sense for dashes at this time.
+		type="dash",			These spells cause the character to move to a predictable spot
+			ends="<type>",		"max"			Dash always ends at max range
+														Graves's dash
+									"reverse"	Dash always ends at max range opposite of fire direction
+														Caitlyn's net
+									"point"		Dash ends at the fire point capped at range
+														Tristana's jump
+									"target"		Dash ends on a target
+														Jax's leap, Alistair's headbutt
+			range=#,				Max cast range
+			overShoot=#,		How far past the cast point the land position is (some spells undershoot a bit)
+
+		type="stall"			These spells cause the character to temporarily stop
+	}
+]]
 
 SPELL_DEFS = {
    Aatrox = {
@@ -76,32 +98,31 @@ SPELL_DEFS = {
    Azir = {
    	azirq={},
    	azirw={},
-   	azire={},
+   	azire={key="E", type="dash", ends="target"},
    	azirr={},
    	azirdummyspell={},
    	azirtowerclick={},
-
    }, 
 	Blitzcrank = {
-		rocketgrab={},
-		rocketgrabmissile={
+		rocketgrab={
 			key="Q", range=925, radius=90, time=1, ss=true, block=true, perm=true, show=true, isline=true, cc=GRAB,
 			type="stall",
 		},
+		rocketgrabmissile={"rocketgrab"},
 		overdrive={},
 		powerfist={},
 		staticfield={},
 	},
 	Brand = {
-		brandblaze={},
-		brandblazemissile={range=1050, radius=70, time=1, ss=true, isline=true, block=true, cc=STUN},
+		brandblaze={range=1050, radius=70, time=1, ss=true, isline=true, block=true, cc=STUN},
+		brandblazemissile={"brandblaze"},
 		brandconflagration={},
 		brandfissure={range=900, radius=250, time=4, ss=true, isline=false},
 		brandwildfire={},
 	},
 	Braum = {
 		braumq={range=1000, radius=175, time=1, ss=true, isline=true, block=true, cc=SLOW},
-		braumw={},
+		braumw={type="dash", ends="target"},
 		braume={},
 		braumrwrapper={},
 	},
@@ -161,7 +182,9 @@ SPELL_DEFS = {
 	},
 	Draven = {
 		dravendoubleshot={range=1050, radius=125, time=1, ss=true, isline=true, cc=SLOW, physical=true},
-		dravenrcast={range=50000, radius=100, time=4, ss=true, show=true, isline=true, physical=true},
+		dravenrcast={range=50000, radius=100, time=4, ss=true, show=true, isline=true, physical=true,
+			type="stall"
+		},
 		dravenspinning={},
 		dravenfury={},
 	},
@@ -195,8 +218,10 @@ SPELL_DEFS = {
 	},
 	FiddleSticks = {
 		terrify={cc=FEAR, nodamage=true},
+
       drain={type="stall"},
-      drainchannel={type="stall"},
+      drainchannel={"drain"},
+
 		crowstorm={
 			range=800, radius=300, time=1.5, ss=true, isline=false,
 			type="dash", ends="point"
@@ -220,7 +245,7 @@ SPELL_DEFS = {
 	Galio = {
 		galioresolutesmite={range=905, radius=200, time=1.5, ss=true, isline=false, cc=SLOW},
 		galiorighteousgust={range=1000, radius=120, time=1.5, ss=true, isline=true},
-      galioidolofdurand={type="stall"},
+      galioidolofdurand={type="stall", duration=2},
       galiobulwark={},
 	},
 	Gangplank = {
@@ -236,15 +261,18 @@ SPELL_DEFS = {
 		garenr={},
 	},
 	Gnar = {
-		gnarq={},
-		gnarqmissile={},
-		gnarbigq={},
-		gnarbigqmissile={},
+		gnarq={key="Q", range=1100, width=55, physical=true},
+		gnarqmissile={"gnarq"},
+		gnarbigq={key="Q", range=1100, width=90, physical=true},
+		gnarbigqmissile={"gnarbigq"},
 		gnarbigw={},
-		gnare={},
-		gnarbige={},
+		gnare={type="dash", range=475, ends="point", physical=true},
+		gnarbige={type="dash", range=475, ends="point", physical=true},
 		gnarr={},
 	},
+
+-- pass to here
+
 	Graves = {
 		gravesclustershot={range=750, radius=50, time=1, ss=true, isline=true, physical=true},
 		gravessmokegrenade={range=700, radius=275, time=1.5, ss=true, isline=false},
