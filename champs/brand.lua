@@ -37,7 +37,7 @@ spells["sear"] = {
 }
 spells["pillar"] = {
    key="W", 
-   range=902-15, 
+   range=900-15, 
    color=red, 
    base={75,120,165,210,255}, 
    ap=.6,
@@ -132,7 +132,7 @@ function Action()
       return true
    end
 
-   if CanUse("sear") and GetMPerc(me) > .75 then
+   if CanUse("sear") and GetMPerc(me) > .5 then
       if SkillShot("sear") then
          return true
       end
@@ -172,7 +172,7 @@ function Action()
    end
 
    if CanUse("pillar") then
-      if GetMPerc() > .75 then
+      if GetMPerc() > .5 then
          if SkillShot("pillar") then
             return true
          end
