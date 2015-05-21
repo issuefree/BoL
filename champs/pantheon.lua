@@ -77,7 +77,7 @@ spells["AA"].scale=function(target)
             return 2 
          end 
       end
-   end,
+   end
 
 
 local strikeTime = nil
