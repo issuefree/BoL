@@ -89,10 +89,9 @@ SPELL_DEFS = {
 		glacialstorm={},
 	},
 	Ashe = {
-		volley={block=true, cc=SLOW, physical=true},
+		asheq={block=true, cc=SLOW, physical=true},
+		volley={"asheq"},
 		enchantedcrystalarrow={range=50000, radius=120, time=4, ss=true, show=true, isline=true, cc=STUN, dodgeByObject=true},
-		frostarrow={},
-		frostshot={},
 		ashespiritofthehawk={},
 	},
    Azir = {
@@ -103,6 +102,12 @@ SPELL_DEFS = {
    	azirdummyspell={},
    	azirtowerclick={},
    }, 
+   Bard={
+   	bardq={},
+   	bardw={},
+   	barde={},
+   	bardr={},
+   },
 	Blitzcrank = {
 		rocketgrab={
 			key="Q", range=925, radius=90, time=1, ss=true, block=true, perm=true, show=true, isline=true, cc=GRAB,
@@ -153,6 +158,7 @@ SPELL_DEFS = {
 		},
 		feralscream={cc=SILENCE},
 		feast={},
+		vorpalspikes={},
 	},
 	Corki = {
 		missilebarrage={},
@@ -255,10 +261,11 @@ SPELL_DEFS = {
 		cannonbarrage={},
 	},
 	Garen = {
-		garenq={},
-		garenw={},
-		garene={},
-		garenr={},
+		garenq={key="Q"},
+		garenw={key="W"},
+		garene={key="E"},
+		garenecancel={},
+		garenr={key="R"},
 	},
 	Gnar = {
 		gnarq={key="Q", range=1100, width=55, physical=true},
@@ -271,8 +278,6 @@ SPELL_DEFS = {
 		gnarr={},
 	},
 
--- pass to here
-
 	Graves = {
 		gravesclustershot={range=750, radius=50, time=1, ss=true, isline=true, physical=true},
 		gravessmokegrenade={range=700, radius=275, time=1.5, ss=true, isline=false},
@@ -280,6 +285,7 @@ SPELL_DEFS = {
       gravesmove={type="dash", ends="max", range=425},
 		graveschargeshot={range=1000, radius=110, time=1, ss=true, isline=true, physical=true},
 	},
+
 	Gragas = {
 		gragasq={range=850, radius=320, time=2.5, ss=true, show=true, isline=false},
 		gragasqtoggle={},
@@ -310,7 +316,7 @@ SPELL_DEFS = {
 	Janna = {
 		howlinggale={range=1700, radius=100, time=3, ss=true, show=true, isline=true, dodgeByObject=true},
 		sowthewind={cc=SLOW},
-      reapthewhirlwind={type="stall"},
+      reapthewhirlwind={type="stall", duration=2},
       eyeofthestorm={},
 	},
 	JarvanIV = {
@@ -590,6 +596,9 @@ SPELL_DEFS = {
 	},
 	Nocturne = {
 		nocturneduskbringer={range=1200, radius=150, time=1.5, ss=true, isline=true, physical=true},
+		nocturneunspeakablehorror={},
+		nocturneshroudofdarkness={},
+		nocturneparanoia={},
 	},
    Nunu={
       consume={type="stall"},
@@ -842,6 +851,7 @@ SPELL_DEFS = {
 		udyrbearstance={},
 		udyrtigerstance={},
 		udyrturtlestance={},
+		udyrphoenixstance={},
 	},
 	Urgot = {
 		urgotheatseekingmissile={},
