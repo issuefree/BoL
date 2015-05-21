@@ -137,7 +137,7 @@ function Action()
       end
    end
 
-   if SkillShot("lay", nil, nil, 2) then -- I may go down to 1 if this doesn't cast enough
+   if SkillShot("lay", "best") then -- I may go down to 1 if this doesn't cast enough
       -- StartChannel(.5)
       return true
    end

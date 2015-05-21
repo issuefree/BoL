@@ -116,7 +116,7 @@ end
 function Action()
    -- TestSkillShot("cleaver")
 
-   if SkillShot("cleaver") then
+   if SkillShot("cleaver", "best") then
       return true
    end
    
