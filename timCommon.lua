@@ -1138,20 +1138,24 @@ function GetSkillShot(thing, purpose, targets, minChance)
    if not CanUse(spell) then return nil end
 
    targets = targets or ENEMIES   
-
    targets = GetInRange(me, GetSpellRange(spell)+500, targets)
-
    targets = GetGoodFireaheads(spell, minChance, targets)
 
    local target
    -- find the best target in the remaining unblocked
    if purpose == "peel" then
       target = GetPeel({ADC, APC, me}, targets)
+   elseif purpose == "best" then
+      target = SelectFromList(targets, 
+         function(item)
+            local pos, chance = GetSpellFireahead(thing, item)
+            return chance
+         end
+      )
    else
       target = GetWeakest(spell, targets)
    end
-
-   if target then
+   if target then      
       local _,chance = GetSpellFireahead(spell, target)
       log(GetSpellInfo(spell.key).name.." -> "..target.charName.." "..chance, "prediction")
    end

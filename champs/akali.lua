@@ -35,28 +35,28 @@ spells["detonate"] = {
    ap=.5
 }
 spells["shroud"] = {
-  key="W", 
-  range=700, 
-  color=blue, 
-  radius=425, -- check
-  cost={80,75,70,65,60}
+   key="W", 
+   range=700, 
+   color=blue, 
+   radius=425, -- check
+   cost={80,75,70,65,60}
 }
 spells["slash"] = {
-  key="E", 
-  range=325, 
-  color=red,
-  base={30,55,80,105,130}, 
-  ap=.4,
-  ad=.6,
-  type="P",
-  cost={60,55,50,45,40},
+   key="E", 
+   range=325, 
+   color=red,
+   base={30,55,80,105,130}, 
+   ap=.4,
+   ad=.6,
+   type="P",
+   cost={60,55,50,45,40},
 }
 spells["dance"] = {
-  key="R", 
-  range=700, 
-  color=yellow, 
-  base={100,175,250}, 
-  ap=.5
+   key="R", 
+   range=700, 
+   color=yellow, 
+   base={100,175,250}, 
+   ap=.5
 }
 
 function getDetonateDam(target)
@@ -69,6 +69,10 @@ end
 spells["AA"].damOnTarget = getDetonateDam
 
 function Run()
+   if IsWall(Point(mousePos):vector()) then
+      PrintState(0, "WALL")
+   end
+
    spells["AA"].bonus = GetSpellDamage("AA")*(.06+(me.ap/6/100))
 
    for _,m in ipairs(GetWithBuff("mark", MINIONS, CREEPS, ENEMIES)) do
