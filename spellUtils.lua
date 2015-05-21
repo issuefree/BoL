@@ -703,11 +703,8 @@ function GetFireaheads(thing, targets)
 end
 
 function IsGoodFireahead(thing, target, minChance)
-	-- PrintAction("SS", target.name)
    local spell = GetSpell(thing)
    if not IsValid(target) and not IsImmune(thing, target) then return false end   
-    -- check for "goodness". I'm testing good is when the tfas are all the same (or similar)
-    -- this should imply that the target is moving steadily.
 
    local point, chance = GetSpellFireahead(spell, target)
 
