@@ -197,6 +197,7 @@ function TestSkillShot(thing, name, excludes)
       testShot.times = {}
       StartChannel(1)
    end
+   return true
 end
 
 AddOnSpell(onSpell)
