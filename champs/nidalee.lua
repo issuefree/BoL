@@ -22,7 +22,7 @@ spells["jav"] = {
    ap=.4,
    cost={50,60,70,80,90},
    width=40,  -- from patch notes
-   delay=.15,  -- testskillshot
+   delay=.35,  -- test
    speed=1250,  -- testskillshot
    cd=6
 }
@@ -64,7 +64,7 @@ spells["trap"] = {
    ap=.2,
    delay=.5, -- 2.5 to land ~2.5 to arm
    speed=0,
-   radius=85, -- reticle
+   radius=85-20, -- reticle
    noblock=true,
    cost={40,45,50,55,60},
    cd={13,12,11,10,9}
