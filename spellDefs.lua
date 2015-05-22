@@ -212,6 +212,12 @@ SPELL_DEFS = {
 		eliserspider={},
 		eliser={},
 	},
+	Evelynn = {
+		evelynnq={},
+		evelynnw={},
+		evelynne={},
+		evelynnr={},
+	},
 	Ezreal = {
 		ezrealmysticshot={key="Q", range=1100, radius=80, time=1, ss=true, block=true, perm=true, isline=true, block=true, physical=true},
 		ezrealessenceflux={},
@@ -553,10 +559,14 @@ SPELL_DEFS = {
    	monkeykingnimbus={type="dash", ends="target"},
    	monkeykingdecoy={},
    	monkeykingspintowin={},
+   	monkeykingspintowinleave={},
 	},
 
 	Mordekaiser = {
-
+		mordekaisersyphonofdestruction={},
+		mordekaisercreepingdeathcast={},
+		mordekaisermaceofspades={},
+		mordekaiserchildrenofthegrave={},
 	},
 	Morgana = {
 		darkbindingmissile={key="Q", range=1300, radius=110, time=1.5, ss=true, show=true, perm=true, block=true, isline=true, cc=BIND},
@@ -664,6 +674,7 @@ SPELL_DEFS = {
 		rengarw={key="W"},
 		rengare={key="E", cc=STUN, physical=true},
 		rengarefinal={key="E"},
+		rengarefinalmax={},
 		rengarr={key="R"},
 	},
    Riven={
@@ -903,6 +914,8 @@ SPELL_DEFS = {
 	},
 	Vi = {
 		viq={range=900, radius=150, time=1, ss=true, isline=true, physical=true}, -- TODO dash stuff
+		vie={},
+		vir={},
 		assaultandbattery={cc=KNOCK, physical=true},
 	},
 	Viktor = {
