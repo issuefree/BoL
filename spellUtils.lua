@@ -378,8 +378,10 @@ function GetSpellInfo(thing, hero)
    if iSpell then
       return hero:GetSpellData(iSpell)
    else
-      pp(debug.traceback())
-      pp(thing)
+      if spell.key ~= "--" then
+         pp(debug.traceback())
+         pp(thing)
+      end
       return nil
    end
 end
@@ -485,7 +487,7 @@ function GetSpellDamage(thing, target, ignoreResists)
    if spell.byLevel and type(spell.byLevel == "table") then
       damage = damage + spell.byLevel[me.level]
    end
-   
+
    if target then
       local targetMaxHealth = GetLVal(spell, "targetMaxHealth", target)
       targetMaxHealth = targetMaxHealth + GetLVal(spell, "targetMaxHealthAP", target)*me.ap
