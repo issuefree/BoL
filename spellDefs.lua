@@ -209,8 +209,8 @@ SPELL_DEFS = {
 		elisehumane={range=1075, radius=100, time=1, ss=true, block=true, perm=true, isline=true, block=true},
 		elisespidereinitial={},
 		elisespidere={},
-		eliserspider={},
 		eliser={},
+		eliserspider={},
 	},
 	Evelynn = {
 		evelynnq={},
@@ -923,6 +923,7 @@ SPELL_DEFS = {
 		viktordeathray={}, --{range=700, radius=80, time=2, ss=true, isline=true},
 		viktorgravitonfield={},
 		viktorpowertransfer={},
+		viktorchaosstorm={},
 	},
    Warwick={
    	hungeringstrike={key="Q"},
