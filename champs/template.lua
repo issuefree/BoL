@@ -11,9 +11,8 @@ pp("\nTim's Template")
 
 InitAAData({ 
 --    speed = 1300,
---    minMoveTime = 0,
 --    extraRange=-20,
---    particles = {"TeemoBasicAttack_mis", "Toxicshot_mis"} 
+--    attacks = {"attack"} 
 })
 
 -- SetChampStyle("marksman")
@@ -140,9 +139,15 @@ end
 -- SetAutoJungle(jungle)
 
 local function onCreate(object)
+   -- if GetDistance(object) < 150 then
+   --    pp(object.name)
+   -- end
 end
 
 local function onSpell(unit, spell)
+   -- if IsMe(unit) then
+   --    pp(spell.name)
+   -- end
 end
 
 AddOnCreate(onCreate)
