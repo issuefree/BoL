@@ -20,19 +20,6 @@ function OnLoad()
 	require("issuefree/champs/"..string.lower(me.charName))
    VP = VPrediction()
    loadtime = time()
-
-   -- if me:GetSpellData(_Q).mana < 5 then
-   --    pp("Check mana cost for Q  "..me:GetSpellData(_Q).mana)
-   -- end
-   -- if me:GetSpellData(_W).mana < 5 then
-   --    pp("Check mana cost for W  "..me:GetSpellData(_W).mana)
-   -- end
-   -- if me:GetSpellData(_E).mana < 5 then
-   --    pp("Check mana cost for E  "..me:GetSpellData(_E).mana)
-   -- end
-   -- if me:GetSpellData(_R).mana < 5 then
-   --    pp("Check mana cost for R  "..me:GetSpellData(_R).mana)
-   -- end
 end
 
 function OnUnload()
@@ -1744,7 +1731,7 @@ function OnTick()
    local frameTime = sum(frames)/#frames
    local fps = 1/frameTime
 
-   if fps < 20 then
+   if fps < 10 then
       return
    end
 
