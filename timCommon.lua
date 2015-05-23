@@ -9,8 +9,8 @@ require "issuefree/persist"
 require "issuefree/prediction"
 require "issuefree/spellUtils"
 require "issuefree/toggles"
+require "issuefree/timPrediction"
 
-require "VPrediction"
 -- require "issuefree/walls"
 
 -- require "issuefree/champWealth"
