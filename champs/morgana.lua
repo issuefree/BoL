@@ -22,7 +22,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["binding"] = {
    key="Q", 
-   range=1300,
+   range=1300-100,
    color=red, 
    base={80,135,190,245,300}, 
    ap=.9,
@@ -38,7 +38,7 @@ spells["soil"] = {
    -- listing 2 ticks here, can't remember why though (probably for last hits, 1 tick on cast 1 tick before they get out)
    base={16,32,48,64,80}, 
    ap=.22,
-   radius=275,
+   radius=275-25,
    delay=.2,
    speed=0,
    cost={70,85,100,115,130},
