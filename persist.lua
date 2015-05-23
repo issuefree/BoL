@@ -420,8 +420,8 @@ function IsMajorCreep(creep)
       return true
    end
 end   
-function IsCreep(creep)
-   return creep.team == 300
+function IsCreep(creep)   
+   return creep and creep.team == 300
 end   
 
 local function persistCreeps(object)
