@@ -106,7 +106,7 @@ end
 function Action()   
    -- TestSkillShot("arrow")
 
-   if CanUse("focus") and Q.focus then
+   if CanUse("focus") and P.focus then
       if #GetInE2ERange(me, GetAARange()*.75, ENEMIES) >= 1 then
          Cast("focus", me)
          PrintAction("Focus for flurry")
