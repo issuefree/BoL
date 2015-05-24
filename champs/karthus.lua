@@ -118,11 +118,9 @@ function Run()
 
    end
 
-   if IsOn("tear") then
-      if CanChargeTear() then
-         if HitMinionsInArea("lay", GetThreshMP(thing, .025)) then
-            return true
-         end
+   if IsOn("tear") and CanChargeTear() then
+      if HitMinionsInArea("lay", GetThreshMP(thing, .025)) then
+         return true
       end
    end
 
