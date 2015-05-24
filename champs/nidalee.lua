@@ -1,6 +1,8 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
+-- TODO change pounce to look at the relative number of enemies near my target so I don't pounce to certain death
+
 pp("\nTim's Nidalee")
 
 InitAAData({})
