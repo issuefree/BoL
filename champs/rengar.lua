@@ -87,6 +87,7 @@ spells["bola"] = {
    delay=.25,  -- test
    speed=1200, -- test
    width=80,   -- test
+   minRange=GetAARange,
    cost=0
 } 
 spells["empbola"] = {
@@ -97,6 +98,10 @@ spells["empbola"] = {
    byLevel={50,75,100,125,150,175,200,225,250,260,270,280,290,300,310,320,330,340},
    adBonus=.7,
    type="P",
+   delay=.25,  -- test
+   speed=1200, -- test
+   width=80,   -- test
+   minRange=GetAARange,
    cost=0,
 }
 
@@ -120,6 +125,11 @@ function Run()
 			return true
 		end
 	end
+
+   if CanUse("emproar") and VeryAlone() and GetHPerc() < .75 then
+      Cast("emproar", me)
+      PrintAction("Roar alone for heal", nil, .5)
+   end
 
 	-- auto stuff that should happen if you didn't do something more important
    if IsOn("lasthit") then
@@ -149,7 +159,39 @@ function Run()
    EndTickActions()
 end
 
+-- It seems like it's best to blow your empowered abilities asap so you can get back to spamming
+-- Heal when needed seems like the most important
+-- Savagery seems like a great one to just blast off
+-- Bola is last resort.
+
 function Action()
+   if CanUse("emproar") and GetHPerc() < .33 then
+      Cast("emproar", me)
+      PrintAction("Roar for heal", nil, .5)
+   end
+
+   if CastBest("empsavagery") then
+      return true
+   end
+
+   if CastBest("savagery") then
+      return true
+   end
+
+   if SkillShot("bola") then
+      return true
+   end
+
+   if SkillShot("empbola") then
+      return true
+   end
+
+   if CanUse("roar") then
+      if #GetInRange(me, "roar", ENEMIES) >= 1 then
+         Cast("roar", me)
+         PrintAction("Roar", nil, .5)
+      end
+   end
 
    local target = GetMarkedTarget() or GetMeleeTarget()
    if AutoAA(target) then
