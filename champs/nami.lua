@@ -226,7 +226,7 @@ function Action()
    then
       return true
    end
-   if SkillShot("prison", nil, nil, 3) then
+   if SkillShot("prison", nil, nil, 2.5) then
       return true
    end
 

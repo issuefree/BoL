@@ -180,7 +180,7 @@ function Action()
       end
    end
 
-   if SkillShot("roar", nil, nil, 3) then
+   if SkillShot("roar", nil, nil, 2.5) then
       return true
    end
 

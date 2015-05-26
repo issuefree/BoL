@@ -136,7 +136,7 @@ function Action()
 					return true
 				end
 			else -- I have more health than mana so be carefull but still hit stuff
-				if SkillShot("starcall", "best", nil, 3) then
+				if SkillShot("starcall", "best", nil, 2.5) then
 					PrintAction("< M", nil, 1)
 					return true
 				end

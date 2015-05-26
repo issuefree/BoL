@@ -17,3 +17,14 @@ Code up being oathbound to kalista
 Lay traps on zhonya'd folks
 Detect Liss invuln
 Lay traps on Liss invuln
+
+
+Evaluate prediction chance returns for high vs low chance shots.
+	Until this is done I need to change some champs:
+		Chogath's rupture: 174
+		Anivia's orb: 163
+		Corki bomb: 146
+		Galio smite: 114
+		Nami Prison: 229
+		Sion roar: 183
+		Soraka starcall: 139
