@@ -3,18 +3,20 @@ require "issuefree/modules"
 
 pp("\nTim's Singed")
 
-AddToggle("move", {on=true, key=112, label="Move to Mouse"})
+AddToggle("", {on=true, key=112, label="- - -"})
 AddToggle("tear", {on=true, key=113, label="Tear"})
 AddToggle("", {on=true, key=114, label=""})
 AddToggle("", {on=true, key=115, label=""})
 
 AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0}", args={GetAADamage}})
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
+AddToggle("move", {on=true, key=118, label="Move to Mouse"})
 
 spells["poison"] = {
    key="Q", 
    base={66,102,138,174,210}, 
-   ap=.9
+   ap=.9,
+   cloudRadius=20, -- wiki (seems wrong)
 } 
 spells["goo"] = {
    key="W", 
@@ -23,15 +25,18 @@ spells["goo"] = {
    delay=.3,
    speed=0,
    radius=175,
+   noblock=true,
    cost={70,80,90,100,110}
 } 
 spells["fling"] = {
    key="E", 
    range=125, 
-   color=violet, 
+   color=orange, 
    base={50,65,80,95,110}, 
+   ap=.75,
    targetMaxHealth={.06,.065,.07,.075,.08},
-   cost={100,110,120,130,140}
+   cost={100,110,120,130,140},
+   knockBack=550,
 } 
 spells["potion"] = {
    key="R", 
@@ -53,10 +58,10 @@ function Run()
 	end
 
    if IsOn("tear") then
-      if CanChargeTear() and GetMPerc(me) > .25 and Alone() then
+      if CanChargeTear() and GetMPerc(me) > .66 and Alone() then
          CastBuff("poison")
       end
-      if not CanChargeTear() and VeryAlone() and #GetInRange(me, 500, CREEPS, MINIONS) == 0 then
+      if not CanChargeTear() and Alone() and #GetInRange(me, 500, CREEPS, MINIONS) == 0 then
          CastBuff("poison", false)
       end
    end
@@ -74,6 +79,10 @@ function Run()
 end
 
 function Action()
+   if #GetInRange(me, 500, ENEMIES) >= 1 then
+      CastBuff("poison")
+      PrintAction("Poison ON")
+   end
    return false
 end
 function FollowUp()
