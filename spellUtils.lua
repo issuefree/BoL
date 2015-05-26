@@ -61,7 +61,7 @@ spells["alias"] = {
       -- usually you only use width or radius not both
    noblock=true,              -- set if the skillshot passes through objects
    overShoot=150,             -- if you want the point of impact to be past the target then set this.
-   
+   minRange=200,              -- use this if you don't want to fire skill shots at short range. Intended for slows that you want to save for when you can't attack people.
 
    -- channelling
    channel=true,              -- if the spell is channelled (e.g. fiddle's drain). If set up it will detect the channel and the bot won't break the channel
@@ -708,6 +708,10 @@ function IsGoodFireahead(thing, target, minChance)
    local spell = GetSpell(thing)
    if not IsValid(target) and not IsImmune(thing, target) then return false end   
 
+   if spell.minRange and GetDistance(target) < GetLVal(spell, "minRange") then
+      return false
+   end
+
    local point, chance = GetSpellFireahead(spell, target)
 
    point.name = target.name -- hack for IsBlocked I think
@@ -727,11 +731,11 @@ function IsGoodFireahead(thing, target, minChance)
    -- - 5: Target dashing or blinking. (~100% hit chance)
 
    if not minChance then
-      if GetMPerc() > .66 then
+      -- if GetMPerc() > .66 then
          minChance = 2
-      else
-         minChance = 2.5
-      end
+      -- else
+      --    minChance = 2.5
+      -- end
    end
 
    if chance < minChance then
