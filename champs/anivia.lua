@@ -160,7 +160,7 @@ function Action()
    end
 
    if not P.orb and not P.orbTemp then
-      if SkillShot("orb", nil, nil, 3) then
+      if SkillShot("orb", nil, nil, 2) then
          return true
       end
    end
