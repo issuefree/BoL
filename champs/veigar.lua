@@ -94,7 +94,10 @@ function Run()
    end
 
    if IsOn("lasthit") and Alone() then
-      if KillMinion("strike", "ignoreMana", true) then
+      local hits, kills, score = GetBestLine(me, "strike", .05, .95, MINIONS, PETS, CREEPS, ENEMIES)
+      if #kills >= 1 then
+         CastXYZ("strike", GetCastPoint(hits, "strike"))
+         PrintAction("Strike for LH", score)
          return true
       end
    end
@@ -116,7 +119,7 @@ function Action()
       for _,enemy in ipairs(enemies) do
          local pred, chance = GetSpellFireahead("event", enemy)
          if chance >= 1 then
-            local pos = Projection(pred, enemy, 150)
+            local pos = Projection(pred, enemy, 200)
             if IsInRange("event", pos) then
                CastXYZ("event", pos)
                PrintAction("Event horizon", enemy)
