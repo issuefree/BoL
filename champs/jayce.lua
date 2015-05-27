@@ -246,16 +246,6 @@ function FollowUp()
          if HitMinion("AA", "strong") then
             return true
          end
-
-         if CanUse("Tiamat") or CanUse("Ravenous Hydra") then
-            local minions = GetInRange(me, item, MINIONS)
-            if #minions >= 2 then
-               Cast("Tiamat", me)
-               Cast("Ravenous Hydra", me)
-               PrintAction("Crescent for clear")
-               return true
-            end
-         end
       end
    end
 
