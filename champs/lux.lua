@@ -73,7 +73,8 @@ spells["singularity"] = {
 }
 spells["detonate"] = {
    key="E",
-   canCast=function() return GetSpellInfo("E").name == "luxlightstriketoggle" and P.singularity end
+   canCast=function() return GetSpellInfo("E").name == "luxlightstriketoggle" and P.singularity end,
+   cost=0
 }
 spells["detonate"].base = spells["singularity"].base
 spells["detonate"].ap = spells["singularity"].ap
@@ -346,8 +347,8 @@ end
 
 
 local function onObject(object)
-   Persist("singularity", object, "LuxLightstrike_tar")
-   PersistOnTargets("flare", object, "LuxDebuff", MINIONS, ENEMIES)
+   Persist("singularity", object, "Lux_Base_E_tar_aoe_green.troy")
+   PersistOnTargets("flare", object, "Lux_Base_P_debuff.troy", MINIONS, ENEMIES)
 end
 
 local function onSpell(object, spell)
