@@ -127,6 +127,7 @@ SPELL_DEFS = {
 	},
 	Braum = {
 		braumq={range=1000, radius=175, time=1, ss=true, isline=true, block=true, cc=SLOW},
+		braumqmissile={},
 		braumw={type="dash", ends="target"},
 		braume={},
 		braumrwrapper={},
@@ -176,6 +177,7 @@ SPELL_DEFS = {
 			key="E", range=540, perm=true, cc=GRAB, nodamage=true,
 			type="stall"
 		},
+		dariusegrabsound={},
       dariusexecute={type="dash", ends="target"},
       dariuscleave={},
       dariusnoxiantacticsonh={},
@@ -651,6 +653,7 @@ SPELL_DEFS = {
 		quinnwenhanced={},
 		quinnvalore={},
 		quinnr={},
+		quinnrfinale={},
 	},
 	Rammus = {
 		puncturingtaunt={cc=TAUNT, nodamage=true},
@@ -687,7 +690,10 @@ SPELL_DEFS = {
    },
  	Rumble = {
 		rumblegrenademissile={range=1000, radius=100, time=1.5, ss=true, isline=true},
+		rumbleshield={},
 		rumblecarpetbomb={range=1700, radius=100, time=1.5, ss=true, isline=true},
+		rumblegrenade={},
+		rumbleflamethrower={},
 	},
 	Ryze = {
 		ryzeq={},
@@ -706,6 +712,7 @@ SPELL_DEFS = {
 		sejuaniarcticassault={},
 		sejuaniglacialprisonstart={},
 		sejuaniglacialprisoncast={},
+		sejuaninorthernwindsremoval={},
 	},
 	Shaco = {
 		deceive={
@@ -924,6 +931,7 @@ SPELL_DEFS = {
 		viktorgravitonfield={},
 		viktorpowertransfer={},
 		viktorchaosstorm={},
+		viktorchaosstormguide={},
 	},
    Warwick={
    	hungeringstrike={key="Q"},
