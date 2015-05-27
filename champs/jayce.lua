@@ -1,8 +1,6 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
--- TODO: If I'm low on mana and alone turn on clear minions and go hammer for the regen.
-
 pp("\nTim's Jayce")
 
 InitAAData({ 
@@ -243,6 +241,24 @@ function Action()
    return false
 end
 function FollowUp()
+   if Alone() then
+      if GetSpellLevel("field") > 0 and GetMPerc() < .9 and not P.cannon then
+         if HitMinion("AA", "strong") then
+            return true
+         end
+
+         if CanUse("Tiamat") or CanUse("Ravenous Hydra") then
+            local minions = GetInRange(me, item, MINIONS)
+            if #minions >= 2 then
+               Cast("Tiamat", me)
+               Cast("Ravenous Hydra", me)
+               PrintAction("Crescent for clear")
+               return true
+            end
+         end
+      end
+   end
+
    return false
 end
 
