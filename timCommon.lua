@@ -1994,7 +1994,7 @@ function AutoJungle()
    end
 end   
 
-function EndTickActions(noLastHit)
+function LastHit()
    if IsOn("lasthit") and Alone() and not noLastHit then
       if KillMinion("AA") then
          return true
@@ -2007,6 +2007,12 @@ function EndTickActions(noLastHit)
          return true
       end
    end
+end
+
+function EndTickActions(noLastHit)
+   if LastHit() then
+      return true
+   end
 
    if HotKey() and HitObjectives() then
       return true
@@ -2018,7 +2024,7 @@ function EndTickActions(noLastHit)
 
    if HotKey() and Alone() then
       if IsOn("clear") or
-         (GetHPerc() < .9 and me.lifeSteal > 0)
+         (GetHPerc() < .9 and me.lifeSteal > 0.05)
       then
          if HitMinion("AA", "strong") then
             return true
@@ -2240,7 +2246,7 @@ function UseItem(itemName, target, force)
    elseif itemName == "Tiamat" or
           itemName == "Ravenous Hydra"
    then
-      if not CanAttack() and #GetInRange(me, item, ENEMIES) >= 1 then
+      if JustAttacked() and #GetInRange(me, item, ENEMIES) >= 1 then
          CastSpellTarget(slot, me)
          PrintAction(itemName, nil, 1)
          return true
@@ -2686,4 +2692,24 @@ function GetHeroByName(name)
          return enemy
       end
    end
+end
+
+-- lots of champs have dashes
+-- to dive or not to dive. Bad dives are suicide. Good dives kill people.
+
+-- if my target is alone then a dive is probably ok.
+-- if my target is skirmishing a dive is probably ok.
+-- if my target is marked then DIVE DIVE DIVE
+function GetDive(thing)
+   local targets = SortByHealth(GetInRange(me, thing, ENEMIES), thing)
+   targets = FilterList(targets, function(item) return not IsInAARange(item) end)
+   for _,target in ipairs(targets) do
+      if UnderTower(target) then
+         return nil
+      end
+      if #GetInRange(target, 750, ENEMIES) == 1 or Skirmishing(target) or GetMarkedTarget() == target then
+         return target
+      end
+   end
+   return nil
 end
