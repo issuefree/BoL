@@ -285,7 +285,7 @@ local function onSpell(unit, spell)
 
    if CanUse("mercury") then
       if ICast("blow", unit, spell) then
-         if #GetInRange(me, GetAARange(), ENEMIES) == 0 then
+         if #GetInAARange(me, ENEMIES) == 0 then
             Cast("mercury", me)
             PrintAction("Cannon to followup blow")
          end
