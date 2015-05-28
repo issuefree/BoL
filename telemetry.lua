@@ -430,6 +430,7 @@ function GetMousePos()
    return mousePos
 end
 
+-- I have at least 2 allies within 1000 of the target who can hit an enemy
 function Skirmishing(target)
    target = target or me
    -- there are multiple enemies in AA range of multiple nearby allies
@@ -449,11 +450,13 @@ function Skirmishing(target)
    end
    return false
 end
+
 function Engaged(target)
    target = target or me
    local engageRange = math.max(target.range+50, 400)
    return #GetInRange(target, engageRange, ENEMIES) > 0
 end
+
 -- this is used for "Can I hit minions with stuff" as much as really being "alone"
 -- at low levels we want to last hit stuff over saving stuff for enemies
 function Alone(target)  
