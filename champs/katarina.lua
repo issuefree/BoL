@@ -31,8 +31,8 @@ spells["shunpo"] = {
    key="E", 
    range=700, 
    color=yellow, 
-   base={60,85,110,135,160}, 
-   ap=.4,
+   base={40,70,100,130,160}, 
+   ap=.25,
    name="KatarinaE"
 }
 spells["lotus"] = {

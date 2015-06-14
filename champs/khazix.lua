@@ -111,7 +111,7 @@ evolvedR = false
 
 function isolated(target)
    return HasBuff("isolated", target)
-   -- return IsEnemy(target) and (#GetInRange(target, 500, ENEMIES) == 1)
+   -- return IsEnemy(target) and (#GetInRange(target, 425, ENEMIES) == 1)
 end
 
 function Run()

@@ -16,9 +16,9 @@ SetChampStyle("caster")
 
 spells["overload"] = {
    key="Q", 
-   range=900, 
+   range=900-50, 
    color=violet, 
-   base={65,90,115,140,165}, 
+   base={65,95,125,155,185}, 
    ap=.55,
    maxMana={.02,.025,.03,.035,.04},
    cost={30,35,40,45,50},
@@ -173,12 +173,12 @@ function burnSpell()
          return true
       end
 
-      local bush = GetNearestBush(me, GetSpellRange("overload"))
-      if bush then
-         CastXYZ("overload", bush)
-         PrintAction("Burn overload into a bush")
-         return true
-      end
+      -- local bush = GetNearestBush(me, GetSpellRange("overload"))
+      -- if bush then
+      --    CastXYZ("overload", bush)
+      --    PrintAction("Burn overload into a bush")
+      --    return true
+      -- end
    end
 end
 

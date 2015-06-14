@@ -17,7 +17,7 @@ spells["heal"] = {
 	base={60,100,140,180,220}, 
 	ap=.3,
 	type="H",
-	cost={60,80,100,120,140}
+	cost={60,70,80,90,100}
 }
 spells["shatter"] = {
 	key="W", 

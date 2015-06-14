@@ -47,7 +47,7 @@ spells["slam"] = {
    ap=.6,
    delay=.16,
    speed=9,
-   area=150,
+   area=180,
    cost=50,
 }
 spells["cask"] = {

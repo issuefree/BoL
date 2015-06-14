@@ -79,7 +79,8 @@ spells["ace"] = {
 spells["headshot"] = {
    base={0},
    ad=.5,
-   type="P"
+   type="P",
+   -- no need to code up the 5.11 change to passive
 }
 
 spells["AA"].damOnTarget = 

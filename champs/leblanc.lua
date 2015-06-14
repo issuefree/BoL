@@ -121,7 +121,7 @@ spells["distortion"] = {
    base={85,125,165,205,245}, 
    ap=.6,
    delay=.24, 
-   speed=0,
+   speed=1300, -- notes
    noblock=true, 
    radius=225, -- reticle
    cost={80,85,90,95,100},
@@ -135,7 +135,7 @@ spells["chains"] = {
    ap=.5,
    delay=.25, -- testskillshot
    speed=1700, -- testskillshot
-   width=80, -- reticle
+   width=55, -- notes
    cost=80,
 } 
 spells["mimic"] = {

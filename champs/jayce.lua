@@ -28,11 +28,11 @@ spells["skies"] = {
    key="Q", 
    range=600, 
    color=yellow, 
-   base={20,65,110,155,200}, 
+   base={30,70,110,150,190,230} 
    adBonus=1,
    type="P",
    radius=150, -- test
-   cost={40,45,50,55,60}
+   cost={40,45,50,55,60,65}
 } 
 spells["blast"] = {
    key="--", 
@@ -46,27 +46,27 @@ spells["blast"] = {
       end,
    baseRange=1050,
    color=violet, 
-   base={60,115,170,225,280}, 
+   base={70,120,170,220,270,320}, 
    adBonus=1.2,
    type="P",
    delay=.35,  -- tss
    speed=1450, -- wiki
    width=100,  -- reticle
    -- radius=125, -- visual
-   cost={55,60,65,70,75}
+   cost={55,60,65,70,75,80}
 }
 
 spells["field"] = {
    key="W", 
    range=285, 
    color=orange, 
-   base={100,170,240,310,380}, 
+   base={100,160,220,280,340,400}, 
    ap=1,
    cost=40
 } 
 spells["hyper"] = {
    key="--",
-   multiplier={.7,.8,.9,1,1.1},
+   multiplier={.7,.78,.86,.94,1.02,1.1},
    cost=40
 }
 
@@ -76,7 +76,7 @@ spells["blow"] = {
    rangeType="e2e",
    color=violet, 
    base=0, 
-   targetMaxHealth={.08,.11,.14,.17,.2},
+   targetMaxHealth={.08,.14,.128,.152,.176,.2},
    adBonus=1,
    cost={40,50,60,70,80}
 } 
@@ -88,8 +88,19 @@ spells["gate"] = {
 } 
 
 spells["mercury"] = {
-   key="R", 
+   key="R",    
    base={20,60,100}, 
+   bonus=function()
+      if me.level < 6 then
+         return 20
+      elseif me.level < 11
+         return 60
+      elseif me.level < 16
+         return 100
+      else
+         return 140
+      end
+   end,
    ap=.4,
    cost=0,
 } 

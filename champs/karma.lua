@@ -39,16 +39,16 @@ spells["tether"] = {
    range=650, 
    color=yellow, 
    base={60,110,160,210,260}, 
-   ap=.6,
+   ap=.9,
    cost={70,75,80,85,90}
 }
 spells["shield"] = {
    key="E", 
    range=800, 
-   color=blue, 
-   base={80,120,160,200,240}, 
+   color=cyan, 
+   base={80,110,140,170,200}, 
    ap=.5,
-   cost={60,70,80,90,100},
+   cost={60,65,70,75,80},
    shieldRadius=700,
    damageRadius=600
 }

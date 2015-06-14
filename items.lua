@@ -1,9 +1,9 @@
 ITEMS = {}
 
 --Active offense
-ITEMS["Bilgewater Cutlass"]       = {id=3144, name="BilgewaterCutlass", range=450, itemType="active", color=violet}
+ITEMS["Bilgewater Cutlass"]       = {id=3144, name="BilgewaterCutlass", range=550, itemType="active", color=violet}
 ITEMS["Hextech Gunblade"]         = {id=3146, name="HextechGunblade", range=700, itemType="active", color=violet}
-ITEMS["Blade of the Ruined King"] = {id=3153, name="ItemSwordOfFeastAndFamine", range=450, itemType="active", color=violet}
+ITEMS["Blade of the Ruined King"] = {id=3153, name="ItemSwordOfFeastAndFamine", range=550, itemType="active", color=violet}
 ITEMS["Tiamat"]                   = {id=3077, name="ItemTiamatCleave", range=400-25, ad=.6, itemType="active", color=red}
 ITEMS["Ravenous Hydra"]           = {id=3074, name="ItemTiamatCleave", range=400-25, ad=.6, itemType="active", color=red}
 ITEMS["Frost Queen's Claim"]      = {id=3092, name="ItemGlacialSpikeCast", range=600, itemType="active", radius=200, color=blue}

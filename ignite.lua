@@ -8,7 +8,7 @@ local ignite = {
    type="T"
 }
 local snowball = {
-   range=2500,
+   range=1600,
    color=blue,
    base=20,
    level=10,
