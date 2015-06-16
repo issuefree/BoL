@@ -33,7 +33,9 @@ spells["shard"] = {
    cost={70,75,80,85,90}
 } 
 spells["strikes"] = {
-   key="W", 
+   key="W",
+   base={25,40,55,70,85},
+   ap=.15,
    cost=25,
 } 
 spells["slam"] = {
@@ -57,10 +59,14 @@ spells["force"] = {
    cost=100
 } 
 
-spells["AA"].damOnTarget = 
-   function(target)
-      return 0
+spells["AA"].bonus = 
+   function()
+      if P.strikes then
+         return GetSpellDamage("strikes")
+      end
    end
+
+
 
 function Run()
    if StartTickActions() then
@@ -127,6 +133,7 @@ function FollowUp()
 end
 
 local function onCreate(object)
+   PersistBuff("strikes", object, "Malphite_Base_Enrage_buf.troy")
 end
 
 local function onSpell(unit, spell)
