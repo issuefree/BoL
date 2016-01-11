@@ -428,10 +428,10 @@ function onSpellAA(unit, spell)
    if printNextSpell then
       if IsMe(unit) then
          if not IAttack(unit, spell) then
-            pp("NEW ATTACK SPELL: ")
-            pp(spell.name)
-            print("NEW ATTACK SPELL: "..spell.name)
-            printNextSpell = false
+            -- pp("NEW ATTACK SPELL: ")
+            -- pp(spell.name)
+            -- print("NEW ATTACK SPELL: "..spell.name)
+            -- printNextSpell = false
          end
       end
    end

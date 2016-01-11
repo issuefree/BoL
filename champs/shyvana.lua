@@ -61,6 +61,12 @@ spells["binding"] = {
    noblock=true
 } 
 
+spells["AA"].bonus = 
+   function()
+      if P.burnout then
+         return GetSpellDamage("burnout")*.25
+      end
+   end
 function Run()
    local biteLevel = GetSpellLevel(spells["bite"].key)
    if biteLevel > 0 then
@@ -165,6 +171,7 @@ end
 
 
 local function onObject(object)
+   PersistBuff("burnout", object, "TODO")
 end
 
 local function onSpell(unit, spell)
