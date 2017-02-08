@@ -22,7 +22,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["ambush"] = {
    key="Q",
-   cost=60,
+   cost=40,
 }
 spells["cask"] = {
    key="W", 
@@ -32,7 +32,7 @@ spells["cask"] = {
    speed=1400,
    noblock=true,
    radius=300,
-   cost=50,
+   cost=70,
 }
 spells["expColor1"] = {
    key="E", 
@@ -48,14 +48,14 @@ spells["contaminate"] = {
    key="E", 
    range=1200,
    color=yellow, 
-   base=0,
+   base={20,35,50,65,80},
    damOnTarget=function(target)
-      return getStacks(target)*GetSpellDamage("contaminateStack")
+      return (getStacks(target)-1)*GetSpellDamage("contaminateStack")
    end,
    cost={50,60,70,80,90},
 }
 spells["contaminateStack"] = {
-   base={20,35,50,65,80}, 
+   base={15,20,25,30,35}, 
    ap=.2,
    adBonus=.25
 }
