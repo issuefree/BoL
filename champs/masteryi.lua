@@ -43,8 +43,8 @@ spells["meditate"] = {
 }
 spells["wuju"] = {
    key="E",
-   base={10,15,20,25,30},
-   ad={.1,.125,.15,.175,.2},
+   base={14,23,32,41,50},
+   ad=.25,
    type="T",
    cost=0,
 }
@@ -207,7 +207,7 @@ end
 
 local function onObject(object)
 	PersistBuff("wuju", object, "MasterYi_Base_E_SuperChraged_buf")
-	PersistBuff("wujuBase", object, "MasterYi_Base_E_buff")
+	PersistBuff("wujuBase", object, "MasterYi_Base_E_Sword")
 end
 
 local function onSpell(unit, spell)
