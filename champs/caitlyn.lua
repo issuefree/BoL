@@ -27,10 +27,10 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["pp"] = {
    key="Q", 
-   range=1200, 
+   range=1250, 
    color=violet, 
-   base={20,60,100,140,180}, 
-   ad=1.3,
+   base={30,70,110,150,190}, 
+   ad={1.3,1.4,1.5,1.6,1.7},
    cost={50,60,70,80,90},
    delay=.7-.3, -- reduce delay for less leading
    speed=2200,
@@ -42,20 +42,18 @@ spells["trap"] = {
    key="W", 
    range=800, 
    color=blue,
-   base={80,130,180,230,280}, 
-   ap=.6,
    type="M",
    cost=50,
-   delay=.8-.3, -- reduce delay for less leading
+   delay=.8,
    speed=0,
-   radius=75,
+   radius=67.5,
    noblock=true
 }
 spells["net"] = {
    key="E", 
    range=950, 
    color=yellow, 
-   base={80,130,180,230,280}, 
+   base={70,110,150,190,230}, 
    ap=.8,
    type="M",
    cost=75,
@@ -64,7 +62,7 @@ spells["net"] = {
 }
 spells["recoil"] = {
    key="E", 
-   range=400+50, 
+   range=400, 
    color=blue
 }
 spells["ace"] = {
@@ -86,7 +84,7 @@ spells["headshot"] = {
 spells["AA"].damOnTarget = 
    function(target)
       if P.headshot and not IsHero(target) then
-         return GetSpellDamage("headshot")*2
+         return GetSpellDamage("headshot")*3
       end
    end
 
