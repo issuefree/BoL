@@ -38,8 +38,8 @@ spells["courage"] = {
 spells["judgement"] = {
   key="E", 
   type="P",
-  range=330,
-  radius=330,
+  range=300,
+  radius=300,
   color=violet
 }
 spells["justice"] = {
