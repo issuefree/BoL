@@ -650,7 +650,9 @@ function MoveToTarget(t)
    if CanMove() then
       local pos = VP:GetPredictedPos(t, .5, t.ms, me, false)
       if GetDistance(pos) > 150 then
-         me:MoveTo(pos.x,pos.z)
+         if throttle() then
+            me:MoveTo(pos.x,pos.z)
+         end
       end
       PrintAction("MTT", t, 1)
       return true
@@ -670,9 +672,13 @@ function MoveToCursor()
    --    me:MoveTo(moveX,moveZ)
    -- else
    if GetDistance(mousePos) < 10 then
-      me:HoldPosition()
+      if throttle() then         
+         me:HoldPosition()
+      end
    else
-		me:MoveTo(mousePos.x, mousePos.z)
+      if throttle() then
+         me:MoveTo(mousePos.x, mousePos.z)
+      end
    end
 end
 
@@ -1720,7 +1726,7 @@ objectsPerCycle = 10000
 local startTime = time()
 
 local tt = time()
-frames = {.1}
+frames = {.2}
 function OnTick()
    table.insert(frames, time()-tt)
    tt = time()
@@ -1950,9 +1956,11 @@ function AutoMove()
          end
       end
       if needMove and CURSOR then      
-         me:MoveTo(Point(CURSOR).x, Point(CURSOR).z)
-         -- PrintAction("move")
-         needMove = false
+         if throttle() then
+            me:MoveTo(Point(CURSOR).x, Point(CURSOR).z)
+            -- PrintAction("move")
+            needMove = false
+         end
       end
    end
 end
@@ -2059,10 +2067,12 @@ end
 function AA(target, force)
    if IsValid(target) then
       if CanAttack() or force then
-         SetAttacking()
-         me:Attack(target)
-         -- needMove = true
-         return true
+         if throttle() then
+            SetAttacking()
+            me:Attack(target)
+            -- needMove = true
+            return true
+         end
       end
    end
    return false
@@ -2712,4 +2722,19 @@ function GetDive(thing)
       end
    end
    return nil
+end
+
+lastThrottleTime = time()
+
+-- limit actions to one per x seconds.
+-- check throttle before any action sent to the game.
+-- return of true means go ahead and act
+-- return of false means don't act
+function throttle()
+   if time()-.2+(math.random(0,.1)) > lastThrottleTime then
+      lastThrottleTime = time()
+      return true
+   else
+      return false
+   end
 end

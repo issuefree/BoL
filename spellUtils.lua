@@ -170,10 +170,15 @@ function GetCD(thing, hero)
 end
 
 function CastSpellTarget(slot, target)
-   CastSpell(getISpell(slot), target)
+   if throttle() then
+      CastSpell(getISpell(slot), target)
+   end
 end
 
 function Cast(thing, target, force)
+   if not throttle() then
+      return
+   end
    local spell = GetSpell(thing)
    spell = spell or thing
 
@@ -202,6 +207,10 @@ function Cast(thing, target, force)
 end
 
 function CastXYZ(thing, x,y,z)
+   if not throttle() then
+      return
+   end
+   
    local spell = GetSpell(thing)
    if not spell then return end
    local p
