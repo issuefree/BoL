@@ -21,38 +21,27 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["chord"] = {
    base=0,
-   lvl={13,20,27,35,43,52,62,72,82,92,102,112,122,132,147,162,177,192},
+   lvl={15,25,35,45,55,65,75,85,100,115,130,145,160,170,190,205,220,235},
    ap=.2
 }
 spells["blue"] = {
    key="Q", 
    range=850, 
    color=cyan, 
-   base={40,80,120,160,200}, 
+   base={40,70,100,130,160}, 
    ap=.5,
    cost={45,50,55,60,65},
 }
 spells["valor"] = {
-   base={40,50,60,70,80},
+   base={20,30,40,50,60},
    ap=.2,
-   bonus=function() 
-      base={10,20,30}
-      return base[GetSpellLevel("R")]
-   end
 }
 spells["green"] = {
    key="W", 
    range=1000, 
    color=green, 
-   base={30,50,70,90,110}, 
-   ap=.2,
-   damOnTarget=
-      function(target)
-         if target then
-            return GetSpellDamage("green")*.5*(1-GetHPerc(target))
-         end
-         return 0
-      end,
+   base={35,55,75,95,115}, 
+   ap=.25,
    type="H",
    cost={80,85,90,95,100}
 }
@@ -60,12 +49,8 @@ spells["shield"] = {
    key="W",
    range=350,
    color=green,
-   base={40,60,80,100,120},
-   ap=.2,
-   bonus=function() 
-      base={10,20,30}
-      return base[GetSpellLevel("R")]
-   end   
+   base={30,55,80,105,130},
+   ap=.3,
 }
 spells["violet"] = {
    key="E", 
@@ -75,7 +60,7 @@ spells["violet"] = {
 }
 spells["yellow"] = {
    key="R", 
-   range=1000, 
+   range=900, 
    color=yellow, 
    base={150,250,350}, 
    ap=.5,
