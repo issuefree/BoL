@@ -12,29 +12,25 @@ InitAAData({
 
 spells["starcall"] = {
 	key="Q", 
-	range=970,  
+	range=800,  
 	color=violet,    
 	base={70,110,150,190,230},
 	ap=.35,
 	delay=.24, --?
 	speed=1000,  --?
-	radius=300-50, -- reticle
-	innerRadius=100,
+	radius=235, -- wiki
 	noblock=true,
-	cost={70,75,80,85,90},
+	cost={40,45,50,55,60},
 }
-
-spells["starcallPinpoint"] = copy(spells["starcall"])
-spells["starcallPinpoint"].radius = spells["starcall"].innerRadius
 
 spells["heal"] = {
 	key="W", 
 	range=550,  
 	color=green,  
-	base={110,140,170,200,230}, 
+	base={80,110,140,170,200}, 
 	ap=.6,
 	type="H",
-	cost={20,25,30,35,40}
+	cost={50,55,60,65,70}
 }
 
 spells["equinox"] = {
@@ -123,11 +119,6 @@ function Action()
 					PrintAction("harass", nil, 1)
 					return true
 				end
-			elseif GetMPerc() > .66 then -- lower mana
-				if SkillShot("starcallPinpoint") then
-					PrintAction("PP", nil, 1)
-					return true
-			   end
 			end
 		else -- for healing
 			if GetMPerc() > GetHPerc() then -- I have more mana than health. hit something
