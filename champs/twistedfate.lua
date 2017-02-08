@@ -29,7 +29,7 @@ spells["wild"] = {
 	key="Q", 
 	range=1450, 
 	color=violet, 
-	base={60,110,160,210,260}, 
+	base={60,105,150,195,240}, 
 	ap=.65,
 	delay=.2,
 	speed=1000,
@@ -98,6 +98,7 @@ function Run()
 			CastSpell(_W)			
 			
 			PrintAction("Pick "..card, nil, .5)
+			return true
 		end
 	end
 
@@ -105,7 +106,7 @@ function Run()
       spells["card"] = nil
    end
 
-   if VeryAlone() and not gating then
+   if Alone() and not gating then
    	card = "blue"
    else
    	card = "gold"
