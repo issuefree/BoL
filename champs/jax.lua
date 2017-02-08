@@ -167,10 +167,12 @@ function Action()
 	   	if CanUse("counter") and not P.counter then
 	   		Cast("counter", me)
 	   		PrintAction("prep counter")
+	   		return true
 	   	end
 	   	if CanUse("empower") and not P.empower then
 	   		Cast("empower", me)
 	   		PrintAction("Empower Leap")
+	   		return true
 	   	end
 	   	Cast("leap", target)
 	   	PrintAction("Leap", target)
