@@ -15,7 +15,7 @@ spells["cleaver"] = {
    type="M",
    width=80, -- reticle -- wiki says 60
    delay=.23,  -- tss
-   speed=2000,
+   speed=1850,
    showFireahead=true,
    cost=0,
 }
@@ -25,13 +25,12 @@ spells["agony"] = {
    color=red, 
    base={35,50,65,80,95},
    type="M", 
-   ap=.2,
+   ap=.1,
    cost=0,
 }
 spells["masochism"] = {
    key="E",
-   base={40,55,70,85,100},
-   mhp={0.4,0.55,0.7,0.85,1},
+   base={30,50,70,90,110},
    type="P",
    cost=0,
 }
@@ -144,7 +143,7 @@ function FollowUp()
 end
 
 function onCreate(object)
-   PersistBuff("burning", object, "dr_mundo_burning_agony")
+   PersistBuff("burning", object, "DrMundo_Base_W")
 end
 local function onSpell(unit, spell)
    if IAttack(unit, spell) and CanUse("masochism") and GetHPerc(me) > .33 then
