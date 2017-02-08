@@ -21,7 +21,7 @@ spells["dis"] = {
 }
 spells["inc"] = {
    key="W", 
-   range=575-100, 
+   range=625-75, 
    color=red,    
    base={70,115,160,205,250},
    cost={70,80,90,100,110}, 
@@ -40,9 +40,8 @@ spells["tibbers"] = {
    key="R", 
    range=600, 
    color=red, 
-   base={175,300,425},
-   cost={125,175,225}, 
-   ap=.8,
+   base={150,275,400},
+   ap=.65,
    radius=250,
    petRange=300,
    cost=100
@@ -181,8 +180,9 @@ function Action()
       -- end
       local target = GetMarkedTarget() or GetWeakestEnemy("inc")
       if target then
+         PrintState(1, "Here")
          if ( IsOn("stoke") and not P.stun ) or -- hold off on incinerate if you're holding a stun and they're at the edge of range
-            GetDistance(target) < 525 
+            GetDistance(target) < 600 
          then
             Cast("inc", target)
             PrintAction("Incinerate", target)
