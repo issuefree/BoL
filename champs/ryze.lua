@@ -18,19 +18,19 @@ spells["overload"] = {
    key="Q", 
    range=900-50, 
    color=violet, 
-   base={65,95,125,155,185}, 
+   base={60,90,120,150,180}, 
    ap=.55,
    maxMana={.02,.025,.03,.035,.04},
    cost={30,35,40,45,50},
    speed=1400,
    delay=.4, -- tss
-   width=60, -- reticle
+   width=55, -- wiki
 }
 spells["prison"] = {
    key="W", 
    range=600, 
    color=red,    
-   base={65,95,125,155,185}, 
+   base={80,100,120,140,160}, 
    ap=.4, 
    maxMana=.025,
    cost={60,70,80,90,100},
@@ -40,14 +40,15 @@ spells["flux"] = {
    range=600, 
    color=violet,
    speed=1400,
-   base={50,66,82,98,114},  
-   ap=.3, 
+   base={36,52,68,84,100},  
+   ap=.2, 
    maxMana=.02,
    cost={60,70,80,90,100},
 }
 spells["fluxBounce"] = {
-   base={25,33,41,49,57},
-   ap=.15,
+   base={18,26,34,42,50},
+   range=200,
+   ap=.1,
    mana=.01,
 }
 spells["power"] = {
@@ -199,7 +200,7 @@ function FollowUp()
          if ( CanChargeTear() and GetMPerc(me) > .33 ) or
             GetMPerc(me) > .75
          then
-            if #GetInRange(minion, 200, minions) > 0 and CanUse("flux") then
+            if #GetInRange(minion, GetSpellRange("fluxBounce"), minions) > 0 and CanUse("flux") then
                Cast("flux", minion)
                PrintAction("Flux for clear")
                return true
