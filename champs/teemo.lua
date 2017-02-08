@@ -7,7 +7,7 @@ InitAAData({
 	speed = 1300, 
 	minMoveTime = 0,
 	-- extraRange = -20,
-	particles = {"TeemoBasicAttack_mis", "Toxicshot_mis"},
+	particles = {"Teemo_Base_BA_mis", "Teemo_Base_E_mis"},
 	resets={GetSpellInfo("Q").name} -- wiki says so
 })
 
@@ -22,7 +22,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["blind"] = {
 	key="Q", 
-	range=680, 
+	range=580, 
 	color=violet, 
 	base={80,125,170,215,260}, 
 	ap=.8,
@@ -35,12 +35,12 @@ spells["toxic"] = {
 }
 spells["shroom"] = {
 	key="R",
-	range=230,
-	color=green,	
+	range={400,650,900},
+	color=green,
 	base={200,325,450},
-	ap=.5,
-	radius=115,
-	cost={75,100,125},
+	ap=.125,
+	radius=60, -- trigger radius
+	cost={75},
 
    useCharges=true,
    maxCharges=3,
@@ -52,8 +52,12 @@ local poisons = {}
 local shrooms = {}
 
 function Run()
-	Clean(poisons, "name", "Global_poison")
+	Clean(poisons, "name", "Teemo_Base_E_Poison")
 	Clean(shrooms, "name", "Noxious Trap")
+
+	for _,shroom in ipairs(poisons) do
+		Circle(shroom)
+	end
 
 	spells["AA"].bonus = GetSpellDamage("toxic")
 
@@ -91,11 +95,11 @@ function Action()
    -- throw the shroom at them or as far as I can in their direction
    if IsOn("shroom") and CanUse("shroom") then
    	local shroom = spells["shroom"]
-   	local targets = SortByDistance(GetInRange(me, shroom.range+shroom.radius, ENEMIES))
+   	local targets = SortByDistance(GetInRange(me, GetSpellRange("shroom")+shroom.radius, ENEMIES))
    	for _,target in ipairs(targets) do
    		if #GetInRange(target, shroom.radius*3, shrooms) == 0 then
 
-   			local dist = math.min(shroom.range, GetDistance(target))   			
+   			local dist = math.min(GetSpellRange(shroom), GetDistance(target))   			
    			local point = Projection(me, target, dist)
    			CastXYZ(shroom, point)
    			PrintAction("Plant a Shroom")
@@ -142,7 +146,7 @@ end
 
 local function onObject(object)
 	if IsOn("clear") and GetDistance(object) < 1000 then
-		if find(object.name, "Global_poison") then
+		if find(object.name, "Teemo_Base_E_Poison") then
 			table.insert(poisons, object)
 		end 
 	end
