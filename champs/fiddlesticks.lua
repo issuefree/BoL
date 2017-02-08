@@ -23,7 +23,7 @@ AddToggle("move", {on=true, key=115, label="Move"})
 
 spells["fear"] = {
    key="Q", 
-   range=575, 
+   range=525, 
    color=violet,
    cost=65
 }
