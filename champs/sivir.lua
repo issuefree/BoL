@@ -20,17 +20,17 @@ AddToggle("move", {on=true, key=118, label="Move"})
 
 spells["boomerang"] = {
    key="Q", 
-   range=1000, 
+   range=1250,
    color=violet, 
    base={25,45,65,85,105}, 
    ap=.5, 
    ad={.7,.8,.9,1,1.1},
    type="P",
    delay=.24,  -- testskillshot
-   speed=1400,   -- testskillshot
+   speed=1350,   -- wiki
    width=100,
    noblock=true,
-   overShoot=-200,
+   overShoot=-300,
    cost={70,80,90,100,110}
 }
 spells["doubleMinBoomerang"] = copy(spells["boomerang"])

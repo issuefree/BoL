@@ -65,7 +65,7 @@ spells["rattat"] = {
    color=red,
    range=850,
    onHit=true,
-   cost={100,125,150},
+   cost=100,
 }
 
 function Run()

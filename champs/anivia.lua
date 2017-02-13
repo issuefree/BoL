@@ -4,13 +4,15 @@ require "issuefree/modules"
 pp("\nTim's Anivia")
 pp(" - Orb people")
 pp(" - Detonate orb when it's near people")
-pp(" - Spike chilled people")
+pp(" - Spike chilled people (TODO)")
 pp(" - Storm for aoe")
 pp(" - Storm for minion clear")
 
+pp("TODO - fix chilled buff")
+
 InitAAData({
-   speed = 1050,
-   extraWindup=.2,
+   speed = 1500,
+   extraWindup = .2,
    particles = {"cryoBasicAttack"}
 })
 
@@ -25,12 +27,12 @@ AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0}", args={
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
-spells["orb"] = {
+spells["orb"] = { -- flash frost
    key="Q", 
    range=1100, 
    color=cyan, 
-   base={60,90,120,150,180}, 
-   ap=.5,
+   base={60,85,110,135,160}, 
+   ap=.4,
    delay=.15,
    speed=850,
    width=80,
@@ -44,11 +46,12 @@ spells["wall"] = {
    color=yellow,
    cost=70
 }
-spells["spike"] = {
+spells["spike"] = { -- frostbite
    key="E", 
-   range=650, 
+   range=600, 
+   rangeType="e2e",
    color=violet, 
-   base={55,85,115,145,175}, 
+   base={50,75,100,125,150}, 
    ap=.5,
    damOnTarget=function(target)
                   if HasBuff("freeze", target) then
@@ -60,11 +63,12 @@ spells["spike"] = {
 }
 spells["storm"] = {
    key="R", 
-   range=625, 
+   range=750, 
    color=red, 
-   base={80,120,160}, 
-   ap=.25,
-   radius=400
+   base={40,60,80}, -- triples after 1.5 seconds
+   ap=.125,
+   radius=200,
+   maxRadius=400, -- after 1.5 seconds
 }
 
 function Run()
@@ -183,7 +187,8 @@ end
 local function onObject(object)
    Persist("orb", object, "cryo_FlashFrost_mis")
    Persist("storm", object, "cryo_storm_green_team")
-   PersistOnTargets("freeze", object, "Global_Freeze", ENEMIES, MINIONS)
+   -- needs a redo to get the right debuff (if possible)
+   -- PersistOnTargets("freeze", object, "Global_Freeze", ENEMIES, MINIONS)
 end
 
 local function onSpell(unit, spell)

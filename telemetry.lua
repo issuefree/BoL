@@ -520,7 +520,7 @@ function IsInE2ERange(thing, target, source, extraRange)
       extraRange = extraRange + 20
    end
 
-   return GetDistance(target, source) < range + GetWidth(source)/2 + GetWidth(target)/2 + extraRange
+   return GetDistance(target, source) < (range + GetWidth(source)/2 + GetWidth(target)/2 + extraRange)
 end
 
 function IsInAARange(target, source, extraRange)

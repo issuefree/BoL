@@ -1,8 +1,6 @@
 require "issuefree/timCommon"
 require "issuefree/modules"
 
--- TODO I may want to incorporate the new frost shot mechanics into last hitting.
-
 pp("\nTim's Ashe")
 
 SetChampStyle("marksman")
@@ -30,18 +28,18 @@ spells["focus"] = {
 spells["flurry"] = {
    key="Q",
    base=0,
-   ad={.15,.2,.25,.3,.35}
+   ad={.05,.1,.15,.2,.25}
 }
 
 spells["volley"] = {
    key="W", 
-   range=1100, 
+   range=1200, 
    color=violet, 
    base={20,35,50,65,80}, 
    ad=1,
    delay=.25,
    speed=9,
-   cone=24.32*2, 
+   cone=57.5, --wiki
    cost=50,
    width=20
 }
@@ -52,7 +50,7 @@ spells["hawkshot"] = {
 
 spells["arrow"] = {
    key="R",
-   base={250,425,600}, 
+   base={200,400,600}, 
    ap=1,
    delay=.26,
    speed=1600,

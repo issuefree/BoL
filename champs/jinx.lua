@@ -34,7 +34,7 @@ spells["zap"] = {
    base={10,60,110,160,210},
    ad=1.4,
    delay=.65,
-   speed=2400,
+   speed=3200,
    width=80,
    cost={50,60,70,80,90},
    type="P"
@@ -43,18 +43,18 @@ spells["chompers"] = {
    key="E", 
    range=900, 
    color=yellow, 
-   base={80,135,190,245,300},
+   base={70,120,170,220,270},
    ap=1,
    delay=.4,
    speed=3000,
    width=80,
    noblock=true,
-   cost=50
+   cost=70
 } 
 spells["rocket"] = {
    key="R",
-   base={125,175,225},
-   ap=.7,
+   base={25,35,45},
+   adBonus=.15,
    delay=.2,
    speed=2000,
    width=150,
@@ -67,7 +67,7 @@ local launcherRange = 0
 local baseRange = 0
 
 function Run()
-   if me.range <= 525 then
+   if me.range <= 550 then
       minigun = true
       spells["AA"].ad = 1
    else

@@ -71,9 +71,10 @@ spells["soldier"] = {
 }
 spells["shifting"] = {
    key="E", 
+   range=1100,
    base={80,100,140,180,220}, 
    ap=.4,
-   width=GetWidth(me),
+   width=150,
    cost=60,
 } 
 spells["divide"] = {

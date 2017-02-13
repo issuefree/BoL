@@ -4,7 +4,7 @@ require "issuefree/modules"
 pp("\nTim's Teemo")
 
 InitAAData({ 
-	speed = 1300, 
+	speed = 1500, 
 	minMoveTime = 0,
 	-- extraRange = -20,
 	particles = {"Teemo_Base_BA_mis", "Teemo_Base_E_mis"},
@@ -23,6 +23,7 @@ AddToggle("move", {on=true, key=118, label="Move"})
 spells["blind"] = {
 	key="Q", 
 	range=580, 
+	rangeType="e2e",
 	color=violet, 
 	base={80,125,170,215,260}, 
 	ap=.8,
@@ -36,6 +37,7 @@ spells["toxic"] = {
 spells["shroom"] = {
 	key="R",
 	range={400,650,900},
+	extraRange=-25,
 	color=green,
 	base={200,325,450},
 	ap=.125,
@@ -54,10 +56,6 @@ local shrooms = {}
 function Run()
 	Clean(poisons, "name", "Teemo_Base_E_Poison")
 	Clean(shrooms, "name", "Noxious Trap")
-
-	for _,shroom in ipairs(poisons) do
-		Circle(shroom)
-	end
 
 	spells["AA"].bonus = GetSpellDamage("toxic")
 
