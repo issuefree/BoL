@@ -67,7 +67,8 @@ function SetChampStyle(style)
 end
 
 function HasMastery(mastery)
-   return ListContains("havoc", MASTERIES)
+   return false
+   --return ListContains("havoc", MASTERIES)
 end
 
 
