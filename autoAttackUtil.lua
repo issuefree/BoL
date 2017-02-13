@@ -94,7 +94,7 @@ function loadAAData()
    spells["AA"].extraRange = 0
    spells["AA"].extraWindup = 0
    spells["AA"].windupScale = .5 -- for safety
-   spells["AA"].windupVal = 3
+   spells["AA"].baseWindUp = 3
    -- BoL may not have the bug which necessitates the minMoveTime
    spells["AA"].minMoveTime = 0
    spells["AA"].attacks = {"attack"}
@@ -129,7 +129,9 @@ end
 
 function getWindup()
    local effAs = 1+((me.attackSpeed - 1)*spells["AA"].windupScale)
-   return (1 / (effAs * spells["AA"].windupVal))*(1+spells["AA"].extraWindup)
+   local windup = (1 / (effAs * spells["AA"].baseWindUp))*(1+spells["AA"].extraWindup)
+   return windup * 1.25
+   -- return 1/(myHero.attackSpeed*spells["AA"].baseWindUp)
 end
 
 function OrbWalk()
@@ -165,9 +167,9 @@ local testWUs = {}
 function AfterAttack()
    -- needMove = true
    -- pp("UNBLOCK")
-   if ModuleConfig.aaDebug then
-      me:HoldPosition()
-   end
+   -- if ModuleConfig.aaDebug then
+   --    me:HoldPosition()
+   -- end
 end
 
 
@@ -186,7 +188,7 @@ function aaTick()
       PrintState(-5, "OBJ")
       local dist = GetDistance(aaPos1, aaPosE)
       local delta = aaTE - aaT1
-      pp(dist / delta)
+      -- pp(dist / delta)
       table.insert(speeds, dist/delta)
    elseif aaTE then
       local dist = GetDistance(aaPos1, aaPosE)
@@ -194,10 +196,10 @@ function aaTick()
 
       table.remove(speeds, 1)
       local avgSpeed = sum(speeds)/#speeds
-      pp(dist / delta)
+      -- pp(dist / delta)
 
       pp("final "..avgSpeed)
-      pp(speeds[1])
+      -- pp(speeds[1])
       aaObj = nil
       aaPos1 = nil
       aaT1 = nil
@@ -239,8 +241,8 @@ function aaTick()
 
       if CanAttack() then
          setAttackState(0)
-         PrintState(0, "!")
-      end
+         PrintState(0, "!")         
+       end
       if IsAttacking() then
          setAttackState(1)
          PrintState(0, "  -")
@@ -268,7 +270,7 @@ end
 
 local printNextSpell = false
 function SetAttacking()
-   -- lastAttack = time()
+   lastAttack = time()
    printNextSpell = true
 end
 
@@ -286,7 +288,8 @@ function CanAttack()
    if P.blind then
       return false
    end
-   return time() > (getNextAttackTime() - GetPing()/2) -- or time() < (lastAttack + getWindup()/4)
+   return time() > getNextAttackTime()
+   -- return time() > (getNextAttackTime() - GetPing()/2) -- or time() < (lastAttack + getWindup()/4)
 end
 
 function IsAttacking()
@@ -449,7 +452,8 @@ function onSpellAA(unit, spell)
          end
 
          if delay then
-            AddIncomingDamage(spell.target, unit.totalDamage, GetImpactTime(unit, spell.target, delay, speed))
+            -- TODO figure out why this isn't working
+            -- AddIncomingDamage(spell.target, unit.totalDamage, GetImpactTime(unit, spell.target, delay, speed))
          end
       end
    end
@@ -464,7 +468,7 @@ function onSpellAA(unit, spell)
 
    if IAttack(unit, spell) then
       spells["AA"].baseAttackSpeed = 1 / (spell.animationTime * myHero.attackSpeed)
-      spells["AA"].windupVal = 1 / (spell.windUpTime * myHero.attackSpeed)
+      spells["AA"].baseWindUp = 1 / (spell.windUpTime * myHero.attackSpeed)
 
       if IsValid(spell.target) then
          lastAATarget = spell.target

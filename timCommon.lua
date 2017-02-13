@@ -1375,7 +1375,7 @@ function WillKill(...)
             -- removing windup from this calc. 
             -- I can get it close enough to orbwalk but not reliably close enough for timing lasthits against minion attacks
             -- and it's better to shoot late than early.
-            local impactTime = GetImpactTime(me, target, getWindup()*0, speed)
+            local impactTime = GetImpactTime(me, target, getWindup(), speed)
             local incdDam = 0
             for _,incd in ipairs(INCOMING_DAMAGE) do
                if incd.time < impactTime then
@@ -1627,6 +1627,10 @@ end
 
 function GetPing()
    return GetLatency()/1000
+end
+
+function OnProcessAttack(unit, spell)
+   return OnProcessSpell(unit, spell)
 end
 
 function OnProcessSpell(unit, spell)
@@ -2731,7 +2735,7 @@ lastThrottleTime = time()
 -- return of true means go ahead and act
 -- return of false means don't act
 function throttle()
-   if time()-.2+(math.random(0,.1)) > lastThrottleTime then
+   if (time()-.2+(math.random(0,.1))) > lastThrottleTime then
       lastThrottleTime = time()
       return true
    else
