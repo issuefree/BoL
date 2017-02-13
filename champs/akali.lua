@@ -22,6 +22,12 @@ AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0} / {1} / 
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
+spells["force"] = {
+   base=0,
+   byLevel={10,12,14,16,18,20,22,24,26,28,30,40,50,60,70,80,90,100},
+   adBonus=.5,
+   ap=.65
+}
 spells["mark"] = {
   key="Q",
   range=600,
@@ -36,18 +42,18 @@ spells["detonate"] = {
 }
 spells["shroud"] = {
    key="W", 
-   range=700, 
+   range=250, 
    color=blue, 
-   radius=425, -- check
-   cost={80,75,70,65,60}
+   radius=475, -- wiki
+   cost={60,55,50,45,40}
 }
 spells["slash"] = {
    key="E", 
    range=325, 
    color=red,
-   base={30,55,80,105,130}, 
-   ap=.4,
-   ad=.6,
+   base={70,100,130,160,190}, 
+   ap=.6,
+   adBonus=.8,
    type="P",
    cost={60,55,50,45,40},
 }
@@ -55,8 +61,8 @@ spells["dance"] = {
    key="R", 
    range=700, 
    color=yellow, 
-   base={100,175,250}, 
-   ap=.5
+   base={50,100,150}, 
+   ap=.35
 }
 
 function getDetonateDam(target)
@@ -69,11 +75,12 @@ end
 spells["AA"].damOnTarget = getDetonateDam
 
 function Run()
-   if IsWall(Point(mousePos):vector()) then
-      PrintState(0, "WALL")
+   spells["AA"].bonus = 0
+   if P.twinMight then
+      
+   elseif not P.twinMight and P.twinForce then
+      spells["AA"].bonus = GetSpellDamage("force")
    end
-
-   spells["AA"].bonus = GetSpellDamage("AA")*(.06+(me.ap/6/100))
 
    for _,m in ipairs(GetWithBuff("mark", MINIONS, CREEPS, ENEMIES)) do
       Circle(m)
@@ -157,10 +164,12 @@ function FollowUp()
 end
 
 local function onObject(object)
-   local target = PersistOnTargets("mark", object, "Akali_Base_markOftheAssasin_marker_tar", ENEMIES)
-   PersistOnTargets("mark", object, "Akali_Base_markOftheAssasin_marker_tar", CREEPS, MINIONS)
+   PersistOnTargets("mark", object, "Akali_Base_markOftheAssasin_marker_tar", ENEMIES, CREEPS, MINIONS)
 
-   Persist("shroud", object, "akali_smoke_bomb_tar_team_green")
+   Persist("shroud", object, "Akali_Base_smoke_bomb_tar_team_green")
+
+   PersistBuff("twinMight", object, "Akali_Base_P_LHand_buf")
+   PersistBuff("twinForce", object, "Akali_Base_P_RHand_buf")
 end
 
 local function onSpell(unit, spell)
