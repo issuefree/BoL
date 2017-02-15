@@ -63,7 +63,7 @@ spells["arrow"] = {
 
 spells["AA"].damOnTarget = function(target)
    if target and HasBuff("frosted", target) then
-      return me.totalDamage*(.1 + me.critChance)
+      return me.totalDamage*(.1 + me.critChance) -- TODO crit damage not counted since I'm not sure if it's available
    end
 end
 

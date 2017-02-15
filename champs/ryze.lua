@@ -16,49 +16,57 @@ SetChampStyle("caster")
 
 spells["overload"] = {
    key="Q", 
-   range=900-50, 
+   range=1000-50, --wiki
    color=violet, 
-   base={60,90,120,150,180}, 
-   ap=.55,
-   maxMana={.02,.025,.03,.035,.04},
-   cost={30,35,40,45,50},
+   base={60,85,110,135,160,185}, 
+   ap=.45,
+   bonus=function()
+      return getBonusMana()*.03
+   end,
+   cost=40,
    speed=1400,
    delay=.4, -- tss
    width=55, -- wiki
+   scale=function(target)
+      if HasBuff("flux", target) then
+         return GetLVal(spells["flux"], "olScale")
+      else
+         return 1
+      end
+   end
 }
 spells["prison"] = {
    key="W", 
-   range=600, 
+   range=615, 
    color=red,    
    base={80,100,120,140,160}, 
-   ap=.4, 
-   maxMana=.025,
+   ap=.2, 
+   bonus=function()
+      return getBonusMana()*.01
+   end,
    cost={60,70,80,90,100},
 }
 spells["flux"] = {
    key="E", 
-   range=600, 
-   color=violet,
+   range=615, 
+   color=yellow,
    speed=1400,
-   base={36,52,68,84,100},  
-   ap=.2, 
-   maxMana=.02,
-   cost={60,70,80,90,100},
+   base={50,75,100,125,150},  
+   ap=.3, 
+   bonus=function()
+      return getBonusMana()*.02
+   end,
+   cost={40,55,70,85,100},
+   olScale={1.4,1.55,1.70,1.85,2}
 }
-spells["fluxBounce"] = {
-   base={18,26,34,42,50},
-   range=200,
-   ap=.1,
-   mana=.01,
-}
-spells["power"] = {
+spells["warp"] = {
    key="R",
-   radius=200,
-   cost=0,
+   range={1750,3000},
+   cost=100,
 }
 
-AddToggle("power", {on=true, key=112, label="Auto Power"})
-AddToggle("arcane", {on=true, key=113, label="Manage Arcane"})
+AddToggle("-", {on=true, key=112, label=""})
+AddToggle("-", {on=true, key=113, label=""})
 AddToggle("tear", {on=true, key=114, label="Charge tear"})
 AddToggle("", {on=true, key=115, label=""})
 
@@ -67,6 +75,11 @@ AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
 local lastCast = 0
+
+local manaByLevel = {400,436,474,513,555,598,642,689,737,787,839,892,948,1005,1063,1124,1186,1250}
+function getBonusMana()
+   return me.maxMana - manaByLevel[me.level]
+end
 
 function Run()
    if StartTickActions() then
@@ -95,16 +108,6 @@ function Run()
       end
    end
 
-   if IsOn("arcane") and GetMPerc() > .5 then
-      if time() - lastCast > 10 and
-         time() - lastCast < 12
-      then
-         if burnSpell() then
-            return true
-         end
-      end
-   end   
-
    if IsOn("tear") and CanChargeTear() and GetMPerc() > .75 then
       if burnSpell() then
          return true
@@ -117,22 +120,20 @@ end
 function Action()
    -- TestSkillShot("overload", "mis")
 
-   if CanUse("prison") then
-      local target = GetWeakestEnemy("prison", 0, 15)
+   if CanUse("overload") then
+      local target = GetSkillShot("overload")
       if target then
-         checkPower(target)
-         Cast("prison", target)
-         PrintAction("Prison", target)
+         CastFireahead("overload", target)
+         PrintAction("Overload", target)
          return true
       end
    end
 
-   if CanUse("overload") then
-      local target = GetSkillShot("overload")
+   if CanUse("prison") then
+      local target = GetWeakestEnemy("prison", 0, 15)
       if target then
-         checkPower(target)
-         CastFireahead("overload", target)
-         PrintAction("Overload", target)
+         Cast("prison", target)
+         PrintAction("Prison", target)
          return true
       end
    end
@@ -140,7 +141,6 @@ function Action()
    if CanUse("flux") then
       local target = GetWeakestEnemy("flux", 0, 15)
       if target then
-         checkPower(target)
          Cast("flux", target)
          PrintAction("Flux", target)
          return true
@@ -183,15 +183,6 @@ function burnSpell()
    end
 end
 
-function checkPower(target)
-   if IsOn("power") and CanUse("power") then
-      if #GetInRange(target, spells["power"].radius, ENEMIES) > 1 then
-         Cast("power", me)
-         PrintAction("Power UP", nil, 1)
-      end
-   end
-end
-
 function FollowUp()
    if IsOn("clear") and Alone() then
       local minion = GetWeakest("overload", GetInRange(me, "overload", MINIONS))
@@ -200,11 +191,6 @@ function FollowUp()
          if ( CanChargeTear() and GetMPerc(me) > .33 ) or
             GetMPerc(me) > .75
          then
-            if #GetInRange(minion, GetSpellRange("fluxBounce"), minions) > 0 and CanUse("flux") then
-               Cast("flux", minion)
-               PrintAction("Flux for clear")
-               return true
-            end
          end
       end
 
@@ -212,23 +198,16 @@ function FollowUp()
          return true
       end
 
-   end
+   end 
 
    return false
 end
 
 local function onObject(object)
-   PersistBuff("arcane", object, "PARTICLE") -- I don't know if I need this for anything.
+   PersistOnTargets("flux", object, "Ryze_Base_E_Debuff_Timer", ENEMIES, MINIONS)
 end
 
 local function onSpell(unit, spell)
-   if ICast("overload", unit, spell) or
-      ICast("prison", unit, spell) or
-      ICast("flux", unit, spell) or
-      ICast("power", unit, spell)
-   then
-      lastCast = time()
-   end
 end
 
 AddOnCreate(onObject)

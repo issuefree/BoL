@@ -17,24 +17,24 @@ spells["strike"] = {
    key="Q", 
    range=950-25, 
    color=violet, 
-   base={80,125,170,215,260}, 
+   base={70,110,150,190,230}, 
    ap=.6,
    speed=2000, -- wiki
    delay=.4, -- tss
    width=85, -- reticle
-   cost={60,65,70,75,80},
+   cost={40,45,50,55,60},
 }
 spells["dark"] = {
    key="W", 
    range=900, 
    color=red,    
-   base={120,170,220,270,320}, 
+   base={100,150,200,250,300}, 
    ap=1, 
    delay=1.5,
    speed=0,
    noblock=true,
    radius=225-25,
-   cost={70,75,80,85,90},
+   cost={60,65,70,75,80},
 }
 spells["event"] = {
    key="E", 
@@ -43,21 +43,22 @@ spells["event"] = {
    radius=375,
    delay=.75,
    noblock=true,
-   cost={80,85,90,95,100},
+   cost={70,75,80,85,90},
 }
 spells["burst"] = {
    key="R", 
    range=650, 
-   color=red,    
-   base={250,375,500}, 
-   ap=1,
-   cost=125,
-   damOnTarget=
-      function(target)
-         if target then
-            return target.ap*.8
-         end
-      end,
+   color=red,
+   base={175,250,325}, 
+   ap=.75,
+   cost=100,
+   scale=function(target)
+      if not target then
+         return 1
+      end
+      local missingHPerc = math.max((target.maxHealth - target.health)/target.maxHealth, .66)
+      return 1+(missingHPerc*.015)
+   end,
 }
 
 AddToggle("", {on=true, key=112, label=""})
@@ -94,6 +95,7 @@ function Run()
    end
 
    if IsOn("lasthit") and Alone() then
+      -- this needs a rework since it can ony hit 2 things
       local hits, kills, score = GetBestLine(me, "strike", .05, .95, MINIONS, PETS, CREEPS, ENEMIES)
       if #kills >= 1 then
          CastXYZ("strike", GetCastPoint(hits, "strike"))

@@ -34,13 +34,13 @@ spells["shuriken"] = {
    base={75,115,155,195,235}, 
    ap=.75,
    delay=.18,  --tss
-   speed=1700,   --tss
+   speed=1650,   --tss
    width=55+20,   --reticle
-   cost={65,60,55,50,45},
+   cost={60,55,50,45,40},
 } 
 spells["surge"] = {
    key="W", 
-   range=800+75, -- reticle
+   range=750, -- wiki
    color=yellow, 
    base={65,95,125,155,185}, 
    ap=.55,

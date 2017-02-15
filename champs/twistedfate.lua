@@ -6,7 +6,8 @@ pp("\nTim's Twisted Fate")
 InitAAData({
 	baseAttackSpeed = 0.651,
 	speed = 1500, windup=.4,
-	particles = {"TwistedFateBasicAttack_mis", "TwistedFateStackAttack_mis", "PickaCard_blue", "PickaCard_red", "PickaCard_yellow"}	
+	-- particles = {"TwistedFateBasicAttack_mis", "TwistedFateStackAttack_mis", "PickaCard_blue", "PickaCard_red", "PickaCard_yellow"}	
+	minMoveTime=.4, -- pick a card has a very fast windup so it messes with the calcs. Safer just to have a min move time.
 })
 
 local card = "blue"
@@ -164,15 +165,16 @@ end
 
 selectStart = 0
 function Action()
-   if IsOn("pick") and canPick() then
-   	if GetWeakestEnemy("AA",100) then
-	      pick()
-	      PrintAction("Picking action card", card)
-     	end
-   end
-
    if SkillShot("wild") then
    	return true
+   end
+
+   if IsOn("pick") and canPick() then
+   	if GetWeakestEnemy("AA", 50) then
+	      pick()
+	      PrintAction("Picking action card", card)
+	      return
+     	end
    end
 
    local target = GetMarkedTarget() or GetWeakestEnemy("AA")
@@ -183,17 +185,17 @@ function Action()
 end
 
 function onCreateObj(object)
-	if PersistBuff("card", object, "Card_", 200) then
-		if find(object.name, "gold") then
-			spells["card"] = spells["gold"]
-		elseif find(object.name, "red") then
-			spells["card"] = spells["red"]
-		elseif find(object.name, "blue") then
-			spells["card"] = spells["blue"]
-		end
+	if PersistBuff("card", object, "TwistedFate_Base_W_SelectBlue", 200) then
+		spells["card"] = spells["blue"]
+	end
+	if PersistBuff("card", object, "TwistedFate_Base_W_SelectYellow", 200) then
+		spells["card"] = spells["gold"]
+	end
+	if PersistBuff("card", object, "TwistedFate_Base_W_SelectRed", 200) then
+		spells["card"] = spells["red"]
 	end
 
-	Persist("stacked", object, "stackready")
+	Persist("stacked", object, "TwistedFate_Base_E_Ready")
 end
 
 function onSpell(unit, spell)
@@ -208,7 +210,7 @@ function onSpell(unit, spell)
          end
       end
 
-		if spell.name == "gate" then
+		if spell.name == "Gate" then
          gating = false
       end
       
