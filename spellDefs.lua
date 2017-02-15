@@ -1014,9 +1014,9 @@ SPELL_DEFS = {
 		chronoshift={},
 	},
 	Zyra = {
-		zyraqfissure={key="Q", range=800, radius=275, time=1.5, ss=true},
-		zyraseed={key="W"},
-		zyragraspingroots={key="E", range=1100, radius=90, time=2, ss=true, show=true, isline=true, cc=BIND},
+		ZyraQ={key="Q", range=800, radius=275, time=1.5, ss=true},
+		ZyraW={key="W"},
+		ZyraE={key="E", range=1100, radius=90, time=2, ss=true, show=true, isline=true, cc=BIND},
 		zyrabramblezone={key="R", cc=KNOCK},
 		zyrapassivedeathmanager={},
 	},
