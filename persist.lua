@@ -173,17 +173,24 @@ function PersistToTrack(object, name, champName, spellName)
       PData[spellName].startPoint = Point(object)
       PData[spellName].type = "trackedSpell"
       PData[spellName].champName = champName
-      PData[spellName].spellName = spellName      
+      PData[spellName].spellName = spellName
+      if ModuleConfig.debug then
+         pp("PersistToTrack - "..name)
+      end
    end
 end
 
 function PersistPet(object, charName, name)
    if find(object.charName, charName) or find(object.name, name) then
       if object.team == me.team then
-         -- pp("Persist my pet "..object.name)
+         if ModuleConfig.debug then
+            pp("Persist my pet "..object.name)
+         end
          return PersistAll("MYPET", object)
       else
-         -- pp("Persist enemy pet "..object.name)
+         if ModuleConfig.debug then
+            pp("Persist enemy pet "..object.name)
+         end
          return PersistAll("PET", object)
       end
    end   
@@ -194,6 +201,9 @@ function PersistAll(label, object, name)
       Persist(label..object.name..object.x, object)
       PData[label..object.name..object.x].name = label
       PData[label..object.name..object.x].time = time()
+      if ModuleConfig.debug then
+         pp("Persisting "..name.." as "..label)
+      end
       return true
    end
 end
@@ -218,7 +228,9 @@ function PersistBuff(label, object, name, dist, exact)
          P[label] = object
          PData[label] = {}
          PData[label].name = object.name
-         -- pp("Persisting "..object.name.." as "..label)
+         if ModuleConfig.debug then
+            pp("Persisting "..object.name.." as "..label)
+         end
          return true
       elseif GetDistance(object) < 500 then
          -- pp("Found "..label.." at distance "..math.floor(GetDistance(object)))
@@ -238,7 +250,9 @@ function PersistOnTargets(label, object, name, ...)
          PData[label..target.name].unit = target
          PData[label..target.name].time = time()
          table.insert(pOn[label], label..target.name)
-         -- pp("Persisting "..name.." on "..target.charName.." as "..label..target.name)
+         if ModuleConfig.debug then
+            pp("Persisting "..name.." as "..label.." on "..target.charName)
+         end
          return target
       end
    end
