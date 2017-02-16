@@ -44,7 +44,7 @@ spells["surge"] = {
    color=yellow, 
    base={65,95,125,155,185}, 
    ap=.55,
-   cost=45,
+   cost=40,
 } 
 spells["surgePassive"] = {
    base=0,
@@ -53,16 +53,16 @@ spells["surgePassive"] = {
 }
 spells["rush"] = {
    key="E", 
-   base={85,125,165,205,245}, 
-   ap=.6,
+   base={42.5,62.5,82.5,102.5,122.5}, 
+   ap=.3,
    cost={100,95,90,85,80}
 } 
 spells["maelstrom"] = {
    key="R", 
    range=550, 
    color=red, 
-   base={80,145,210}, 
-   ap=.4,
+   base={40,75,110}, 
+   ap=.2,
 } 
 
 spells["AA"].bonus = 
@@ -133,24 +133,23 @@ function Action()
 
    if CanUse("surge") then
       local targets = GetInRange(me, "surge", GetWithBuff("mos2", ENEMIES))
+      if #targets >= 1 then
+         Cast("surge", me)
+         PrintAction("Surge for stun")
+         return true
+      end      
+
+      local targets = GetInRange(me, "surge", GetWithBuff("mos", ENEMIES))
       local kills = GetKills("surge", targets)
       if #kills >= 1 then
          Cast("surge", me)
          PrintAction("Surge for execute", kills[1])
          return true
       end
-      if #targets >= 1 then
+      if #targets >= 2 then
          Cast("surge", me)
-         PrintAction("Surge for stun")
+         PrintAction("Surge for AoE")
          return true
-      end      
-      if #targets >= 1 then
-         local nearby = GetInRange(me, "surge", ENEMIES)
-         if #targets == #nearby and GetMPerc(me) > .33 then
-            Cast("surge", me)
-            PrintAction("Surge because everyone has a mark")
-            return true
-         end
       end
    end
 
@@ -168,10 +167,11 @@ function FollowUp()
 end
 
 local function onCreate(object)
-   PersistBuff("surge", object, "kennen_ds_proc")
-   PersistOnTargets("mos", object, "kennen_mos", MINIONS, PETS, CREEPS, ENEMIES)
-   PersistOnTargets("mos2", object, "kennen_mos2", ENEMIES)
-   PersistBuff("rush", object, "kennen_lr_buf")
+   PersistOnTargets("mos", object, "Kennen_Base_Proc", MINIONS, PETS, CREEPS, ENEMIES)
+   PersistOnTargets("mos2", object, "Kennen_Base_Proc_2", ENEMIES)
+   PersistBuff("surge", object, "Kennen_Base_W_proc")
+   PersistBuff("maelstrom", object, "Kennen_Base_R_Cast_Green")
+   PersistBuff("rush", object, "Kennen_Base_E_Buff_Cas")
 end
 
 local function onSpell(unit, spell)
