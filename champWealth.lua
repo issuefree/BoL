@@ -80,7 +80,7 @@ itemPrices = {
    [3072] = {name="The Bloodthirster", price=3500},
    [3180] = {name="Odyn's Veil", price=2500},
    [3090] = {name="Wooglet's Witchcap", price=3540},
-   [3184] = {name="Entropy", price=2700},
+   [3184] = {name="Entropy", price=950},
    [3185] = {name="The Lightbringer", price=2280},
    [3091] = {name="Wit's End", price=2600},
    [3188] = {name="Blackfire Torch", price=2650},

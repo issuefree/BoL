@@ -1192,8 +1192,6 @@ function UseAutoItems()
    UseItem("Randuin's Omen")
 
    UseItem("Youmuu's Ghostblade")
-   UseItem("Entropy")
-
 end
 
 function GetNearestIndex(target, list)
@@ -2220,9 +2218,7 @@ function UseItem(itemName, target, force)
 
    if not IsCooledDown(slot) then return end
 
-   if itemName == "Entropy" or
-      itemName == "Youmuu's Ghostblade" 
-   then
+   if itemName == "Youmuu's Ghostblade" then
       if ( IsMelee() and GetMeleeTarget() ) or
          #GetInAARange(me, ENEMIES) > 0
       then

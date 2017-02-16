@@ -10,7 +10,7 @@ ITEMS["Frost Queen's Claim"]      = {id=3092, name="ItemGlacialSpikeCast", range
 
 ITEMS["Randuin's Omen"]           = {id=3143, name="RanduinsOmen", range=500, itemType="active", color=yellow}
 
-ITEMS["Entropy"]			      = {id=3184, name="OdinEntropicClaymore", itemType="active"}
+ITEMS["Entropy"]			      = {id=3184, name="OdinEntropicClaymore"}
 ITEMS["Youmuu's Ghostblade"]      = {id=3142, name="YoumusBlade", itemType="active"}
 
 --Active defense
