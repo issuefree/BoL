@@ -43,3 +43,5 @@ Temporary Items
 .apdisk
 
 test.lua
+*.sublime-project
+bol.sublime-workspace
