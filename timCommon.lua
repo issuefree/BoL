@@ -1192,6 +1192,7 @@ function UseAutoItems()
    UseItem("Randuin's Omen")
 
    UseItem("Youmuu's Ghostblade")
+   UseItem("Righteous Glory")
 end
 
 function GetNearestIndex(target, list)
@@ -2213,12 +2214,12 @@ local flaskCharges = 3
 function UseItem(itemName, target, force)
    local item = ITEMS[itemName]
    local slot = GetInventorySlot(item)
-   if not slot or slot == 0 then return end   
+   if not slot or slot == 0 then return end
    slot = tostring(slot)
 
    if not IsCooledDown(slot) then return end
 
-   if itemName == "Youmuu's Ghostblade" then
+   if itemName == "Youmuu's Ghostblade" or itemName == "Righteous Glory" then
       if ( IsMelee() and GetMeleeTarget() ) or
          #GetInAARange(me, ENEMIES) > 0
       then
@@ -2260,14 +2261,6 @@ function UseItem(itemName, target, force)
       if JustAttacked() and #GetInRange(me, item, ENEMIES) >= 1 then
          CastSpellTarget(slot, me)
          PrintAction(itemName, nil, 1)
-         return true
-      end
-
-   elseif itemName == "Frost Queen's Claim" then
-      local target = SelectFromList(GetInRange(me, item, ENEMIES), function(enemy) return #GetInRange(enemy, item.radius, ENEMIES) end)
-      if target then
-         CastXYZ(slot, target)
-         PrintAction(itemName, target, 1)
          return true
       end
 
