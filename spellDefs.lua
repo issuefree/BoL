@@ -59,19 +59,20 @@ SPELL_DEFS = {
       akalismokebomb={},
 	},
 	Alistar = {
-		headbutt={
+		alistarq={
 			cc=KNOCK,
 			type="dash", ends="target", overShoot=-25,
 		},
-		triumphantroar={},
-		ferocioushowl={},
-		pulverize={},
+		alistarw={},
+		alistare={},
+		alistarr={},
 	},
 	Amumu = {
 		bandagetoss={
 			range=1100, radius=80, time=1, ss=true, isline=true, block=true, cc=STUN, 
 			type="dash", ends="target"
 		},
+		auraofdespair={},
 		tantrum={},
 	},
 	Annie = {
@@ -94,6 +95,9 @@ SPELL_DEFS = {
 		enchantedcrystalarrow={range=50000, radius=120, time=4, ss=true, show=true, isline=true, cc=STUN, dodgeByObject=true},
 		ashespiritofthehawk={},
 	},
+	AurelionSol = {
+	
+	},
    Azir = {
    	azirq={},
    	azirw={},
@@ -105,6 +109,8 @@ SPELL_DEFS = {
    Bard={
    	bardq={},
    	bardw={},
+   	bardwhealthpack={},
+   	bardwdirectheal={},
    	barde={},
    	bardr={},
    },
@@ -119,11 +125,10 @@ SPELL_DEFS = {
 		staticfield={},
 	},
 	Brand = {
-		brandblaze={range=1050, radius=70, time=1, ss=true, isline=true, block=true, cc=STUN},
-		brandblazemissile={"brandblaze"},
-		brandconflagration={},
-		brandfissure={range=900, radius=250, time=4, ss=true, isline=false},
-		brandwildfire={},
+		brandq={range=1050, radius=70, time=1, ss=true, isline=true, block=true, cc=STUN},
+		brandw={},
+		brande={range=900, radius=250, time=4, ss=true, isline=false},
+		brandr={},
 	},
 	Braum = {
 		braumq={range=1000, radius=175, time=1, ss=true, isline=true, block=true, cc=SLOW},
@@ -263,10 +268,11 @@ SPELL_DEFS = {
       galiobulwark={},
 	},
 	Gangplank = {
-		parley={physical=true},
-		removescurvy={},
-		raisemorale={},
-		cannonbarrage={},
+		gangplankqwrapper={physical=true},
+		gangplankqproceed={},
+		gangplankw={},
+		gangplanke={},
+		gangplankr={},
 	},
 	Garen = {
 		garenq={key="Q"},
@@ -438,6 +444,9 @@ SPELL_DEFS = {
 		},
 		khazixeevo={},
 		khazixr={},
+	},
+	Kindred={
+
 	},
 	KogMaw = {
 		kogmawq={},--TODO
@@ -639,10 +648,10 @@ SPELL_DEFS = {
       pantheonrjump={key="R"},
 	},
    Poppy={
-      poppydevastatingblow={key="Q"},
-      poppyheroiccharge={type="dash", ends="target", overShoot=300},
-      poppyparagonofdemacia={},
-      poppydiplomaticimmunity={key="R"},
+      poppye={key="Q"},
+--      poppyw={type="dash", ends="target", overShoot=300},
+      poppye={},
+      poppyr={key="R"},
    },
   	Quinn = {
   		quinnq={key="Q"},
@@ -660,6 +669,9 @@ SPELL_DEFS = {
 		powerball={},
 		defensiveballcurl={},
 		tremors2={},
+	},
+	RekSai = {
+
 	},
 	Renekton = {
 		-- RenektonSliceAndDice={range=450, radius=80, time=1, ss=true, isline=true, physical=true},
@@ -794,6 +806,9 @@ SPELL_DEFS = {
 		syndrarcasttime={},
 		syndrae5={},
 	},
+	TahmKench = {
+
+	},
 	Talon={
 		taloncutthroat={type="dash", ends="target"},
 		talonrake={},
@@ -811,7 +826,7 @@ SPELL_DEFS = {
 	Teemo = {
 		movequick={},
 		blindingdart={cc=BLIND},
-		bantamtrap={},
+		teemorcast={},
 	},
 	Thresh = {
 		threshq={key="Q", range=1100, radius=100, time=1.5, ss=true, show=true, block=true, perm=true, isline=true, cc=STUN},
@@ -908,10 +923,10 @@ SPELL_DEFS = {
    	velkozr={type="stall"},
 	},	
 	Vladimir = {
-		vladimirtransfusion={},
-		vladimirtidesofblood={},
-		vladimirhemoplague={},
-		vladimirsanguinepool={},
+		vladimirq={},
+		vladimirw={},
+		vladimire={},
+		vladimirr={},
 	},
 	Volibear = {
 		volibearq={cc=KNOCK, physical=true},
@@ -934,11 +949,10 @@ SPELL_DEFS = {
 		viktorchaosstormguide={},
 	},
    Warwick={
-   	hungeringstrike={key="Q"},
-      infiniteduress={type="dash", ends="target"},
-      infiniteduresschannel={},
-      hunterscall={key="W"},
-      bloodscent={},
+   	warwickq={},
+   	warwickw={},
+   	warwicke={},
+   	warwickr={},
    },	
 	Xerath = {
 		xerathlocuspulse={},
