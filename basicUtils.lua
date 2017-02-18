@@ -139,9 +139,9 @@ function concat(...)
    return resTable
 end
 
-function uniques(t)
+function uniques(list)
    local result = {}
-   for i,item in ipairs(t) do
+   for i,item in ipairs(list) do
       local unique = true
       for _,res in ipairs(result) do
          if item == res then
