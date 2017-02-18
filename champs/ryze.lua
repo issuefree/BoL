@@ -97,7 +97,15 @@ function Run()
    end
 
    if IsOn("lasthit") and Alone() then
-      if KillMinion("overload", nil, true) then
+      local kmOpts = nil
+      if IsOn("tear") and CanChargeTear() then
+         kmOpts = "lowMana"
+      end
+      if KillMinion("overload", kmOpts, true) then
+         return true
+      end
+
+      if KillMinion("flux", kmOpts, true) then
          return true
       end
    end
@@ -180,6 +188,12 @@ function burnSpell()
       --    PrintAction("Burn overload into a bush")
       --    return true
       -- end
+   end
+
+   if CanUse("flux") and Alone() then
+      if HitMinion("flux", "strong") then
+         return true
+      end
    end
 end
 
