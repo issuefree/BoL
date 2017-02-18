@@ -6,16 +6,17 @@ ITEMS["Hextech Gunblade"]         = {id=3146, name="HextechGunblade", range=700,
 ITEMS["Blade of the Ruined King"] = {id=3153, name="ItemSwordOfFeastAndFamine", range=550, itemType="active", color=violet}
 ITEMS["Tiamat"]                   = {id=3077, name="ItemTiamatCleave", range=400-25, ad=.6, itemType="active", color=red}
 ITEMS["Ravenous Hydra"]           = {id=3074, name="ItemTiamatCleave", range=400-25, ad=.6, itemType="active", color=red}
-ITEMS["Frost Queen's Claim"]      = {id=3092, name="ItemGlacialSpikeCast", range=600, itemType="active", radius=200, color=blue}
+ITEMS["Frost Queen's Claim"]      = {id=3092, name="ItemGlacialSpikeCast", itemType="active"} -- TODO ghosts
 
 ITEMS["Randuin's Omen"]           = {id=3143, name="RanduinsOmen", range=500, itemType="active", color=yellow}
 
-ITEMS["Entropy"]			      = {id=3184, name="OdinEntropicClaymore"}
+ITEMS["Entropy"]                  = {id=3184, name="OdinEntropicClaymore"}
 ITEMS["Youmuu's Ghostblade"]      = {id=3142, name="YoumusBlade", itemType="active"}
+ITEMS["Righteous Glory"]          = {id=3800, itemType="active"}
 
 --Active defense
 ITEMS["Locket of the Iron Solari"] = {id=3190, name="IronStylus", range=700, itemType="active", color=green}
-ITEMS["Locket of the Iron Solari Aura"] = {id=3190, range=1200, itemType="aura", color=green}
+
 ITEMS["Guardian's Horn"] = {id=2051, name="ItemHorn", itemType="active"}
 ITEMS["Zhonya's Hourglass"] = {id=3157, name="ZhonyasHourglass", itemType="active"}
 ITEMS["Seraph's Embrace"] = {id=3040, name="ItemSeraphsEmbrace", itemType="active"}
@@ -61,6 +62,9 @@ ITEMS["Crystaline Flask"] = {id=2041}
 
 ITEMS["Sightstone"] = {id=2049}
 ITEMS["Ruby Sightstone"] = {id=2045}
+ITEMS["Eye of the Equinox"] = {id=2303, type="active"}
+ITEMS["Eye of the Oasis"] = {id=2302, type="active"}
+ITEMS["Eye of the Watchers"] = {id=2301, type="active"}
 
 ITEMS["Warding Totem"] = {id=3340}
 ITEMS["Greater Stealth Totem"] = {id=3361}
@@ -70,6 +74,14 @@ ITEMS["Sweeping Lens"] = {id=3341}
 ITEMS["Oracle's Lens"] = {id=3364}
 
 ITEMS["Scrying Orb"] = {id=3342}
+
+ITEMS["Edge of Night"] = {id=3814, type="active"} -- TODO shield
+ITEMS["Face of the Mountain"] = {id=3401, type="active"} -- TODO shield
+ITEMS["Hextech GLP-800"] = {id=3030, type="active"} -- TODO damage
+ITEMS["Hextech Protobelt-01"] = {id=3152, type="active"} -- TODO dash/damage
+ITEMS["Knight's Vow"] = {id=3109, type="active"} -- TODO (*)
+
+
 
 local ITEMSBYID = {}
 for name,item in ipairs(ITEMS) do
