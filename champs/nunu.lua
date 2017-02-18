@@ -42,13 +42,13 @@ spells["boil"] = {
 }
 spells["iceblast"] = {
 	key="E", 
-	range=575,  
+	range=550,  
 	color=violet, 
-	base={85,130,175,225,275}, 
+	base={80,120,160,200,240}, 
 	type="M",
-	ap=1,
-	cost={75,85,95,105,115},
-	baseCost={75,85,95,105,115},
+	ap=.9,
+	cost={70,75,80,85,90},
+	baseCost={70,75,80,85,90},
 }
 spells["zero"] = {
 	key="R", 
@@ -225,7 +225,7 @@ end
 SetAutoJungle(jungle)
 
 local function onObject(object)
-	PersistBuff("visionary", object, "Visionary_buf")
+	PersistBuff("Nunu_Base_P_Free_buff", object, "Visionary_buf")
 end
 
 local function onSpell(unit, spell)
