@@ -8,6 +8,11 @@ pp(" -   don't activate if I'm spinning")
 pp(" - If someone targets me and I'm < 75% activate courage")
 pp(" - If strike is on cooldown and I have >= 2 enemies in range, activate spin")
 
+pp("")
+
+pp("TODO:")
+pp(" - track villian for preferred target")
+
 InitAAData({ 
    particles = {"Garen_Base_AA_Tar", "Garen_Base_Q_Land"},
    resets = {"GarenQ"}
@@ -47,7 +52,7 @@ spells["justice"] = {
   range=400,
   color=red,
   base={175,350,525},
-  missing={3.5,3,2.5},
+  targetMissingHealth={.286,.333,.4},
   type="M"
 }
 
@@ -89,11 +94,11 @@ function Run()
    end
 
    if CanUse("justice") then
-      local targets = SortByDistance(GetInRange(me, spells["justice"].range*2, ENEMIES))
-      for i,target in ipairs(targets) do
+      local target = GetWeakestEnemy("justice", 0, GetSpellRange("justice"))
+      if target then
          if target.health < getJusticeDam(target) then
             Circle(target, nil, violet, 5)
-            if GetDistance(target) < GetSpellRange("justice") then
+            if IsInRange("justice", target) then
                Cast("justice", target)
                PrintAction("Justice", target)
                return true            
@@ -188,19 +193,8 @@ function FollowUp()
    return false
 end
 
-function getJusticeDam(target)
-   if not target then return 0 end
-   local sLvl = GetSpellInfo("R").level
-   if sLvl < 1 then return 0 end
-
-   local dam = GetSpellDamage("justice")
-   local missingHealth = target.maxHealth - target.health
-   dam = dam + missingHealth / spells["justice"].missing[sLvl]
-   return CalculateDamage(target, dam)
-end
-
 function isSpinning()
-   return GetSpellInfo("E").name == "garenecancel"
+   return GetSpellInfo("E").name == "GarenECancel"
 end
 
 local function onObject(object)

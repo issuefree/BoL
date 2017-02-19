@@ -3,9 +3,15 @@ require "issuefree/modules"
 
 pp("\nTim's Gangplank")
 pp(" - heal up with oranges")
-pp(" - warn for good ult")
+--pp(" - warn for good ult")
 pp(" - shoot for lasthit")
-pp(" - morale if near enemies")
+pp("if hitting keg will kill multiple minions use it to last hit")
+
+-- track kegs (and their health?)
+-- if hitting a keg will hit a champ hit the keg
+-- track linked kegs and do above
+
+-- should I place kegs? I'll do them manually for now
 
 InitAAData({
 	windup=.25,
@@ -22,6 +28,14 @@ AddToggle("lasthit", {on=true, key=116, label="Last Hit", auxLabel="{0} / {1}", 
 AddToggle("clear", {on=false, key=117, label="Clear Minions"})
 AddToggle("move", {on=true, key=118, label="Move"})
 
+spells["trial"] = {
+	base=0,
+	bonus=function()
+		return 20+(me.level*10)
+	end,
+	adBonus=1,
+	type="T"
+}
 spells["gun"] = {
 	key="Q", 
 	range=625, 
@@ -30,29 +44,51 @@ spells["gun"] = {
 	ad=1,
 	onHit=true,
 	type="P",
-	cost={50,55,60,65,70}
+	cost=40,
 }
 spells["oranges"] = {
 	key="W",
-	base={80,150,220,290,360}, 
-	ap=1,
-	cost=65
+	base={50,75,100,125,150}, 
+	ap=.9,
+	bonus=function()
+		return (me.maxHealth-me.health)*.15
+	end,
+	type="H",
+	cost={80,90,100,110,120}
 }
-spells["morale"] = {
+spells["keg"] = {
 	key="E", 
-	range=1200, 
-	color=blue,
-	cost={50,55,60,65,70}
+	range=1000, 
+	radius=350, --reticle
+	color=yellow,
+	linkRange=675, -- seems about right
 }
 spells["barrage"] = {
 	key="R",
-	base="75,120,165",
-	ap=.2,
-	area="575",
-	cost=100
+	base={35,60,85},
+	ap=.1,
+	area=575, --?
+	cost=100,
+	waves=12
 }
 
+local kegs
+local lowKegs
 function Run()
+
+	spells["AA"].bonus = 0
+	if P.trial then
+		spells["AA"].bonus = GetSpellDamage("trial")
+	end
+
+	kegs = GetPersisted("keg")
+	lowKegs = {}
+	for _,keg in ipairs(kegs) do
+		if keg.health == 1 then
+			table.insert(lowKegs, keg)
+		end
+	end
+
    if StartTickActions() then
       return true
    end
@@ -66,8 +102,8 @@ function Run()
 	-- end
 
 	if CanUse("oranges") and
-		( GetHPerc(me) < .5 or 
-		  GetHPerc(me) < .75 and Alone() )
+		( GetHPerc(me) < .33 or 
+		  GetHPerc(me) < .66 and Alone() )
 	then
 		PrintAction("oranges")
 		Cast("oranges", me)		
@@ -81,6 +117,25 @@ function Run()
    end
 
 	if IsOn("lasthit") and Alone() then
+
+		if CanUse("gun") then
+			local nearKegs = GetInRange(me, "gun", lowKegs)
+			local maxScore = 0
+			local bestKeg
+			for _,keg in ipairs(nearKegs) do
+				local score, kills = scoreKegLH(keg)
+				if score > maxScore then
+					maxScore = score
+					bestKeg = keg
+				end
+			end
+			if maxScore >= 2 then
+				PrintAction("Hit keg for LH", maxScore)
+				Cast("gun", bestKeg)
+				return
+			end
+		end
+
 		if KillMinion("gun", {"far", "lowMana"}, true) then
 			return true
 		end
@@ -97,21 +152,27 @@ end
 
 function Action()
 	if CanUse("gun") then
-		local target = GetMarkedTarget() or GetWeakestEnemy("gun")
-		if target and Cast("gun", target) then
-			PrintAction("Shoot", target)
-			return true
+		local nearKegs = GetInRange(me, "gun", lowKegs)
+		local maxScore = 0
+		local bestKeg
+		for _,keg in ipairs(nearKegs) do
+			local score, kills = scoreKegChamps(keg)
+			if score > maxScore then
+				maxScore = score
+				bestKeg = keg
+			end
+		end
+		if maxScore >= 1 then
+			Cast("gun", bestKeg)
+			PrintAction("Hit keg for damage", maxScore)
+			return
 		end
 	end
 
-	if not Alone() and CanUse("morale") then
-		local manaThresh = 1
-		manaThresh = manaThresh - .1*#GetInRange(me, spells["morale"].range, ALLIES)
-		manaThresh = manaThresh - .05*#GetInRange(me, spells["gun"].range, ENEMIES)
-		
-		if GetMPerc(me) > manaThresh then
-			Cast("morale", me)
-			PrintAction("morale")
+	if CanUse("gun") then
+		local target = GetMarkedTarget() or GetWeakestEnemy("gun")
+		if target and Cast("gun", target) then
+			PrintAction("Shoot", target)
 			return true
 		end
 	end
@@ -124,8 +185,54 @@ function Action()
    return false
 end
 
+function scoreKegLH(keg)
+	return scoreHits("gun", getKegHits(keg, MINIONS), .05, .95)
+end
+
+function scoreKegChamps(keg)
+	return scoreHits("gun", getKegHits(keg, ENEMIES), 1, 10)
+end
+
+function getKegHits(keg, ...)
+	local hits = {}
+	for _,lk in ipairs(getLinkedKegs(keg)) do
+		hits = concat(hits, GetInRange(lk, spells["keg"].radius, concat(...)))
+	end
+	return uniques(hits)
+end
+
+function getLinkedKegs(keg, remainingKegs, linkedKegs)	
+	remainingKegs = remainingKegs or copy(kegs)	
+	linkedKegs = linkedKegs or {}
+
+	local nlks = GetInRange(keg, spells["keg"].linkRange, remainingKegs)
+	linkedKegs = concat(linkedKegs, nlks)
+
+	if #nlks > 0 then
+		remainingKegs = removeItems(remainingKegs, nlks)
+		if #remainingKegs > 0 then
+			for _,lk in ipairs(linkedKegs) do
+				getLinkedKegs(lk, remainingKegs, linkedKegs)
+			end
+		end
+	end
+
+	return linkedKegs
+end
+
 function FollowUp()
 	return false
 end
+
+function onObject(object)
+	PersistBuff("trial", object, "Gangplank_Base_P_Buf")
+	PersistAll("keg", object, "Barrel")
+end
+
+function onSpell(unit, spell)
+end
+
+AddOnCreate(onObject)
+AddOnSpell(onSpell)
 
 AddOnTick(Run)

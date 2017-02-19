@@ -2520,7 +2520,7 @@ end
 
 Combo = Class()
 function Combo:__init(name, timeout, onEnd)
-   self.state = nil   
+   self.state = nil
    self.states = {}
    self.vars = {}
    self.target = nil

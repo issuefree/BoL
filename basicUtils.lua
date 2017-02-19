@@ -173,7 +173,8 @@ function removeItems(list, items)
    return resTable
 end
 
-
+-- finds the item in list that maximizes scoreFunction(item, args)
+-- returns the bestItem, bestScore or nil, 0
 function SelectFromList(list, scoreFunction, args)
    local bestItem
    local bestScore = 0
